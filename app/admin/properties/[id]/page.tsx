@@ -187,22 +187,6 @@ export default function PropertyDetailsPage() {
                   <h3 className="font-semibold mb-2">Descrição</h3>
                   <p className="text-muted-foreground">{property.description}</p>
                 </div>
-
-                {property.features?.length > 0 && (
-                  <div>
-                    <h3 className="font-semibold mb-2">Características</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {property.features.map((feature, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md text-sm"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </CardContent>
           </Card>
