@@ -1,6 +1,6 @@
 import { PropertiesResponse, Property } from "@/types/property";
 
-const API_BASE_URL = "http://23.88.99.154:30008";
+const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
 
 export interface PropertyFilters {
   minPrice?: number;
