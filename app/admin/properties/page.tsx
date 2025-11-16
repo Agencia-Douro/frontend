@@ -221,17 +221,6 @@ export default function PropertiesPage() {
                     />
                   </div>
 
-                  {/* Faixa de Área */}
-                  <div className="space-y-2">
-                    <Label>Área Mínima (m²)</Label>
-                    <Input
-                      type="number"
-                      placeholder="0"
-                      value={filters.minArea || ""}
-                      onChange={(e) => updateFilter("minArea", e.target.value ? Number(e.target.value) : undefined)}
-                    />
-                  </div>
-
                   {/* Localização */}
                   <div className="space-y-2">
                     <Label>Distrito</Label>
