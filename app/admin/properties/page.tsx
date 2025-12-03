@@ -7,7 +7,7 @@ import { propertiesApi, PropertyFilters } from "@/services/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { DeletePropertyDialog } from "@/components/delete-property-dialog"
@@ -286,7 +286,7 @@ export default function PropertiesPage() {
                           checked={filters.hasOffice === true}
                           onCheckedChange={(checked) => updateFilter("hasOffice", checked ? true : undefined)}
                         />
-                        <label htmlFor="hasOffice" className="text-sm cursor-pointer">
+                        <label htmlFor="hasOffice" className="text-body-small font-medium cursor-pointer">
                           Escritório
                         </label>
                       </div>
@@ -296,7 +296,7 @@ export default function PropertiesPage() {
                           checked={filters.hasLaundry === true}
                           onCheckedChange={(checked) => updateFilter("hasLaundry", checked ? true : undefined)}
                         />
-                        <label htmlFor="hasLaundry" className="text-sm cursor-pointer">
+                        <label htmlFor="hasLaundry" className="text-body-small font-medium cursor-pointer">
                           Lavandaria
                         </label>
                       </div>
@@ -334,7 +334,7 @@ export default function PropertiesPage() {
               className="cursor-pointer"
               onClick={() => router.push(`/admin/properties/${property.id}`)}
             >
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-body-small font-medium ">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Preço:</span>
                   <span className="font-semibold">€{parseFloat(property.price).toLocaleString()}</span>

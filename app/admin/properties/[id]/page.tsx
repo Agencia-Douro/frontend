@@ -144,7 +144,7 @@ export default function PropertyDetailsPage() {
                   <p className="text-3xl font-bold text-primary">
                     €{parseFloat(property.price).toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground capitalize">{property.status}</p>
+                  <p className="text-body-small font-medium text-muted-foreground capitalize">{property.status}</p>
                 </div>
               </div>
             </CardHeader>
@@ -216,7 +216,7 @@ export default function PropertyDetailsPage() {
                         }}
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium">
+                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
                           Clique para ampliar
                         </span>
                       </div>
@@ -234,7 +234,7 @@ export default function PropertyDetailsPage() {
             <CardHeader>
               <CardTitle>Informações Adicionais</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm">
+            <CardContent className="space-y-3 text-body-small font-medium">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Referência:</span>
                 <span className="font-medium">{property.reference}</span>
@@ -314,7 +314,7 @@ export default function PropertyDetailsPage() {
             <CardHeader>
               <CardTitle>Datas</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm">
+            <CardContent className="space-y-3 text-body-small font-medium">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 <div>

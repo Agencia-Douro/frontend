@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, X } from "lucide-react"
 import { Property } from "@/types/property"
@@ -453,7 +453,7 @@ export default function EditPropertyPage() {
             <div className="space-y-4">
               {formData.images && formData.images.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-medium mb-2">Imagens Atuais</h3>
+                  <h3 className="text-body-small font-medium mb-2">Imagens Atuais</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {formData.images.map((url, index) => (
                       <div key={index} className="relative group">
@@ -478,13 +478,13 @@ export default function EditPropertyPage() {
               )}
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Adicionar Novas Imagens</h3>
+                <h3 className="text-body-small font-medium mb-2">Adicionar Novas Imagens</h3>
                 <Input type="file" accept="image/*" multiple onChange={handleImageChange} />
               </div>
 
               {selectedImages.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-medium mb-2">Novas Imagens</h3>
+                  <h3 className="text-body-small font-medium mb-2">Novas Imagens</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {selectedImages.map((file, index) => (
                       <div key={index} className="relative group">

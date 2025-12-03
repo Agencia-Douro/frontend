@@ -21,13 +21,13 @@ export default function RootLayout({
             <div className="flex items-center gap-8">
               <Link
                 href="/admin"
-                className="text-sm font-medium hover:text-primary transition-colors"
+                className="text-body-small font-medium hover:text-primary transition-colors"
               >
                 INÍCIO
               </Link>
               <Link
                 href="/admin/properties"
-                className="text-sm font-medium hover:text-primary transition-colors"
+                className="text-body-small font-medium hover:text-primary transition-colors"
               >
                 PROPRIEDADES
               </Link>
