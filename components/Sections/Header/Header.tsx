@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NavLink from "@/components/Sections/Header/NavLink";
 import { Button } from "@/components/ui/button";
+import Logo from "@/public/Logo.svg"
 
 export default function Header() {
     return (
@@ -10,10 +11,10 @@ export default function Header() {
                 <div className="w-full">
                     <Link href="/">
                         <Image
-                        src="/logo.svg"
-                        alt="Agência Douro Logótipo"
-                        width={88}
-                        height={40}
+                            src={Logo}
+                            alt="Agência Douro Logótipo"
+                            width={88}
+                            height={40}
                         />
                     </Link>
                 </div>
@@ -29,7 +30,7 @@ export default function Header() {
                     </Button>
                     <button className="block p-1 lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
-                            <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor"/>
+                            <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor" />
                         </svg>
                     </button>
                 </div>
