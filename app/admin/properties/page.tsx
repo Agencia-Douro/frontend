@@ -249,7 +249,7 @@ export default function PropertiesPage() {
                           key={num}
                           type="button"
                           variant={(filters.bedrooms || []).includes(num) ? "brown" : "ghost"}
-                          size="sm"
+                          size="default"
                           onClick={() => toggleBedrooms(num)}
                         >
                           {num === 7 ? "7+" : num}
@@ -267,7 +267,7 @@ export default function PropertiesPage() {
                           key={num}
                           type="button"
                           variant={(filters.bathrooms || []).includes(num) ? "brown" : "ghost"}
-                          size="sm"
+                          size="default"
                           onClick={() => toggleBathrooms(num)}
                         >
                           {num === 7 ? "7+" : num}

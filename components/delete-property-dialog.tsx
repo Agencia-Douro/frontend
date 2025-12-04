@@ -42,7 +42,7 @@ export function DeletePropertyDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" size="sm">
+        <Button variant="brown" size="default">
           <Trash2 className="h-4 w-4" />
         </Button>
       </DialogTrigger>
@@ -57,14 +57,14 @@ export function DeletePropertyDialog({
         </DialogHeader>
         <DialogFooter>
           <Button
-            variant="outline"
+            variant="brown"
             onClick={() => setOpen(false)}
             disabled={deleteMutation.isPending}
           >
             Cancelar
           </Button>
           <Button
-            variant="destructive"
+            variant="brown"
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
