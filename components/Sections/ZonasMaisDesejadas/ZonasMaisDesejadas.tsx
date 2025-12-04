@@ -1,5 +1,10 @@
 import Image from "next/image";
-import img from "@/public/test-Image.jpg"
+import porto from "@/public/localizacoes/porto.jpg"
+import aveiro from "@/public/localizacoes/aveiro.jpg"
+import faro from "@/public/localizacoes/faro.jpg"
+import coimbra from "@/public/localizacoes/coimbra.jpg"
+import braga from "@/public/localizacoes/braga.jpg"
+import lisboa from "@/public/localizacoes/lisboa.jpg"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -13,8 +18,8 @@ export default function ZonasMaisDesejadas() {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mt-12">
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={porto} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">
@@ -24,8 +29,8 @@ export default function ZonasMaisDesejadas() {
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={aveiro} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">
@@ -35,8 +40,8 @@ export default function ZonasMaisDesejadas() {
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={faro} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">
@@ -46,8 +51,8 @@ export default function ZonasMaisDesejadas() {
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={coimbra} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">
@@ -57,8 +62,8 @@ export default function ZonasMaisDesejadas() {
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={braga} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">
@@ -68,8 +73,8 @@ export default function ZonasMaisDesejadas() {
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={img} alt="teste-image" className="object-cover bg-center"/>
-                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/100 absolute top-0 left-0 ease-out duration-200 transition-all">
+                        <Image src={lisboa} alt="teste-image" className="object-cover bg-center"/>
+                        <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Douro</p>
                                 <Button variant="gold" asChild className="w-min">

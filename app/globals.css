@@ -119,6 +119,13 @@
     font-weight: var(--font-medium);
 }
 
+@utility body-18-regular {
+    font-size: var(--text-medium);
+    line-height: var(--text-medium--line-height);
+    letter-spacing: var(--text-medium--letter-spacing);
+    font-weight: var(--font-regular);
+}
+
 @utility body-18-medium {
     font-size: var(--text-medium);
     line-height: var(--text-medium--line-height);

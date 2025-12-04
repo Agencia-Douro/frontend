@@ -15,7 +15,7 @@ export default function ImoveisDestacados() {
                 </div>
                 <Cards/>
             </section>
-            <div className="w-screen left-0 bg-gold lg:h-[382px] absolute top-110 -z-10"></div>
+            <div className="w-screen left-0 bg-[#D6D2CB] lg:h-[382px] absolute top-110 -z-10"></div>
         </div>
     )
 }
