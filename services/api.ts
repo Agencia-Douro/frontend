@@ -1,6 +1,7 @@
 import { PropertiesResponse, Property } from "@/types/property";
 
-const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
+// const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
+const API_BASE_URL = "http://localhost:3008";
 
 export interface PropertyFilters {
   minPrice?: number;
@@ -237,5 +238,27 @@ export const propertiesApi = {
     if (!response.ok) {
       throw new Error("Erro ao deletar propriedade");
     }
+  },
+
+  getFeatured: async (): Promise<Property[]> => {
+    const response = await fetch(`${API_BASE_URL}/properties/featured/list`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar propriedades destacadas");
+    }
+
+    return response.json();
+  },
+
+  toggleFeatured: async (id: string): Promise<Property> => {
+    const response = await fetch(`${API_BASE_URL}/properties/${id}/featured`, {
+      method: "PATCH",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao alterar destaque da propriedade");
+    }
+
+    return response.json();
   },
 };

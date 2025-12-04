@@ -106,35 +106,6 @@ export default function CreatePropertyPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Referência</Label>
-                <Input
-                  placeholder="REF-001"
-                  value={formData.reference}
-                  onChange={(e) => updateField("reference", e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Status *</Label>
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => updateField("status", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="active">Ativo</SelectItem>
-                    <SelectItem value="inactive">Inativo</SelectItem>
-                    <SelectItem value="sold">Vendido</SelectItem>
-                    <SelectItem value="rented">Arrendado</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
             <div className="space-y-2">
               <Label>Título *</Label>
               <Input
@@ -166,7 +137,7 @@ export default function CreatePropertyPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="comprar">Comprar</SelectItem>
-                    <SelectItem value="arrender">Arrender</SelectItem>
+                    <SelectItem value="arrendar">Arrendar</SelectItem>
                     <SelectItem value="vender">Vender</SelectItem>
                   </SelectContent>
                 </Select>
@@ -460,7 +431,7 @@ export default function CreatePropertyPage() {
                       />
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="brown"
                         size="icon"
                         className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={() => removeImage(index)}
@@ -496,7 +467,7 @@ export default function CreatePropertyPage() {
         <div className="flex gap-4">
           <Button
             type="button"
-            variant="outline"
+            variant="ghost"
             onClick={() => router.push("/admin/properties")}
           >
             Cancelar

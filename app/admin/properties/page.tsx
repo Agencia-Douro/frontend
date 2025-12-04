@@ -123,7 +123,7 @@ export default function PropertiesPage() {
             />
           </div>
           <Button
-            variant={showFilters ? "default" : "outline"}
+            variant={showFilters ? "brown" : "ghost"}
             onClick={() => setShowFilters(!showFilters)}
           >
             <SlidersHorizontal className="h-4 w-4 mr-2" />
@@ -248,7 +248,7 @@ export default function PropertiesPage() {
                         <Button
                           key={num}
                           type="button"
-                          variant={(filters.bedrooms || []).includes(num) ? "default" : "outline"}
+                          variant={(filters.bedrooms || []).includes(num) ? "brown" : "ghost"}
                           size="sm"
                           onClick={() => toggleBedrooms(num)}
                         >
@@ -266,7 +266,7 @@ export default function PropertiesPage() {
                         <Button
                           key={num}
                           type="button"
-                          variant={(filters.bathrooms || []).includes(num) ? "default" : "outline"}
+                          variant={(filters.bathrooms || []).includes(num) ? "brown" : "ghost"}
                           size="sm"
                           onClick={() => toggleBathrooms(num)}
                         >
@@ -379,7 +379,7 @@ export default function PropertiesPage() {
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-8">
           <Button
-            variant="outline"
+            variant="brown"
             disabled={currentPage === 1}
             onClick={() => updateFilter("page", currentPage - 1)}
           >
@@ -389,7 +389,7 @@ export default function PropertiesPage() {
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <Button
                 key={page}
-                variant={page === currentPage ? "default" : "outline"}
+                variant={page === currentPage ? "brown" : "ghost"}
                 onClick={() => updateFilter("page", page)}
               >
                 {page}
@@ -397,7 +397,7 @@ export default function PropertiesPage() {
             ))}
           </div>
           <Button
-            variant="outline"
+            variant="brown"
             disabled={currentPage === totalPages}
             onClick={() => updateFilter("page", currentPage + 1)}
           >

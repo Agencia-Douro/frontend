@@ -13,16 +13,16 @@ export const metadata: Metadata = {
   description: "Casas, apartamentos, escritórios, terrenos para venda e aluguel, temos várias opções em diversas localidades. Fale com um de nossos representantes e agende",
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={monaSans.variable}>
       <body className="antialiased bg-muted">
         <QueryProvider>
-			<Header />
-            <main>
-                {children}
-            </main>
-		</QueryProvider>
+          <Header />
+          <main>
+            {children}
+          </main>
+        </QueryProvider>
       </body>
     </html>
   );

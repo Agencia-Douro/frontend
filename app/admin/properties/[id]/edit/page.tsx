@@ -107,7 +107,7 @@ export default function EditPropertyPage() {
       <div className="mb-6">
         <Button
           variant="ghost"
-          onClick={() => router.push(`/admin/properties`)}
+          onClick={() => router.back()}
           className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -124,14 +124,6 @@ export default function EditPropertyPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Referência</Label>
-                <Input
-                  value={formData.reference || ""}
-                  onChange={(e) => updateField("reference", e.target.value)}
-                />
-              </div>
-
               <div className="space-y-2">
                 <Label>Status *</Label>
                 <Select
@@ -180,7 +172,7 @@ export default function EditPropertyPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="comprar">Comprar</SelectItem>
-                    <SelectItem value="arrender">Arrender</SelectItem>
+                    <SelectItem value="arrendar">arrendar</SelectItem>
                     <SelectItem value="vender">Vender</SelectItem>
                   </SelectContent>
                 </Select>
@@ -464,7 +456,7 @@ export default function EditPropertyPage() {
                         />
                         <Button
                           type="button"
-                          variant="destructive"
+                          variant="brown"
                           size="icon"
                           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => removeExistingImage(url)}
@@ -495,7 +487,7 @@ export default function EditPropertyPage() {
                         />
                         <Button
                           type="button"
-                          variant="destructive"
+                          variant="brown"
                           size="icon"
                           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => removeNewImage(index)}
@@ -514,7 +506,7 @@ export default function EditPropertyPage() {
         <div className="flex gap-4">
           <Button
             type="button"
-            variant="outline"
+            variant="brown"
             onClick={() => router.push(`/admin/properties/${propertyId}`)}
           >
             Cancelar

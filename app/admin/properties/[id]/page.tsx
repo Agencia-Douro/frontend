@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { ArrowLeft, MapPin, Bed, Bath, Car, Ruler, Calendar, Trash2, Pencil } from "lucide-react"
+import { ArrowLeft, MapPin, Bed, Bath, Car, Ruler, Calendar, Trash2, Pencil, Star } from "lucide-react"
 
 export default function PropertyDetailsPage() {
   const params = useParams()
@@ -36,8 +36,20 @@ export default function PropertyDetailsPage() {
     },
   })
 
+  const toggleFeaturedMutation = useMutation({
+    mutationFn: (id: string) => propertiesApi.toggleFeatured(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
+      queryClient.invalidateQueries({ queryKey: ["properties"] })
+    },
+  })
+
   const handleDelete = () => {
     deleteMutation.mutate(propertyId)
+  }
+
+  const handleToggleFeatured = () => {
+    toggleFeaturedMutation.mutate(propertyId)
   }
 
   if (isLoading) {
@@ -78,7 +90,20 @@ export default function PropertyDetailsPage() {
 
         <div className="flex gap-2">
           <Button
-            variant="outline"
+            variant={property.isFeatured ? "gold" : "brown"}
+            onClick={handleToggleFeatured}
+            disabled={toggleFeaturedMutation.isPending}
+          >
+            <Star className={`h-4 w-4 mr-2 ${property.isFeatured ? "fill-current" : ""}`} />
+            {toggleFeaturedMutation.isPending
+              ? "Processando..."
+              : property.isFeatured
+                ? "Remover Destaque"
+                : "Destacar"}
+          </Button>
+
+          <Button
+            variant="brown"
             onClick={() => router.push(`/admin/properties/${propertyId}/edit`)}
           >
             <Pencil className="h-4 w-4 mr-2" />
@@ -86,7 +111,7 @@ export default function PropertyDetailsPage() {
           </Button>
 
           <Button
-            variant="destructive"
+            variant="brown"
             onClick={() => setOpenDeleteDialog(true)}
           >
             <Trash2 className="h-4 w-4 mr-2" />
@@ -107,14 +132,14 @@ export default function PropertyDetailsPage() {
           </DialogHeader>
           <DialogFooter>
             <Button
-              variant="outline"
+              variant="brown"
               onClick={() => setOpenDeleteDialog(false)}
               disabled={deleteMutation.isPending}
             >
               Cancelar
             </Button>
             <Button
-              variant="destructive"
+              variant="brown"
               onClick={handleDelete}
               disabled={deleteMutation.isPending}
             >
@@ -236,8 +261,11 @@ export default function PropertyDetailsPage() {
             </CardHeader>
             <CardContent className="space-y-3 text-body-small font-medium">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Referência:</span>
-                <span className="font-medium">{property.reference}</span>
+                <span className="text-muted-foreground">Imóvel Destacado:</span>
+                <span className={`font-medium flex items-center gap-1 ${property.isFeatured ? "text-yellow-600" : ""}`}>
+                  {property.isFeatured && <Star className="h-4 w-4 fill-current" />}
+                  {property.isFeatured ? "Sim" : "Não"}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Tipo:</span>
