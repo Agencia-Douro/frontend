@@ -31,7 +31,7 @@ export default function Header() {
                     </div>
                     <nav className="hidden lg:flex items-center gap-6">
                         <NavLink href="/imoveis" hasArrow>Imóveis</NavLink>
-                        <NavLink href="/imoveis-de-luxo" hasArrow>Imóveis de luxo</NavLink>
+                        <NavLink href="/imoveis-luxo" hasArrow>Imóveis de luxo</NavLink>
                         <NavLink href="/institucional" hasArrow>Institucional</NavLink>
                         <NavLink href="/newsletter">Newsletter</NavLink>
                     </nav>
