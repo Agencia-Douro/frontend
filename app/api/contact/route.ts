@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       },
       {
         headers: {
-          Authorization: `Bearer CiRuYTEtMzcxZC1hOWIwLTQ2YzItYmExMy0xMjc4OGE0MjQxMWIQ95LIFxj5-Y8lKhkABeaRghkA9fbYIeXq3ASLbX_K9qsJN1rNSgNuYTE`,
+          Authorization: `Bearer ${process.env.HUBSPOT_TOKEN}`,
           "Content-Type": "application/json",
         },
       }
