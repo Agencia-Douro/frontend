@@ -16,12 +16,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={monaSans.variable}>
-      <body className="antialiased bg-muted w-screen overflow-x-hidden">
+      <body className="antialiased bg-muted w-screen overflow-x-hidden flex flex-col">
         <QueryProvider>
-          <Header />
-          <main>
-            {children}
-          </main>
+            <Header />
+                {children}
         </QueryProvider>
       </body>
     </html>
