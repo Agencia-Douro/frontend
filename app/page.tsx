@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Hero from "@/components/Sections/Hero";
 import ImoveisDestacados from "@/components/Sections/ImoveisDestacados/ImoveisDestacados";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
@@ -8,8 +10,10 @@ export default function Home() {
     <>
       <Hero />
       <ImoveisDestacados />
-      <ZonasMaisDesejadas/>
-      <Testemunhos/>
+      <ZonasMaisDesejadas />
+      <Testemunhos />
+      <FaleConnosco />
+      <Footer />
     </>
   );
 }
