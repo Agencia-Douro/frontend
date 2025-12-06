@@ -142,7 +142,7 @@ export default function PropertiesPage() {
           <CollapsibleContent>
             <Card>
               <CardContent className="pt-6">
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 bg-white">
                   {/* Tipo de Propriedade */}
                   <div className="space-y-2">
                     <Label>Tipo de Imóvel</Label>

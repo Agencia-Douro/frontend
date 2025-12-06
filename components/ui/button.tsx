@@ -13,6 +13,7 @@ const buttonVariants = cva(
         gold: "button-14-semibold bg-gold hover:bg-gold-muted text-white",
         ghost: "button-14-medium text-black-muted",
         "icon-brown": "border border-brown hover:bg-brown",
+        outline: "button-14-semibold border border-brown text-brown hover:bg-brown hover:text-white",
       },
       size: {
         default: "px-3 py-2",

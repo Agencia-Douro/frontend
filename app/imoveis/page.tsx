@@ -69,7 +69,7 @@ function ImoveisContent() {
                                 <SelectTrigger id="tipo" name="tipo">
                                     <SelectValue placeholder="Mais recentes" />
                                 </SelectTrigger>
-                                <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                <SelectContent>
                                     <SelectItem value="mais-recentes">Mais recentes</SelectItem>
                                     <SelectItem value="mais antigos">Mais antigos</SelectItem>
                                     <SelectItem value="menor-preco">Menos preço</SelectItem>
@@ -106,7 +106,7 @@ function ImoveisContent() {
 
 export default function Imoveis() {
     return (
-        <Suspense fallback={<div>Carregando...</div>}>
+        <Suspense fallback={<div className="grid place-items-center h-screen">A carregar...</div>}>
             <ImoveisContent />
         </Suspense>
     );

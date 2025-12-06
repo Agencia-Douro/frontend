@@ -16,7 +16,7 @@ export default function AdminLayout({
 
   return (
     <AuthProvider>
-      <div className="antialiased bg-white min-h-screen">
+      <div className="antialiased bg-[#fafafa] min-h-screen">
         {isLoginPage ? (
           children
         ) : (
