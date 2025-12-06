@@ -26,19 +26,36 @@ export default function Sidebar() {
                             </svg>
                         </div>
                         <div className="space-y-3">
-                        <Label htmlFor="tipo">Localização</Label>
-                        <Select value="Selecione">
-                            <SelectTrigger id="tipo" name="tipo">
-                                <SelectValue placeholder="Selecione" />
-                            </SelectTrigger>
-                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                <SelectItem value="moradia">Moradia</SelectItem>
-                                <SelectItem value="apartamento">Apartamento</SelectItem>
-                                <SelectItem value="predio">Prédio</SelectItem>
-                                <SelectItem value="terreno">Terreno</SelectItem>
-                                <SelectItem value="escritorio">Escritório</SelectItem>
-                            </SelectContent>
-                        </Select>
+                            <div className="space-y-1">
+                                <Label htmlFor="tipo">Tipo de Imóvel</Label>
+                                <Select>
+                                    <SelectTrigger id="tipo" name="tipo">
+                                        <SelectValue placeholder="Selecione" />
+                                    </SelectTrigger>
+                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                        <SelectItem value="moradia">Moradia</SelectItem>
+                                        <SelectItem value="apartamento">Apartamento</SelectItem>
+                                        <SelectItem value="predio">Prédio</SelectItem>
+                                        <SelectItem value="terreno">Terreno</SelectItem>
+                                        <SelectItem value="escritorio">Escritório</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-1">
+                                <Label htmlFor="tipo">Estado do Imóvel</Label>
+                                <Select>
+                                    <SelectTrigger id="tipo" name="tipo">
+                                        <SelectValue placeholder="Selecione" />
+                                    </SelectTrigger>
+                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                        <SelectItem value="moradia">Moradia</SelectItem>
+                                        <SelectItem value="apartamento">Apartamento</SelectItem>
+                                        <SelectItem value="predio">Prédio</SelectItem>
+                                        <SelectItem value="terreno">Terreno</SelectItem>
+                                        <SelectItem value="escritorio">Escritório</SelectItem>
+                                    </SelectContent>
+                            </Select>
+                            </div>
                         </div>
                     </div>
                 </div>
