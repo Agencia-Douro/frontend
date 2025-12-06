@@ -1,3 +1,5 @@
+import { Toaster } from "@/components/ui/sonner"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -6,6 +8,7 @@ export default function RootLayout({
   return (
     <div className="antialiased bg-white min-h-screen">
       {children}
+      <Toaster />
     </div>
   );
 }

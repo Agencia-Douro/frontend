@@ -12,11 +12,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, X } from "lucide-react"
+import { toast } from "sonner"
 
 export default function CreatePropertyPage() {
   const router = useRouter()
   const queryClient = useQueryClient()
   const [selectedImages, setSelectedImages] = useState<File[]>([])
+  const [priceDisplay, setPriceDisplay] = useState("")
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const [formData, setFormData] = useState({
     reference: "",
@@ -46,15 +49,83 @@ export default function CreatePropertyPage() {
     status: "active",
   })
 
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value)
+  }
+
+  const parseCurrency = (value: string): number => {
+    const cleanedValue = value.replace(/[^\d]/g, '')
+    return cleanedValue ? parseInt(cleanedValue) : 0
+  }
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value
+    const numericValue = parseCurrency(inputValue)
+    updateField("price", numericValue)
+    setPriceDisplay(formatCurrency(numericValue))
+  }
+
+  const validateAreas = (field: string, value: number | null) => {
+    const newErrors = { ...errors }
+    const areas = { ...formData, [field]: value }
+
+    // Área construída não pode ser maior que área total
+    if (areas.builtArea && areas.totalArea && areas.builtArea > areas.totalArea) {
+      newErrors.builtArea = "Área construída não pode ser maior que área total"
+    } else {
+      delete newErrors.builtArea
+    }
+
+    // Área útil não pode ser maior que área construída ou total
+    if (areas.usefulArea) {
+      if (areas.builtArea && areas.usefulArea > areas.builtArea) {
+        newErrors.usefulArea = "Área útil não pode ser maior que área construída"
+      } else if (areas.totalArea && areas.usefulArea > areas.totalArea) {
+        newErrors.usefulArea = "Área útil não pode ser maior que área total"
+      } else {
+        delete newErrors.usefulArea
+      }
+    }
+
+    setErrors(newErrors)
+  }
+
+  const handleAreaChange = (field: string, value: string) => {
+    const numValue = value ? Number(value) : null
+    updateField(field, numValue)
+    validateAreas(field, numValue)
+  }
+
   const createMutation = useMutation({
     mutationFn: ({ data, images }: { data: any; images: File[] }) =>
       propertiesApi.create(data, images),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["properties"] })
+      toast.success("Propriedade criada com sucesso!")
       router.push(`/admin/properties/${data.id}`)
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Error creating property:", error)
+
+      // Extrair mensagem de erro do backend
+      const errorMessage = error?.message || "Erro ao criar propriedade"
+
+      // Se houver mensagens de erro mais detalhadas do backend
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message)
+      } else if (Array.isArray(error?.response?.data?.errors)) {
+        // Se o backend retornar um array de erros
+        error.response.data.errors.forEach((err: string) => {
+          toast.error(err)
+        })
+      } else {
+        toast.error(errorMessage)
+      }
     },
   })
 
@@ -75,6 +146,18 @@ export default function CreatePropertyPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validar se tem pelo menos uma imagem
+    if (selectedImages.length === 0) {
+      toast.error("A propriedade precisa ter pelo menos uma imagem")
+      return
+    }
+
+    // Validar se há erros de área
+    if (Object.keys(errors).length > 0) {
+      toast.error("Por favor, corrija os erros antes de continuar")
+      return
+    }
 
     createMutation.mutate({
       data: formData,
@@ -192,11 +275,24 @@ export default function CreatePropertyPage() {
 
               <div className="space-y-2">
                 <Label>Classe Energética</Label>
-                <Input
-                  placeholder="Ex: A+, A, B"
+                <Select
                   value={formData.energyClass}
-                  onChange={(e) => updateField("energyClass", e.target.value)}
-                />
+                  onValueChange={(value) => updateField("energyClass", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="A+">A+</SelectItem>
+                    <SelectItem value="A">A</SelectItem>
+                    <SelectItem value="B">B</SelectItem>
+                    <SelectItem value="B-">B-</SelectItem>
+                    <SelectItem value="C">C</SelectItem>
+                    <SelectItem value="D">D</SelectItem>
+                    <SelectItem value="E">E</SelectItem>
+                    <SelectItem value="F">F</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </CardContent>
@@ -212,10 +308,10 @@ export default function CreatePropertyPage() {
               <div className="space-y-2">
                 <Label>Preço (€) *</Label>
                 <Input
-                  type="number"
-                  placeholder="250000"
-                  value={formData.price}
-                  onChange={(e) => updateField("price", parseFloat(e.target.value))}
+                  type="text"
+                  placeholder="250.000 €"
+                  value={priceDisplay}
+                  onChange={handlePriceChange}
                 />
               </div>
 
@@ -244,7 +340,7 @@ export default function CreatePropertyPage() {
                   type="number"
                   placeholder="150"
                   value={formData.totalArea ?? ""}
-                  onChange={(e) => updateField("totalArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("totalArea", e.target.value)}
                 />
               </div>
 
@@ -254,8 +350,12 @@ export default function CreatePropertyPage() {
                   type="number"
                   placeholder="120"
                   value={formData.builtArea ?? ""}
-                  onChange={(e) => updateField("builtArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("builtArea", e.target.value)}
+                  className={errors.builtArea ? "border-red-500" : ""}
                 />
+                {errors.builtArea && (
+                  <p className="text-body-small text-red-500">{errors.builtArea}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -264,8 +364,12 @@ export default function CreatePropertyPage() {
                   type="number"
                   placeholder="100"
                   value={formData.usefulArea ?? ""}
-                  onChange={(e) => updateField("usefulArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("usefulArea", e.target.value)}
+                  className={errors.usefulArea ? "border-red-500" : ""}
                 />
+                {errors.usefulArea && (
+                  <p className="text-body-small text-red-500">{errors.usefulArea}</p>
+                )}
               </div>
             </div>
           </CardContent>

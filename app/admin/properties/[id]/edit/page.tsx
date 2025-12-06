@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, X } from "lucide-react"
 import { Property } from "@/types/property"
+import { toast } from "sonner"
 
 export default function EditPropertyPage() {
   const router = useRouter()
@@ -20,7 +21,26 @@ export default function EditPropertyPage() {
   const queryClient = useQueryClient()
   const propertyId = params.id as string
 
+  const formatCurrency = (value: string | number): string => {
+    const numValue = typeof value === 'string' ? parseFloat(value) : value
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(numValue)
+  }
+
+  const parseCurrency = (value: string): string => {
+    const cleanedValue = value.replace(/[^\d]/g, '')
+    return cleanedValue || "0"
+  }
+
   const [formData, setFormData] = useState<Property | null>(null)
+  const [imagesToRemove, setImagesToRemove] = useState<string[]>([])
+  const [selectedImages, setSelectedImages] = useState<File[]>([])
+  const [priceDisplay, setPriceDisplay] = useState("")
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const { data: property, isLoading } = useQuery({
     queryKey: ["property", propertyId],
@@ -30,21 +50,77 @@ export default function EditPropertyPage() {
   useEffect(() => {
     if (property) {
       setFormData(property)
+      setImagesToRemove([]) // Reset images to remove when property changes
+      setPriceDisplay(formatCurrency(property.price))
     }
   }, [property])
 
-  const [selectedImages, setSelectedImages] = useState<File[]>([])
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value
+    const stringValue = parseCurrency(inputValue)
+    updateField("price", stringValue)
+    setPriceDisplay(formatCurrency(stringValue))
+  }
+
+  const validateAreas = (field: string, value: number | null) => {
+    if (!formData) return
+
+    const newErrors = { ...errors }
+    const areas = { ...formData, [field]: value }
+
+    // Área construída não pode ser maior que área total
+    if (areas.builtArea && areas.totalArea && areas.builtArea > areas.totalArea) {
+      newErrors.builtArea = "Área construída não pode ser maior que área total"
+    } else {
+      delete newErrors.builtArea
+    }
+
+    // Área útil não pode ser maior que área construída ou total
+    if (areas.usefulArea) {
+      if (areas.builtArea && areas.usefulArea > areas.builtArea) {
+        newErrors.usefulArea = "Área útil não pode ser maior que área construída"
+      } else if (areas.totalArea && areas.usefulArea > areas.totalArea) {
+        newErrors.usefulArea = "Área útil não pode ser maior que área total"
+      } else {
+        delete newErrors.usefulArea
+      }
+    }
+
+    setErrors(newErrors)
+  }
+
+  const handleAreaChange = (field: keyof Property, value: string) => {
+    const numValue = value ? Number(value) : null
+    updateField(field, numValue)
+    validateAreas(field as string, numValue)
+  }
 
   const updateMutation = useMutation({
-    mutationFn: ({ data, images }: { data: any; images: File[] }) =>
-      propertiesApi.update(propertyId, data, images),
+    mutationFn: ({ data, images, imagesToRemove }: { data: any; images: File[]; imagesToRemove: string[] }) =>
+      propertiesApi.update(propertyId, data, images, imagesToRemove),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] })
       queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
+      toast.success("Propriedade atualizada com sucesso!")
       router.push(`/admin/properties/${propertyId}`)
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Error updating property:", error)
+
+      // Extrair mensagem de erro do backend
+      const errorMessage = error?.message || "Erro ao atualizar propriedade"
+
+      // Se houver mensagens de erro mais detalhadas do backend
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message)
+      } else if (Array.isArray(error?.response?.data?.errors)) {
+        // Se o backend retornar um array de erros
+        error.response.data.errors.forEach((err: string) => {
+          toast.error(err)
+        })
+      } else {
+        toast.error(errorMessage)
+      }
     },
   })
 
@@ -65,6 +141,7 @@ export default function EditPropertyPage() {
         ...formData,
         images: formData.images.filter((img) => img !== url)
       })
+      setImagesToRemove((prev) => [...prev, url])
     }
   }
 
@@ -72,9 +149,23 @@ export default function EditPropertyPage() {
     e.preventDefault()
     if (!formData) return
 
+    // Validar se tem pelo menos uma imagem (existente ou nova)
+    const totalImages = (formData.images?.length || 0) + selectedImages.length
+    if (totalImages === 0) {
+      toast.error("A propriedade precisa ter pelo menos uma imagem")
+      return
+    }
+
+    // Validar se há erros de área
+    if (Object.keys(errors).length > 0) {
+      toast.error("Por favor, corrija os erros antes de continuar")
+      return
+    }
+
     updateMutation.mutate({
       data: formData,
-      images: selectedImages
+      images: selectedImages,
+      imagesToRemove: imagesToRemove
     })
   }
 
@@ -237,10 +328,24 @@ export default function EditPropertyPage() {
 
               <div className="space-y-2">
                 <Label>Classe Energética</Label>
-                <Input
+                <Select
                   value={formData.energyClass || ""}
-                  onChange={(e) => updateField("energyClass", e.target.value)}
-                />
+                  onValueChange={(value) => updateField("energyClass", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="A+">A+</SelectItem>
+                    <SelectItem value="A">A</SelectItem>
+                    <SelectItem value="B">B</SelectItem>
+                    <SelectItem value="B-">B-</SelectItem>
+                    <SelectItem value="C">C</SelectItem>
+                    <SelectItem value="D">D</SelectItem>
+                    <SelectItem value="E">E</SelectItem>
+                    <SelectItem value="F">F</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </CardContent>
@@ -256,9 +361,10 @@ export default function EditPropertyPage() {
               <div className="space-y-2">
                 <Label>Preço (€) *</Label>
                 <Input
-                  type="number"
-                  value={formData.price}
-                  onChange={(e) => updateField("price", parseFloat(e.target.value))}
+                  type="text"
+                  placeholder="250.000 €"
+                  value={priceDisplay}
+                  onChange={handlePriceChange}
                 />
               </div>
 
@@ -285,7 +391,7 @@ export default function EditPropertyPage() {
                 <Input
                   type="number"
                   value={formData.totalArea ?? ""}
-                  onChange={(e) => updateField("totalArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("totalArea", e.target.value)}
                 />
               </div>
 
@@ -294,8 +400,12 @@ export default function EditPropertyPage() {
                 <Input
                   type="number"
                   value={formData.builtArea ?? ""}
-                  onChange={(e) => updateField("builtArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("builtArea", e.target.value)}
+                  className={errors.builtArea ? "border-red-500" : ""}
                 />
+                {errors.builtArea && (
+                  <p className="text-body-small text-red-500">{errors.builtArea}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -303,8 +413,12 @@ export default function EditPropertyPage() {
                 <Input
                   type="number"
                   value={formData.usefulArea ?? ""}
-                  onChange={(e) => updateField("usefulArea", e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => handleAreaChange("usefulArea", e.target.value)}
+                  className={errors.usefulArea ? "border-red-500" : ""}
                 />
+                {errors.usefulArea && (
+                  <p className="text-body-small text-red-500">{errors.usefulArea}</p>
+                )}
               </div>
             </div>
           </CardContent>

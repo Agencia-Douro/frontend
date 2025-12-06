@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from "next/image"
+import Image from "next/image"
 import Link from "next/link"
 
 interface CardProps {
@@ -6,7 +6,7 @@ interface CardProps {
     titulo: string
     localizacao: string
     preco: string
-    image: StaticImageData
+    image: string
 }
 
 export default function Card({ href, titulo, localizacao, preco, image }: CardProps) {

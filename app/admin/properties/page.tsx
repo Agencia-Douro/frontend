@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { DeletePropertyDialog } from "@/components/delete-property-dialog"
+import ImovelCard from "@/components/Sections/Imoveis/Card"
 import { Plus, Search, SlidersHorizontal, X } from "lucide-react"
 import {
   Collapsible,
@@ -312,66 +313,14 @@ export default function PropertiesPage() {
       {/* Grid de Propriedades */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {data?.data.map((property) => (
-          <Card key={property.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div
-                  className="flex-1 cursor-pointer"
-                  onClick={() => router.push(`/admin/properties/${property.id}`)}
-                >
-                  <CardTitle className="line-clamp-1">{property.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {property.description}
-                  </CardDescription>
-                </div>
-                <DeletePropertyDialog
-                  propertyId={property.id}
-                  propertyTitle={property.title}
-                />
-              </div>
-            </CardHeader>
-            <CardContent
-              className="cursor-pointer"
-              onClick={() => router.push(`/admin/properties/${property.id}`)}
-            >
-              <div className="space-y-2 text-body-small font-medium ">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Preço:</span>
-                  <span className="font-semibold">€{parseFloat(property.price).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tipo:</span>
-                  <span className="capitalize">{property.propertyType}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Área:</span>
-                  <span>{property.totalArea || property.builtArea || property.usefulArea || 'N/A'}m²</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Quartos:</span>
-                  <span>{property.bedrooms} | Banhos: {property.bathrooms}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Localização:</span>
-                  <span className="text-right line-clamp-1">
-                    {property.concelho}, {property.distrito}
-                  </span>
-                </div>
-                <div className="flex gap-2 mt-3">
-                  {property.hasOffice && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-xs">
-                      Escritório
-                    </span>
-                  )}
-                  {property.hasLaundry && (
-                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-md text-xs">
-                      Lavandaria
-                    </span>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <ImovelCard
+            href={`properties/${property.id}`}
+            image={property.images.at(0) as string}
+            localizacao={property.concelho + property.distrito}
+            preco={property.price}
+            titulo={property.title}
+            key={property.id}
+          />
         ))}
       </div>
 
