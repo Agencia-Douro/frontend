@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import Card from "@/components/Sections/Imoveis/Card";
@@ -8,7 +9,7 @@ import { propertiesApi, PropertyFilters } from "@/services/api";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-flat";
 
-export default function Imoveis() {
+function ImoveisContent() {
     const searchParams = useSearchParams();
 
     // Construir filtros a partir dos parâmetros da URL
@@ -100,5 +101,13 @@ export default function Imoveis() {
                 </div>
             </div>
         </section>
+    );
+}
+
+export default function Imoveis() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <ImoveisContent />
+        </Suspense>
     );
 }

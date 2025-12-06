@@ -56,7 +56,6 @@ export default function PropertyForm({
       concelho: "",
       address: "",
       paymentConditions: "",
-      features: [] as string[],
       status: "active",
       images: [] as string[],
     }
@@ -579,26 +578,6 @@ export default function PropertyForm({
           </div>
         </CardContent>
       </Card>
-
-      {/* Features */}
-      {!isEditMode && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Características Adicionais</CardTitle>
-            <CardDescription>
-              Uma característica por linha
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Textarea
-              placeholder="Ar condicionado&#10;Aquecimento central&#10;Varanda"
-              value={Array.isArray(formData.features) ? formData.features.join('\n') : ''}
-              onChange={(e) => updateField("features", e.target.value.split('\n').filter((f: string) => f.trim()))}
-              className="min-h-[120px]"
-            />
-          </CardContent>
-        </Card>
-      )}
 
       <div className="flex gap-4">
         {onCancel && (

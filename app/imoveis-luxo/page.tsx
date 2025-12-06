@@ -1,12 +1,13 @@
 "use client"
 
+import { Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useSearchParams } from "next/navigation"
 import Card from "@/components/Sections/Imoveis/Card"
 import Sidebar from "@/components/sidebar"
 import { propertiesApi, PropertyFilters } from "@/services/api"
 
-export default function Imoveis() {
+function ImoveisLuxoContent() {
     const searchParams = useSearchParams()
 
     // Construir filtros a partir dos parâmetros da URL + filtro fixo de preço mínimo 800k
@@ -34,10 +35,10 @@ export default function Imoveis() {
     })
 
     return (
-        <section className="h-[calc(100vh-73px)]">
-            <div className="container flex divide-x divide-[#EAE6DF] h-full">
+        <section>
+            <div className="container flex divide-x divide-[#EAE6DF] h-full overflow-hidden">
                 <Sidebar />
-                <div className="border-r border-[#EAE6DF] bg-deaf">
+                <div className="border-r border-[#EAE6DF] bg-deaf overflow-y-auto flex-1">
                     <div></div>
                     <div className="grid grid-cols-3 gap-4 p-4">
                         {isLoading ? (
@@ -62,5 +63,13 @@ export default function Imoveis() {
                 </div>
             </div>
         </section>
+    )
+}
+
+export default function Imoveis() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <ImoveisLuxoContent />
+        </Suspense>
     )
 }
