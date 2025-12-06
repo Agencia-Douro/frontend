@@ -782,7 +782,7 @@ export default function PropertyForm({
                         <Button
                           type="button"
                           variant="brown"
-                          size="sm"
+                          size="default"
                           onClick={() => deleteExistingSection(section.id)}
                           disabled={loadingDeleteSection === section.id}
                         >

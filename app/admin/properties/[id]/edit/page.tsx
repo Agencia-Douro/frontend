@@ -21,8 +21,8 @@ export default function EditPropertyPage() {
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ data, images, imagesToRemove }: { data: any; images: File[]; imagesToRemove: string[] }) =>
-      propertiesApi.update(propertyId, data, images, imagesToRemove),
+    mutationFn: ({ data, images }: { data: any; images: File[]; imagesToRemove: string[] }) =>
+      propertiesApi.update(propertyId, data, images),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] })
       queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
