@@ -15,6 +15,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { ArrowLeft, MapPin, Bed, Bath, Car, Ruler, Calendar, Trash2, Pencil, Star } from "lucide-react"
+import { formatPriceNumber, translatePropertyStatus } from "@/lib/currency"
 
 export default function PropertyDetailsPage() {
   const params = useParams()
@@ -167,9 +168,11 @@ export default function PropertyDetailsPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-primary">
-                    €{parseFloat(property.price).toLocaleString()}
+                    {formatPriceNumber(property.price)} €
                   </p>
-                  <p className="text-body-small font-medium text-muted-foreground capitalize">{property.status}</p>
+                  <p className="text-body-small font-medium text-muted-foreground">
+                    {translatePropertyStatus(property.status)}
+                  </p>
                 </div>
               </div>
             </CardHeader>
