@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,24 +14,31 @@ export async function POST(request: NextRequest) {
     }
 
     // Enviar para o HubSpot
-    await axios.post(
+    const response = await fetch(
       "https://api.hubapi.com/crm/v3/objects/contacts",
       {
-        properties: {
-          email: email,
-          firstname: nome,
-          phone: telefone,
-          message: mensagem,
-          hs_marketable_status: aceitaMarketing ? "true" : "false",
-        },
-      },
-      {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.HUBSPOT_TOKEN}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          properties: {
+            email: email,
+            firstname: nome,
+            phone: telefone,
+            message: mensagem,
+            hs_marketable_status: aceitaMarketing ? "true" : "false",
+          },
+        }),
       }
     );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error("Erro ao enviar contato para HubSpot:", errorData);
+      throw new Error("Erro na requisição para HubSpot");
+    }
 
     return NextResponse.json(
       { message: "Contato enviado com sucesso!" },
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error(
       "Erro ao enviar contato:",
-      error.response?.data || error.message
+      error.message
     );
 
     return NextResponse.json(
