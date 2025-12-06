@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 
 interface AuthContextType {
   isAuthenticated: boolean
+  isLoading: boolean
   login: (email: string, password: string) => boolean
   logout: () => void
 }
@@ -13,12 +14,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
     // Verificar se o usuário está autenticado ao carregar a página
     const auth = localStorage.getItem("admin-authenticated")
     setIsAuthenticated(auth === "true")
+    setIsLoading(false)
   }, [])
 
   const login = (email: string, password: string) => {
@@ -38,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
