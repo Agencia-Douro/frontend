@@ -37,7 +37,7 @@ function ImoveisLuxoContent() {
     return (
         <section>
             <div className="container flex divide-x divide-[#EAE6DF] h-full overflow-hidden">
-                <Sidebar />
+                <Sidebar basePath="/imoveis-luxo" />
                 <div className="border-r border-[#EAE6DF] bg-deaf overflow-y-auto flex-1">
                     <div></div>
                     <div className="grid grid-cols-3 gap-4 p-4">
@@ -51,7 +51,7 @@ function ImoveisLuxoContent() {
                             data.data.map((property) => (
                                 <Card
                                     key={property.id}
-                                    image={property.images[0] || "/placeholder.jpg"}
+                                    image={property.image || "/placeholder.jpg"}
                                     href={`/imoveis/${property.id}`}
                                     titulo={property.title}
                                     localizacao={`${property.concelho}, ${property.distrito}`}

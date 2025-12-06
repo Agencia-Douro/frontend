@@ -16,19 +16,6 @@ export default function Footer() {
                             <h2 className="text-2xl font-light tracking-wider">DOURO</h2>
                             <p className="text-sm italic mt-1">Imobiliária</p>
                         </div>
-
-                        {/* Seletor de Idioma */}
-                        <div className="inline-flex items-center gap-2 bg-gold text-black px-3 py-1.5 rounded cursor-pointer">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="10" cy="10" r="9" fill="#FF0000"/>
-                                <circle cx="10" cy="10" r="6" fill="#FFD700"/>
-                                <circle cx="10" cy="10" r="3" fill="#00FF00"/>
-                            </svg>
-                            <span className="text-sm font-medium">Português</span>
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                        </div>
                     </div>
 
                     {/* Coluna 1 */}

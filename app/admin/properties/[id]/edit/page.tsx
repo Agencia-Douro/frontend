@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import PropertyForm from "@/components/PropertyForm"
+import { Property } from "@/types/property"
 
 export default function EditPropertyPage() {
   const router = useRouter()
@@ -48,18 +49,32 @@ export default function EditPropertyPage() {
     },
   })
 
-  const handleSubmit = (data: any, images: File[], imagesToRemove?: string[]) => {
-    // Validar se tem pelo menos uma imagem (existente ou nova)
-    const totalImages = (data.images?.length || 0) + images.length
-    if (totalImages === 0) {
-      toast.error("A propriedade precisa ter pelo menos uma imagem")
-      return
+  const handleSubmit = async (data: any, images: File[], imagesToRemove?: string[]): Promise<Property> => {
+    // Validar se tem exatamente uma imagem (existente ou nova)
+    const hasExistingImage = data.image && data.image.length > 0
+    const hasNewImage = images.length > 0
+
+    if (!hasExistingImage && !hasNewImage) {
+      toast.error("A propriedade precisa ter uma imagem principal")
+      throw new Error("Imagem principal obrigatória")
     }
 
-    updateMutation.mutate({
-      data,
-      images,
-      imagesToRemove: imagesToRemove || []
+    return new Promise<Property>((resolve, reject) => {
+      updateMutation.mutate(
+        {
+          data,
+          images,
+          imagesToRemove: imagesToRemove || []
+        },
+        {
+          onSuccess: (property) => {
+            resolve(property)
+          },
+          onError: (error) => {
+            reject(error)
+          },
+        }
+      )
     })
   }
 
@@ -100,6 +115,10 @@ export default function EditPropertyPage() {
         submitButtonText="Atualizar Propriedade"
         cancelButtonText="Cancelar"
         onCancel={() => router.push(`/admin/properties/${propertyId}`)}
+        onSuccess={() => {
+          // Invalidar cache da propriedade para recarregar com as novas seções
+          queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
+        }}
       />
     </div>
   )

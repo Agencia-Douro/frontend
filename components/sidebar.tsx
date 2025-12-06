@@ -1,14 +1,18 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
 
-export default function Sidebar() {
+interface SidebarProps {
+  basePath?: string
+}
+
+export default function Sidebar({ basePath = "/imoveis" }: SidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -46,9 +50,8 @@ export default function Sidebar() {
     )
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
+  // Auto-apply filters when any field changes
+  useEffect(() => {
     const params = new URLSearchParams()
 
     if (transactionType) params.set("transactionType", transactionType)
@@ -65,8 +68,24 @@ export default function Sidebar() {
     if (bedrooms.length > 0) params.set("bedrooms", bedrooms.join(","))
     if (bathrooms.length > 0) params.set("bathrooms", bathrooms.join(","))
 
-    router.push(`/imoveis?${params.toString()}`)
-  }
+    router.push(`${basePath}?${params.toString()}`)
+  }, [
+    transactionType,
+    isEmpreendimento,
+    propertyType,
+    propertyState,
+    energyClass,
+    distrito,
+    concelho,
+    minPrice,
+    maxPrice,
+    minUsefulArea,
+    maxUsefulArea,
+    bedrooms,
+    bathrooms,
+    router,
+    basePath,
+  ])
 
   const handleReset = () => {
     setTransactionType("comprar")
@@ -82,12 +101,12 @@ export default function Sidebar() {
     setMaxUsefulArea("")
     setBedrooms([])
     setBathrooms([])
-    router.push("/imoveis")
+    router.push(basePath)
   }
 
   return (
     <aside className="w-[300px] border-x border-[#EAE6DF] h-full bg-deaf">
-      <form className="flex flex-col h-full" onSubmit={handleSubmit}>
+      <div className="flex flex-col h-full">
         <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="p-4 border-b border-[#EAE6DF]">
             <div className="flex">
@@ -95,8 +114,8 @@ export default function Sidebar() {
                 type="button"
                 onClick={() => setTransactionType("comprar")}
                 className={`grow body-14-medium py-1.5 ${transactionType === "comprar"
-                    ? "text-white bg-brown"
-                    : "text-brown bg-muted"
+                  ? "text-white bg-brown"
+                  : "text-brown bg-muted"
                   }`}
               >
                 Comprar
@@ -105,8 +124,8 @@ export default function Sidebar() {
                 type="button"
                 onClick={() => setTransactionType("arrendar")}
                 className={`grow body-14-medium py-1.5 ${transactionType === "arrendar"
-                    ? "text-white bg-brown"
-                    : "text-brown bg-muted"
+                  ? "text-white bg-brown"
+                  : "text-brown bg-muted"
                   }`}
               >
                 Arrendar
@@ -115,8 +134,8 @@ export default function Sidebar() {
                 type="button"
                 onClick={() => setTransactionType("vender")}
                 className={`grow body-14-medium py-1.5 ${transactionType === "vender"
-                    ? "text-white bg-brown"
-                    : "text-brown bg-muted"
+                  ? "text-white bg-brown"
+                  : "text-brown bg-muted"
                   }`}
               >
                 Vender
@@ -379,18 +398,12 @@ export default function Sidebar() {
           <button
             type="button"
             onClick={handleReset}
-            className="shadow-pretty grow flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer"
+            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer"
           >
             Limpar
           </button>
-          <button
-            type="submit"
-            className="grow flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-brown hover:bg-brown-muted text-white px-3 py-2 cursor-pointer"
-          >
-            Filtrar
-          </button>
         </div>
-      </form>
+      </div>
     </aside>
   )
 }

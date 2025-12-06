@@ -8,17 +8,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { X } from "lucide-react"
-import { Property } from "@/types/property"
+import { X, Plus, Trash2 } from "lucide-react"
+import { Property, PropertyImageSection } from "@/types/property"
 import { formatCurrency, parseCurrency } from "@/lib/currency"
+import { imageSectionsApi } from "@/services/api"
+import { toast } from "sonner"
 
 interface PropertyFormProps {
   initialData?: Property | null
-  onSubmit: (data: any, images: File[], imagesToRemove?: string[]) => void
+  onSubmit: (data: any, images: File[], imagesToRemove?: string[]) => Promise<Property> | void
   isLoading?: boolean
   submitButtonText?: string
   cancelButtonText?: string
   onCancel?: () => void
+  onSuccess?: () => void
 }
 
 export default function PropertyForm({
@@ -28,6 +31,7 @@ export default function PropertyForm({
   submitButtonText = "Salvar",
   cancelButtonText = "Cancelar",
   onCancel,
+  onSuccess,
 }: PropertyFormProps) {
   const isEditMode = !!initialData
 
@@ -57,21 +61,50 @@ export default function PropertyForm({
       address: "",
       paymentConditions: "",
       status: "active",
-      images: [] as string[],
+      image: "",
     }
   )
 
-  const [selectedImages, setSelectedImages] = useState<File[]>([])
-  const [imagesToRemove, setImagesToRemove] = useState<string[]>([])
+  const [selectedImage, setSelectedImage] = useState<File | null>(null)
+  const [imageToRemove, setImageToRemove] = useState<string>("")
   const [priceDisplay, setPriceDisplay] = useState("")
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  // Estados para Image Sections
+  const [imageSections, setImageSections] = useState<PropertyImageSection[]>([])
+  const [newSections, setNewSections] = useState<Array<{
+    sectionName: string
+    images: File[]
+    displayOrder: number
+  }>>([])
+  const [isLoadingSections, setIsLoadingSections] = useState(false)
+  const [loadingDeleteSection, setLoadingDeleteSection] = useState<string | null>(null)
+  const [loadingRemoveImage, setLoadingRemoveImage] = useState<string | null>(null)
+  const [loadingAddImage, setLoadingAddImage] = useState<string | null>(null)
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
       setPriceDisplay(formatCurrency(initialData.price))
+
+      // Carregar seções de imagens se estiver no modo de edição
+      if (initialData.id) {
+        loadImageSections(initialData.id)
+      }
     }
   }, [initialData])
+
+  const loadImageSections = async (propertyId: string) => {
+    try {
+      setIsLoadingSections(true)
+      const sections = await imageSectionsApi.getAll(propertyId)
+      setImageSections(sections)
+    } catch (error) {
+      console.error("Erro ao carregar seções de imagens:", error)
+    } finally {
+      setIsLoadingSections(false)
+    }
+  }
 
   const updateField = (field: string, value: any) => {
     setFormData({ ...formData, [field]: value })
@@ -115,26 +148,152 @@ export default function PropertyForm({
     validateAreas(field, numValue)
   }
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files)
-      setSelectedImages((prev) => [...prev, ...filesArray])
+  const handleImageChange = (file: File) => {
+    setSelectedImage(file)
+  }
+
+  const removeNewImage = () => {
+    setSelectedImage(null)
+  }
+
+  const removeExistingImage = () => {
+    setImageToRemove(formData.image)
+    setFormData({
+      ...formData,
+      image: ""
+    })
+  }
+
+  // Funções para gerenciar seções de imagens
+  const suggestedSections = [
+    'Cozinha',
+    'Sala de Estar',
+    'Sala de Jantar',
+    'Quartos',
+    'Quarto Principal',
+    'Banheiros',
+    'Escritório',
+    'Lavandaria',
+    'Garagem',
+    'Exterior',
+    'Jardim',
+    'Piscina',
+    'Varanda',
+    'Vista',
+    'Área Comum',
+    'Ginásio',
+    'Outros'
+  ]
+
+  const addNewSection = () => {
+    setNewSections([
+      ...newSections,
+      {
+        sectionName: '',
+        images: [],
+        displayOrder: Math.max(0, (imageSections.length || 0) + newSections.length)
+      }
+    ])
+  }
+
+  const updateNewSection = (index: number, field: string, value: any) => {
+    const updated = [...newSections]
+    updated[index] = { ...updated[index], [field]: value }
+    setNewSections(updated)
+  }
+
+  const addImagesToNewSection = (index: number, files: File[]) => {
+    const updated = [...newSections]
+    updated[index].images = [...updated[index].images, ...files]
+    setNewSections(updated)
+  }
+
+  const removeImageFromNewSection = (sectionIndex: number, imageIndex: number) => {
+    const updated = [...newSections]
+    updated[sectionIndex].images = updated[sectionIndex].images.filter((_, i) => i !== imageIndex)
+    setNewSections(updated)
+  }
+
+  const removeNewSection = (index: number) => {
+    setNewSections(newSections.filter((_, i) => i !== index))
+  }
+
+  const deleteExistingSection = async (sectionId: string) => {
+    try {
+      setLoadingDeleteSection(sectionId)
+      await imageSectionsApi.delete(sectionId)
+      setImageSections(imageSections.filter((s) => s.id !== sectionId))
+      toast.success("Seção deletada com sucesso")
+    } catch (error) {
+      toast.error("Erro ao deletar seção")
+    } finally {
+      setLoadingDeleteSection(null)
     }
   }
 
-  const removeNewImage = (index: number) => {
-    setSelectedImages((prev) => prev.filter((_, i) => i !== index))
+  const addImageToExistingSection = async (sectionId: string, files: File[]) => {
+    try {
+      setLoadingAddImage(sectionId)
+      const section = imageSections.find((s) => s.id === sectionId)
+      if (!section) return
+
+      await imageSectionsApi.update(sectionId, {
+        imagesToAdd: files
+      })
+
+      // Recarregar seções
+      if (initialData?.id) {
+        await loadImageSections(initialData.id)
+      }
+      toast.success("Imagens adicionadas com sucesso")
+    } catch (error) {
+      toast.error("Erro ao adicionar imagens")
+    } finally {
+      setLoadingAddImage(null)
+    }
   }
 
-  const removeExistingImage = (url: string) => {
-    setFormData({
-      ...formData,
-      images: formData.images.filter((img) => img !== url)
-    })
-    setImagesToRemove((prev) => [...prev, url])
+  const removeImageFromExistingSection = async (sectionId: string, imageUrl: string) => {
+    try {
+      setLoadingRemoveImage(`${sectionId}-${imageUrl}`)
+      await imageSectionsApi.update(sectionId, {
+        imagesToRemove: [imageUrl]
+      })
+
+      // Recarregar seções
+      if (initialData?.id) {
+        await loadImageSections(initialData.id)
+      }
+      toast.success("Imagem removida com sucesso")
+    } catch (error) {
+      toast.error("Erro ao remover imagem")
+    } finally {
+      setLoadingRemoveImage(null)
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const saveNewSections = async (propertyId: string) => {
+    for (const section of newSections) {
+      if (!section.sectionName) continue
+
+      try {
+        // Garantir que displayOrder seja um número inteiro >= 0
+        const displayOrder = Math.max(0, Math.floor(section.displayOrder || 0))
+
+        await imageSectionsApi.create(
+          propertyId,
+          section.sectionName,
+          displayOrder,
+          section.images
+        )
+      } catch (error) {
+        console.error(`Erro ao criar seção ${section.sectionName}:`, error)
+        toast.error(`Erro ao criar seção ${section.sectionName}`)
+      }
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Validar se há erros de área
@@ -142,7 +301,25 @@ export default function PropertyForm({
       return
     }
 
-    onSubmit(formData, selectedImages, imagesToRemove)
+    try {
+      const images = selectedImage ? [selectedImage] : []
+      const imagesToRemove = imageToRemove ? [imageToRemove] : []
+
+      const result = await onSubmit(formData, images, imagesToRemove)
+
+      // Se retornar uma propriedade e houver novas seções, criar as seções
+      if (result && result.id && newSections.length > 0) {
+        await saveNewSections(result.id)
+        setNewSections([]) // Limpar seções criadas
+
+        // Chamar callback de sucesso para invalidar cache
+        if (onSuccess) {
+          onSuccess()
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao salvar propriedade:", error)
+    }
   }
 
   return (
@@ -507,75 +684,260 @@ export default function PropertyForm({
         </CardContent>
       </Card>
 
-      {/* Imagens */}
+      {/* Imagem Principal */}
       <Card>
         <CardHeader>
-          <CardTitle>Imagens *</CardTitle>
+          <CardTitle>Imagem Principal *</CardTitle>
           <CardDescription>
-            {isEditMode ? "Gerencie as fotos da propriedade" : "Adicione fotos da propriedade (mínimo 1)"}
+            {isEditMode ? "Gerencie a foto de capa da propriedade" : "Adicione a foto de capa da propriedade"}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {isEditMode && formData.images && formData.images.length > 0 && (
+            {isEditMode && formData.image && (
               <div>
-                <h3 className="text-body-small font-medium mb-2">Imagens Atuais</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {formData.images.map((url, index) => (
-                    <div key={index} className="relative group">
-                      <img
-                        src={url}
-                        alt={`Existing ${index + 1}`}
-                        className="w-full h-32 object-cover rounded"
-                      />
-                      <Button
-                        type="button"
-                        variant="brown"
-                        size="icon"
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => removeExistingImage(url)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
+                <h3 className="text-body-small font-medium mb-2">Imagem Atual</h3>
+                <div className="relative group w-fit">
+                  <img
+                    src={formData.image}
+                    alt="Imagem principal"
+                    className="w-64 h-48 object-cover rounded"
+                  />
+                  <Button
+                    type="button"
+                    variant="brown"
+                    size="icon"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={removeExistingImage}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             )}
 
-            <div>
-              <h3 className="text-body-small font-medium mb-2">
-                {isEditMode ? "Adicionar Novas Imagens" : "Imagens"}
-              </h3>
-              <Input type="file" accept="image/*" multiple onChange={handleImageChange} />
-            </div>
-
-            {selectedImages.length > 0 && (
+            {(!isEditMode || !formData.image) && !selectedImage && (
               <div>
-                <h3 className="text-body-small font-medium mb-2">Novas Imagens</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {selectedImages.map((file, index) => (
-                    <div key={index} className="relative group">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`New ${index + 1}`}
-                        className="w-full h-32 object-cover rounded"
-                      />
-                      <Button
-                        type="button"
-                        variant="brown"
-                        size="icon"
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => removeNewImage(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
+                <h3 className="text-body-small font-medium mb-2">
+                  {isEditMode ? "Adicionar Nova Imagem" : "Imagem"}
+                </h3>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      handleImageChange(e.target.files[0])
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+            {selectedImage && (
+              <div>
+                <h3 className="text-body-small font-medium mb-2">Nova Imagem</h3>
+                <div className="relative group w-fit">
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Nova imagem principal"
+                    className="w-64 h-48 object-cover rounded"
+                  />
+                  <Button
+                    type="button"
+                    variant="brown"
+                    size="icon"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={removeNewImage}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             )}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Galeria Organizada por Seções */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Galeria Organizada por Seções</CardTitle>
+          <CardDescription>
+            Organize as imagens por ambientes (ex: Cozinha, Sala, Quartos, etc.)
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {isLoadingSections ? (
+            <p className="text-muted-foreground">Carregando seções...</p>
+          ) : (
+            <>
+              {/* Seções Existentes (apenas no modo edição) */}
+              {isEditMode && imageSections.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-body-small font-medium">Seções Existentes</h3>
+                  {imageSections.map((section) => (
+                    <div key={section.id} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium">{section.sectionName}</h4>
+                        <Button
+                          type="button"
+                          variant="brown"
+                          size="sm"
+                          onClick={() => deleteExistingSection(section.id)}
+                          disabled={loadingDeleteSection === section.id}
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          {loadingDeleteSection === section.id ? "Deletando..." : "Deletar Seção"}
+                        </Button>
+                      </div>
+
+                      {section.images.length > 0 && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          {section.images.map((url, imgIndex) => (
+                            <div key={imgIndex} className="relative group">
+                              <img
+                                src={url}
+                                alt={`${section.sectionName} ${imgIndex + 1}`}
+                                className="w-full h-32 object-cover rounded"
+                              />
+                              <Button
+                                type="button"
+                                variant="brown"
+                                size="icon"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() => removeImageFromExistingSection(section.id, url)}
+                                disabled={loadingRemoveImage === `${section.id}-${url}`}
+                              >
+                                {loadingRemoveImage === `${section.id}-${url}` ? (
+                                  <span className="animate-spin">⏳</span>
+                                ) : (
+                                  <X className="h-4 w-4" />
+                                )}
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div>
+                        <Label htmlFor={`section-${section.id}-images`} className="text-sm">
+                          {loadingAddImage === section.id ? "Adicionando imagens..." : "Adicionar Imagens"}
+                        </Label>
+                        <Input
+                          id={`section-${section.id}-images`}
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          disabled={loadingAddImage === section.id}
+                          onChange={(e) => {
+                            if (e.target.files) {
+                              const files = Array.from(e.target.files)
+                              addImageToExistingSection(section.id, files)
+                              e.target.value = ''
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Novas Seções */}
+              {newSections.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-body-small font-medium">Novas Seções</h3>
+                  {newSections.map((section, index) => (
+                    <div key={index} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex gap-4 items-start">
+                        <div className="flex-1 space-y-2">
+                          <Label htmlFor={`new-section-${index}-name`}>Nome da Seção *</Label>
+                          <Select
+                            value={section.sectionName}
+                            onValueChange={(value) => updateNewSection(index, 'sectionName', value)}
+                          >
+                            <SelectTrigger id={`new-section-${index}-name`}>
+                              <SelectValue placeholder="Selecione ou digite" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {suggestedSections.map((name) => (
+                                <SelectItem key={name} value={name}>
+                                  {name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <Button
+                          type="button"
+                          variant="brown"
+                          size="icon"
+                          onClick={() => removeNewSection(index)}
+                          className="mt-8"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+
+                      {section.images.length > 0 && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          {section.images.map((file, imgIndex) => (
+                            <div key={imgIndex} className="relative group">
+                              <img
+                                src={URL.createObjectURL(file)}
+                                alt={`${section.sectionName} ${imgIndex + 1}`}
+                                className="w-full h-32 object-cover rounded"
+                              />
+                              <Button
+                                type="button"
+                                variant="brown"
+                                size="icon"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() => removeImageFromNewSection(index, imgIndex)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div>
+                        <Label htmlFor={`new-section-${index}-images`} className="text-sm">
+                          Adicionar Imagens
+                        </Label>
+                        <Input
+                          id={`new-section-${index}-images`}
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={(e) => {
+                            if (e.target.files) {
+                              const files = Array.from(e.target.files)
+                              addImagesToNewSection(index, files)
+                              e.target.value = ''
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Botão para adicionar nova seção */}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={addNewSection}
+                className="w-full"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Adicionar Seção
+              </Button>
+            </>
+          )}
         </CardContent>
       </Card>
 

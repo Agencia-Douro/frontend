@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import PropertyForm from "@/components/PropertyForm"
+import { Property } from "@/types/property"
 
 export default function CreatePropertyPage() {
   const router = useRouter()
@@ -40,16 +41,28 @@ export default function CreatePropertyPage() {
     },
   })
 
-  const handleSubmit = (data: any, images: File[]) => {
-    // Validar se tem pelo menos uma imagem
+  const handleSubmit = async (data: any, images: File[]): Promise<Property> => {
+    // Validar se tem exatamente uma imagem
     if (images.length === 0) {
-      toast.error("A propriedade precisa ter pelo menos uma imagem")
-      return
+      toast.error("A propriedade precisa ter uma imagem principal")
+      throw new Error("Imagem principal obrigatória")
     }
 
-    createMutation.mutate({
-      data,
-      images,
+    return new Promise<Property>((resolve, reject) => {
+      createMutation.mutate(
+        {
+          data,
+          images,
+        },
+        {
+          onSuccess: (property) => {
+            resolve(property)
+          },
+          onError: (error) => {
+            reject(error)
+          },
+        }
+      )
     })
   }
 

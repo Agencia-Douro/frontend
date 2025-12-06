@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Card from "@/components/Sections/Imoveis/Card";
 import Sidebar from "@/components/sidebar";
 import { propertiesApi, PropertyFilters } from "@/services/api";
@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 function ImoveisContent() {
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     // Construir filtros a partir dos parâmetros da URL
     const filters: PropertyFilters = {
@@ -42,6 +43,37 @@ function ImoveisContent() {
         queryFn: () => propertiesApi.getAll(filters),
     });
 
+    const currentPage = filters.page || 1;
+    const itemsPerPage = filters.limit || 12;
+    const totalItems = data?.total || 0;
+    const totalPages = data?.totalPages || 1;
+
+    // Calcular o range de itens exibidos
+    const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+    const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+    const handlePageChange = (newPage: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", newPage.toString());
+        router.push(`/imoveis?${params.toString()}`);
+    };
+
+    const handleSortChange = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        // Mapear valores do select para sortBy da API
+        const sortMap: { [key: string]: string } = {
+            "mais-recentes": "-createdAt",
+            "mais-antigos": "createdAt",
+            "menor-preco": "price",
+            "maior-preco": "-price",
+        };
+
+        params.set("sortBy", sortMap[value] || "-createdAt");
+        params.delete("page"); // Reset para página 1 ao mudar ordenação
+        router.push(`/imoveis?${params.toString()}`);
+    };
+
     return (
         <section>
             <div className="container flex divide-x divide-[#EAE6DF] h-full overflow-hidden">
@@ -49,30 +81,38 @@ function ImoveisContent() {
                 <div className="border-r border-[#EAE6DF] bg-deaf">
                     <div className="px-6 py-4 flex justify-between border-b border-[#EAE6DF]">
                         <div className="flex items-center gap-4">
-                            <p><span>1 - 20</span> de <span>125</span> imóveis </p>
+                            <p><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
                             <div className="bg-white shadow-pretty divide-x divide-muted">
-                                <button className="cursor-pointer p-1.5 hover:bg-deaf">
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="cursor-pointer p-1.5 hover:bg-deaf disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-black-grey">
-                                        <path d="M8.33333 4.79163L3.125 9.99996L8.33333 15.2083M3.75 9.99996H16.875" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.33333 4.79163L3.125 9.99996L8.33333 15.2083M3.75 9.99996H16.875" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </button>
-                                <button className="cursor-pointer p-1.5 hover:bg-deaf">
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="cursor-pointer p-1.5 hover:bg-deaf disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-black-muted">
-                                        <path d="M11.6667 4.79163L16.875 9.99996L11.6667 15.2083M16.25 9.99996H3.125" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M11.6667 4.79163L16.875 9.99996L11.6667 15.2083M16.25 9.99996H3.125" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
                             <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">Ordenar por:</Label>
-                            <Select>
+                            <Select value={filters.sortBy === "createdAt" ? "mais-antigos" : filters.sortBy === "price" ? "menor-preco" : filters.sortBy === "-price" ? "maior-preco" : "mais-recentes"} onValueChange={handleSortChange}>
                                 <SelectTrigger id="tipo" name="tipo">
                                     <SelectValue placeholder="Mais recentes" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="mais-recentes">Mais recentes</SelectItem>
-                                    <SelectItem value="mais antigos">Mais antigos</SelectItem>
-                                    <SelectItem value="menor-preco">Menos preço</SelectItem>
+                                    <SelectItem value="mais-antigos">Mais antigos</SelectItem>
+                                    <SelectItem value="menor-preco">Menor preço</SelectItem>
                                     <SelectItem value="maior-preco">Maior preço</SelectItem>
                                 </SelectContent>
                             </Select>
@@ -89,7 +129,7 @@ function ImoveisContent() {
                             data.data.map((property) => (
                                 <Card
                                     key={property.id}
-                                    image={property.images[0] || "/placeholder.jpg"}
+                                    image={property.image || "/placeholder.jpg"}
                                     href={`/imoveis/${property.id}`}
                                     titulo={property.title}
                                     localizacao={`${property.concelho}, ${property.distrito}`}

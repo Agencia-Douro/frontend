@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 export const FaleConnosco = () => {
     const [formData, setFormData] = useState({
@@ -19,25 +20,31 @@ export const FaleConnosco = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        const res = await fetch("/api/contato", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        })
+        const toastId = toast.loading("Enviando mensagem...")
 
-        const data = await res.json()
-
-        if (res.ok) {
-            alert("Mensagem enviada com sucesso!")
-            setFormData({
-                nome: "",
-                telefone: "",
-                email: "",
-                mensagem: "",
-                aceitaMarketing: false,
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
             })
-        } else {
-            alert("Erro: " + data.error)
+
+            const data = await res.json()
+
+            if (res.ok) {
+                toast.success("Mensagem enviada com sucesso!", { id: toastId })
+                setFormData({
+                    nome: "",
+                    telefone: "",
+                    email: "",
+                    mensagem: "",
+                    aceitaMarketing: false,
+                })
+            } else {
+                toast.error(data.error || "Erro ao enviar mensagem", { id: toastId })
+            }
+        } catch (error) {
+            toast.error("Erro ao enviar mensagem. Tente novamente.", { id: toastId })
         }
     }
 

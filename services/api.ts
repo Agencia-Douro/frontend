@@ -1,4 +1,8 @@
-import { PropertiesResponse, Property } from "@/types/property";
+import {
+  PropertiesResponse,
+  Property,
+  PropertyImageSection,
+} from "@/types/property";
 
 const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
 // const API_BASE_URL = "http://localhost:3008";
@@ -122,18 +126,9 @@ export const propertiesApi = {
     if (data.paymentConditions)
       formData.append("paymentConditions", data.paymentConditions);
 
-    // Arrays
-    if (data.images && data.images.length > 0) {
-      data.images.forEach((image) => {
-        formData.append("images[]", image);
-      });
-    }
-
-    // Adicionar imagens se existirem
+    // Adicionar imagem se existir
     if (images && images.length > 0) {
-      images.forEach((image) => {
-        formData.append("images", image);
-      });
+      formData.append("image", images[0]);
     }
 
     const response = await fetch(`${API_BASE_URL}/properties`, {
@@ -142,7 +137,10 @@ export const propertiesApi = {
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao criar propriedade");
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar propriedade (${response.status})`;
+      throw new Error(errorMessage);
     }
 
     return response.json();
@@ -151,8 +149,7 @@ export const propertiesApi = {
   update: async (
     id: string,
     data: Property,
-    imagesToAdd?: File[],
-    imagesToRemove?: string[]
+    imagesToAdd?: File[]
   ): Promise<Property> => {
     const formData = new FormData();
 
@@ -204,18 +201,9 @@ export const propertiesApi = {
     if (data.paymentConditions)
       formData.append("paymentConditions", data.paymentConditions);
 
-    // Adicionar novas imagens
+    // Adicionar nova imagem (substitui a existente)
     if (imagesToAdd && imagesToAdd.length > 0) {
-      imagesToAdd.forEach((image) => {
-        formData.append("imagesToAdd", image);
-      });
-    }
-
-    // Adicionar imagens a remover
-    if (imagesToRemove && imagesToRemove.length > 0) {
-      imagesToRemove.forEach((imageUrl) => {
-        formData.append("imagesToRemove[]", imageUrl);
-      });
+      formData.append("image", imagesToAdd[0]);
     }
 
     const response = await fetch(`${API_BASE_URL}/properties/${id}`, {
@@ -224,7 +212,11 @@ export const propertiesApi = {
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao atualizar propriedade");
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar propriedade (${response.status})`;
+      throw new Error(errorMessage);
     }
 
     return response.json();
@@ -260,5 +252,119 @@ export const propertiesApi = {
     }
 
     return response.json();
+  },
+};
+
+export const imageSectionsApi = {
+  getAll: async (propertyId: string): Promise<PropertyImageSection[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/image-sections`
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar seções de imagens");
+    }
+
+    return response.json();
+  },
+
+  create: async (
+    propertyId: string,
+    sectionName: string,
+    displayOrder: number,
+    images?: File[]
+  ): Promise<PropertyImageSection> => {
+    const formData = new FormData();
+    formData.append("sectionName", sectionName);
+    formData.append("displayOrder", displayOrder.toString());
+
+    if (images && images.length > 0) {
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/image-sections`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao criar seção de imagens (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    sectionId: string,
+    data: {
+      sectionName?: string;
+      displayOrder?: number;
+      imagesToRemove?: string[];
+      imagesToAdd?: File[];
+    }
+  ): Promise<PropertyImageSection> => {
+    const formData = new FormData();
+
+    if (data.sectionName) {
+      formData.append("sectionName", data.sectionName);
+    }
+
+    if (data.displayOrder !== undefined) {
+      formData.append("displayOrder", data.displayOrder.toString());
+    }
+
+    if (data.imagesToRemove && data.imagesToRemove.length > 0) {
+      formData.append("imagesToRemove", JSON.stringify(data.imagesToRemove));
+    }
+
+    if (data.imagesToAdd && data.imagesToAdd.length > 0) {
+      data.imagesToAdd.forEach((image) => {
+        formData.append("imagesToAdd", image);
+      });
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/properties/image-sections/${sectionId}`,
+      {
+        method: "PATCH",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar seção de imagens (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (sectionId: string): Promise<void> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/image-sections/${sectionId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao deletar seção de imagens (${response.status})`;
+      throw new Error(errorMessage);
+    }
   },
 };

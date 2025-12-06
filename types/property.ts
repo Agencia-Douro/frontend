@@ -1,3 +1,13 @@
+export interface PropertyImageSection {
+  id: string;
+  propertyId: string;
+  sectionName: string;
+  images: string[];
+  displayOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Property {
   id: string;
   reference: string;
@@ -23,7 +33,8 @@ export interface Property {
   distrito: string;
   concelho: string;
   address: string | null;
-  images: string[];
+  image: string;
+  imageSections?: PropertyImageSection[];
   paymentConditions: string | null;
   status: "active" | "inactive" | "sold" | "rented";
   createdAt: string;

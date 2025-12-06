@@ -38,9 +38,9 @@ export default function Cards({ properties }: CardsProps) {
                     className={`w-full bg-white ${index === 0 ? 'mb-16' : index === 1 ? 'mt-16' : 'mb-16'}`}
                 >
                     <div className="card-image-overlay h-93 relative">
-                        {property.images && property.images.length > 0 && (
+                        {property.image && (
                             <Image
-                                src={property.images[0]}
+                                src={property.image}
                                 alt={`Imóvel em ${property.concelho}`}
                                 fill
                                 className="object-cover"

@@ -219,38 +219,78 @@ export default function PropertyDetailsPage() {
             </CardContent>
           </Card>
 
-          {property.images.length > 0 && (
+          {property.image && (
             <Card>
               <CardHeader>
-                <CardTitle>Fotos ({property.images.length})</CardTitle>
+                <CardTitle>Imagem Principal</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {property.images.map((photo, index) => (
-                    <a
-                      key={index}
-                      href={photo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                    >
-                      <img
-                        src={photo}
-                        alt={`${property.title} - Foto ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagem não disponível%3C/text%3E%3C/svg%3E';
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
-                          Clique para ampliar
-                        </span>
+                <a
+                  href={property.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity max-w-2xl"
+                >
+                  <img
+                    src={property.image}
+                    alt={`${property.title} - Imagem principal`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagem não disponível%3C/text%3E%3C/svg%3E';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
+                      Clique para ampliar
+                    </span>
+                  </div>
+                </a>
+              </CardContent>
+            </Card>
+          )}
+
+          {property.imageSections && property.imageSections.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Galeria por Seções</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {property.imageSections.map((section) => (
+                  <div key={section.id} className="space-y-3">
+                    <h3 className="font-semibold text-lg">{section.sectionName}</h3>
+                    {section.images && section.images.length > 0 ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {section.images.map((photo, index) => (
+                          <a
+                            key={index}
+                            href={photo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                          >
+                            <img
+                              src={photo}
+                              alt={`${section.sectionName} - Foto ${index + 1}`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagem não disponível%3C/text%3E%3C/svg%3E';
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                              <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
+                                Clique para ampliar
+                              </span>
+                            </div>
+                          </a>
+                        ))}
                       </div>
-                    </a>
-                  ))}
-                </div>
+                    ) : (
+                      <p className="text-muted-foreground text-sm">Nenhuma imagem nesta seção</p>
+                    )}
+                  </div>
+                ))}
               </CardContent>
             </Card>
           )}
