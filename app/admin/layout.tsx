@@ -1,14 +1,32 @@
-import { Toaster } from "@/components/ui/sonner"
+"use client"
 
-export default function RootLayout({
+import { Toaster } from "@/components/ui/sonner"
+import { AuthProvider } from "@/contexts/auth-context"
+import { AdminAuthGuard } from "@/components/admin-auth-guard"
+import { AdminNavbar } from "@/components/admin-navbar"
+import { usePathname } from "next/navigation"
+
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname()
+  const isLoginPage = pathname === "/admin/login"
+
   return (
-    <div className="antialiased bg-white min-h-screen">
-      {children}
-      <Toaster />
-    </div>
+    <AuthProvider>
+      <div className="antialiased bg-white min-h-screen">
+        {isLoginPage ? (
+          children
+        ) : (
+          <AdminAuthGuard>
+            <AdminNavbar />
+            {children}
+          </AdminAuthGuard>
+        )}
+        <Toaster />
+      </div>
+    </AuthProvider>
   );
 }
