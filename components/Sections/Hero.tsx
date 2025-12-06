@@ -21,11 +21,27 @@ export default function Hero() {
         e.preventDefault();
 
         const params = new URLSearchParams();
-        params.set("transacao", transactionType);
 
-        if (localizacao) params.set("localizacao", localizacao);
-        if (tipo) params.set("tipo", tipo);
-        if (preco) params.set("preco", preco);
+        // Mapear transactionType para o formato correto da API
+        if (transactionType === "comprar") {
+            params.set("transactionType", "comprar");
+        } else if (transactionType === "arrendar") {
+            params.set("transactionType", "arrendar");
+        } else if (transactionType === "investir") {
+            params.set("transactionType", "vender");
+        }
+
+        // Localização = distrito
+        if (localizacao) params.set("distrito", localizacao);
+
+        // Tipo = propertyType
+        if (tipo) params.set("propertyType", tipo);
+
+        // Preço = maxPrice (extrair o valor máximo do range)
+        if (preco) {
+            const maxPrice = preco.split("-")[1];
+            params.set("maxPrice", maxPrice);
+        }
 
         router.push(`/imoveis?${params.toString()}`);
     };
