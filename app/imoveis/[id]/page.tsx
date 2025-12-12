@@ -13,11 +13,14 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
 import Link from "next/link"
 import { toast } from "sonner"
+import useFavorites from "@/hooks/useFavorites"
 
 export default function ImovelDetails() {
     const params = useParams()
     const id = params.id as string
     const [linkCopied, setLinkCopied] = useState(false)
+    const { isFavorite, toggleFavorite } = useFavorites()
+    const fav = isFavorite(id)
 
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", id],
@@ -71,6 +74,7 @@ export default function ImovelDetails() {
             toast.error("Erro ao copiar link")
         }
     }
+
 
     return (
         <>
@@ -144,11 +148,25 @@ export default function ImovelDetails() {
                             </div>
                             <div className="mt-4">
                                 <div className="flex gap-4 w-full">
-                                    <Button variant="muted" className="grow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                                        </svg>
-                                        Favoritos
+                                    <Button
+                                        variant={fav ? "red" : "muted"}
+                                        className="grow"
+                                        onClick={() => {
+                                            const currentlyFav = isFavorite(id)
+                                            toggleFavorite(id)
+                                            toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
+                                        }}
+                                    >
+                                        {fav ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" fill="currentColor" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                            </svg>
+                                        )}
+                                        {fav ? "Favorito" : "Favoritos"}
                                     </Button>
                                     <Button variant="muted" className="grow" onClick={handleCopyLink}>
                                         {linkCopied ? (
@@ -220,6 +238,7 @@ export default function ImovelDetails() {
 
                                     <Button type="submit" variant="gold" className="w-full">Enviar</Button>
                                 </form>
+
                             </div>
                         </div>
                         <div className="w-[512px] sticky top-0">

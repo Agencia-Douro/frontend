@@ -8,7 +8,6 @@ import Sidebar from "@/components/sidebar";
 import { propertiesApi, PropertyFilters } from "@/services/api";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-flat";
-import imgTest from "@/public/test-Image.jpg";
 
 function ImoveisContent() {
     const searchParams = useSearchParams();
@@ -140,21 +139,6 @@ function ImoveisContent() {
                         )}
                     </div>
                 </div>
-                {isLoading ? (<p>Carregando...</p>) : error ? 
-                ( <div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div> ) : !data || data.data.length === 0 ? 
-                ( <div className="grid place-content-center h-full"><p>Nenhum imóvel encontrado</p></div> ) : (
-                    <div className="grid grid-cols-3 gap-4 p-4">
-                    {data.data.map((property) => (
-                    <Card
-                        key={property.id}
-                        image={imgTest.src}
-                        href={`/imoveis/${property.id}`}
-                        titulo={property.title}
-                        localizacao={`${property.concelho}, ${property.distrito}`}
-                        preco={property.price}
-                    />))}
-                    </div>
-                )}
             </div>
         </section>
     );
