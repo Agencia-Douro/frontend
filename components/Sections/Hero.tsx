@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
 import HeroImage from "@/public/hero-image.png";
+import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 
 type TransactionType = "comprar" | "arrendar" | "investir";
 
@@ -94,24 +95,11 @@ export default function Hero() {
                                     <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="aveiro">Aveiro</SelectItem>
-                                    <SelectItem value="beja">Beja</SelectItem>
-                                    <SelectItem value="braga">Braga</SelectItem>
-                                    <SelectItem value="castelo-branco">Castelo Branco</SelectItem>
-                                    <SelectItem value="coimbra">Coimbra</SelectItem>
-                                    <SelectItem value="braganca">Braganca</SelectItem>
-                                    <SelectItem value="evora">Évora</SelectItem>
-                                    <SelectItem value="faro">Faro</SelectItem>
-                                    <SelectItem value="guarda">Guarda</SelectItem>
-                                    <SelectItem value="lisboa">Lisboa</SelectItem>
-                                    <SelectItem value="leiria">Leiria</SelectItem>
-                                    <SelectItem value="portalegre">Portalegre</SelectItem>
-                                    <SelectItem value="porto">Porto</SelectItem>
-                                    <SelectItem value="santarem">Santarém</SelectItem>
-                                    <SelectItem value="setubal">Setúbal</SelectItem>
-                                    <SelectItem value="viana-do-castelo">Viana do Castelo</SelectItem>
-                                    <SelectItem value="viseu">Viseu</SelectItem>
-                                    <SelectItem value="vila-real">Vila Real</SelectItem>
+                                    {DISTRITOS.map((distrito) => (
+                                        <SelectItem key={distrito} value={distrito}>
+                                            {distrito}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -122,11 +110,11 @@ export default function Hero() {
                                     <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                    <SelectItem value="moradia">Moradia</SelectItem>
-                                    <SelectItem value="apartamento">Apartamento</SelectItem>
-                                    <SelectItem value="predio">Prédio</SelectItem>
-                                    <SelectItem value="terreno">Terreno</SelectItem>
-                                    <SelectItem value="escritorio">Escritório</SelectItem>
+                                    {TIPOS_IMOVEL.map((tipo) => (
+                                        <SelectItem key={tipo.value} value={tipo.value}>
+                                            {tipo.label}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>

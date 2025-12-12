@@ -8,10 +8,12 @@ import Sidebar from "@/components/sidebar";
 import { propertiesApi, PropertyFilters } from "@/services/api";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-flat";
+import useFavorites from "@/hooks/useFavorites";
 
 function ImoveisContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
+    const { favorites } = useFavorites();
 
     // Construir filtros a partir dos parâmetros da URL
     const filters: PropertyFilters = {
@@ -38,15 +40,25 @@ function ImoveisContent() {
         sortBy: searchParams.get("sortBy") || "-createdAt",
     };
 
+    const onlyFavorites = searchParams.get("onlyFavorites") === "true";
+
     const { data, isLoading, error } = useQuery({
         queryKey: ["properties-public", filters],
         queryFn: () => propertiesApi.getAll(filters),
     });
 
+    // Filtrar imóveis favoritos se necessário
+    const filteredData = onlyFavorites && data ? {
+        ...data,
+        data: data.data.filter(property => favorites.includes(property.id)),
+        total: data.data.filter(property => favorites.includes(property.id)).length,
+        totalPages: Math.ceil(data.data.filter(property => favorites.includes(property.id)).length / (filters.limit || 12))
+    } : data;
+
     const currentPage = filters.page || 1;
     const itemsPerPage = filters.limit || 12;
-    const totalItems = data?.total || 0;
-    const totalPages = data?.totalPages || 1;
+    const totalItems = filteredData?.total || 0;
+    const totalPages = filteredData?.totalPages || 1;
 
     // Calcular o range de itens exibidos
     const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
@@ -119,13 +131,13 @@ function ImoveisContent() {
                         </div>
                     </div>
                     {isLoading ? (<div className="grid place-content-center h-full"><p>A carregar imóveis</p></div>) : error ?
-                        (<div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div>) : !data || data.data.length === 0 ?
+                        (<div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
                             (<div className="grid place-content-center h-full text-center">
                                 <p className="body-16-medium text-brown">Nenhum correspondência.</p>
                                 <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
                             </div>) : (
                                 <div className="grid grid-cols-3 gap-4 p-4">
-                                    {data.data.map((property) => (
+                                    {filteredData.data.map((property) => (
                                         <Card
                                             key={property.id}
                                             image={property.image}

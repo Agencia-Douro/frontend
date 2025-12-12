@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
 import { Checkbox } from "@/components/ui/checkbox"

@@ -15,6 +15,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
+import { generatePropertyPDF } from "@/utils/pdfGenerator"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -22,6 +23,14 @@ export default function ImovelDetails() {
     const [linkCopied, setLinkCopied] = useState(false)
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
+
+    const [formData, setFormData] = useState({
+        nome: "",
+        telefone: "",
+        email: "",
+        mensagem: "",
+        aceitaMarketing: false,
+    })
 
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", id],
@@ -76,6 +85,56 @@ export default function ImovelDetails() {
         }
     }
 
+    const handleDownloadPDF = async () => {
+        try {
+            toast.loading("Gerando brochura em PDF...")
+            await generatePropertyPDF(property)
+            toast.dismiss()
+            toast.success("Brochura gerada com sucesso!")
+        } catch (error) {
+            toast.dismiss()
+            toast.error("Erro ao gerar PDF")
+            console.error(error)
+        }
+    }
+
+    const handleSubmitContact = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        const toastId = toast.loading("Enviando mensagem...")
+
+        try {
+            // Adicionar informações do imóvel à mensagem
+            const propertyInfo = `\n\n--- Informações do Imóvel ---\nReferência: ${property.reference || property.id}\nTipo: ${property.propertyType}\nLocalização: ${property.concelho}, ${property.distrito}\nPreço: ${parseFloat(property.price.toString()).toLocaleString("pt-PT")} €\nLink: ${window.location.href}`
+
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...formData,
+                    mensagem: formData.mensagem + propertyInfo,
+                }),
+            })
+
+            const data = await res.json()
+
+            if (res.ok) {
+                toast.success("Mensagem enviada com sucesso!", { id: toastId })
+                setFormData({
+                    nome: "",
+                    telefone: "",
+                    email: "",
+                    mensagem: "",
+                    aceitaMarketing: false,
+                })
+            } else {
+                toast.error(data.error || "Erro ao enviar mensagem", { id: toastId })
+            }
+        } catch (error) {
+            toast.error("Erro ao enviar mensagem. Tente novamente.", { id: toastId })
+        }
+    }
+
 
     return (
         <>
@@ -114,18 +173,10 @@ export default function ImovelDetails() {
                     <div className="pt-4 flex justify-between items-center">
                         <div className="flex items-center gap-4 body-16-medium text-brown">
                             <span>{property.concelho}, {property.distrito}</span>
-                            {property.isEmpreendimento && (
-                                <>
-                                    <div className="h-3 w-px bg-brown/30"></div>
-                                    <span>Empreendimento</span>
-                                </>
-                            )}
-                            {property.reference && (
-                                <>
-                                    <div className="h-3 w-px bg-brown/30"></div>
-                                    <p><span className="text-brown/50">#</span>{property.reference}</p>
-                                </>
-                            )}
+                            <div className="h-3 w-px bg-brown/30"></div>
+                            <span className="capitalize">{property.propertyType}</span>
+                            <div className="h-3 w-px bg-brown/30"></div>
+                            <p><span className="text-brown/50">#</span>{property.reference}</p>
                         </div>
                         <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                     </div>
@@ -181,21 +232,22 @@ export default function ImovelDetails() {
                                         )}
                                         {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
                                     </Button>
-                                    <Button variant="muted" className="grow">
+                                    <Button variant="muted" className="grow" onClick={handleDownloadPDF}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         Guardar PDF
                                     </Button>
                                 </div>
-                                <form className="space-y-4 mt-4 p-4 border border-brown/10">
+                                <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome"
                                                 placeholder="Tomas Ribeiro Silva"
-                                                value=""
+                                                value={formData.nome}
+                                                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
                                             />
                                         </div>
@@ -204,7 +256,8 @@ export default function ImovelDetails() {
                                             <Input
                                                 id="telefone"
                                                 placeholder="+351 919 766 323"
-                                                value=""
+                                                value={formData.telefone}
+                                                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
                                             />
                                         </div>
@@ -216,7 +269,8 @@ export default function ImovelDetails() {
                                             id="email"
                                             type="email"
                                             placeholder="contacto@agenciadouro.pt"
-                                            value=""
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
                                         />
                                     </div>
@@ -226,14 +280,19 @@ export default function ImovelDetails() {
                                         <Textarea
                                             id="mensagem"
                                             placeholder="Envie-nos uma mensagem!"
-                                            value=""
+                                            value={formData.mensagem}
+                                            onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
                                             className="min-h-[100px]"
                                         />
                                     </div>
 
                                     <div className="flex items-center gap-2">
-                                        <Checkbox id="marketing" />
+                                        <Checkbox
+                                            id="marketing"
+                                            checked={formData.aceitaMarketing}
+                                            onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
+                                        />
                                         <label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
                                     </div>
 

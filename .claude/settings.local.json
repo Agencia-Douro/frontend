@@ -4,7 +4,8 @@
       "Bash(pnpm add:*)",
       "Bash(npx shadcn@latest add:*)",
       "mcp__ide__getDiagnostics",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "WebFetch(domain:geoapi.pt)"
     ],
     "deny": [],
     "ask": []

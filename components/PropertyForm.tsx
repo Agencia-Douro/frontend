@@ -13,6 +13,7 @@ import { Property, PropertyImageSection } from "@/types/property"
 import { formatCurrency, parseCurrency } from "@/lib/currency"
 import { imageSectionsApi } from "@/services/api"
 import { toast } from "sonner"
+import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
 
 interface PropertyFormProps {
   initialData?: Property | null
@@ -82,6 +83,9 @@ export default function PropertyForm({
   const [loadingRemoveImage, setLoadingRemoveImage] = useState<string | null>(null)
   const [loadingAddImage, setLoadingAddImage] = useState<string | null>(null)
 
+  // Get municipios based on selected distrito
+  const municipios = formData.distrito ? DISTRITO_MUNICIPIOS[formData.distrito] || [] : []
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
@@ -93,6 +97,16 @@ export default function PropertyForm({
       }
     }
   }, [initialData])
+
+  // Reset concelho when distrito changes
+  useEffect(() => {
+    if (formData.distrito && formData.concelho) {
+      const validMunicipios = DISTRITO_MUNICIPIOS[formData.distrito] || []
+      if (!validMunicipios.includes(formData.concelho)) {
+        updateField("concelho", "")
+      }
+    }
+  }, [formData.distrito, formData.concelho])
 
   const loadImageSections = async (propertyId: string) => {
     try {
@@ -352,6 +366,25 @@ export default function PropertyForm({
                   </SelectContent>
                 </Select>
               </div>
+              <div className="space-y-2">
+                <Label>Referência</Label>
+                <Input
+                  placeholder="Ex: REF123456"
+                  value={formData.reference || ""}
+                  onChange={(e) => updateField("reference", e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+
+          {!isEditMode && (
+            <div className="space-y-2">
+              <Label>Referência</Label>
+              <Input
+                placeholder="Ex: REF123456"
+                value={formData.reference || ""}
+                onChange={(e) => updateField("reference", e.target.value)}
+              />
             </div>
           )}
 
@@ -402,19 +435,11 @@ export default function PropertyForm({
                   <SelectValue placeholder="Selecione o tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="casa">Casa</SelectItem>
-                  <SelectItem value="apartamento">Apartamento</SelectItem>
-                  <SelectItem value="terreno">Terreno</SelectItem>
-                  <SelectItem value="moradia">Moradia</SelectItem>
-                  <SelectItem value="comercial">Comercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="armazem">Armazém</SelectItem>
-                  <SelectItem value="escritorio">Escritório</SelectItem>
-                  <SelectItem value="loja">Loja</SelectItem>
-                  <SelectItem value="garagem">Garagem</SelectItem>
-                  <SelectItem value="quinta">Quinta</SelectItem>
-                  <SelectItem value="terreno_urbano">Terreno Urbano</SelectItem>
-                  <SelectItem value="terreno_rustico">Terreno Rústico</SelectItem>
+                  {TIPOS_IMOVEL.map((tipo) => (
+                    <SelectItem key={tipo.value} value={tipo.value}>
+                      {tipo.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -656,20 +681,49 @@ export default function PropertyForm({
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Distrito *</Label>
-              <Input
-                placeholder="Porto"
-                value={formData.distrito}
-                onChange={(e) => updateField("distrito", e.target.value)}
-              />
+              <Select
+                value={formData.distrito || undefined}
+                onValueChange={(value) => updateField("distrito", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o distrito" />
+                </SelectTrigger>
+                <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                  {DISTRITOS.map((d) => (
+                    <SelectItem key={d} value={d}>
+                      {d}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
               <Label>Concelho *</Label>
-              <Input
-                placeholder="Porto"
-                value={formData.concelho}
-                onChange={(e) => updateField("concelho", e.target.value)}
-              />
+              <Select
+                value={formData.concelho || undefined}
+                onValueChange={(value) => updateField("concelho", value)}
+                disabled={!formData.distrito}
+              >
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={
+                      !formData.distrito
+                        ? "Selecione primeiro um distrito"
+                        : "Selecione o concelho"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                  {municipios.length > 0 ? (
+                    municipios.map((m) => (
+                      <SelectItem key={m} value={m}>
+                        {m}
+                      </SelectItem>
+                    ))
+                  ) : null}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

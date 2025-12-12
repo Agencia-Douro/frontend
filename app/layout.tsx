@@ -3,6 +3,7 @@ import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import Header from "@/components/Sections/Header/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <QueryProvider>
             <Header />
                 {children}
+            <Toaster />
         </QueryProvider>
       </body>
     </html>
