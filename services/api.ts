@@ -3,6 +3,7 @@ import {
   Property,
   PropertyImageSection,
 } from "@/types/property";
+import { Newsletter } from "@/types/newsletter";
 
 const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
 // const API_BASE_URL = "http://localhost:3008";
@@ -249,6 +250,108 @@ export const propertiesApi = {
 
     if (!response.ok) {
       throw new Error("Erro ao alterar destaque da propriedade");
+    }
+
+    return response.json();
+  },
+};
+
+export const newslettersApi = {
+  getAll: async (): Promise<Newsletter[]> => {
+    const response = await fetch(`${API_BASE_URL}/newsletters`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar newsletters");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<Newsletter> => {
+    const response = await fetch(`${API_BASE_URL}/newsletters/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar newsletter");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: Partial<Newsletter>): Promise<Newsletter> => {
+    const response = await fetch(`${API_BASE_URL}/newsletters`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: data.title,
+        content: data.content,
+        category: data.category,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar newsletter (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: Partial<Newsletter>
+  ): Promise<Newsletter> => {
+    const response = await fetch(`${API_BASE_URL}/newsletters/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: data.title,
+        content: data.content,
+        category: data.category,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar newsletter (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/newsletters/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar newsletter");
+    }
+  },
+
+  uploadImage: async (image: File): Promise<{ url: string }> => {
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const response = await fetch(`${API_BASE_URL}/newsletters/upload-image`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao fazer upload da imagem (${response.status})`;
+      throw new Error(errorMessage);
     }
 
     return response.json();
