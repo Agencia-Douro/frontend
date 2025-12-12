@@ -16,6 +16,7 @@ import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
 import { generatePropertyPDF } from "@/utils/pdfGenerator"
+import ImagensImoveis from "@/components/Sections/ImagensImoveis"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -23,6 +24,9 @@ export default function ImovelDetails() {
     const [linkCopied, setLinkCopied] = useState(false)
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
+    const [showPanel, setShowPanel] = useState(false)
+    const [panelClosing, setPanelClosing] = useState(false)
+    const [panelOpening, setPanelOpening] = useState(false)
 
     const [formData, setFormData] = useState({
         nome: "",
@@ -32,6 +36,28 @@ export default function ImovelDetails() {
         aceitaMarketing: false,
     })
 
+    const handleOpenPanel = () => {
+        setShowPanel(true)
+        // Força o elemento a começar com translate-y-full e depois anima
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setPanelOpening(true)
+            })
+        })
+    }
+
+    const handleClosePanel = () => {
+        setPanelClosing(true)
+        setPanelOpening(false)
+    }
+
+    const handleTransitionEnd = () => {
+        if (panelClosing) {
+            setPanelClosing(false);
+            setShowPanel(false);
+            setPanelOpening(false);
+        }
+    }
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", id],
         queryFn: () => propertiesApi.getById(id),
@@ -80,7 +106,7 @@ export default function ImovelDetails() {
             setTimeout(() => {
                 setLinkCopied(false)
             }, 2000)
-        } catch (error) {
+        } catch {
             toast.error("Erro ao copiar link")
         }
     }
@@ -144,7 +170,7 @@ export default function ImovelDetails() {
                         <div className="flex items-center gap-3">
                             <Link
                                 href="/imoveis"
-                                className="body-14-medium text-brown hover:bg-muted flex gap-2 px-1.5 py-0.5">
+                                className="body-14-medium text-brown hover:bg-muted flex items-center gap-2 px-1.5 py-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
                                 </svg>Voltar
@@ -162,7 +188,14 @@ export default function ImovelDetails() {
                                 <p className="body-16-medium text-brown">{property.distrito}</p>
                             </div>
                         </div>
-                        <Button variant="outline">Ver Todas</Button>
+                        <ImagensImoveis 
+                            showPanel={showPanel}
+                            panelClosing={panelClosing}
+                            panelOpening={panelOpening}
+                            handleOpenPanel={handleOpenPanel}
+                            handleClosePanel={handleClosePanel}
+                            handleTransitionEnd={handleTransitionEnd}
+                        />
                     </div>
                     <div className="h-96 grid grid-cols-12 w-full gap-4">
                         <div className="border border-brown/10 col-span-6 row-span-2"></div>

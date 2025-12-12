@@ -20,7 +20,7 @@ export default function Header() {
             <div className="container">
                 <div className="flex items-center h-18 gap-6">
                     <div className="w-full">
-                        <Link href="/" className="inline-block">
+                        <Link href="/" className="inline-flex">
                             <Image
                                 src={Logo}
                                 alt="Agência Douro Logótipo"
