@@ -82,11 +82,13 @@ export default function ImagensImoveis({
                         </button>
                         <div className="h-full">
                             <div className="grid grid-cols-12">
-                                <p className="col-start-1 col-end-3 text-end text-brown body-18-medium">Cozinha</p>
-                                <div className="grid grid-rows-subgrid col-start-5 col-end-13 bg-red">
-                                    <div className="row-start-1 row-end-3 h-[406px]">s</div>
-                                    <div className="row-start-3 row-end-5 h-[406px]">s</div>
-                                    <div className="row-start-5 row-end-7 h-[406px]">s</div>
+                                <p className="col-start-1 col-end-4 text-end text-brown body-18-medium">Cozinha</p>
+                                <div className="grid-rows-2 col-start-6 col-end-13 gap-4">
+                                    <div className="row-start-1 row-end-3 h-[406px] bg-red col-span-2">s</div>
+                                    <div className="grid grid-col-2 gap-4">
+                                        <div className="col-span-2 h-[406px] bg-red">s</div>
+                                        <div className="h-[406px] bg-red">s</div>
+                                    </div>
                                 </div>
                             </div>
                             
