@@ -5,8 +5,8 @@ import {
 } from "@/types/property";
 import { Newsletter } from "@/types/newsletter";
 
-// const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
-const API_BASE_URL = "http://localhost:3008";
+const API_BASE_URL = "https://api.agenciadouro.server.ausses.pt";
+// const API_BASE_URL = "http://localhost:3008";
 
 export interface PropertyFilters {
   minPrice?: number;
@@ -349,7 +349,8 @@ export const newslettersApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao fazer upload da imagem (${response.status})`;
+        errorData.message ||
+        `Erro ao fazer upload da imagem (${response.status})`;
       throw new Error(errorMessage);
     }
 
