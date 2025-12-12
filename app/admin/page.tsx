@@ -17,6 +17,16 @@ export default function AdminPage() {
                         </CardHeader>
                     </Card>
                 </Link>
+                <Link href="/admin/newsletters">
+                    <Card className="hover:shadow-sm transition-shadow cursor-pointer">
+                        <CardHeader>
+                            <CardTitle>Gerenciar Newsletters</CardTitle>
+                            <CardDescription>
+                                Adicione, edite ou remova newsletters do sistema
+                            </CardDescription>
+                        </CardHeader>
+                    </Card>
+                </Link>
             </div>
         </div>
     </div>
