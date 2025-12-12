@@ -1,5 +1,4 @@
 import Footer from "@/components/Footer";
-import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado";
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -175,7 +174,6 @@ export default function ImovelDetails() {
                 </div>
             </div>
         </section>
-        <ImoveisRelacionados />
         <Footer/>
         </>
     )

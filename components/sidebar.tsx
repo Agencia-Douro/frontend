@@ -105,7 +105,7 @@ export default function Sidebar({ basePath = "/imoveis" }: SidebarProps) {
   }
 
   return (
-    <aside className="w-[300px] border-x border-[#EAE6DF] h-full bg-deaf">
+    <aside className="min-w-[300px] max-w-[300px] border-x border-[#EAE6DF] h-[calc(100vh-73px)] bg-deaf">
       <div className="flex flex-col h-full">
         <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="p-4 border-b border-[#EAE6DF]">
@@ -398,10 +398,7 @@ export default function Sidebar({ basePath = "/imoveis" }: SidebarProps) {
           <button
             type="button"
             onClick={handleReset}
-            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer"
-          >
-            Limpar
-          </button>
+            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer">Limpar</button>
         </div>
       </div>
     </aside>

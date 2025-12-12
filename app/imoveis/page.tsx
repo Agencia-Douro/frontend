@@ -79,10 +79,9 @@ function ImoveisContent() {
         <section>
             <div className="container flex divide-x divide-[#EAE6DF] h-full overflow-hidden">
                 <Sidebar />
-                <div className="border-r border-[#EAE6DF] bg-deaf">
+                <div className="border-r border-[#EAE6DF] bg-deaf w-full">
                     <div className="px-6 py-4 flex justify-between border-b border-[#EAE6DF]">
                         <div className="flex items-center gap-4">
-                            <p><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
                             <div className="bg-white shadow-pretty divide-x divide-muted">
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
@@ -90,7 +89,7 @@ function ImoveisContent() {
                                     className="cursor-pointer p-1.5 hover:bg-deaf disabled:opacity-40 disabled:cursor-not-allowed"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-black-grey">
-                                        <path d="M8.33333 4.79163L3.125 9.99996L8.33333 15.2083M3.75 9.99996H16.875" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M8.33333 4.79163L3.125 9.99996L8.33333 15.2083M3.75 9.99996H16.875" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </button>
                                 <button
@@ -99,10 +98,11 @@ function ImoveisContent() {
                                     className="cursor-pointer p-1.5 hover:bg-deaf disabled:opacity-40 disabled:cursor-not-allowed"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-black-muted">
-                                        <path d="M11.6667 4.79163L16.875 9.99996L11.6667 15.2083M16.25 9.99996H3.125" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M11.6667 4.79163L16.875 9.99996L11.6667 15.2083M16.25 9.99996H3.125" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </button>
                             </div>
+                            <p><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
                         </div>
                         <div className="flex items-center gap-2">
                             <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">Ordenar por:</Label>
@@ -119,30 +119,12 @@ function ImoveisContent() {
                             </Select>
                         </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-4 p-4">
-                        {isLoading ? (
-                            <p>Carregando...</p>
-                        ) : error ? (
-                            <p>Erro ao carregar imóveis</p>
-                        ) : !data || data.data.length === 0 ? (
-                            <p>Nenhum imóvel encontrado</p>
-                        ) : (
-                            data.data.map((property) => (
-                                <Card
-                                    key={property.id}
-                                    image={property.image || "/placeholder.jpg"}
-                                    href={`/imoveis/${property.id}`}
-                                    titulo={property.title}
-                                    localizacao={`${property.concelho}, ${property.distrito}`}
-                                    preco={property.price}
-                                />
-                            ))
-                        )}
-                    </div>
-                </div>
-                {isLoading ? (<p>Carregando...</p>) : error ? 
+                    {isLoading ? (<div className="grid place-content-center h-full"><p>A carregar imóveis</p></div>) : error ? 
                 ( <div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div> ) : !data || data.data.length === 0 ? 
-                ( <div className="grid place-content-center h-full"><p>Nenhum imóvel encontrado</p></div> ) : (
+                ( <div className="grid place-content-center h-full text-center">
+                    <p className="body-16-medium text-brown">Nenhum correspondência.</p>
+                    <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
+                </div> ) : (
                     <div className="grid grid-cols-3 gap-4 p-4">
                     {data.data.map((property) => (
                     <Card
@@ -155,6 +137,7 @@ function ImoveisContent() {
                     />))}
                     </div>
                 )}
+                </div>
             </div>
         </section>
     );
