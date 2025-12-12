@@ -381,7 +381,10 @@ export default function ImovelDetails() {
                     </div>
                 </div>
             </section>
-            <ImoveisRelacionados />
+            <ImoveisRelacionados
+                currentPropertyId={property.id}
+                currentPrice={property.price}
+            />
             <Footer />
         </>
     );
