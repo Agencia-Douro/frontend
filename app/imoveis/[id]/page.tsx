@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea-line"
 import Link from "next/link"
 import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
+import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -288,7 +289,8 @@ export default function ImovelDetails() {
                     </div>
                 </div>
             </section>
+            <ImoveisRelacionados />
             <Footer />
         </>
-    )
+    );
 }
