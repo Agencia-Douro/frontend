@@ -326,7 +326,7 @@ export default function Sidebar({ basePath = "/imoveis" }: SidebarProps) {
               </>
             )}
           </div>
-          <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
+          <div className="p-4 flex flex-col gap-2">
             <button
               type="button"
               onClick={() => setOutroOpen(!outroOpen)}
