@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useParams, useRouter } from "next/navigation"
 import { propertiesApi } from "@/services/api"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,400 +13,332 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { ArrowLeft, MapPin, Bed, Bath, Car, Ruler, Calendar, Trash2, Pencil, Star } from "lucide-react"
-import { formatPriceNumber, translatePropertyStatus } from "@/lib/currency"
+import Link from "next/link"
+import ImagensImoveis from "@/components/Sections/ImagensImoveis"
+import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
+import { Trash2, Pencil, Star } from "lucide-react"
 
 export default function PropertyDetailsPage() {
-  const params = useParams()
-  const router = useRouter()
-  const queryClient = useQueryClient()
-  const propertyId = params.id as string
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const params = useParams()
+    const router = useRouter()
+    const queryClient = useQueryClient()
+    const propertyId = params.id as string
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const [showPanel, setShowPanel] = useState(false)
+    const [panelClosing, setPanelClosing] = useState(false)
+    const [panelOpening, setPanelOpening] = useState(false)
 
-  const { data: property, isLoading, error } = useQuery({
-    queryKey: ["property", propertyId],
-    queryFn: () => propertiesApi.getById(propertyId),
-  })
+    const { data: property, isLoading, error } = useQuery({
+        queryKey: ["property", propertyId],
+        queryFn: () => propertiesApi.getById(propertyId),
+    })
 
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => propertiesApi.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["properties"] })
-      router.push("/admin/properties")
-    },
-  })
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => propertiesApi.delete(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["properties"] })
+            router.push("/admin/properties")
+        },
+    })
 
-  const toggleFeaturedMutation = useMutation({
-    mutationFn: (id: string) => propertiesApi.toggleFeatured(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
-      queryClient.invalidateQueries({ queryKey: ["properties"] })
-    },
-  })
+    const toggleFeaturedMutation = useMutation({
+        mutationFn: (id: string) => propertiesApi.toggleFeatured(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
+            queryClient.invalidateQueries({ queryKey: ["properties"] })
+        },
+    })
 
-  const handleDelete = () => {
-    deleteMutation.mutate(propertyId)
-  }
+    const handleOpenPanel = () => {
+        document.body.style.overflow = 'hidden';
+        setShowPanel(true)
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setPanelOpening(true)
+            })
+        })
+    }
 
-  const handleToggleFeatured = () => {
-    toggleFeaturedMutation.mutate(propertyId)
-  }
+    const handleClosePanel = () => {
+        setPanelClosing(true)
+        setPanelOpening(false)
+    }
 
-  if (isLoading) {
+    const handleTransitionEnd = () => {
+        if (panelClosing) {
+            setPanelClosing(false);
+            setShowPanel(false);
+            setPanelOpening(false);
+            document.body.style.overflow = '';
+        }
+    }
+
+    const handleDelete = () => {
+        deleteMutation.mutate(propertyId)
+    }
+
+    const handleToggleFeatured = () => {
+        toggleFeaturedMutation.mutate(propertyId)
+    }
+
+    if (isLoading) {
+        return (
+            <section className="bg-deaf">
+                <div className="container pb-16 pt-20">
+                    <p className="text-center text-brown">Carregando...</p>
+                </div>
+            </section>
+        )
+    }
+
+    if (error || !property) {
+        return (
+            <section className="bg-deaf">
+                <div className="container pb-16 pt-20">
+                    <p className="text-center text-red">Imóvel não encontrado</p>
+                </div>
+            </section>
+        )
+    }
+
+    const transactionTypeMap: Record<string, string> = {
+        comprar: "Compra",
+        arrendar: "Arrendamento",
+        vender: "Venda"
+    }
+
     return (
-      <div className="container mx-auto p-6">
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">Carregando detalhes...</p>
-        </div>
-      </div>
-    )
-  }
+        <>
+            <section className="bg-deaf">
+                <div className="container pb-16">
+                    {/* Barra de administração */}
+                    <div className="flex justify-between items-center py-4 border-b border-brown/10 mb-4">
+                        <Link
+                            href="/admin/properties"
+                            className="body-14-medium text-brown hover:bg-muted flex items-center gap-2 px-1.5 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                            Voltar para lista
+                        </Link>
 
-  if (error || !property) {
-    return (
-      <div className="container mx-auto p-6">
-        <div className="text-center py-12">
-          <p className="text-red-500">
-            Erro ao carregar propriedade: {error?.message || "Propriedade não encontrada"}
-          </p>
-          <Button onClick={() => router.back()} className="mt-4">
-            Voltar
-          </Button>
-        </div>
-      </div>
-    )
-  }
+                        <div className="flex gap-2">
+                            <Button
+                                variant={property.isFeatured ? "gold" : "brown"}
+                                onClick={handleToggleFeatured}
+                                disabled={toggleFeaturedMutation.isPending}
+                            >
+                                <Star className={`h-4 w-4 mr-2 ${property.isFeatured ? "fill-current" : ""}`} />
+                                {toggleFeaturedMutation.isPending
+                                    ? "Processando..."
+                                    : property.isFeatured
+                                        ? "Remover Destaque"
+                                        : "Destacar"}
+                            </Button>
 
-  return (
-    <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => router.push(`/admin/properties`)}
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Voltar
-        </Button>
+                            <Button
+                                variant="brown"
+                                onClick={() => router.push(`/admin/properties/${propertyId}/edit`)}
+                            >
+                                <Pencil className="h-4 w-4 mr-2" />
+                                Editar
+                            </Button>
 
-        <div className="flex gap-2">
-          <Button
-            variant={property.isFeatured ? "gold" : "brown"}
-            onClick={handleToggleFeatured}
-            disabled={toggleFeaturedMutation.isPending}
-          >
-            <Star className={`h-4 w-4 mr-2 ${property.isFeatured ? "fill-current" : ""}`} />
-            {toggleFeaturedMutation.isPending
-              ? "Processando..."
-              : property.isFeatured
-                ? "Remover Destaque"
-                : "Destacar"}
-          </Button>
+                            <Button
+                                variant="brown"
+                                onClick={() => setOpenDeleteDialog(true)}
+                            >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Excluir
+                            </Button>
+                        </div>
+                    </div>
 
-          <Button
-            variant="brown"
-            onClick={() => router.push(`/admin/properties/${propertyId}/edit`)}
-          >
-            <Pencil className="h-4 w-4 mr-2" />
-            Editar
-          </Button>
+                    {/* Breadcrumb e Ver Todas */}
+                    <div className="flex justify-between items-center py-4">
+                        <div className="flex items-center gap-0.5">
+                            <p className="body-16-medium text-brown capitalize">{property.transactionType}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                                <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
+                            </svg>
+                            <p className="body-16-medium text-brown capitalize">{property.propertyType}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                                <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
+                            </svg>
+                            <p className="body-16-medium text-brown">{property.distrito}</p>
+                        </div>
+                        <ImagensImoveis
+                            property={property}
+                            showPanel={showPanel}
+                            panelClosing={panelClosing}
+                            panelOpening={panelOpening}
+                            handleOpenPanel={handleOpenPanel}
+                            handleClosePanel={handleClosePanel}
+                            handleTransitionEnd={handleTransitionEnd}
+                        />
+                    </div>
 
-          <Button
-            variant="brown"
-            onClick={() => setOpenDeleteDialog(true)}
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Excluir Propriedade
-          </Button>
-        </div>
-      </div>
+                    {/* Grid de imagens */}
+                    {(() => {
+                        const allImages = property.imageSections
+                            ?.filter(section => section.images && section.images.length > 0)
+                            .flatMap(section => section.images.map(img => ({
+                                url: img,
+                                name: section.sectionName
+                            }))) || [];
 
-      <Dialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirmar exclusão</DialogTitle>
-            <DialogDescription>
-              Tem certeza que deseja excluir a propriedade{" "}
-              <span className="font-semibold">{property.title}</span>? Esta ação
-              não pode ser desfeita.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="brown"
-              onClick={() => setOpenDeleteDialog(false)}
-              disabled={deleteMutation.isPending}
-            >
-              Cancelar
-            </Button>
-            <Button
-              variant="brown"
-              onClick={handleDelete}
-              disabled={deleteMutation.isPending}
-            >
-              {deleteMutation.isPending ? "Excluindo..." : "Excluir"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Coluna Principal */}
-        <div className="lg:col-span-2 space-y-6">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="text-3xl mb-2">{property.title}</CardTitle>
-                  <div className="flex items-center text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>
-                      {property.address && `${property.address} - `}
-                      {property.concelho}, {property.distrito}
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold text-primary">
-                    {formatPriceNumber(property.price)} €
-                  </p>
-                  <p className="text-body-small font-medium text-muted-foreground">
-                    {translatePropertyStatus(property.status)}
-                  </p>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-2xl font-semibold">
-                      {property.totalArea || property.builtArea || property.usefulArea || 'N/A'}m²
-                    </p>
-                    <p className="text-xs text-muted-foreground">Área Total</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Bed className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-2xl font-semibold">{property.bedrooms}</p>
-                    <p className="text-xs text-muted-foreground">Quartos</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Bath className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-2xl font-semibold">{property.bathrooms}</p>
-                    <p className="text-xs text-muted-foreground">Banheiros</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Car className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-2xl font-semibold">{property.garageSpaces}</p>
-                    <p className="text-xs text-muted-foreground">Vagas</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h3 className="font-semibold mb-2">Descrição</h3>
-                  <p className="text-muted-foreground">{property.description}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {property.image && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Imagem Principal</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <a
-                  href={property.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative block aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity max-w-2xl"
-                >
-                  <img
-                    src={property.image}
-                    alt={`${property.title} - Imagem principal`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagem não disponível%3C/text%3E%3C/svg%3E';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
-                      Clique para ampliar
-                    </span>
-                  </div>
-                </a>
-              </CardContent>
-            </Card>
-          )}
-
-          {property.imageSections && property.imageSections.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Galeria por Seções</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {property.imageSections.map((section) => (
-                  <div key={section.id} className="space-y-3">
-                    <h3 className="font-semibold text-lg">{section.sectionName}</h3>
-                    {section.images && section.images.length > 0 ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {section.images.map((photo, index) => (
-                          <a
-                            key={index}
-                            href={photo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative aspect-video bg-muted rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                          >
-                            <img
-                              src={photo}
-                              alt={`${section.sectionName} - Foto ${index + 1}`}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagem não disponível%3C/text%3E%3C/svg%3E';
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                              <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-body-small font-medium">
-                                Clique para ampliar
-                              </span>
+                        return (
+                            <div className="h-96 grid grid-cols-12 w-full gap-4">
+                                <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
+                                    {property.image && (
+                                        <img
+                                            src={property.image}
+                                            alt={property.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
+                                    {allImages[0] && (
+                                        <img
+                                            src={allImages[0].url}
+                                            alt={`${property.title} - ${allImages[0].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    {allImages[1] && (
+                                        <img
+                                            src={allImages[1].url}
+                                            alt={`${property.title} - ${allImages[1].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    {allImages[2] && (
+                                        <img
+                                            src={allImages[2].url}
+                                            alt={`${property.title} - ${allImages[2].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
                             </div>
-                          </a>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-muted-foreground text-sm">Nenhuma imagem nesta seção</p>
-                    )}
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                        );
+                    })()}
 
-        {/* Coluna Lateral */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações Adicionais</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-body-small font-medium">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Imóvel Destacado:</span>
-                <span className={`font-medium flex items-center gap-1 ${property.isFeatured ? "text-yellow-600" : ""}`}>
-                  {property.isFeatured && <Star className="h-4 w-4 fill-current" />}
-                  {property.isFeatured ? "Sim" : "Não"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Tipo:</span>
-                <span className="font-medium capitalize">{property.propertyType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Tipo de Transação:</span>
-                <span className="font-medium capitalize">{property.transactionType}</span>
-              </div>
-              {property.propertyState && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Estado do Imóvel:</span>
-                  <span className="font-medium capitalize">{property.propertyState}</span>
-                </div>
-              )}
-              {property.energyClass && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Classe Energética:</span>
-                  <span className="font-medium">{property.energyClass}</span>
-                </div>
-              )}
-              {property.constructionYear && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Ano de Construção:</span>
-                  <span className="font-medium">{property.constructionYear}</span>
-                </div>
-              )}
-              {property.deliveryDate && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Data de Entrega:</span>
-                  <span className="font-medium">{property.deliveryDate}</span>
-                </div>
-              )}
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">É Empreendimento:</span>
-                <span className="font-medium">{property.isEmpreendimento ? "Sim" : "Não"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Tem Escritório:</span>
-                <span className="font-medium">{property.hasOffice ? "Sim" : "Não"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Tem Lavandaria:</span>
-                <span className="font-medium">{property.hasLaundry ? "Sim" : "Não"}</span>
-              </div>
-              {property.totalArea && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Área Total:</span>
-                  <span className="font-medium">{property.totalArea}m²</span>
-                </div>
-              )}
-              {property.builtArea && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Área Construída:</span>
-                  <span className="font-medium">{property.builtArea}m²</span>
-                </div>
-              )}
-              {property.usefulArea && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Área Útil:</span>
-                  <span className="font-medium">{property.usefulArea}m²</span>
-                </div>
-              )}
-              {property.paymentConditions && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Condições de Pagamento:</span>
-                  <span className="font-medium">{property.paymentConditions}</span>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    {/* Informações do imóvel */}
+                    <div className="pt-4 flex justify-between items-center">
+                        <div className="flex items-center gap-4 body-16-medium text-brown">
+                            <span>{property.concelho}, {property.distrito}</span>
+                            <div className="h-3 w-px bg-brown/30"></div>
+                            <span className="capitalize">{property.propertyType}</span>
+                            <div className="h-3 w-px bg-brown/30"></div>
+                            <p><span className="text-brown/50">#</span>{property.reference}</p>
+                        </div>
+                        <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
+                    </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Datas</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-body-small font-medium">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Criado em</p>
-                  <p className="font-medium">
-                    {new Date(property.createdAt).toLocaleDateString("pt-BR")}
-                  </p>
+                    <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
+
+                    <div className="pt-6 flex justify-between">
+                        <div>
+                            <div className="w-154 [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
+                                <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
+                                {property.deliveryDate && (
+                                    <>
+                                        <h6>Previsão de entrega:</h6>
+                                        <p>{property.deliveryDate}</p>
+                                    </>
+                                )}
+                                {property.paymentConditions && (
+                                    <>
+                                        <h6>Condições de Pagamento:</h6>
+                                        <div dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
+                                    </>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="w-lg sticky top-0">
+                            {property.totalArea && property.totalArea > 0 && (
+                                <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
+                            )}
+                            {property.builtArea && property.builtArea > 0 && (
+                                <Caracteristica titulo="Área Construída" valor={`${property.builtArea}m²`} />
+                            )}
+                            {property.usefulArea && property.usefulArea > 0 && (
+                                <Caracteristica titulo="Área Útil" valor={`${property.usefulArea}m²`} />
+                            )}
+                            {property.bathrooms > 0 && (
+                                <Caracteristica titulo="Casas de Banho" valor={property.bathrooms.toString()} />
+                            )}
+                            {property.bedrooms > 0 && (
+                                <Caracteristica titulo="Quartos" valor={property.bedrooms.toString()} />
+                            )}
+                            {property.hasOffice && <Caracteristica titulo="Escritório" valor="Sim" />}
+                            {property.hasLaundry && <Caracteristica titulo="Lavandaria" valor="Sim" />}
+                            {property.garageSpaces > 0 && (
+                                <Caracteristica
+                                    titulo="Garagem"
+                                    valor={`${property.garageSpaces} ${property.garageSpaces === 1 ? 'Lugar' : 'Lugares'}`}
+                                />
+                            )}
+                            {property.constructionYear && property.constructionYear > 0 && (
+                                <Caracteristica titulo="Ano de construção" valor={property.constructionYear.toString()} />
+                            )}
+                            {property.propertyState && (
+                                <Caracteristica titulo="Estado" valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
+                            )}
+                            {property.energyClass && (
+                                <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
+                            )}
+                            <iframe
+                                className="mt-6 h-75 border-0"
+                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
+                                    `${property.concelho}, ${property.distrito}, Portugal`
+                                )}`}
+                                width="100%"
+                                allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                            />
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Atualizado em</p>
-                  <p className="font-medium">
-                    {new Date(property.updatedAt).toLocaleDateString("pt-BR")}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  )
+            </section>
+
+            {/* Dialog de confirmação de exclusão */}
+            <Dialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Confirmar exclusão</DialogTitle>
+                        <DialogDescription>
+                            Tem certeza que deseja excluir a propriedade{" "}
+                            <span className="font-semibold">{property.title}</span>? Esta ação
+                            não pode ser desfeita.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button
+                            variant="brown"
+                            onClick={() => setOpenDeleteDialog(false)}
+                            disabled={deleteMutation.isPending}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            variant="brown"
+                            onClick={handleDelete}
+                            disabled={deleteMutation.isPending}
+                        >
+                            {deleteMutation.isPending ? "Excluindo..." : "Excluir"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </>
+    );
 }
