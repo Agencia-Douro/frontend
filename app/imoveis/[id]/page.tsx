@@ -192,7 +192,8 @@ export default function ImovelDetails() {
                                 <p className="body-16-medium text-brown">{property.distrito}</p>
                             </div>
                         </div>
-                        <ImagensImoveis 
+                        <ImagensImoveis
+                            property={property}
                             showPanel={showPanel}
                             panelClosing={panelClosing}
                             panelOpening={panelOpening}
@@ -201,12 +202,57 @@ export default function ImovelDetails() {
                             handleTransitionEnd={handleTransitionEnd}
                         />
                     </div>
-                    <div className="h-96 grid grid-cols-12 w-full gap-4">
-                        <div className="border border-brown/10 col-span-6 row-span-2"></div>
-                        <div className="border border-brown/10 col-span-3 row-span-2"></div>
-                        <div className="border border-brown/10 col-span-3"></div>
-                        <div className="border border-brown/10 col-span-3"></div>
-                    </div>
+                    {(() => {
+                        // Coletar todas as imagens disponíveis (primeira de cada seção)
+                        const allImages = property.imageSections
+                            ?.filter(section => section.images && section.images.length > 0)
+                            .flatMap(section => section.images.map(img => ({
+                                url: img,
+                                name: section.sectionName
+                            }))) || [];
+
+                        return (
+                            <div className="h-96 grid grid-cols-12 w-full gap-4">
+                                <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
+                                    {property.image && (
+                                        <img
+                                            src={property.image}
+                                            alt={property.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
+                                    {allImages[0] && (
+                                        <img
+                                            src={allImages[0].url}
+                                            alt={`${property.title} - ${allImages[0].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    {allImages[1] && (
+                                        <img
+                                            src={allImages[1].url}
+                                            alt={`${property.title} - ${allImages[1].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    {allImages[2] && (
+                                        <img
+                                            src={allImages[2].url}
+                                            alt={`${property.title} - ${allImages[2].name}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })()}
+
                     <div className="pt-4 flex justify-between items-center">
                         <div className="flex items-center gap-4 body-16-medium text-brown">
                             <span>{property.concelho}, {property.distrito}</span>
@@ -238,7 +284,7 @@ export default function ImovelDetails() {
                             <div className="mt-4">
                                 <div className="flex gap-4 w-full">
                                     <Button
-                                        variant={fav ? "red" : "muted"}
+                                        variant={fav ? "gold" : "muted"}
                                         className="grow"
                                         onClick={() => {
                                             const currentlyFav = isFavorite(id)

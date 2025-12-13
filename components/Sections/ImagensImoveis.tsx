@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import Image from "next/image";
-import testImage from "@/public/test-Image.jpg";
+import { Property } from "@/types/property";
 
 interface ImagensImoveisProps {
+  property: Property;
   showPanel?: boolean;
   panelClosing?: boolean;
   panelOpening?: boolean;
@@ -13,6 +13,7 @@ interface ImagensImoveisProps {
 }
 
 export default function ImagensImoveis({
+  property,
   showPanel: showPanelProp,
   panelClosing: panelClosingProp,
   panelOpening: panelOpeningProp,
@@ -133,11 +134,11 @@ export default function ImagensImoveis({
         handleClose();
       }
     };
-  
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [showPanel, panelOpening]);
-  
+
 
   return (
     <>
@@ -148,7 +149,7 @@ export default function ImagensImoveis({
       {/* Mantemos o wrapper no DOM enquanto showPanel ou estamos no processo de fechar */}
       {(showPanel || panelClosing) && (
         <div
-        className="bg-deaf block overflow-hidden fixed inset-0 z-50"
+          className="bg-deaf block overflow-hidden fixed inset-0 z-50"
           // wrapper que tem a transição de transform inline — por isso onTransitionEnd aqui é fiável
           onTransitionEnd={onTransitionEnd}
           role="dialog"
@@ -167,80 +168,54 @@ export default function ImagensImoveis({
                 onClick={handleClose}
                 disabled={panelClosing}
                 aria-disabled={panelClosing}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path
-                            d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                        />
-                    </svg>
-                    Voltar
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+                Voltar
               </button>
               <div className="min-h-full">
-                <div className="grid grid-cols-6">
-                    <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">Cozinha</span>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-4 col-start-4 col-end-7 pt-8">
-                        <div className="col-span-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Cozinha"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
+                {property.imageSections && property.imageSections.length > 0 ? (
+                  property.imageSections.map((section, sectionIndex) => {
+                    const imageCount = section.images.length;
+                    const imagesToShow = section.images.slice(0, 3);
+
+                    return (
+                      <div key={section.id} className={`grid grid-cols-6 ${sectionIndex === property.imageSections!.length - 1 ? 'pb-8' : ''}`}>
+                        <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">
+                          {section.sectionName}
+                        </span>
+                        <div className={`col-start-4 col-end-7 pt-8 ${imageCount === 1 ? 'pb-8' : ''}`}>
+                          <div className={`grid gap-4 ${imageCount >= 2 ? 'grid-cols-2 grid-rows-2' : 'grid-cols-1'}`}>
+                            {imagesToShow.map((image, imageIndex) => (
+                              <div
+                                key={imageIndex}
+                                className={`h-[406px] bg-cover bg-center overflow-hidden ${
+                                  imageCount >= 2 && imageIndex === 0 ? 'col-span-2' : ''
+                                } ${
+                                  imageCount >= 2 && imageIndex > 0 ? 'row-start-2' : ''
+                                }`}
+                              >
+                                <img
+                                  src={image}
+                                  alt={`${section.sectionName} - ${imageIndex + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Cozinha"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
-                        </div>
-                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Cozinha"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="grid grid-cols-6 pb-8">
-                    <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">Sala</span>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-4 col-start-4 col-end-7 pt-8">
-                        <div className="col-span-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Sala"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
-                        </div>
-                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Sala"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
-                        </div>
-                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
-                            <Image
-                                src={testImage}
-                                alt="Sala"
-                                width={294}
-                                height={406}
-                                className="w-full h-full"
-                            />
-                        </div>
-                    </div>
-                </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-brown body-16-regular">Nenhuma imagem disponível para este imóvel.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

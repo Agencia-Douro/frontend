@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         brown: "button-14-semibold bg-brown hover:bg-brown-muted text-white",
-        red: "button-14-semibold bg-red-600 hover:bg-red-700 text-white",
+        red: "button-14-semibold bg-red hover:bg-red/90 text-white",
         gold: "button-14-semibold bg-gold hover:bg-gold-muted text-white",
         ghost: "button-14-medium text-black-muted",
         "icon-brown": "border border-brown hover:bg-brown",
