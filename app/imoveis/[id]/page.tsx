@@ -37,6 +37,8 @@ export default function ImovelDetails() {
     })
 
     const handleOpenPanel = () => {
+        // Bloquear overflow imediatamente
+        document.body.style.overflow = 'hidden';
         setShowPanel(true)
         // Força o elemento a começar com translate-y-full e depois anima
         requestAnimationFrame(() => {
@@ -56,6 +58,8 @@ export default function ImovelDetails() {
             setPanelClosing(false);
             setShowPanel(false);
             setPanelOpening(false);
+            // Restaurar overflow quando o painel fechar completamente
+            document.body.style.overflow = '';
         }
     }
     const { data: property, isLoading, error } = useQuery({

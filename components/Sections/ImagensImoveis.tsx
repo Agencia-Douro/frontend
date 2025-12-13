@@ -1,101 +1,251 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import Image from "next/image";
+import testImage from "@/public/test-Image.jpg";
 
 interface ImagensImoveisProps {
-    showPanel?: boolean;
-    panelClosing?: boolean;
-    panelOpening?: boolean;
-    handleOpenPanel?: () => void;
-    handleClosePanel?: () => void;
-    handleTransitionEnd?: () => void;
+  showPanel?: boolean;
+  panelClosing?: boolean;
+  panelOpening?: boolean;
+  handleOpenPanel?: () => void;
+  handleClosePanel?: () => void;
+  handleTransitionEnd?: () => void;
 }
 
-export default function ImagensImoveis({ 
-    showPanel: showPanelProp, 
-    panelClosing: panelClosingProp, 
-    panelOpening: panelOpeningProp,
-    handleOpenPanel,
-    handleClosePanel: handleClosePanelProp,
-    handleTransitionEnd: handleTransitionEndProp
+export default function ImagensImoveis({
+  showPanel: showPanelProp,
+  panelClosing: panelClosingProp,
+  panelOpening: panelOpeningProp,
+  handleOpenPanel,
+  handleClosePanel: handleClosePanelProp,
+  handleTransitionEnd: handleTransitionEndProp,
 }: ImagensImoveisProps) {
-    // Estados locais como fallback quando não há props
-    const [showPanelLocal, setShowPanelLocal] = useState(false)
-    const [panelClosingLocal, setPanelClosingLocal] = useState(false)
-    const [panelOpeningLocal, setPanelOpeningLocal] = useState(false)
+  // --- estados locais (fallback quando não há props) ---
+  const [showPanelLocal, setShowPanelLocal] = useState(false);
+  const [panelClosingLocal, setPanelClosingLocal] = useState(false);
+  const [panelOpeningLocal, setPanelOpeningLocal] = useState(false);
 
-    // Usar props se fornecidas, caso contrário usar estados locais
-    const showPanel = showPanelProp !== undefined ? showPanelProp : showPanelLocal;
-    const panelClosing = panelClosingProp !== undefined ? panelClosingProp : panelClosingLocal;
-    const panelOpening = panelOpeningProp !== undefined ? panelOpeningProp : panelOpeningLocal;
+  // --- usar props se fornecidas, senão usar estados locais ---
+  const isControlled = showPanelProp !== undefined;
+  const showPanel = showPanelProp ?? showPanelLocal;
+  const panelClosing = panelClosingProp ?? panelClosingLocal;
+  const panelOpening = panelOpeningProp ?? panelOpeningLocal;
 
-    const handleOpen = () => {
-        if (handleOpenPanel) {
-            handleOpenPanel();
-            console.log("aberto")
-        } else {
-            // Fallback para quando não há prop
-            setShowPanelLocal(true)
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    setPanelOpeningLocal(true)
-                })
-            })
-            console.log("fechado")
-        }
+  // --- abrir painel (modo controlado delega para prop) ---
+  const handleOpen = () => {
+    if (handleOpenPanel) {
+      console.log("[ImagensImoveis] delegando open para prop");
+      handleOpenPanel();
+      return;
     }
-    
-    const handleClosePanel = () => {
-        if (handleClosePanelProp) {
-            handleClosePanelProp();
-        } else {
-            // Fallback para quando não há prop
-            setPanelClosingLocal(true)
-            setPanelOpeningLocal(false)
-        }
+
+    console.log("[ImagensImoveis] abrir (local)");
+    // reset de segurança
+    setPanelClosingLocal(false);
+    setPanelOpeningLocal(false);
+
+    // montar o painel
+    setShowPanelLocal(true);
+
+    // garantir que a transição de abertura corre (duplo RAF força aplicação do style)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setPanelOpeningLocal(true);
+      });
+    });
+  };
+
+  // --- fechar painel (modo controlado delega para prop) ---
+  const handleClose = () => {
+    if (handleClosePanelProp) {
+      console.log("[ImagensImoveis] delegando close para prop");
+      handleClosePanelProp();
+      return;
     }
-    return (
-        <>
-            <Button variant="outline" onClick={handleOpen}>
-                Ver Todas
-            </Button>
-            {(showPanel || panelClosing) && (
-                <div className={`z-50 bg-deaf fixed inset-0 l transition-transform duration-300 ease-in-out overflow-hidden ${panelOpening && !panelClosing ? 'translate-y-0' : 'translate-y-full'}`}>
-                    <div className="container py-8 relative"
-                    onTransitionEnd={() => {
-                        if (panelClosing) {
-                            if (handleTransitionEndProp) {
-                                handleTransitionEndProp();
-                            } else {
-                                // Fallback para quando não há prop
-                                setPanelClosingLocal(false);
-                                setShowPanelLocal(false);
-                                setPanelOpeningLocal(false);
-                            }
-                        }}}>
-                        <button
-                            className="body-14-medium text-brown hover:bg-muted flex items-center gap-2 px-1.5 py-1"
-                            onClick={handleClosePanel}
-                            disabled={panelClosing}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
-                            </svg>Voltar
-                        </button>
-                        <div className="h-full">
-                            <div className="grid grid-cols-12">
-                                <p className="col-start-1 col-end-4 text-end text-brown body-18-medium">Cozinha</p>
-                                <div className="grid-rows-2 col-start-6 col-end-13 gap-4">
-                                    <div className="row-start-1 row-end-3 h-[406px] bg-red col-span-2">s</div>
-                                    <div className="grid grid-col-2 gap-4">
-                                        <div className="col-span-2 h-[406px] bg-red">s</div>
-                                        <div className="h-[406px] bg-red">s</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
+
+    console.log("[ImagensImoveis] fechar (local) — iniciar transição de fechar");
+    setPanelClosingLocal(true);
+    setPanelOpeningLocal(false);
+  };
+
+  // --- when transition ends on the outer wrapper ---
+  const onTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    // só reagir à transição de transform
+    if (e.propertyName !== "transform") return;
+
+    console.log(
+      `[ImagensImoveis] onTransitionEnd prop=${e.propertyName} panelClosing=${panelClosing} panelOpening=${panelOpening}`
+    );
+
+    if (handleTransitionEndProp) {
+      // se caller controla estados, delega
+      handleTransitionEndProp();
+      return;
+    }
+
+    if (panelClosing) {
+      // terminar de fechar: desmontar
+      setPanelClosingLocal(false);
+      setShowPanelLocal(false);
+      setPanelOpeningLocal(false);
+      console.log("[ImagensImoveis] transição de fechar terminou — desmontado localmente");
+    } else {
+      // terminou abertura — nada necessário
+      console.log("[ImagensImoveis] transição de abrir terminou");
+    }
+  };
+
+  // Caso alguém altere showPanelProp externamente (modo controlado),
+  // queremos garantir que o estado local de opening/closing sincroniza visualmente
+  useEffect(() => {
+    if (!isControlled) return;
+
+    // modo controlado: se showPanelProp foi ativado -> simular opening
+    if (showPanelProp) {
+      // reset e abrir
+      setPanelClosingLocal(false);
+      setPanelOpeningLocal(false);
+      // permitir ao browser aplicar estilos
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          // não mexer em showPanelLocal (está controlado pelo prop), usamos apenas panelOpeningLocal para cálculo do transform inline
+          setPanelOpeningLocal(true);
+        });
+      });
+    } else {
+      // se foi pedido para fechar via prop, iniciar a animação de fechar
+      setPanelOpeningLocal(false);
+      setPanelClosingLocal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showPanelProp]);
+
+  // --- estilo inline garantido para a transição do transform ---
+  const transformStyle = panelOpening && !panelClosing ? "translateY(0%)" : "translateY(100%)";
+
+  // pointer events off when fully hidden to avoid tabbing into content while hidden
+  const pointerEvents = showPanel || panelClosing ? "auto" : "none";
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && (showPanel || panelOpening)) {
+        console.log("[ImagensImoveis] ESC pressionado – fechar painel");
+        handleClose();
+      }
+    };
+  
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showPanel, panelOpening]);
+  
+
+  return (
+    <>
+      <Button variant="outline" onClick={handleOpen}>
+        Ver Todas
+      </Button>
+
+      {/* Mantemos o wrapper no DOM enquanto showPanel ou estamos no processo de fechar */}
+      {(showPanel || panelClosing) && (
+        <div
+        className="bg-deaf block overflow-hidden fixed inset-0 z-50"
+          // wrapper que tem a transição de transform inline — por isso onTransitionEnd aqui é fiável
+          onTransitionEnd={onTransitionEnd}
+          role="dialog"
+          aria-modal="true"
+          style={{
+            overflow: "hidden",
+            transform: transformStyle,
+            transition: "transform 300ms ease-in-out",
+            pointerEvents,
+          }}
+        >
+          <div style={{ height: "100%", overflowY: "auto" }}>
+            <div className="container relative" style={{ minHeight: "100%" }}>
+              <button
+                className="body-14-medium text-brown hover:bg-muted flex items-center gap-2 px-1.5 py-1 fixed mt-8 z-100"
+                onClick={handleClose}
+                disabled={panelClosing}
+                aria-disabled={panelClosing}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path
+                            d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                        />
+                    </svg>
+                    Voltar
+              </button>
+              <div className="min-h-full">
+                <div className="grid grid-cols-6">
+                    <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">Cozinha</span>
+                    <div className="grid grid-cols-2 grid-rows-2 gap-4 col-start-4 col-end-7 pt-8">
+                        <div className="col-span-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Cozinha"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
+                        </div>
+                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Cozinha"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
+                        </div>
+                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Cozinha"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
                         </div>
                     </div>
                 </div>
-            )}
-        </>
-    )
+                <div className="grid grid-cols-6 pb-8">
+                    <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">Sala</span>
+                    <div className="grid grid-cols-2 grid-rows-2 gap-4 col-start-4 col-end-7 pt-8">
+                        <div className="col-span-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Sala"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
+                        </div>
+                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Sala"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
+                        </div>
+                        <div className="row-start-2 h-[406px] bg-cover bg-center overflow-hidden">
+                            <Image
+                                src={testImage}
+                                alt="Sala"
+                                width={294}
+                                height={406}
+                                className="w-full h-full"
+                            />
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
