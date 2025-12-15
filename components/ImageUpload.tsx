@@ -102,7 +102,7 @@ export function ImageUpload({ value, onChange, label = "Imagem" }: ImageUploadPr
           />
           <Button
             type="button"
-            variant="destructive"
+            variant="brown"
             size="icon"
             className="absolute top-2 right-2"
             onClick={handleRemove}
