@@ -4,12 +4,14 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { newslettersApi } from "@/services/api"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RichTextEditor } from "@/components/RichTextEditor"
+import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 
@@ -24,8 +26,10 @@ export default function EditNewsletterPage() {
     content: "",
     category: "",
     coverImage: "",
+    propertyIds: [] as string[],
   })
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [isPropertyModalOpen, setIsPropertyModalOpen] = useState(false)
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -43,6 +47,10 @@ export default function EditNewsletterPage() {
     }
   }
 
+  const handlePropertySelectionConfirm = (propertyIds: string[]) => {
+    setFormData(prev => ({ ...prev, propertyIds }))
+  }
+
   const { data: newsletter, isLoading } = useQuery({
     queryKey: ["newsletter", id],
     queryFn: () => newslettersApi.getById(id),
@@ -56,6 +64,7 @@ export default function EditNewsletterPage() {
         content: newsletter.content,
         category: newsletter.category,
         coverImage: newsletter.coverImage || "",
+        propertyIds: newsletter.propertyIds || [],
       })
     }
   }, [newsletter])
@@ -111,7 +120,6 @@ export default function EditNewsletterPage() {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar
         </Button>
-        <h1 className="text-3xl font-bold">Editar Newsletter</h1>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -173,6 +181,58 @@ export default function EditNewsletterPage() {
                 placeholder="Digite o conteúdo da newsletter..."
               />
             </div>
+
+            <div className="space-y-4">
+              <div>
+                <Label>Imóveis Relacionados</Label>
+                <p className="text-sm text-gray-500 mb-3">
+                  Selecione os imóveis que deseja associar a esta newsletter
+                </p>
+              </div>
+
+              {/* Cards dos imóveis selecionados */}
+              {newsletter?.properties && newsletter.properties.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 border rounded-lg bg-gray-50">
+                  {newsletter.properties.map((property) => (
+                    <div key={property.id} className="bg-white rounded-lg overflow-hidden shadow-sm">
+                      <div className="relative w-full h-40">
+                        <Image
+                          src={property.image}
+                          alt={property.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="p-3">
+                        <p className="body-16-medium text-black line-clamp-1">{property.title}</p>
+                        <p className="body-14-medium text-grey mt-1">
+                          {property.concelho}, {property.distrito}
+                        </p>
+                        <p className="body-20-medium text-black mt-2">
+                          {new Intl.NumberFormat('pt-PT', {
+                            style: 'currency',
+                            currency: 'EUR',
+                            minimumFractionDigits: 0
+                          }).format(parseFloat(property.price))}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Botão para editar seleção */}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsPropertyModalOpen(true)}
+                className="w-full"
+              >
+                {formData.propertyIds.length > 0
+                  ? `${formData.propertyIds.length} imóvel(is) selecionado(s) - Clique para editar seleção`
+                  : "Selecionar Imóveis"}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -192,6 +252,13 @@ export default function EditNewsletterPage() {
           </Button>
         </div>
       </form>
+
+      <PropertySelectorModal
+        open={isPropertyModalOpen}
+        onOpenChange={setIsPropertyModalOpen}
+        selectedPropertyIds={formData.propertyIds}
+        onConfirm={handlePropertySelectionConfirm}
+      />
     </div>
   )
 }

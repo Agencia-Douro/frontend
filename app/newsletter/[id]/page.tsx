@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { newslettersApi } from "@/services/api";
 import Link from "next/link";
+import Image from "next/image";
 import Footer from "@/components/Footer";
 
 export default function NewsletterDetailsPage() {
@@ -84,20 +85,16 @@ export default function NewsletterDetailsPage() {
                             {newsletter.title}
                         </h1>
 
-                        {/* Meta info */}
-                        <div className="flex items-center gap-4 mb-8 pb-8 border-b border-brown/10">
-                            <span className="body-14-regular">
-                                {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
-                                    day: '2-digit',
-                                    month: 'long',
-                                    year: 'numeric'
-                                })}
-                            </span>
-                            <div className="w-1 h-1 rounded-full"></div>
-                            <span className="body-14-regular">
-                                {newsletter.readingTime} min de leitura
-                            </span>
-                        </div>
+                        {/* Cover Image */}
+                        {newsletter.coverImage && (
+                            <div className="relative w-full mb-10">
+                                <img
+                                    src={newsletter.coverImage}
+                                    alt={newsletter.title}
+                                    className="w-full h-auto max-h-[400px] object-contain"
+                                />
+                            </div>
+                        )}
 
                         {/* Content */}
                         <article className="mb-10">

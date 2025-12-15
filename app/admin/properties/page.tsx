@@ -96,10 +96,10 @@ export default function PropertiesPage() {
   const currentPage = data?.page || 1
 
   return (
-    <div className="container mx-auto p-6 bg-white">
+    <div className="container mt-10">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Gerenciar Propriedades</h1>
+          <h1 className="body-18-medium">Gerenciar Propriedades</h1>
           <p className="text-muted-foreground mt-1">
             Total de {data?.total} propriedade(s)
           </p>

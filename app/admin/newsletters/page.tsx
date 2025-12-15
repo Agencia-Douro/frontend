@@ -7,7 +7,7 @@ import { newslettersApi } from "@/services/api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Plus, Search, Trash2, Edit, X } from "lucide-react"
 import { toast } from "sonner"
 import {
@@ -109,10 +109,10 @@ export default function NewslettersPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-white">
+    <div className="container mt-10">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Gerenciar Newsletters</h1>
+          <h1 className="body-18-medium">Gerenciar Newsletters</h1>
           <p className="text-muted-foreground mt-1">
             Total de {newsletters?.length || 0} newsletter(s)
             {filteredAndSortedNewsletters.length !== newsletters?.length &&
@@ -175,7 +175,7 @@ export default function NewslettersPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedNewsletters.map((newsletter) => (
-          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer p-0">
             {newsletter.coverImage && (
               <div className="w-full h-48 overflow-hidden">
                 <img
@@ -185,12 +185,8 @@ export default function NewslettersPage() {
                 />
               </div>
             )}
-            <CardHeader>
-              <div className="flex items-start justify-between gap-2">
-                <CardTitle className="text-lg line-clamp-2">{newsletter.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="pb-5">
+              <CardTitle className="text-lg line-clamp-2 mb-5">{newsletter.title}</CardTitle>
               <div className="flex gap-2">
                 <Button
                   variant="outline"

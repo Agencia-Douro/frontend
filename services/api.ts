@@ -6,7 +6,7 @@ import {
 import { Newsletter } from "@/types/newsletter";
 
 const API_BASE_URL = "http://51.75.19.38:3008";
-// const API_BASE_URL = "http://localhost:3008";
+//const API_BASE_URL = "http://localhost:3008";
 
 export interface PropertyFilters {
   minPrice?: number;
@@ -288,6 +288,7 @@ export const newslettersApi = {
         content: data.content,
         category: data.category,
         coverImage: data.coverImage,
+        propertyIds: data.propertyIds || [],
       }),
     });
 
@@ -315,6 +316,7 @@ export const newslettersApi = {
         content: data.content,
         category: data.category,
         coverImage: data.coverImage,
+        propertyIds: data.propertyIds || [],
       }),
     });
 

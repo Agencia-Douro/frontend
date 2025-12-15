@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { newslettersApi } from "@/services/api"
+import { newslettersApi, propertiesApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RichTextEditor } from "@/components/RichTextEditor"
+import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 
@@ -21,8 +22,10 @@ export default function CreateNewsletterPage() {
     content: "",
     category: "",
     coverImage: "",
+    propertyIds: [] as string[],
   })
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [isPropertyModalOpen, setIsPropertyModalOpen] = useState(false)
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -38,6 +41,10 @@ export default function CreateNewsletterPage() {
     } finally {
       setUploadingImage(false)
     }
+  }
+
+  const handlePropertySelectionConfirm = (propertyIds: string[]) => {
+    setFormData(prev => ({ ...prev, propertyIds }))
   }
 
   const createMutation = useMutation({
@@ -134,6 +141,23 @@ export default function CreateNewsletterPage() {
                 placeholder="Digite o conteúdo da newsletter..."
               />
             </div>
+
+            <div className="space-y-2">
+              <Label>Imóveis Relacionados</Label>
+              <p className="text-sm text-gray-500 mb-3">
+                Selecione os imóveis que deseja associar a esta newsletter
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsPropertyModalOpen(true)}
+                className="w-full"
+              >
+                {formData.propertyIds.length > 0
+                  ? `${formData.propertyIds.length} imóvel(is) selecionado(s) - Clique para editar`
+                  : "Selecionar Imóveis"}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -153,6 +177,13 @@ export default function CreateNewsletterPage() {
           </Button>
         </div>
       </form>
+
+      <PropertySelectorModal
+        open={isPropertyModalOpen}
+        onOpenChange={setIsPropertyModalOpen}
+        selectedPropertyIds={formData.propertyIds}
+        onConfirm={handlePropertySelectionConfirm}
+      />
     </div>
   )
 }
