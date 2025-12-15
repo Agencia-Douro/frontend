@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { propertiesApi } from "@/services/api"
@@ -27,6 +27,7 @@ export default function ImovelDetails() {
     const [showPanel, setShowPanel] = useState(false)
     const [panelClosing, setPanelClosing] = useState(false)
     const [panelOpening, setPanelOpening] = useState(false)
+    const ref = useRef(null)
 
     const [formData, setFormData] = useState({
         nome: "",
@@ -118,7 +119,7 @@ export default function ImovelDetails() {
     const handleDownloadPDF = async () => {
         try {
             toast.loading("Gerando brochura em PDF...")
-            await generatePropertyPDF(property)
+            await generatePropertyPDF(property, ref)
             toast.dismiss()
             toast.success("Brochura gerada com sucesso!")
         } catch (error) {
@@ -168,7 +169,7 @@ export default function ImovelDetails() {
 
     return (
         <>
-            <section className="bg-deaf">
+            <section className="bg-deaf" ref={ref}>
                 <div className="container pb-16">
                     <div className="flex justify-between items-center py-4">
                         <div className="flex items-center gap-3">
