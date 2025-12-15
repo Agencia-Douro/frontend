@@ -105,7 +105,6 @@ export default function EditPropertyPage() {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar
         </Button>
-        <h1 className="text-3xl font-bold">Editar Propriedade</h1>
       </div>
 
       <PropertyForm

@@ -101,7 +101,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             {/* Botão Flutuante */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 right-6 z-40 bg-gold hover:bg-gold/90 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 font-medium"
+                className="cursor-pointer fixed bottom-6 right-6 z-40 bg-gold hover:bg-gold/90 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 font-medium"
             >
                 Avaliador Online
             </button>
@@ -110,7 +110,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-2xl">Avaliador Online</DialogTitle>
+                        <DialogTitle className="body-18-medium">Avaliador Online</DialogTitle>
                     </DialogHeader>
 
                     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -251,9 +251,9 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                             />
                             <label
                                 htmlFor="modal-marketing"
-                                className="body-14-regular text-black-muted cursor-pointer"
+                                className="body-14-medium text-black-muted cursor-pointer"
                             >
-                                Autorizo a Agência Douro a guardar estes dados para efeitos de contacto.
+                                Autorizo a Agência Douro a guardar estes dados
                             </label>
                         </div>
 

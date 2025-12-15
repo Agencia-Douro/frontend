@@ -48,7 +48,7 @@ export function DeletePropertyDialog({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Confirmar exclusão</DialogTitle>
+          <DialogTitle className="body-18-medium">Confirmar exclusão</DialogTitle>
           <DialogDescription>
             Tem certeza que deseja excluir a propriedade{" "}
             <span className="font-semibold">{propertyTitle}</span>? Esta ação

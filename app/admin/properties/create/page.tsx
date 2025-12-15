@@ -77,7 +77,6 @@ export default function CreatePropertyPage() {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar
         </Button>
-        <h1 className="text-3xl font-bold">Nova Propriedade</h1>
       </div>
 
       <PropertyForm

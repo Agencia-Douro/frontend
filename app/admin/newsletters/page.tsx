@@ -219,7 +219,7 @@ export default function NewslettersPage() {
       <Dialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirmar exclusão</DialogTitle>
+            <DialogTitle className="body-18-medium">Confirmar exclusão</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja deletar esta newsletter? Esta ação não pode ser desfeita.
             </DialogDescription>
