@@ -17,6 +17,7 @@ import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
 import { generatePropertyPDF } from "@/utils/pdfGenerator"
 import ImagensImoveis from "@/components/Sections/ImagensImoveis"
+import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -27,7 +28,7 @@ export default function ImovelDetails() {
     const [showPanel, setShowPanel] = useState(false)
     const [panelClosing, setPanelClosing] = useState(false)
     const [panelOpening, setPanelOpening] = useState(false)
-    const ref = useRef(null)
+    const pdfRef = useRef(null)
 
     const [formData, setFormData] = useState({
         nome: "",
@@ -119,7 +120,7 @@ export default function ImovelDetails() {
     const handleDownloadPDF = async () => {
         try {
             toast.loading("Gerando brochura em PDF...")
-            await generatePropertyPDF(property, ref)
+            await generatePropertyPDF(property, pdfRef)
             toast.dismiss()
             toast.success("Brochura gerada com sucesso!")
         } catch (error) {
@@ -169,7 +170,7 @@ export default function ImovelDetails() {
 
     return (
         <>
-            <section className="bg-deaf" ref={ref}>
+            <section className="bg-deaf">
                 <div className="container pb-16">
                     <div className="flex justify-between items-center py-4">
                         <div className="flex items-center gap-3">
@@ -437,6 +438,11 @@ export default function ImovelDetails() {
                 currentPrice={property.price}
             />
             <Footer />
+
+            {/* Template invisível para geração de PDF */}
+            <div className="fixed -left-[9999px] top-0 pointer-events-none" ref={pdfRef}>
+                <PropertyPDFTemplate property={property} />
+            </div>
         </>
     );
 }
