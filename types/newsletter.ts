@@ -4,6 +4,7 @@ export interface Newsletter {
   content: string;
   category: string;
   readingTime: number;
+  coverImage: string;
   createdAt: string;
   updatedAt: string;
 }

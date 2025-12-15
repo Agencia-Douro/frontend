@@ -7,7 +7,7 @@ import { newslettersApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RichTextEditor } from "@/components/RichTextEditor"
 import { ArrowLeft } from "lucide-react"
@@ -20,7 +20,25 @@ export default function CreateNewsletterPage() {
     title: "",
     content: "",
     category: "",
+    coverImage: "",
   })
+  const [uploadingImage, setUploadingImage] = useState(false)
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingImage(true)
+    try {
+      const result = await newslettersApi.uploadImage(file)
+      setFormData({ ...formData, coverImage: result.url })
+      toast.success("Imagem enviada com sucesso!")
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao fazer upload da imagem")
+    } finally {
+      setUploadingImage(false)
+    }
+  }
 
   const createMutation = useMutation({
     mutationFn: (data: any) => newslettersApi.create(data),
@@ -91,6 +109,21 @@ export default function CreateNewsletterPage() {
                   <SelectItem value="noticias">Notícias</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="coverImage">Imagem de Capa</Label>
+              <Input
+                id="coverImage"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploadingImage}
+              />
+              {uploadingImage && <p className="text-sm text-gray-500">Enviando imagem...</p>}
+              {formData.coverImage && (
+                <img src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover rounded border mt-2" />
+              )}
             </div>
 
             <div className="space-y-2">

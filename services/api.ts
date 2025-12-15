@@ -287,6 +287,7 @@ export const newslettersApi = {
         title: data.title,
         content: data.content,
         category: data.category,
+        coverImage: data.coverImage,
       }),
     });
 
@@ -313,6 +314,7 @@ export const newslettersApi = {
         title: data.title,
         content: data.content,
         category: data.category,
+        coverImage: data.coverImage,
       }),
     });
 

@@ -164,7 +164,7 @@ export default function ImagensImoveis({
           <div style={{ height: "100%", overflowY: "auto" }}>
             <div className="container relative" style={{ minHeight: "100%" }}>
               <button
-                className="body-14-medium text-brown hover:bg-muted flex items-center gap-2 px-1.5 py-1 fixed mt-8 z-100"
+                className="flex items-center gap-2 px-1.5 py-1 fixed mt-8 z-100 body-16-medium text-brown hover:text-gold transition-colors cursor-pointer"
                 onClick={handleClose}
                 disabled={panelClosing}
                 aria-disabled={panelClosing}>
@@ -193,11 +193,9 @@ export default function ImagensImoveis({
                             {imagesToShow.map((image, imageIndex) => (
                               <div
                                 key={imageIndex}
-                                className={`h-[406px] bg-cover bg-center overflow-hidden ${
-                                  imageCount >= 2 && imageIndex === 0 ? 'col-span-2' : ''
-                                } ${
-                                  imageCount >= 2 && imageIndex > 0 ? 'row-start-2' : ''
-                                }`}
+                                className={`h-[406px] bg-cover bg-center overflow-hidden ${imageCount >= 2 && imageIndex === 0 ? 'col-span-2' : ''
+                                  } ${imageCount >= 2 && imageIndex > 0 ? 'row-start-2' : ''
+                                  }`}
                               >
                                 <img
                                   src={image}

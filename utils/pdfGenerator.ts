@@ -1,412 +1,314 @@
-import jsPDF from "jspdf";
 import { Property } from "@/types/property";
+import jsPDF from "jspdf";
 
-// Cores da Agência Douro
+// --- CONFIGURAÇÃO DE DESIGN ---
 const COLORS = {
   brown: "#553B1E",
-  gold: "#DCB053",
-  deaf: "#FBF9F6",
-  muted: "#F4F0E9",
-  grey: "#6A6561",
-  black: "#0B090C",
+  gold: "#DCB053", // Dourado para detalhes finos
+  bg_light: "#FAFAFA", // Fundo muito suave
+  grey_dark: "#333333",
+  grey_light: "#888888",
+  black: "#000000",
   white: "#FFFFFF",
-  red: "#FB2C36",
 };
 
-// Função auxiliar para converter cor hex para RGB
-const hexToRgb = (hex: string) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : { r: 0, g: 0, b: 0 };
-};
+// URL do Logo
+const AGENCY_LOGO_URL = "/Logo.svg"; // Certifique-se que este arquivo existe em public/
 
-// Função para carregar imagem e converter para base64
-const loadImage = (url: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
+/**
+ * Carrega a imagem e trata erros de CORS.
+ * IMPORTANTE: O servidor da imagem deve retornar o header 'Access-Control-Allow-Origin: *'
+ */
+const loadImage = (url: string): Promise<string | null> => {
+  return new Promise((resolve) => {
     const img = new Image();
-    img.crossOrigin = "Anonymous";
+    img.crossOrigin = "Anonymous"; // Crucial para imagens externas
+    img.src = url;
+
     img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext("2d");
       if (ctx) {
+        // Preenche fundo branco para evitar PNGs transparentes ficarem pretos
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0);
-        resolve(canvas.toDataURL("image/jpeg", 0.8));
+        try {
+          const dataURL = canvas.toDataURL("image/jpeg", 0.9);
+          resolve(dataURL);
+        } catch (e) {
+          console.error("Erro CORS ao converter imagem:", url, e);
+          resolve(null);
+        }
       } else {
-        reject("Failed to get canvas context");
+        resolve(null);
       }
     };
-    img.onerror = () => reject("Failed to load image");
-    img.src = url;
+
+    img.onerror = () => {
+      console.warn(`Erro ao carregar imagem (verifique URL/CORS): ${url}`);
+      resolve(null);
+    };
   });
 };
 
 export const generatePropertyPDF = async (property: Property) => {
-  const pdf = new jsPDF({
+  const doc = new jsPDF({
     orientation: "portrait",
     unit: "mm",
     format: "a4",
   });
 
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-  const margin = 15;
-  const contentWidth = pageWidth - 2 * margin;
+  // Dimensões & Layout Clean
+  const PAGE_WIDTH = 210;
+  const PAGE_HEIGHT = 297;
+  const MARGIN = 15; // Margem maior = mais premium
+  const COL_GAP = 10;
 
-  // Definir background bege claro
-  const bgColor = hexToRgb(COLORS.deaf);
-  pdf.setFillColor(bgColor.r, bgColor.g, bgColor.b);
-  pdf.rect(0, 0, pageWidth, pageHeight, "F");
+  // Coluna esquerda mais estreita para texto, direita mais larga para imagens (65%)
+  const LEFT_COL_WIDTH = 70;
+  const RIGHT_COL_START = MARGIN + LEFT_COL_WIDTH + COL_GAP;
+  const RIGHT_COL_WIDTH = PAGE_WIDTH - RIGHT_COL_START - MARGIN;
 
-  // ===== HEADER - Logo e Tipo do Imóvel =====
-  const logoColor = hexToRgb(COLORS.brown);
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.setFontSize(22);
-  pdf.setFont("helvetica", "bold");
-  pdf.text("AGÊNCIA", margin, 12);
+  let cursorY = MARGIN;
 
-  const goldColor = hexToRgb(COLORS.gold);
-  pdf.setTextColor(goldColor.r, goldColor.g, goldColor.b);
-  pdf.text("DOURO", margin + 30, 12);
+  // --- 1. CARREGAMENTO DE ASSETS ---
+  const imageUrls: string[] = [];
+  if (property.image) imageUrls.push(property.image);
+  if (property.imageSections) {
+    property.imageSections.forEach((s) => imageUrls.push(...s.images));
+  }
 
-  // Tipo do Imóvel no canto superior direito
-  const propertyTypeMap: Record<string, string> = {
-    apartamento: "Apartamento",
-    moradia: "Moradia",
-    terreno: "Terreno",
-    comercial: "Comercial",
-    escritorio: "Escritório",
-    armazem: "Armazém",
-    garagem: "Garagem",
-    outro: "Outro",
-  };
+  // Tenta carregar imagens
+  const imagesToLoad = imageUrls.slice(0, 5);
+  const loadedImages = await Promise.all(
+    imagesToLoad.map((url) => loadImage(url))
+  );
+  // Remove falhas
+  const validImages = loadedImages.filter((img): img is string => img !== null);
 
-  const transactionTypeMap: Record<string, string> = {
-    comprar: "Venda",
-    arrendar: "Arrendamento",
-    vender: "Venda",
-  };
+  // --- 2. CABEÇALHO MINIMALISTA ---
+  const logoBase64 = await loadImage(AGENCY_LOGO_URL);
 
-  const stateMap: Record<string, string> = {
-    novo: "Novo",
-    usado: "Usado",
-    renovado: "Renovado",
-    em_construcao: "Em Construção",
-  };
+  if (logoBase64) {
+    const logoW = 45;
+    const logoH = 18;
+    doc.addImage(
+      logoBase64,
+      "PNG",
+      MARGIN,
+      cursorY,
+      logoW,
+      logoH,
+      undefined,
+      "FAST"
+    );
+  } else {
+    doc.setTextColor(COLORS.brown);
+    doc.setFont("times", "bold");
+    doc.setFontSize(18);
+    doc.text("AGÊNCIA DOURO", MARGIN, cursorY + 8);
+  }
 
-  pdf.setFontSize(10);
-  pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  const headerText = `${propertyTypeMap[property.propertyType] || property.propertyType} ${
-    property.propertyType.toLowerCase() === "apartamento" ? `T${property.bedrooms}` : ""
-  }  Habitação / ${property.propertyState ? stateMap[property.propertyState] : "Novo"} / ${
-    transactionTypeMap[property.transactionType]
-  }`;
-  pdf.text(headerText, pageWidth - margin, 8, { align: "right" });
-
-  pdf.setFontSize(9);
-  pdf.text(
-    `${property.concelho} - ${property.distrito}`,
-    pageWidth - margin,
-    13,
+  // Info rápida no topo direito (Data/Ref)
+  doc.setFont("courier", "normal"); // Fonte Mono para dados técnicos
+  doc.setFontSize(8);
+  doc.setTextColor(COLORS.grey_light);
+  doc.text(
+    `REF: ${property.reference} | ${new Date().toLocaleDateString()}`,
+    PAGE_WIDTH - MARGIN,
+    cursorY + 5,
     { align: "right" }
   );
 
-  // Referência
-  if (property.reference) {
-    pdf.setFontSize(10);
-    pdf.setFont("helvetica", "bold");
-    pdf.text(property.reference, pageWidth - margin, 18, { align: "right" });
+  cursorY += 25;
+
+  // --- 3. TÍTULO E PREÇO (CLEAN) ---
+
+  // Tags (Minimalistas, sem fundo pesado)
+  const tags = [
+    property.transactionType,
+    property.propertyState,
+    property.propertyType,
+  ]
+    .filter(Boolean)
+    .map((t) => t?.toUpperCase());
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(7);
+  doc.setTextColor(COLORS.gold);
+  doc.text(tags.join("  //  "), MARGIN, cursorY); // Separador estilo código
+
+  cursorY += 6;
+
+  // Título
+  doc.setFont("times", "roman"); // Times dá o toque clássico/premium
+  doc.setFontSize(20);
+  doc.setTextColor(COLORS.black);
+  const titleLines = doc.splitTextToSize(property.title, LEFT_COL_WIDTH);
+  doc.text(titleLines, MARGIN, cursorY);
+
+  cursorY += titleLines.length * 8 + 2;
+
+  // Localização
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(COLORS.grey_dark);
+  doc.text(`${property.concelho}, ${property.distrito}`, MARGIN, cursorY);
+  cursorY += 10;
+
+  // Linha separadora fina
+  doc.setDrawColor(COLORS.gold);
+  doc.setLineWidth(0.2); // Linha super fina
+  doc.line(MARGIN, cursorY, MARGIN + 20, cursorY);
+  cursorY += 8;
+
+  // --- 4. PREÇO (DESTAQUE) ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(24);
+  doc.setTextColor(COLORS.brown);
+  const priceFormatted = new Intl.NumberFormat("pt-PT", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(property.price));
+  doc.text(priceFormatted, MARGIN, cursorY);
+
+  cursorY += 15;
+
+  // --- 5. GRID DE ESPECIFICAÇÕES (ESTILO MONO/TECH) ---
+  // Usaremos Courier para parecer dados técnicos de arquitetura
+
+  const drawSpec = (label: string, value: string | number, yPos: number) => {
+    doc.setFont("courier", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(COLORS.grey_light);
+    doc.text(label.toUpperCase(), MARGIN, yPos);
+
+    doc.setFont("courier", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(COLORS.grey_dark);
+    doc.text(String(value), MARGIN + 35, yPos); // Alinhamento tabular
+  };
+
+  drawSpec("QUARTOS", property.bedrooms, cursorY);
+  cursorY += 6;
+  drawSpec("CASAS DE BANHO", property.bathrooms, cursorY);
+  cursorY += 6;
+
+  const areaVal = property.usefulArea || property.builtArea;
+  drawSpec("ÁREA", `${areaVal ?? "-"} m²`, cursorY);
+  cursorY += 6;
+
+  if (property.garageSpaces) {
+    drawSpec("ESTACIONAMENTO", property.garageSpaces, cursorY);
+    cursorY += 6;
+  }
+  if (property.energyClass) {
+    drawSpec("ENERGIA", property.energyClass.toUpperCase(), cursorY);
+    cursorY += 6;
   }
 
-  // ===== SEÇÃO ESQUERDA - Consultor (placeholder) =====
-  let yPos = 25;
+  cursorY += 10;
 
-  // Box para foto do consultor (placeholder com cor marrom)
-  const consultorBoxX = margin;
-  const consultorBoxY = yPos;
-  const consultorBoxWidth = 60;
-  const consultorBoxHeight = 35;
+  // --- 6. DESCRIÇÃO ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.setTextColor(COLORS.black);
+  doc.text("SOBRE O IMÓVEL", MARGIN, cursorY);
+  cursorY += 5;
 
-  pdf.setFillColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.rect(consultorBoxX, consultorBoxY, consultorBoxWidth, consultorBoxHeight, "F");
+  doc.setFont("helvetica", "normal"); // Fonte limpa para leitura
+  doc.setFontSize(9);
+  doc.setTextColor(COLORS.grey_dark);
+  doc.setLineHeightFactor(1.5); // Mais espaço entre linhas (Premium)
 
-  // Nome do consultor (placeholder)
-  pdf.setFontSize(11);
-  pdf.setFont("helvetica", "bold");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.text("Consultor Imobiliário", consultorBoxX, consultorBoxY + consultorBoxHeight + 7);
+  const maxDescHeight = PAGE_HEIGHT - cursorY - 20;
+  const descLines = doc.splitTextToSize(property.description, LEFT_COL_WIDTH);
 
-  pdf.setFontSize(9);
-  pdf.setFont("helvetica", "normal");
-  const greyColor = hexToRgb(COLORS.grey);
-  pdf.setTextColor(greyColor.r, greyColor.g, greyColor.b);
-  pdf.text("Agência Douro", consultorBoxX, consultorBoxY + consultorBoxHeight + 12);
+  // Lógica de corte de texto
+  const lineHeightMm = 4.5;
+  const maxLines = Math.floor(maxDescHeight / lineHeightMm);
+  const printLines =
+    descLines.length > maxLines
+      ? [...descLines.slice(0, maxLines - 1), "[...]"]
+      : descLines;
 
-  // Telefone
-  pdf.setFontSize(9);
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.text("☎ +351 XXX XXX XXX", consultorBoxX, consultorBoxY + consultorBoxHeight + 17);
+  doc.text(printLines, MARGIN, cursorY);
 
-  pdf.setFontSize(7);
-  pdf.setTextColor(greyColor.r, greyColor.g, greyColor.b);
-  pdf.text("(Chamada para a rede móvel nacional)", consultorBoxX, consultorBoxY + consultorBoxHeight + 21);
+  // --- 7. IMAGENS (COLUNA DIREITA - VISUAL MAGAZINE) ---
+  let imgY = MARGIN + 20; // Começa um pouco abaixo para alinhar com título
 
-  // Email
-  pdf.setFontSize(9);
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.text("contacto@agenciadouro.pt", consultorBoxX, consultorBoxY + consultorBoxHeight + 26);
+  if (validImages.length > 0) {
+    // Imagem Principal (Grande e impactante)
+    const mainImgH = 100;
+    doc.addImage(
+      validImages[0],
+      "JPEG",
+      RIGHT_COL_START,
+      MARGIN,
+      RIGHT_COL_WIDTH,
+      mainImgH,
+      undefined,
+      "FAST"
+    );
 
-  // ===== SEÇÃO DIREITA - Galeria de Fotos do Imóvel =====
-  const galleryX = consultorBoxX + consultorBoxWidth + 10;
-  const galleryWidth = pageWidth - margin - galleryX;
+    // Pequena legenda na imagem (opcional, visual chique)
+    // doc.setFillColor(COLORS.white);
+    // doc.rect(RIGHT_COL_START, MARGIN + mainImgH - 8, 30, 8, "F");
+    // doc.setFontSize(6);
+    // doc.text("VISTA PRINCIPAL", RIGHT_COL_START + 2, MARGIN + mainImgH - 3);
 
-  // Foto principal (maior)
-  const mainPhotoHeight = 60;
+    let currentImgY = MARGIN + mainImgH + COL_GAP;
 
-  try {
-    if (property.image) {
-      const imageData = await loadImage(property.image);
-      pdf.addImage(imageData, "JPEG", galleryX, yPos, galleryWidth, mainPhotoHeight);
-    } else {
-      // Placeholder para foto principal
-      pdf.setFillColor(200, 200, 200);
-      pdf.rect(galleryX, yPos, galleryWidth, mainPhotoHeight, "F");
-      pdf.setTextColor(150, 150, 150);
-      pdf.setFontSize(10);
-      pdf.text("Foto do Imóvel", galleryX + galleryWidth / 2, yPos + mainPhotoHeight / 2, {
-        align: "center",
+    // Restante das imagens em coluna única larga ou mosaico
+    const remainingImages = validImages.slice(1);
+
+    // Layout mosaico assimétrico para visual moderno
+    if (remainingImages.length > 0) {
+      remainingImages.forEach((img) => {
+        const h = 55;
+        if (currentImgY + h < PAGE_HEIGHT - MARGIN) {
+          doc.addImage(
+            img,
+            "JPEG",
+            RIGHT_COL_START,
+            currentImgY,
+            RIGHT_COL_WIDTH,
+            h,
+            undefined,
+            "FAST"
+          );
+          currentImgY += h + COL_GAP;
+        }
       });
     }
-  } catch (error) {
-    // Fallback para placeholder
-    pdf.setFillColor(200, 200, 200);
-    pdf.rect(galleryX, yPos, galleryWidth, mainPhotoHeight, "F");
+  } else {
+    // Placeholder se não carregar imagens (evita espaço vazio feio)
+    doc.setFillColor(COLORS.bg_light);
+    doc.setDrawColor(COLORS.grey_light);
+    doc.rect(RIGHT_COL_START, MARGIN, RIGHT_COL_WIDTH, 150, "FD");
+    doc.setFontSize(10);
+    doc.setTextColor(COLORS.grey_light);
+    doc.text("Imagens indisponíveis", RIGHT_COL_START + 10, MARGIN + 75);
   }
 
-  // Fotos menores (grid 2x2)
-  const smallPhotoSize = (galleryWidth - 5) / 2;
-  const smallPhotosY = yPos + mainPhotoHeight + 5;
+  // --- 8. RODAPÉ ---
+  const footerY = PAGE_HEIGHT - 10;
 
-  // Tentar carregar fotos das seções de imagens
-  const imagesToLoad =
-    property.imageSections && property.imageSections.length > 0
-      ? property.imageSections.flatMap((section) => section.images).slice(0, 4)
-      : [];
+  doc.setDrawColor(COLORS.grey_light);
+  doc.setLineWidth(0.1);
+  doc.line(MARGIN, footerY - 4, PAGE_WIDTH - MARGIN, footerY - 4);
 
-  const photoPositions = [
-    { x: galleryX, y: smallPhotosY },
-    { x: galleryX + smallPhotoSize + 5, y: smallPhotosY },
-    { x: galleryX, y: smallPhotosY + smallPhotoSize + 5 },
-    { x: galleryX + smallPhotoSize + 5, y: smallPhotosY + smallPhotoSize + 5 },
-  ];
+  doc.setFont("courier", "normal");
+  doc.setFontSize(7);
+  doc.setTextColor(COLORS.grey_light);
 
-  for (let i = 0; i < 4; i++) {
-    const pos = photoPositions[i];
-    try {
-      if (imagesToLoad[i]) {
-        const imageData = await loadImage(imagesToLoad[i]);
-        pdf.addImage(imageData, "JPEG", pos.x, pos.y, smallPhotoSize, smallPhotoSize);
-      } else {
-        // Placeholder
-        pdf.setFillColor(220, 220, 220);
-        pdf.rect(pos.x, pos.y, smallPhotoSize, smallPhotoSize, "F");
-      }
-    } catch (error) {
-      // Placeholder
-      pdf.setFillColor(220, 220, 220);
-      pdf.rect(pos.x, pos.y, smallPhotoSize, smallPhotoSize, "F");
-    }
-  }
-
-  // ===== TÍTULO DO IMÓVEL E PREÇO =====
-  yPos = smallPhotosY + 2 * smallPhotoSize + 15;
-
-  // Box destacado para título
-  const titleBoxColor = hexToRgb(COLORS.brown);
-  pdf.setFillColor(titleBoxColor.r, titleBoxColor.g, titleBoxColor.b);
-  pdf.rect(margin, yPos - 8, contentWidth, 22, "F");
-
-  pdf.setTextColor(255, 255, 255);
-  pdf.setFontSize(14);
-  pdf.setFont("helvetica", "bold");
-  pdf.text(
-    `${propertyTypeMap[property.propertyType] || property.propertyType} ${
-      property.propertyType.toLowerCase() === "apartamento" ? `T${property.bedrooms}` : ""
-    }`,
-    margin + 3,
-    yPos - 2
-  );
-
-  // Preço
-  pdf.setFontSize(22);
-  const priceText = `${parseFloat(property.price.toString()).toLocaleString("pt-PT")} €`;
-  pdf.text(priceText, margin + 3, yPos + 8);
-
-  yPos += 18;
-
-  // Localização completa
-  pdf.setFontSize(9);
-  pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.text(
-    `${property.concelho}`,
-    margin,
-    yPos + 5
-  );
-  pdf.text(
-    `${property.address || `${property.distrito}`}, Porto`,
-    margin,
-    yPos + 10
-  );
-
-  // ===== CARACTERÍSTICAS EM GRID =====
-  yPos += 20;
-
-  const characteristics = [
-    { label: "Quartos", value: property.bedrooms.toString() },
-    { label: "WCs", value: property.bathrooms.toString() },
-    {
-      label: property.garageSpaces > 0 ? "Garagem aberta" : "Garagem",
-      value: property.garageSpaces > 0 ? `${property.garageSpaces} lugar${property.garageSpaces > 1 ? "es" : ""}` : "N/A",
-    },
-    {
-      label: "Parqueamento",
-      value: property.garageSpaces > 0 ? `${property.garageSpaces} lugar${property.garageSpaces > 1 ? "es" : ""}` : "N/A",
-    },
-    {
-      label: "Área útil de hab.",
-      value: property.usefulArea ? `${property.usefulArea} m²` : "N/A",
-    },
-    {
-      label: "Área bruta de const.",
-      value: property.builtArea ? `${property.builtArea} m²` : "N/A",
-    },
-    {
-      label: "Ano de construção",
-      value: property.constructionYear ? property.constructionYear.toString() : "N/A",
-    },
-  ];
-
-  // Desenhar características em grid 4 colunas
-  const charColWidth = contentWidth / 4;
-  characteristics.forEach((char, index) => {
-    const col = index % 4;
-    const row = Math.floor(index / 4);
-    const xPos = margin + col * charColWidth;
-    const charYPos = yPos + row * 15;
-
-    pdf.setFontSize(8);
-    pdf.setFont("helvetica", "bold");
-    pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-    pdf.text(char.label, xPos, charYPos);
-
-    pdf.setFontSize(10);
-    pdf.setFont("helvetica", "bold");
-    pdf.text(char.value, xPos, charYPos + 5);
+  doc.text("AGÊNCIA DOURO REAL ESTATE", MARGIN, footerY);
+  doc.text("WWW.AGENCIADOURO.PT", PAGE_WIDTH - MARGIN, footerY, {
+    align: "right",
   });
 
-  yPos += 40;
-
-  // ===== DESCRIÇÃO DO IMÓVEL =====
-  pdf.setFontSize(9);
-  pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-
-  // Remove HTML tags from description
-  const cleanDescription = property.description
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  const descriptionLines = pdf.splitTextToSize(cleanDescription, contentWidth);
-
-  const maxLinesPage1 = Math.floor((pageHeight - yPos - 60) / 5);
-  const page1DescriptionLines = descriptionLines.slice(0, maxLinesPage1);
-
-  page1DescriptionLines.forEach((line: string) => {
-    pdf.text(line, margin, yPos);
-    yPos += 5;
-  });
-
-  // ===== SEÇÃO "3 RAZÕES PARA ESCOLHER A AGÊNCIA DOURO" =====
-  yPos = pageHeight - 55;
-
-  pdf.setFontSize(10);
-  pdf.setFont("helvetica", "bold");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  pdf.text("3 razões para escolher a Agência Douro", margin, yPos);
-
-  yPos += 7;
-
-  // Razão 1
-  pdf.setFontSize(8);
-  pdf.setTextColor(goldColor.r, goldColor.g, goldColor.b);
-  pdf.text("+ acompanhamento", margin, yPos);
-
-  pdf.setFontSize(7);
-  pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  const reason1 = pdf.splitTextToSize(
-    "Com experiência única no mercado imobiliário, os nossos consultores dedicam-se a dar-lhe o melhor acompanhamento, orientando-o com confiança na direção das suas necessidades e ambições.",
-    contentWidth
-  );
-  yPos += 4;
-  reason1.slice(0, 3).forEach((line: string) => {
-    pdf.text(line, margin, yPos);
-    yPos += 3;
-  });
-
-  yPos += 2;
-
-  // Razão 2
-  pdf.setFontSize(8);
-  pdf.setFont("helvetica", "bold");
-  pdf.setTextColor(goldColor.r, goldColor.g, goldColor.b);
-  pdf.text("+ simples", margin, yPos);
-
-  pdf.setFontSize(7);
-  pdf.setFont("helvetica", "normal");
-  pdf.setTextColor(logoColor.r, logoColor.g, logoColor.b);
-  const reason2 = pdf.splitTextToSize(
-    "Os consultores da Agência Douro têm formação única, ancorada na experiência prática, que permite simplificar e tornar mais eficaz a sua experiência imobiliária.",
-    contentWidth
-  );
-  yPos += 4;
-  reason2.slice(0, 2).forEach((line: string) => {
-    pdf.text(line, margin, yPos);
-    yPos += 3;
-  });
-
-  // Footer
-  pdf.setFontSize(6);
-  pdf.setTextColor(greyColor.r, greyColor.g, greyColor.b);
-  pdf.text(
-    "Dados válidos salvo erro tipográfico. Processado automaticamente por computador.",
-    margin,
-    pageHeight - 10
-  );
-
-  pdf.setFontSize(7);
-  pdf.setFont("helvetica", "bold");
-  pdf.text("AGÊNCIA DOURO", margin, pageHeight - 5);
-  pdf.setFont("helvetica", "normal");
-  pdf.text(
-    "Porto - Rua Principal",
-    margin + 30,
-    pageHeight - 5
-  );
-
-  // Salvar o PDF
-  const fileName = property.reference
-    ? `AgenciaDouro_${property.reference}.pdf`
-    : `AgenciaDouro_Imovel_${property.id}.pdf`;
-
-  pdf.save(fileName);
+  doc.save(`Douro_${property.reference}.pdf`);
 };

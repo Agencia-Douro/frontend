@@ -175,7 +175,16 @@ export default function NewslettersPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedNewsletters.map((newsletter) => (
-          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow">
+          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+            {newsletter.coverImage && (
+              <div className="w-full h-48 overflow-hidden">
+                <img
+                  src={newsletter.coverImage}
+                  alt={newsletter.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <CardHeader>
               <div className="flex items-start justify-between gap-2">
                 <CardTitle className="text-lg line-clamp-2">{newsletter.title}</CardTitle>
@@ -224,8 +233,8 @@ export default function NewslettersPage() {
               Cancelar
             </Button>
             <Button
+              variant="ghost"
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
-              className="bg-red-600 hover:bg-red-700"
             >
               Deletar
             </Button>

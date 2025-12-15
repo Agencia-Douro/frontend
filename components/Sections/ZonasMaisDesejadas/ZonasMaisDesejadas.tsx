@@ -18,67 +18,67 @@ export default function ZonasMaisDesejadas() {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mt-12">
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={porto} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={porto} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Porto</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=porto">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Porto">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={aveiro} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={aveiro} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Aveiro</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=aveiro">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Aveiro">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={faro} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={faro} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Faro</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=faro">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Faro">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={coimbra} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={coimbra} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Coimbra</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=coimbra">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Coimbra">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={braga} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={braga} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Braga</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=braga">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Braga">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div className="overflow-hidden w-[405px] max-h-58 group relative">
-                        <Image src={lisboa} alt="teste-image" className="object-cover bg-center"/>
+                        <Image src={lisboa} alt="teste-image" className="object-cover bg-center" />
                         <div className="group-hover:opacity-100 opacity-0 w-full h-full bg-linear-to-b from-black/0 to-black/70 absolute top-0 left-0 ease-out duration-200 transition-all">
                             <div className="translate-y-16 group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-200 ease-out">
                                 <p className="text-white body-20-medium">Lisboa</p>
                                 <Button variant="gold" asChild className="w-min">
-                                    <Link href="/imoveis?distrito=lisboa">Ver Todos</Link>
+                                    <Link href="/imoveis?distrito=Lisboa">Ver Todos</Link>
                                 </Button>
                             </div>
                         </div>
@@ -87,4 +87,4 @@ export default function ZonasMaisDesejadas() {
             </div>
         </section>
     )
-}
+}   

@@ -4,13 +4,12 @@ import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { propertiesApi, PropertyFilters } from "@/services/api"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { DeletePropertyDialog } from "@/components/delete-property-dialog"
 import ImovelCard from "@/components/Sections/Imoveis/Card"
 import { Plus, Search, SlidersHorizontal, X } from "lucide-react"
 import {
@@ -249,7 +248,7 @@ export default function PropertiesPage() {
                         <Button
                           key={num}
                           type="button"
-                          variant={(filters.bedrooms || []).includes(num) ? "brown" : "ghost"}
+                          variant={(filters.bedrooms || []).includes(num) ? "brown" : "outline"}
                           size="default"
                           onClick={() => toggleBedrooms(num)}
                         >
@@ -267,7 +266,7 @@ export default function PropertiesPage() {
                         <Button
                           key={num}
                           type="button"
-                          variant={(filters.bathrooms || []).includes(num) ? "brown" : "ghost"}
+                          variant={(filters.bathrooms || []).includes(num) ? "brown" : "outline"}
                           size="default"
                           onClick={() => toggleBathrooms(num)}
                         >
