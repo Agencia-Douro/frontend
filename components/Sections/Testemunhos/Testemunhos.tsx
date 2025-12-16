@@ -11,7 +11,7 @@ export default function Testemunhos() {
             <div className="flex justify-between items-end">
                 <div className="space-y-6">
                     <h2 className="heading-dois-regular text-black">Palavras com chave na mão</h2>
-                    <p className="text-black-muted body-18-regular w-[618px]">Cada chave carrega uma história, cada lar acolhe um sonho — estas são as vozes de quem encontrou o seu lugar perfeito.</p>
+                    <p className="text-black-muted body-18-regular w-full md:w-[618px]">Cada chave carrega uma história, cada lar acolhe um sonho — estas são as vozes de quem encontrou o seu lugar perfeito.</p>
                 </div>
                 <div className="flex flex-col gap-2 items-end">
                     <p className="body-18-medium text-black-muted">800+ clientes satisfeitos</p>
@@ -27,7 +27,7 @@ export default function Testemunhos() {
                     </div>
                 </div>
             </div>
-            <div className="mt-12 flex gap-4 overflow-auto">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Testemunho text="A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!" image={testemunho1} name="Lucimara Bordignon Borghetti" />
                 <Testemunho text="Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vania Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre." image={testemunho2} name="Maria Oliveira" />
                 <Testemunho text="Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vania Fernandes !" image={testemunho3} name="Walter Martins" />

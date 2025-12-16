@@ -20,14 +20,13 @@ export default function NewsletterDetailsPage() {
     if (isLoading) {
         return (
             <>
-                <section className="bg-deaf">
-                    <div className="container pb-16 pt-20">
+                <section className="bg-deaf overflow-x-hidden">
+                    <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
                         <div className="max-w-3xl mx-auto">
                             <p className="text-center text-brown">Carregando newsletter...</p>
                         </div>
                     </div>
                 </section>
-                <Footer />
             </>
         );
     }
@@ -35,8 +34,8 @@ export default function NewsletterDetailsPage() {
     if (error || !newsletter) {
         return (
             <>
-                <section className="bg-deaf">
-                    <div className="container pb-16 pt-20">
+                <section className="bg-deaf overflow-x-hidden">
+                    <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
                         <div className="max-w-3xl mx-auto">
                             <p className="text-center text-red">Newsletter não encontrada</p>
                             <div className="text-center mt-6">
@@ -47,20 +46,19 @@ export default function NewsletterDetailsPage() {
                         </div>
                     </div>
                 </section>
-                <Footer />
             </>
         );
     }
 
     return (
         <>
-            <section className="bg-deaf">
-                <div className="container pt-10">
+            <section className="bg-deaf overflow-x-hidden">
+                <div className="container pt-5 sm:pt-10 pb-8 sm:pb-16">
                     <div>
-                        <div className="relative flex items-center">
+                        <div className="relative flex flex-col sm:flex-row sm:items-center">
                             <Link
                                 href="/newsletter"
-                                className="inline-flex items-center gap-2 body-14-medium text-brown hover:text-gold transition-colors mb-8"
+                                className="inline-flex items-center gap-2 body-14-medium text-brown hover:text-gold transition-colors mb-4 sm:mb-8"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path
@@ -72,7 +70,7 @@ export default function NewsletterDetailsPage() {
                                 Voltar
                             </Link>
 
-                            <div className="absolute left-1/2 -translate-x-1/2 bg-[#ECE7E3] p-3">
+                            <div className="sm:absolute sm:left-1/2 sm:-translate-x-1/2 bg-[#ECE7E3] p-3 text-center">
                                 <h1 className="capitalize body-16-medium">
                                     {newsletter.category}
                                 </h1>
@@ -81,43 +79,42 @@ export default function NewsletterDetailsPage() {
 
 
                         {/* Title */}
-                        <h1 className="heading-tres-regular flex justify-center mt-10 mb-10">
+                        <h1 className="heading-tres-regular flex justify-center mt-5 sm:mt-10 mb-5 sm:mb-10 text-2xl sm:text-3xl lg:text-4xl">
                             {newsletter.title}
                         </h1>
 
                         {/* Cover Image */}
                         {newsletter.coverImage && (
-                            <div className="relative w-full mb-10">
+                            <div className="relative w-full mb-5 sm:mb-10">
                                 <img
                                     src={newsletter.coverImage}
                                     alt={newsletter.title}
-                                    className="w-full h-auto max-h-[400px] object-contain"
+                                    className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
                                 />
                             </div>
                         )}
 
-                        {/* Content */}
-                        <article className="mb-10">
+                        <article className="mb-5 sm:mb-10">
                             <div
-                                className="prose prose-brown max-w-none"
+                                className="prose prose-brown max-w-none break-words"
                                 dangerouslySetInnerHTML={{ __html: newsletter.content }}
                             />
                         </article>
 
                         {/* Related Properties */}
                         {newsletter.properties && newsletter.properties.length > 0 && (
-                            <div className="mt-16 mb-16">
-                                <h2 className="heading-tres-regular text-center mb-10">
+                            <div className="mt-8 sm:mt-16 mb-8 sm:mb-16">
+                                <h2 className="heading-tres-regular text-center mb-5 sm:mb-10">
                                     Imóveis Relacionados
                                 </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                                     {newsletter.properties.map((property) => (
                                         <Link
                                             key={property.id}
                                             href={`/imoveis/${property.id}`}
                                             className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                                         >
-                                            <div className="relative w-full h-64">
+                                            <div className="relative w-full h-48 sm:h-56 md:h-64">
                                                 <Image
                                                     src={property.image}
                                                     alt={property.title}
@@ -148,7 +145,6 @@ export default function NewsletterDetailsPage() {
                     </div>
                 </div>
             </section>
-            <Footer />
         </>
     );
 }

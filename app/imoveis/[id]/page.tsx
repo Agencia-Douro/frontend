@@ -172,8 +172,8 @@ export default function ImovelDetails() {
         <>
             <section className="bg-deaf">
                 <div className="container pb-16">
-                    <div className="flex justify-between items-center py-4">
-                        <div className="flex items-center gap-3">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-4 gap-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                             <Link
                                 href="/imoveis"
                                 className="flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors">
@@ -182,7 +182,7 @@ export default function ImovelDetails() {
                                 </svg>Voltar
                             </Link>
                             <div className="w-px h-3 bg-brown/20"></div>
-                            <div className="flex items-center gap-0.5">
+                            <div className="flex flex-wrap items-center gap-0.5">
                                 <p className="body-16-medium text-brown capitalize">{property.transactionType}</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                                     <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
@@ -214,8 +214,8 @@ export default function ImovelDetails() {
                             }))) || [];
 
                         return (
-                            <div className="h-96 grid grid-cols-12 w-full gap-4">
-                                <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
+                            <div className="h-96 grid grid-cols-1 sm:grid-cols-12 w-full gap-4">
+                                <div className="border border-brown/10 col-span-1 sm:col-span-6 row-span-1 sm:row-span-2 overflow-hidden rounded-lg">
                                     {property.image && (
                                         <img
                                             src={property.image}
@@ -224,7 +224,7 @@ export default function ImovelDetails() {
                                         />
                                     )}
                                 </div>
-                                <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
+                                <div className="border border-brown/10 col-span-1 sm:col-span-3 row-span-1 sm:row-span-2 overflow-hidden rounded-lg">
                                     {allImages[0] && (
                                         <img
                                             src={allImages[0].url}
@@ -233,7 +233,7 @@ export default function ImovelDetails() {
                                         />
                                     )}
                                 </div>
-                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                <div className="border border-brown/10 col-span-1 sm:col-span-3 overflow-hidden rounded-lg">
                                     {allImages[1] && (
                                         <img
                                             src={allImages[1].url}
@@ -242,7 +242,7 @@ export default function ImovelDetails() {
                                         />
                                     )}
                                 </div>
-                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                <div className="border border-brown/10 col-span-1 sm:col-span-3 overflow-hidden rounded-lg">
                                     {allImages[2] && (
                                         <img
                                             src={allImages[2].url}
@@ -255,7 +255,7 @@ export default function ImovelDetails() {
                         );
                     })()}
 
-                    <div className="pt-4 flex justify-between items-center">
+                    <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div className="flex items-center gap-4 body-16-medium text-brown">
                             <span>{property.concelho}, {property.distrito}</span>
                             <div className="h-3 w-px bg-brown/30"></div>
@@ -266,9 +266,9 @@ export default function ImovelDetails() {
                         <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                     </div>
                     <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
-                    <div className="pt-6 flex justify-between">
-                        <div>
-                            <div className="w-154 [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
+                    <div className="pt-6 flex flex-col lg:flex-row gap-8 lg:gap-0 justify-between">
+                        <div className="flex-1">
+                            <div className="w-full lg:w-154 [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
                                 <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
                                 {property.deliveryDate && (
                                     <>
@@ -325,7 +325,7 @@ export default function ImovelDetails() {
                                     </Button>
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
                                             <Input
@@ -386,7 +386,7 @@ export default function ImovelDetails() {
 
                             </div>
                         </div>
-                        <div className="w-[512px] sticky top-0">
+                        <div className="w-full lg:w-[512px] sticky top-0">
                             {property.totalArea && property.totalArea > 0 && (
                                 <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
                             )}
@@ -437,7 +437,6 @@ export default function ImovelDetails() {
                 currentPropertyId={property.id}
                 currentPrice={property.price}
             />
-            <Footer />
 
             {/* Template invisível para geração de PDF */}
             <div className="fixed -left-[9999px] top-0 pointer-events-none" ref={pdfRef}>

@@ -54,7 +54,7 @@ export const FaleConnosco = () => {
             <div className="container">
                 <h2 className="text-heading-dois mb-12">Fale connosco</h2>
 
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Mapa */}
                     <div className="relative h-[400px] bg-muted">
                         <iframe
@@ -70,7 +70,7 @@ export const FaleConnosco = () => {
 
                     {/* Formulário */}
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="nome" className="body-14-medium text-black">
                                     Nome *
@@ -148,7 +148,7 @@ export const FaleConnosco = () => {
                 </div>
 
                 {/* Informações de Contato */}
-                <div className="grid grid-cols-4 gap-8 mt-10 pt-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10 pt-16">
                     <div>
                         <h3 className="body-20-medium text-black mb-4">Email</h3>
                         <p className="body-16-regular text-black-muted mb-4">
