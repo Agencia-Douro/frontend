@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -338,8 +339,37 @@ export default function PropertyForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Informações Básicas */}
-      <Card>
+      <Tabs defaultValue="info" className="w-full">
+        <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3 mb-6">
+          <TabsTrigger
+            value="info"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Informações Básicas
+          </TabsTrigger>
+          <TabsTrigger
+            value="features"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Características
+          </TabsTrigger>
+          <TabsTrigger
+            value="location"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Localização
+          </TabsTrigger>
+          <TabsTrigger
+            value="images"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Imagens
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="info" className="space-y-6 mt-0">
+          {/* Informações Básicas */}
+          <Card>
         <CardHeader>
           <CardTitle>Informações Básicas</CardTitle>
           <CardDescription>
@@ -499,8 +529,8 @@ export default function PropertyForm({
         </CardContent>
       </Card>
 
-      {/* Preço e Condições */}
-      <Card>
+          {/* Preço e Condições */}
+          <Card>
         <CardHeader>
           <CardTitle>Preço e Condições</CardTitle>
         </CardHeader>
@@ -527,9 +557,11 @@ export default function PropertyForm({
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
 
-      {/* Áreas */}
-      <Card>
+        <TabsContent value="features" className="space-y-6 mt-0">
+          {/* Áreas */}
+          <Card>
         <CardHeader>
           <CardTitle>Áreas</CardTitle>
         </CardHeader>
@@ -576,8 +608,8 @@ export default function PropertyForm({
         </CardContent>
       </Card>
 
-      {/* Características */}
-      <Card>
+          {/* Características */}
+          <Card>
         <CardHeader>
           <CardTitle>Características</CardTitle>
         </CardHeader>
@@ -643,8 +675,8 @@ export default function PropertyForm({
         </CardContent>
       </Card>
 
-      {/* Construção */}
-      <Card>
+          {/* Construção */}
+          <Card>
         <CardHeader>
           <CardTitle>Informações de Construção</CardTitle>
         </CardHeader>
@@ -671,9 +703,11 @@ export default function PropertyForm({
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
 
-      {/* Localização */}
-      <Card>
+        <TabsContent value="location" className="space-y-6 mt-0">
+          {/* Localização */}
+          <Card>
         <CardHeader>
           <CardTitle>Localização</CardTitle>
         </CardHeader>
@@ -737,9 +771,11 @@ export default function PropertyForm({
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
 
-      {/* Imagem Principal */}
-      <Card>
+        <TabsContent value="images" className="space-y-6 mt-0">
+          {/* Imagem Principal */}
+          <Card>
         <CardHeader>
           <CardTitle>Imagem Principal *</CardTitle>
           <CardDescription>
@@ -812,8 +848,8 @@ export default function PropertyForm({
         </CardContent>
       </Card>
 
-      {/* Galeria Organizada por Seções */}
-      <Card>
+          {/* Galeria Organizada por Seções */}
+          <Card>
         <CardHeader>
           <CardTitle>Galeria Organizada por Seções</CardTitle>
           <CardDescription>
@@ -994,6 +1030,8 @@ export default function PropertyForm({
           )}
         </CardContent>
       </Card>
+        </TabsContent>
+      </Tabs>
 
       <div className="flex gap-4">
         {onCancel && (
