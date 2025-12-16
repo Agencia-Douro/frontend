@@ -60,12 +60,19 @@ export default function EditNewsletterPage() {
 
   useEffect(() => {
     if (newsletter) {
+      // Extrair IDs das properties se existirem, caso contrário usar propertyIds
+      const propertyIds = newsletter.propertyIds && Array.isArray(newsletter.propertyIds)
+        ? newsletter.propertyIds
+        : (newsletter.properties && Array.isArray(newsletter.properties)
+          ? newsletter.properties.map((p: any) => p.id)
+          : [])
+
       setFormData({
-        title: newsletter.title,
-        content: newsletter.content,
-        category: newsletter.category,
+        title: newsletter.title || "",
+        content: newsletter.content || "",
+        category: newsletter.category || "",
         coverImage: newsletter.coverImage || "",
-        propertyIds: newsletter.propertyIds || [],
+        propertyIds: propertyIds,
       })
     }
   }, [newsletter])
@@ -91,7 +98,13 @@ export default function EditNewsletterPage() {
       return
     }
 
-    updateMutation.mutate(formData)
+    // Garantir que propertyIds seja sempre um array (mesmo que vazio)
+    const submitData = {
+      ...formData,
+      propertyIds: formData.propertyIds || []
+    }
+
+    updateMutation.mutate(submitData)
   }
 
   if (isLoading) {
