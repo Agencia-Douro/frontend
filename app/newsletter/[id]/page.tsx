@@ -103,6 +103,48 @@ export default function NewsletterDetailsPage() {
                                 dangerouslySetInnerHTML={{ __html: newsletter.content }}
                             />
                         </article>
+
+                        {/* Related Properties */}
+                        {newsletter.properties && newsletter.properties.length > 0 && (
+                            <div className="mt-16 mb-16">
+                                <h2 className="heading-tres-regular text-center mb-10">
+                                    Imóveis Relacionados
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {newsletter.properties.map((property) => (
+                                        <Link
+                                            key={property.id}
+                                            href={`/imoveis/${property.id}`}
+                                            className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                                        >
+                                            <div className="relative w-full h-64">
+                                                <Image
+                                                    src={property.image}
+                                                    alt={property.title}
+                                                    fill
+                                                    className="object-cover transition-transform duration-300"
+                                                />
+                                            </div>
+                                            <div className="p-4">
+                                                <p className="body-16-medium text-black line-clamp-2 mb-2">
+                                                    {property.title}
+                                                </p>
+                                                <p className="body-14-medium text-grey mb-3">
+                                                    {property.concelho}, {property.distrito}
+                                                </p>
+                                                <p className="body-20-medium text-brown">
+                                                    {new Intl.NumberFormat('pt-PT', {
+                                                        style: 'currency',
+                                                        currency: 'EUR',
+                                                        minimumFractionDigits: 0
+                                                    }).format(parseFloat(property.price))}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
