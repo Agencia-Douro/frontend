@@ -4,7 +4,6 @@ import { useRef, useState } from "react"
 import { useParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { propertiesApi } from "@/services/api"
-import Footer from "@/components/Footer"
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -78,7 +77,6 @@ export default function ImovelDetails() {
                         <p className="text-center text-brown">Carregando...</p>
                     </div>
                 </section>
-                <Footer />
             </>
         )
     }
@@ -91,7 +89,6 @@ export default function ImovelDetails() {
                         <p className="text-center text-red">Imóvel não encontrado</p>
                     </div>
                 </section>
-                <Footer />
             </>
         )
     }
@@ -170,28 +167,28 @@ export default function ImovelDetails() {
 
     return (
         <>
-            <section className="bg-deaf">
+            <section className="bg-deaf overflow-x-hidden">
                 <div className="container pb-16">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-4 gap-4">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        <div className="flex flex-row items-center gap-3 flex-wrap">
                             <Link
                                 href="/imoveis"
-                                className="flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors">
+                                className="flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
                                 </svg>Voltar
                             </Link>
                             <div className="w-px h-3 bg-brown/20"></div>
-                            <div className="flex flex-wrap items-center gap-0.5">
-                                <p className="body-16-medium text-brown capitalize">{property.transactionType}</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                            <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
+                                <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.transactionType}</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
                                     <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                                 </svg>
-                                <p className="body-16-medium text-brown capitalize">{property.propertyType}</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                                <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.propertyType}</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
                                     <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                                 </svg>
-                                <p className="body-16-medium text-brown">{property.distrito}</p>
+                                <p className="body-16-medium text-brown whitespace-nowrap">{property.distrito}</p>
                             </div>
                         </div>
                         <ImagensImoveis
@@ -214,8 +211,49 @@ export default function ImovelDetails() {
                             }))) || [];
 
                         return (
-                            <div className="h-96 grid grid-cols-1 sm:grid-cols-12 w-full gap-4">
-                                <div className="border border-brown/10 col-span-1 sm:col-span-6 row-span-1 sm:row-span-2 overflow-hidden rounded-lg">
+                            <>
+                                {/* Grid de 4 imagens - visible only on md and up */}
+                                <div className="hidden md:grid h-96 grid-cols-12 w-full gap-4">
+                                    <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
+                                        {property.image && (
+                                            <img
+                                                src={property.image}
+                                                alt={property.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
+                                        {allImages[0] && (
+                                            <img
+                                                src={allImages[0].url}
+                                                alt={`${property.title} - ${allImages[0].name}`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                        {allImages[1] && (
+                                            <img
+                                                src={allImages[1].url}
+                                                alt={`${property.title} - ${allImages[1].name}`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                        {allImages[2] && (
+                                            <img
+                                                src={allImages[2].url}
+                                                alt={`${property.title} - ${allImages[2].name}`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                                
+                                {/* Imagem principal - visible only on mobile */}
+                                <div className="md:hidden w-full h-96 border border-brown/10 overflow-hidden rounded-lg">
                                     {property.image && (
                                         <img
                                             src={property.image}
@@ -224,43 +262,16 @@ export default function ImovelDetails() {
                                         />
                                     )}
                                 </div>
-                                <div className="border border-brown/10 col-span-1 sm:col-span-3 row-span-1 sm:row-span-2 overflow-hidden rounded-lg">
-                                    {allImages[0] && (
-                                        <img
-                                            src={allImages[0].url}
-                                            alt={`${property.title} - ${allImages[0].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                                <div className="border border-brown/10 col-span-1 sm:col-span-3 overflow-hidden rounded-lg">
-                                    {allImages[1] && (
-                                        <img
-                                            src={allImages[1].url}
-                                            alt={`${property.title} - ${allImages[1].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                                <div className="border border-brown/10 col-span-1 sm:col-span-3 overflow-hidden rounded-lg">
-                                    {allImages[2] && (
-                                        <img
-                                            src={allImages[2].url}
-                                            alt={`${property.title} - ${allImages[2].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                            </div>
+                            </>
                         );
                     })()}
 
-                    <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div className="flex items-center gap-4 body-16-medium text-brown">
+                    <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 min-w-0">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 body-16-medium text-brown flex-wrap">
                             <span>{property.concelho}, {property.distrito}</span>
-                            <div className="h-3 w-px bg-brown/30"></div>
+                            <div className="hidden sm:block h-3 w-px bg-brown/30"></div>
                             <span className="capitalize">{property.propertyType}</span>
-                            <div className="h-3 w-px bg-brown/30"></div>
+                            <div className="hidden sm:block h-3 w-px bg-brown/30"></div>
                             <p><span className="text-brown/50">#</span>{property.reference}</p>
                         </div>
                         <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
@@ -284,10 +295,10 @@ export default function ImovelDetails() {
                                 )}
                             </div>
                             <div className="mt-4">
-                                <div className="flex gap-4 w-full">
+                                <div className="flex flex-col sm:flex-row gap-4 w-full">
                                     <Button
                                         variant={fav ? "gold" : "muted"}
-                                        className="grow"
+                                        className="grow text-sm sm:text-base"
                                         onClick={() => {
                                             const currentlyFav = isFavorite(id)
                                             toggleFavorite(id)
@@ -305,7 +316,7 @@ export default function ImovelDetails() {
                                         )}
                                         {fav ? "Favorito" : "Favoritos"}
                                     </Button>
-                                    <Button variant="muted" className="grow" onClick={handleCopyLink}>
+                                    <Button variant="muted" className="grow text-sm sm:text-base" onClick={handleCopyLink}>
                                         {linkCopied ? (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                                 <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -317,7 +328,7 @@ export default function ImovelDetails() {
                                         )}
                                         {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
                                     </Button>
-                                    <Button variant="muted" className="grow" onClick={handleDownloadPDF}>
+                                    <Button variant="muted" className="grow text-sm sm:text-base" onClick={handleDownloadPDF}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>

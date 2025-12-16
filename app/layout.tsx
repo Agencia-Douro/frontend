@@ -20,10 +20,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-BR" className={monaSans.variable}>
       <body className="antialiased bg-muted w-screen overflow-x-hidden flex flex-col">
         <QueryProvider>
-            <Header />
-                {children}
-            <Toaster />
-            <AvaliadorOnlineButton />
+          <Header />
+          {children}
+          <Toaster />
+          <AvaliadorOnlineButton />
         </QueryProvider>
       </body>
     </html>
