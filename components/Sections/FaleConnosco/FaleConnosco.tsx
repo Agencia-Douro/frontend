@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import Link from "next/link"
 
 export const FaleConnosco = () => {
     const [formData, setFormData] = useState({
@@ -48,33 +49,20 @@ export const FaleConnosco = () => {
         }
     }
 
-
     return (
-        <section className="bg-white py-16">
+        <section className="bg-deaf py-6 md:py-10 lg:py-12 xl:py-16" id="contacto">
             <div className="container">
-                <h2 className="text-heading-dois mb-12">Fale connosco</h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">Fale connosco</h2>
+                <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                     {/* Mapa */}
-                    <div className="relative h-[400px] bg-muted">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1502.0337394772985!2d-8.6822294!3d41.1842493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f70571b1a9b%3A0xd18009e3350eed24!2sAg%C3%AAncia%20Douro%20-%20Media%C3%A7%C3%A3o%20Imobili%C3%A1ria%20AMI%2017%20632!5e0!3m2!1spt-PT!2spt!4v1234567890"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
+                    <div className="relative h-64 md:h-93 bg-muted w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1502.0337394772985!2d-8.6822294!3d41.1842493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f70571b1a9b%3A0xd18009e3350eed24!2sAg%C3%AAncia%20Douro%20-%20Media%C3%A7%C3%A3o%20Imobili%C3%A1ria%20AMI%2017%20632!5e0!3m2!1spt-PT!2spt!4v1234567890" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
                     </div>
-
                     {/* Formulário */}
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-6 w-full">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="nome" className="body-14-medium text-black">
-                                    Nome *
-                                </Label>
+                            <div className="space-y-1">
+                                <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
                                 <Input
                                     id="nome"
                                     placeholder="Tomas Ribeiro Silva"
@@ -83,10 +71,8 @@ export const FaleConnosco = () => {
                                     required
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="telefone" className="body-14-medium text-black">
-                                    Número de Telemóvel *
-                                </Label>
+                            <div className="space-y-1">
+                                <Label htmlFor="telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
                                 <Input
                                     id="telefone"
                                     placeholder="+351 919 766 323"
@@ -96,11 +82,8 @@ export const FaleConnosco = () => {
                                 />
                             </div>
                         </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="email" className="body-14-medium text-black">
-                                Email *
-                            </Label>
+                        <div className="space-y-1">
+                            <Label htmlFor="email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -110,22 +93,18 @@ export const FaleConnosco = () => {
                                 required
                             />
                         </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="mensagem" className="body-14-medium text-black">
-                                Mensagem *
-                            </Label>
+                        <div className="space-y-1">
+                            <Label htmlFor="mensagem" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
                             <Textarea
                                 id="mensagem"
                                 placeholder="Envie-nos uma mensagem!"
                                 value={formData.mensagem}
                                 onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                 required
-                                className="min-h-[100px]"
+                                className="h-19"
                             />
                         </div>
-
-                        <div className="flex items-center gap-2">
+                        <div className="flex gap-2">
                             <Checkbox
                                 id="marketing"
                                 checked={formData.aceitaMarketing}
@@ -133,73 +112,47 @@ export const FaleConnosco = () => {
                                     setFormData({ ...formData, aceitaMarketing: checked as boolean })
                                 }
                             />
-                            <label
-                                htmlFor="marketing"
-                                className="body-14-regular text-black-muted cursor-pointer"
-                            >
-                                Autorizo a Agência Douro a guardar estes dados para efeitos de contacto.
-                            </label>
+                            <Label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto. <span className="text-red body-14-medium">*</span></Label>
                         </div>
-
-                        <Button type="submit" variant="gold" className="w-full">
-                            ENVIAR
-                        </Button>
+                        <Button type="submit" variant="gold" className="w-full">Enviar</Button>
                     </form>
                 </div>
-
                 {/* Informações de Contato */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10 pt-16">
-                    <div>
-                        <h3 className="body-20-medium text-black mb-4">Email</h3>
-                        <p className="body-16-regular text-black-muted mb-4">
-                            Envie-nos a sua dúvida ou questão para o nosso email.
-                        </p>
-                        <a href="mailto:contacto@agenciadouro.pt" className="body-16-medium text-black hover:text-brown">
-                            contacto@agenciadouro.pt
-                        </a>
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
+                    <div className="flex flex-col">
+                        <h3 className="md:body-20-medium body-18-medium text-black mb-6">Email</h3>
+                        <p className="body-16-regular text-grey mb-4 text-balance">Envie-nos a sua dúvida ou questão para o nosso email.</p>
+                        <Link href="mailto:contacto@agenciadouro.pt" className="body-16-medium text-black underline underline-offset-4 decoration-1">contacto@agenciadouro.pt</Link>
                     </div>
-
-                    <div>
-                        <h3 className="body-20-medium text-black mb-4">Contacto</h3>
-                        <p className="body-16-regular text-black-muted mb-4">
-                            Pode também falar conosco através do telefone.
-                        </p>
-                        <a href="tel:+351919766323" className="body-16-medium text-black hover:text-brown block">
-                            +351 919 766 323
-                        </a>
-                        <a href="tel:+351919766324" className="body-16-medium text-black hover:text-brown block">
-                            +351 919 766 324
-                        </a>
+                    <div className="flex flex-col">
+                        <h3 className="md:body-20-medium body-18-medium text-black mb-6">Contacto</h3>
+                        <p className="body-16-regular text-grey mb-4 text-balance">Pode também falar conosco através do telefone.</p>
+                        <Link href="tel:+351919766323" className="body-16-medium text-black underline underline-offset-4 decoration-1 mb-2">+351 919 766 323</Link>
+                        <Link href="tel:+351919766324" className="body-16-medium text-black underline underline-offset-4 decoration-1">+351 919 766 324</Link>
                     </div>
-
-                    <div>
-                        <h3 className="body-20-medium text-black mb-4">Redes Sociais</h3>
-                        <p className="body-16-regular text-black-muted mb-4">
-                            Somos bastante ativos nas redes, siga-nos!
-                        </p>
-                        <a href="https://www.instagram.com/agenciadouro" target="_blank" rel="noopener noreferrer" className="body-16-medium text-black hover:text-brown flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-gold">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    <div className="flex flex-col">
+                        <h3 className="md:body-20-medium body-18-medium text-black mb-6">Redes Sociais</h3>
+                        <p className="body-16-regular text-grey mb-4 text-balance">Somos bastante ativos nas redes, siga-nos!</p>
+                        <Link href="https://www.instagram.com/agenciadouro" target="_blank" rel="noopener noreferrer" className="body-16-medium text-black flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="text-gold">
+                                <path d="M10.8567 1.66748C11.7946 1.66903 12.2698 1.674 12.6805 1.68622L12.8422 1.69151C13.0291 1.69815 13.2134 1.70648 13.4357 1.7169C14.3224 1.75787 14.9273 1.89815 15.4586 2.1044C16.0078 2.31621 16.4717 2.60231 16.9349 3.06551C17.3974 3.52871 17.6836 3.99398 17.8961 4.5419C18.1016 5.07246 18.2419 5.67801 18.2836 6.56481C18.2935 6.78704 18.3015 6.97137 18.3081 7.15824L18.3133 7.31998C18.3255 7.7306 18.3311 8.20592 18.3328 9.14379L18.3335 9.76512C18.3336 9.84104 18.3336 9.91937 18.3336 10.0002L18.3335 10.2353L18.333 10.8567C18.3314 11.7945 18.3265 12.2699 18.3142 12.6805L18.3089 12.8422C18.3023 13.0291 18.294 13.2135 18.2836 13.4356C18.2426 14.3225 18.1016 14.9273 17.8961 15.4585C17.6842 16.0079 17.3974 16.4718 16.9349 16.935C16.4717 17.3975 16.0057 17.6835 15.4586 17.896C14.9273 18.1016 14.3224 18.2419 13.4357 18.2835C13.2134 18.2935 13.0291 18.3015 12.8422 18.308L12.6805 18.3133C12.2698 18.3255 11.7946 18.331 10.8567 18.3329L10.2353 18.3335C10.1594 18.3335 10.0811 18.3335 10.0002 18.3335H9.76516L9.14375 18.333C8.20591 18.3315 7.7306 18.3265 7.31997 18.3142L7.15824 18.309C6.97136 18.3023 6.78703 18.294 6.56481 18.2835C5.67801 18.2426 5.07384 18.1016 4.5419 17.896C3.99328 17.6843 3.5287 17.3975 3.06551 16.935C2.60231 16.4718 2.3169 16.0058 2.1044 15.4585C1.89815 14.9273 1.75856 14.3225 1.7169 13.4356C1.707 13.2135 1.69892 13.0291 1.69238 12.8422L1.68714 12.6805C1.67495 12.2699 1.66939 11.7945 1.66759 10.8567L1.66748 9.14379C1.66903 8.20592 1.67399 7.7306 1.68621 7.31998L1.69151 7.15824C1.69815 6.97137 1.70648 6.78704 1.7169 6.56481C1.75786 5.67731 1.89815 5.07315 2.1044 4.5419C2.3162 3.99329 2.60231 3.52871 3.06551 3.06551C3.5287 2.60231 3.99398 2.3169 4.5419 2.1044C5.07315 1.89815 5.67731 1.75856 6.56481 1.7169C6.78703 1.70701 6.97136 1.69893 7.15824 1.69239L7.31997 1.68715C7.7306 1.67495 8.20591 1.66939 9.14375 1.66759L10.8567 1.66748ZM10.0002 5.83356C7.69781 5.83356 5.83356 7.69984 5.83356 10.0002C5.83356 12.3026 7.69984 14.1669 10.0002 14.1669C12.3027 14.1669 14.1669 12.3006 14.1669 10.0002C14.1669 7.69781 12.3006 5.83356 10.0002 5.83356ZM10.0002 7.50023C11.381 7.50023 12.5002 8.61912 12.5002 10.0002C12.5002 11.381 11.3813 12.5002 10.0002 12.5002C8.6195 12.5002 7.50023 11.3814 7.50023 10.0002C7.50023 8.61945 8.61908 7.50023 10.0002 7.50023ZM14.3752 4.58356C13.8008 4.58356 13.3336 5.05016 13.3336 5.62452C13.3336 6.1989 13.8002 6.66621 14.3752 6.66621C14.9496 6.66621 15.4169 6.19962 15.4169 5.62452C15.4169 5.05016 14.9488 4.58285 14.3752 4.58356Z"/>
                             </svg>
                             agenciadouro
-                        </a>
-                        <a href="https://www.facebook.com/agenciadouro" target="_blank" rel="noopener noreferrer" className="body-16-medium text-black hover:text-brown flex items-center gap-2 mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-gold">
-                                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                        </Link>
+                        <Link href="https://www.facebook.com/agenciadouro" target="_blank" rel="noopener noreferrer" className="body-16-medium text-black flex items-center gap-2 mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="text-gold">
+                                <path d="M10.0008 1.66626C5.39844 1.66626 1.66748 5.39722 1.66748 9.99959C1.66748 14.159 4.71486 17.6065 8.69875 18.2317V12.4084H6.58284V9.99959H8.69875V8.16366C8.69875 6.07512 9.94283 4.92147 11.8463 4.92147C12.7581 4.92147 13.7117 5.08423 13.7117 5.08423V7.13501H12.6609C11.6257 7.13501 11.3029 7.77738 11.3029 8.43643V9.99959H13.6141L13.2447 12.4084H11.3029V18.2317C15.2867 17.6065 18.3342 14.159 18.3342 9.99959C18.3342 5.39722 14.6032 1.66626 10.0008 1.66626Z"/>
                             </svg>
                             Agência Douro
-                        </a>
+                        </Link>
                     </div>
-
-                    <div>
-                        <h3 className="body-20-medium text-black mb-4">Morada</h3>
-                        <p className="body-16-regular text-black-muted mb-4">
-                            Venha fazer-nos uma visita, ficamos por cá à sua espera
-                        </p>
+                    <div className="flex flex-col">
+                        <h3 className="body-20-medium text-black mb-6">Morada</h3>
+                        <p className="body-16-regular text-grey mb-4 text-balance">Venha fazer-nos uma visita, ficamos por cá à sua espera</p>
                         <p className="body-16-medium text-black">
-                            Rua de Alfredo Cunha 155<br />
-                            rés do chão loja 07<br />
-                            4450-031 Porto
+                            Rua Conde Alto Mearim, nº 1133<br/>
+                            5º Andar, Sala 55 - Edifício Via Europa<br/>
+                            4450-036 - Matosinhos, Porto
                         </p>
                     </div>
                 </div>

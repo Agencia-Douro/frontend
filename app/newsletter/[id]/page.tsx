@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { newslettersApi } from "@/services/api";
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "@/components/Footer";
 
 export default function NewsletterDetailsPage() {
     const params = useParams();
@@ -86,9 +85,11 @@ export default function NewsletterDetailsPage() {
                         {/* Cover Image */}
                         {newsletter.coverImage && (
                             <div className="relative w-full mb-5 sm:mb-10">
-                                <img
+                                <Image
                                     src={newsletter.coverImage}
                                     alt={newsletter.title}
+                                    width={100}
+                                    height={300}
                                     className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
                                 />
                             </div>

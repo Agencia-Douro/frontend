@@ -57,6 +57,7 @@
     --text-small: 0.875rem;
     --text-small--line-height: 1.25rem;
     --text-small-button--letter-spacing: 0.02625rem;
+    --text-small--letter-spacing: -0.00875rem;
 
     --text-base: 1rem;
     --text-base--line-height: 1.5rem;
@@ -79,6 +80,9 @@
 
     --text-heading-tres: 2.5rem;
     --text-heading-tres--line-height: 3rem;
+
+    --text-heading-quatro: 2rem;
+    --text-heading-quatro--line-height: 2.5rem;
     
 }
 
@@ -103,6 +107,13 @@
     line-height: var(--text-small--line-height);
     letter-spacing: var(--text-small--letter-spacing);
     font-weight: var(--font-medium);
+}
+
+@utility body-14-regular {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+    letter-spacing: var(--text-small--letter-spacing);
+    font-weight: var(--font-regular);
 }
 
 @utility body-16-regular {
@@ -174,6 +185,34 @@
     font-size: var(--text-heading-tres);
     line-height: var(--text-heading-tres--line-height);
     font-weight: var(--font-medium);
+}
+
+@utility heading-quatro-regular {
+    font-size: var(--text-heading-quatro);
+    line-height: var(--text-heading-quatro--line-height);
+    font-weight: var(--font-regular);
+}
+
+@utility heading-quatro-medium {
+    font-size: var(--text-heading-quatro);
+    line-height: var(--text-heading-quatro--line-height);
+    font-weight: var(--font-medium);
+}
+
+img, iframe {
+    user-select: none;
+}
+
+body {
+    overscroll-behavior-x: none;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: rgba(255, 255, 255, 0);
 }
 
 .card-image-overlay {

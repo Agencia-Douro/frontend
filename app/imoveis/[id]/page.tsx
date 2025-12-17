@@ -17,6 +17,7 @@ import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/Imove
 import { generatePropertyPDF } from "@/utils/pdfGenerator"
 import ImagensImoveis from "@/components/Sections/ImagensImoveis"
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
+import Image from "next/image"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -216,7 +217,9 @@ export default function ImovelDetails() {
                                 <div className="hidden md:grid h-96 grid-cols-12 w-full gap-4">
                                     <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
                                         {property.image && (
-                                            <img
+                                            <Image
+                                                width={1000}
+                                                height={1000}
                                                 src={property.image}
                                                 alt={property.title}
                                                 className="w-full h-full object-cover"
@@ -225,7 +228,9 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
                                         {allImages[0] && (
-                                            <img
+                                            <Image
+                                                width={1000}
+                                                height={1000}
                                                 src={allImages[0].url}
                                                 alt={`${property.title} - ${allImages[0].name}`}
                                                 className="w-full h-full object-cover"
@@ -234,7 +239,9 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                         {allImages[1] && (
-                                            <img
+                                            <Image
+                                                width={1000}
+                                                height={1000}
                                                 src={allImages[1].url}
                                                 alt={`${property.title} - ${allImages[1].name}`}
                                                 className="w-full h-full object-cover"
@@ -243,7 +250,9 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                         {allImages[2] && (
-                                            <img
+                                            <Image
+                                                width={1000}
+                                                height={1000}
                                                 src={allImages[2].url}
                                                 alt={`${property.title} - ${allImages[2].name}`}
                                                 className="w-full h-full object-cover"
@@ -255,7 +264,9 @@ export default function ImovelDetails() {
                                 {/* Imagem principal - visible only on mobile */}
                                 <div className="md:hidden w-full h-96 border border-brown/10 overflow-hidden rounded-lg">
                                     {property.image && (
-                                        <img
+                                        <Image
+                                            width={1000}
+                                            height={1000}
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"

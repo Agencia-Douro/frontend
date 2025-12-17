@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
@@ -48,18 +48,17 @@ export default function Hero() {
     };
 
     return (
-        <div className="mt-16 container relative">
-            <div className="max-w-[616px] z-100">
-                <h1 className="heading-um-medium">A imobiliária mais exclusiva de portugal.</h1>
-                <p className="mt-8 body-16-regular text-black-muted max-w-[540px]">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor
-                    sit amet Lorem ipsum dolor sit amet.</p>
-                <form className="mt-12" onSubmit={handleSearch}>
-                    <div className="flex justify-between items-center">
-                        <div className="flex">
+        <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative flex justify-center lg:block">
+            <div className="flex flex-col md:items-center lg:items-start md:max-w-[616px] z-100 w-full">
+                <h1 className="text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium md:text-center lg:text-start">A imobiliária mais exclusiva de portugal.</h1>
+                <p className="xl:mt-8 lg:mt-6 mt-4 body-16-regular text-black-muted max-w-[540px] md:text-center lg:text-start">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.</p>
+                <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full" onSubmit={handleSearch}>
+                    <div className="flex justify-between items-center w-full">
+                        <div className="flex flex-row w-full">
                             <Button
                                 type="button"
                                 variant={transactionType === "comprar" ? "gold" : "ghost"}
-                                className="px-4.5"
+                                className="px-4.5 w-1/3 md:w-min"
                                 onClick={() => setTransactionType("comprar")}
                             >
                                 Comprar
@@ -67,7 +66,7 @@ export default function Hero() {
                             <Button
                                 type="button"
                                 variant={transactionType === "arrendar" ? "gold" : "ghost"}
-                                className="px-4.5"
+                                className="px-4.5 w-1/3 md:w-min"
                                 onClick={() => setTransactionType("arrendar")}
                             >
                                 Arrendar
@@ -75,19 +74,19 @@ export default function Hero() {
                             <Button
                                 type="button"
                                 variant={transactionType === "investir" ? "gold" : "ghost"}
-                                className="px-4.5"
+                                className="px-4.5 w-1/3 md:w-min"
                                 onClick={() => setTransactionType("investir")}
                             >
                                 Investir
                             </Button>
                         </div>
-                        <Button type="submit" variant="brown" className="px-4.5">
+                        <Button type="submit" variant="brown" className="px-4.5 hidden md:block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="size-5">
                                 <path d="M14.1666 14.1667L17.5 17.5M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </Button>
                     </div>
-                    <div className="p-4 flex gap-4 bg-white">
+                    <div className="p-4 flex flex-col md:flex-row gap-4 bg-white">
                         <div className="flex flex-col gap-1 w-full">
                             <Label htmlFor="localizacao">Localização</Label>
                             <Select value={localizacao} onValueChange={setLocalizacao}>
@@ -134,6 +133,7 @@ export default function Hero() {
                             </Select>
                         </div>
                     </div>
+                    <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
                 </form>
             </div>
             <Image
@@ -143,6 +143,6 @@ export default function Hero() {
                 height={382}
                 className="absolute top-px left-[58.5%] -z-10 hidden lg:block"
             />
-        </div>
+        </section>
     )
 }

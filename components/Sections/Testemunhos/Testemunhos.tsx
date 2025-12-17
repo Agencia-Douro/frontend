@@ -7,13 +7,13 @@ import Link from "next/link";
 
 export default function Testemunhos() {
     return (
-        <section className="py-16 container">
-            <div className="flex justify-between items-end">
-                <div className="space-y-6">
-                    <h2 className="heading-dois-regular text-black">Palavras com chave na mão</h2>
-                    <p className="text-black-muted body-18-regular w-full md:w-[618px]">Cada chave carrega uma história, cada lar acolhe um sonho — estas são as vozes de quem encontrou o seu lugar perfeito.</p>
+        <section className="py-6 md:py-10 lg:py-12 xl:py-16 container">
+            <div className="flex flex-col lg:flex-row md:justify-center lg:justify-between lg:items-end md:w-[526px] lg:w-full md:text-center lg:text-start md:m-auto">
+                <div className="lg:space-y-6 space-y-4">
+                    <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">Palavras com chave na mão</h2>
+                    <p className="text-black-muted md:body-18-regular body-16-regular w-full lg:w-[618px]">Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.</p>
                 </div>
-                <div className="flex flex-col gap-2 items-end">
+                <div className="flex flex-col md:items-center gap-2 lg:items-end mt-4 md:mt-5 lg:mt-0">
                     <p className="body-18-medium text-black-muted">800+ clientes satisfeitos</p>
                     <div className="flex gap-2 items-center">
                         <div className="flex gap-1">
@@ -27,19 +27,19 @@ export default function Testemunhos() {
                     </div>
                 </div>
             </div>
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex gap-4 overflow-x-auto">
                 <Testemunho text="A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!" image={testemunho1} name="Lucimara Bordignon Borghetti" />
                 <Testemunho text="Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vania Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre." image={testemunho2} name="Maria Oliveira" />
                 <Testemunho text="Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vania Fernandes !" image={testemunho3} name="Walter Martins" />
             </div>
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex items-center justify-between">
                 <div className="flex gap-2 items-center">
-                    <Button variant="icon-brown">
+                    <Button variant="icon-brown" size="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown group-hover:text-white">
                             <path d="M6.52692 9.16658L10.9969 4.69657L9.81842 3.51807L3.33659 9.99992L9.81842 16.4817L10.9969 15.3032L6.52692 10.8332H16.6699V9.16658H6.52692Z" fill="currentColor"/>
                         </svg>
                     </Button>
-                    <Button variant="icon-brown">
+                    <Button variant="icon-brown" size="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown group-hover:text-white">
                             <path d="M13.4731 9.16658L9.00308 4.69657L10.1816 3.51807L16.6634 9.99992L10.1816 16.4817L9.00308 15.3032L13.4731 10.8332H3.33008V9.16658H13.4731Z" fill="currentColor"/>
                         </svg>

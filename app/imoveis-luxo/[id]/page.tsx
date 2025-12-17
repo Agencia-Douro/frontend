@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+import Footer from "@/components/Sections/Footer/Footer";
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

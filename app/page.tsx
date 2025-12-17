@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+import Footer from "@/components/Sections/Footer/Footer";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Hero from "@/components/Sections/Hero";
 import ImoveisDestacados from "@/components/Sections/ImoveisDestacados/ImoveisDestacados";
