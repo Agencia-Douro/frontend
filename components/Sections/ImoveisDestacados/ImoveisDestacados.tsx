@@ -32,6 +32,7 @@ export default function ImoveisDestacados() {
                 )}
 
                 {!isLoading && !isError && <Cards className="min-w-80" properties={properties} />}
+                {/* 
                 <div className="mt-4 md:mt-6 flex lg:hidden items-center justify-between">
                     <Button variant="icon-brown" size="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown group-hover:text-white">
@@ -44,8 +45,9 @@ export default function ImoveisDestacados() {
                         </svg>
                     </Button>
                 </div>
+                     */  }
             </div>
-            <div className="w-screen left-0 bg-gold lg:h-[386px] absolute top-132 -z-10"></div>
+            <div className="w-screen left-0 bg-[#EDE3D7] lg:h-[386px] absolute top-132 -z-10"></div>
         </section>
     )
 }

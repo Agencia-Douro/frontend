@@ -32,7 +32,7 @@ export default function Cards({ properties, className }: CardsProps) {
     }
 
     return (
-        <div className={`mt-8 flex items-center gap-4`}>
+        <div className={`mt-8 flex items-center gap-4 overflow-x-auto remove-scrollbar`}>
             {properties.map((property, index) => (
                 <Link
                     key={property.id}

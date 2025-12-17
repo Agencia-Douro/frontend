@@ -207,12 +207,41 @@ body {
     overscroll-behavior-x: none;
 }
 
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0);
-}
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent; /* sem fundo */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-gold);
+    border-radius: 999px;
+  }
+  
+  /* não muda em nenhuma interação */
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--color-gold);
+  }
+  
+  /* Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) transparent;
+  }
+  
 
-::-webkit-scrollbar-thumb:hover {
-background: rgba(255, 255, 255, 0);
+.remove-scrollbar {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+  
+.remove-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
 .card-image-overlay {

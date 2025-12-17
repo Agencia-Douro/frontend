@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,18 @@ import Logo from "@/public/Logo.svg"
 export default function Header() {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    // Bloquear scroll quando menu mobile está aberto
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [mobileMenuOpen]);
 
     // Não renderizar o Header se a rota contiver /admin
     if (pathname?.includes("/admin")) {
@@ -64,18 +76,21 @@ export default function Header() {
                         <Button variant="brown" asChild className="hidden sm:inline-flex">
                             <Link href="/contacto">Contacto</Link>
                         </Button>
-                        <button className="block p-1 lg:hidden cursor-pointer" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
-                                <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor" />
-                            </svg>
+                        <button className="block p-1 lg:hidden cursor-pointer z-[1001]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                            {mobileMenuOpen ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                                    <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                                    <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor" />
+                                </svg>
+                            )}
                         </button>
                     </div>
                 </div>
                 {/* Mobile Menu */}
-                {mobileMenuOpen && (
-                    <>
-                        {/* useEffect bloqueio scroll no componente pai */}
-                        <nav className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col gap-4 h-[calc(100vh-64px)] absolute bg-muted w-full left-0 z-1000 overflow-hidden">
+                <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-center py-24 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                             <Link
                                 href="/imoveis"
                                 className="body-16-medium text-brown hover:text-gold transition-colors px-2"
@@ -109,9 +124,7 @@ export default function Header() {
                                     Contacto
                                 </Link>
                             </Button>
-                        </nav>
-                    </>
-                )}
+                </nav>
             </div>
         </header>
     );
