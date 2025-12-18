@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import Card from "@/components/Sections/Imoveis/Card";
@@ -14,6 +14,7 @@ function ImoveisContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const { favorites } = useFavorites();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Construir filtros a partir dos parâmetros da URL
     const filters: PropertyFilters = {
@@ -88,11 +89,19 @@ function ImoveisContent() {
 
     return (
         <section>
-            <div className="container flex divide-x divide-[#EAE6DF] h-full overflow-hidden">
-                <Sidebar />
+            <div className="container flex flex-col lg:flex-row lg:divide-x divide-[#EAE6DF] h-full overflow-hidden">
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                 <div className="border-r border-[#EAE6DF] bg-deaf w-full">
-                    <div className="px-6 py-4 flex justify-between border-b border-[#EAE6DF]">
+                    <div className="px-4 md:px-6 py-4 flex flex-col sm:flex-row gap-4 sm:justify-between border-b border-[#EAE6DF]">
                         <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => setSidebarOpen(true)}
+                                className="xl:hidden bg-white shadow-pretty p-1.5 cursor-pointer hover:bg-deaf text-black-muted body-14-medium flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-grey">
+                                    <path d="M8 4V16M16.4 4H3.6C2.71634 4 2 4.59695 2 5.33333V14.6667C2 15.4031 2.71634 16 3.6 16H16.4C17.2837 16 18 15.4031 18 14.6667V5.33333C18 4.59695 17.2837 4 16.4 4Z" stroke="currentColor" strokeWidth="1.25" stroke-linejoin="round"/>
+                                </svg>
+                                Filtrar
+                            </button>
                             <div className="bg-white shadow-pretty divide-x divide-muted">
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
@@ -113,7 +122,7 @@ function ImoveisContent() {
                                     </svg>
                                 </button>
                             </div>
-                            <p><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
+                            <p className="text-sm md:text-base"><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
                         </div>
                         <div className="flex items-center gap-2">
                             <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">Ordenar por:</Label>
@@ -132,11 +141,11 @@ function ImoveisContent() {
                     </div>
                     {isLoading ? (<div className="grid place-content-center h-full"><p>A carregar imóveis</p></div>) : error ?
                         (<div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
-                            (<div className="grid place-content-center h-full text-center">
+                            (<div className="grid place-content-center h-full text-center p-4">
                                 <p className="body-16-medium text-brown">Nenhum correspondência.</p>
                                 <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
                             </div>) : (
-                                <div className="grid grid-cols-3 gap-4 p-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
                                     {filteredData.data.map((property) => (
                                         <Card
                                             key={property.id}
