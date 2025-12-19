@@ -73,7 +73,7 @@ export default function NewsletterPage() {
                                     </Button>
                                 ))}
                             </div>
-                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-5 h-63">
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-5 min-h-63">
                                 {filteredNewsletters.length > 0 ? (
                                     filteredNewsletters.map((newsletter) => (
                                         <NewsletterCard key={newsletter.id} newsletter={newsletter} />
