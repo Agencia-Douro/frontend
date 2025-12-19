@@ -52,100 +52,71 @@ export default function NewsletterDetailsPage() {
 
     return (
         <>
-            <section className="bg-deaf overflow-x-hidden">
-                <div className="container pt-5 sm:pt-10 pb-8 sm:pb-16">
-                    <div>
-                        <div className="relative flex flex-col sm:flex-row sm:items-center">
-                            <Link
-                                href="/newsletter"
-                                className="inline-flex items-center gap-2 body-14-medium text-brown hover:text-gold transition-colors mb-4 sm:mb-8"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                    <path
-                                        d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                    />
-                                </svg>
-                                Voltar
-                            </Link>
-
-                            <div className="sm:absolute sm:left-1/2 sm:-translate-x-1/2 bg-[#ECE7E3] p-3 text-center">
-                                <h1 className="capitalize body-16-medium">
-                                    {newsletter.category}
-                                </h1>
-                            </div>
-                        </div>
-
-
-                        {/* Title */}
-                        <h1 className="heading-tres-regular flex justify-center mt-5 sm:mt-10 mb-5 sm:mb-10 text-2xl sm:text-3xl lg:text-4xl">
-                            {newsletter.title}
-                        </h1>
-
-                        {/* Cover Image */}
-                        {newsletter.coverImage && (
-                            <div className="relative w-full mb-5 sm:mb-10">
-                                <Image
-                                    src={newsletter.coverImage}
-                                    alt={newsletter.title}
-                                    width={100}
-                                    height={300}
-                                    className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
-                                />
-                            </div>
-                        )}
-
-                        <article className="mb-5 sm:mb-10">
-                            <div
-                                className="prose prose-brown max-w-none break-words [&>p>img]:mt-10 [&>p>strong]:mt-10"
-                                dangerouslySetInnerHTML={{ __html: newsletter.content }}
-                            />
-                        </article>
-
-                        {/* Related Properties */}
-                        {newsletter.properties && newsletter.properties.length > 0 && (
-                            <div className="mt-8 sm:mt-16 mb-8 sm:mb-16">
-                                <h2 className="heading-tres-regular text-center mb-5 sm:mb-10">
-                                    Imóveis Relacionados
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                                    {newsletter.properties.map((property) => (
-                                        <Link
-                                            key={property.id}
-                                            href={`/imoveis/${property.id}`}
-                                            className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                                        >
-                                            <div className="relative w-full h-48 sm:h-56 md:h-64">
-                                                <Image
-                                                    src={property.image}
-                                                    alt={property.title}
-                                                    fill
-                                                    className="object-cover transition-transform duration-300"
-                                                />
-                                            </div>
-                                            <div className="p-4">
-                                                <p className="body-16-medium text-black line-clamp-2 mb-2">
-                                                    {property.title}
-                                                </p>
-                                                <p className="body-14-medium text-grey mb-3">
-                                                    {property.concelho}, {property.distrito}
-                                                </p>
-                                                <p className="body-20-medium text-brown">
-                                                    {new Intl.NumberFormat('pt-PT', {
-                                                        style: 'currency',
-                                                        currency: 'EUR',
-                                                        minimumFractionDigits: 0
-                                                    }).format(parseFloat(property.price))}
-                                                </p>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
+            <section className="bg-muted container pt-6 md:pt-8 lg:pt-12 xl:pt-16">
+                <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
+                    <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">Newsletter</Link>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                        <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
+                    </svg>
+                    <p className="body-16-medium text-brown capitalize whitespace-nowrap">{newsletter.title}</p>
                 </div>
+                {/* Title */}
+                <h1 className="heading-tres-regular lg:heading-dois-regular xl:heading-um-regular text-balance text-black lg:mt-8">{newsletter.title}</h1>
+
+                {/* Cover Image */}
+                {newsletter.coverImage && (
+                    <div className="relative w-full h-140 overflow-hidden mt-8">
+                        <Image
+                            src={newsletter.coverImage}
+                            alt={newsletter.title}
+                            width={100}
+                            height={300}
+                            className="w-full object-contain bg-center"
+                        />
+                    </div>
+                )}
+
+                <article className="mb-5 sm:mb-10">
+                    <div
+                        className="prose prose-brown max-w-none [&>p>img]:mt-10 [&>p]:mt-6 [&>p>strong]:mb-4"
+                        dangerouslySetInnerHTML={{ __html: newsletter.content }}
+                    />
+                </article>
+
+                {/* Related Properties */}
+                {newsletter.properties && newsletter.properties.length > 0 && (
+                    <div className="mt-8 sm:mt-16 mb-8 sm:mb-16">
+                        <h2 className="heading-tres-regular text-center mb-5 sm:mb-10">Imóveis Relacionados</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                            {newsletter.properties.map((property) => (
+                                <Link
+                                    key={property.id}
+                                    href={`/imoveis/${property.id}`}
+                                    className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="relative w-full h-48 sm:h-56 md:h-64">
+                                        <Image
+                                            src={property.image}
+                                            alt={property.title}
+                                            fill
+                                            className="object-cover transition-transform duration-300"
+                                        />
+                                    </div>
+                                    <div className="p-4">
+                                        <p className="body-16-medium text-black line-clamp-2 mb-2">{property.title}</p>
+                                        <p className="body-14-medium text-grey mb-3">{property.concelho}, {property.distrito}</p>
+                                        <p className="body-20-medium text-brown">
+                                            {new Intl.NumberFormat('pt-PT', {
+                                                style: 'currency',
+                                                currency: 'EUR',
+                                                minimumFractionDigits: 0
+                                            }).format(parseFloat(property.price))}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </section>
             <Footer/>
         </>

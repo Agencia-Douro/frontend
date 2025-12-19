@@ -195,7 +195,7 @@ export default function EditNewsletterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="coverImage">Imagem de Capa</Label>
+                  <Label htmlFor="coverImage">Imagem de Capa (Máximo 5MB)</Label>
                   <Input
                     id="coverImage"
                     type="file"
