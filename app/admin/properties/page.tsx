@@ -16,6 +16,7 @@ import {
   Collapsible,
   CollapsibleContent,
 } from "@/components/ui/collapsible"
+import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 
 export default function PropertiesPage() {
   const router = useRouter()
@@ -153,9 +154,9 @@ export default function PropertiesPage() {
                         <SelectValue placeholder="Todos" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="casa">Casa</SelectItem>
-                        <SelectItem value="apartamento">Apartamento</SelectItem>
-                        <SelectItem value="terreno">Terreno</SelectItem>
+                        {TIPOS_IMOVEL.map(tipo => (
+                          <SelectItem value={tipo.value}>{tipo.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
