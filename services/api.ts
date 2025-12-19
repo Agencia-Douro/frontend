@@ -497,7 +497,7 @@ export const contactApi = {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUBSPOT_TOKEN}`,
+          Authorization: `Bearer pat-na1-8d5a7b5c-ef55-4332-b543-b2310ccfac05`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
