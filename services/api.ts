@@ -475,3 +475,50 @@ export const imageSectionsApi = {
     }
   },
 };
+
+export interface ContactData {
+  nome: string;
+  telefone: string;
+  email: string;
+  mensagem: string;
+  aceitaMarketing?: boolean;
+}
+
+export const contactApi = {
+  send: async ({
+    email,
+    nome,
+    telefone,
+    mensagem,
+    aceitaMarketing,
+  }: ContactData): Promise<{ message: string }> => {
+    const response = await fetch(
+      `https://api.hubapi.com/crm/v3/objects/contacts/contacts`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUBSPOT_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          properties: {
+            email: email,
+            firstname: nome,
+            phone: telefone,
+            message: mensagem,
+            hs_marketable_status: aceitaMarketing ? "true" : "false",
+          },
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.error || `Erro ao enviar contato (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};

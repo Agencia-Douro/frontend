@@ -34,12 +34,14 @@ export default function PropertySelectorModal({
     distrito: "",
     propertyType: "",
     transactionType: "",
+    page: 1,
   })
 
   const { data: propertiesResponse, isLoading } = useQuery({
     queryKey: ["properties-selector", filters],
     queryFn: () => propertiesApi.getAll({
-      limit: 50,
+      limit: 12,
+      page: filters.page,
       ...(filters.search && { search: filters.search }),
       ...(filters.distrito && { distrito: filters.distrito }),
       ...(filters.propertyType && { propertyType: filters.propertyType }),
@@ -72,14 +74,22 @@ export default function PropertySelectorModal({
       distrito: "",
       propertyType: "",
       transactionType: "",
+      page: 1,
     })
   }
+
+  const updatePage = (newPage: number) => {
+    setFilters(prev => ({ ...prev, page: newPage }))
+  }
+
+  const totalPages = propertiesResponse?.totalPages || 1
+  const currentPage = propertiesResponse?.page || 1
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!w-[95vw] !max-w-[1600px] h-[95vh] overflow-hidden flex flex-col p-6">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Selecionar Imóveis</DialogTitle>
+          <DialogTitle className="text-2xl body-18-medium">Selecionar Imóveis</DialogTitle>
         </DialogHeader>
 
         {/* Filtros */}
@@ -91,7 +101,7 @@ export default function PropertySelectorModal({
                 id="search"
                 placeholder="Título ou referência..."
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
               />
             </div>
 
@@ -99,7 +109,7 @@ export default function PropertySelectorModal({
               <Label htmlFor="distrito">Distrito</Label>
               <Select
                 value={filters.distrito || undefined}
-                onValueChange={(value) => setFilters({ ...filters, distrito: value })}
+                onValueChange={(value) => setFilters({ ...filters, distrito: value, page: 1 })}
               >
                 <SelectTrigger id="distrito">
                   <SelectValue placeholder="Todos os distritos" />
@@ -118,7 +128,7 @@ export default function PropertySelectorModal({
               <Label htmlFor="propertyType">Tipo</Label>
               <Select
                 value={filters.propertyType || undefined}
-                onValueChange={(value) => setFilters({ ...filters, propertyType: value })}
+                onValueChange={(value) => setFilters({ ...filters, propertyType: value, page: 1 })}
               >
                 <SelectTrigger id="propertyType">
                   <SelectValue placeholder="Todos os tipos" />
@@ -137,7 +147,7 @@ export default function PropertySelectorModal({
               <Label htmlFor="transactionType">Transação</Label>
               <Select
                 value={filters.transactionType || undefined}
-                onValueChange={(value) => setFilters({ ...filters, transactionType: value })}
+                onValueChange={(value) => setFilters({ ...filters, transactionType: value, page: 1 })}
               >
                 <SelectTrigger id="transactionType">
                   <SelectValue placeholder="Todas as transações" />
@@ -215,6 +225,35 @@ export default function PropertySelectorModal({
               Nenhum imóvel encontrado com os filtros aplicados
             </p>
           )}
+        </div>
+
+        {/* Paginação */}
+        <div className="flex justify-center gap-2 py-4 border-t">
+          <Button
+            variant="brown"
+            disabled={currentPage === 1}
+            onClick={() => updatePage(currentPage - 1)}
+          >
+            Anterior
+          </Button>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <Button
+                key={page}
+                variant={page === currentPage ? "brown" : "ghost"}
+                onClick={() => updatePage(page)}
+              >
+                {page}
+              </Button>
+            ))}
+          </div>
+          <Button
+            variant="brown"
+            disabled={currentPage === totalPages}
+            onClick={() => updatePage(currentPage + 1)}
+          >
+            Próxima
+          </Button>
         </div>
 
         {/* Footer */}

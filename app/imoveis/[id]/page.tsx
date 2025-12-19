@@ -3,7 +3,7 @@
 import { useRef, useState } from "react"
 import { useParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import { propertiesApi } from "@/services/api"
+import { propertiesApi, contactApi } from "@/services/api"
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -138,31 +138,21 @@ export default function ImovelDetails() {
             // Adicionar informações do imóvel à mensagem
             const propertyInfo = `\n\n--- Informações do Imóvel ---\nReferência: ${property.reference || property.id}\nTipo: ${property.propertyType}\nLocalização: ${property.concelho}, ${property.distrito}\nPreço: ${parseFloat(property.price.toString()).toLocaleString("pt-PT")} €\nLink: ${window.location.href}`
 
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    ...formData,
-                    mensagem: formData.mensagem + propertyInfo,
-                }),
+            await contactApi.send({
+                ...formData,
+                mensagem: formData.mensagem + propertyInfo,
             })
 
-            const data = await res.json()
-
-            if (res.ok) {
-                toast.success("Mensagem enviada com sucesso!", { id: toastId })
-                setFormData({
-                    nome: "",
-                    telefone: "",
-                    email: "",
-                    mensagem: "",
-                    aceitaMarketing: false,
-                })
-            } else {
-                toast.error(data.error || "Erro ao enviar mensagem", { id: toastId })
-            }
-        } catch (error) {
-            toast.error("Erro ao enviar mensagem. Tente novamente.", { id: toastId })
+            toast.success("Mensagem enviada com sucesso!", { id: toastId })
+            setFormData({
+                nome: "",
+                telefone: "",
+                email: "",
+                mensagem: "",
+                aceitaMarketing: false,
+            })
+        } catch (error: any) {
+            toast.error(error.message || "Erro ao enviar mensagem. Tente novamente.", { id: toastId })
         }
     }
 

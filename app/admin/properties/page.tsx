@@ -325,35 +325,33 @@ export default function PropertiesPage() {
       </div>
 
       {/* Paginação */}
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
-          <Button
-            variant="brown"
-            disabled={currentPage === 1}
-            onClick={() => updateFilter("page", currentPage - 1)}
-          >
-            Anterior
-          </Button>
-          <div className="flex items-center gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={page === currentPage ? "brown" : "ghost"}
-                onClick={() => updateFilter("page", page)}
-              >
-                {page}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant="brown"
-            disabled={currentPage === totalPages}
-            onClick={() => updateFilter("page", currentPage + 1)}
-          >
-            Próxima
-          </Button>
+      <div className="flex justify-center gap-2 mt-8">
+        <Button
+          variant="brown"
+          disabled={currentPage === 1}
+          onClick={() => updateFilter("page", currentPage - 1)}
+        >
+          Anterior
+        </Button>
+        <div className="flex items-center gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Button
+              key={page}
+              variant={page === currentPage ? "brown" : "ghost"}
+              onClick={() => updateFilter("page", page)}
+            >
+              {page}
+            </Button>
+          ))}
         </div>
-      )}
+        <Button
+          variant="brown"
+          disabled={currentPage === totalPages}
+          onClick={() => updateFilter("page", currentPage + 1)}
+        >
+          Próxima
+        </Button>
+      </div>
     </div>
   )
 }

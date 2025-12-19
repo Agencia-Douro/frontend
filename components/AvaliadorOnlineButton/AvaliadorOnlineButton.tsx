@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select-line"
 import { toast } from "sonner"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { contactApi } from "@/services/api"
 
 export const AvaliadorOnlineButton = () => {
     const pathname = usePathname()
@@ -62,37 +63,27 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
         `.trim()
 
         try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    ...formData,
-                    mensagem: mensagemFormatada,
-                }),
+            await contactApi.send({
+                ...formData,
+                mensagem: mensagemFormatada,
             })
 
-            const data = await res.json()
-
-            if (res.ok) {
-                toast.success("Avaliação enviada com sucesso!", { id: toastId })
-                setFormData({
-                    nome: "",
-                    telefone: "",
-                    email: "",
-                    aceitaMarketing: false,
-                })
-                setImovelData({
-                    tipoImovel: "",
-                    finalidade: "",
-                    tipologia: "",
-                    observacoes: "",
-                })
-                setIsOpen(false)
-            } else {
-                toast.error(data.error || "Erro ao enviar avaliação", { id: toastId })
-            }
-        } catch (error) {
-            toast.error("Erro ao enviar avaliação. Tente novamente.", { id: toastId })
+            toast.success("Avaliação enviada com sucesso!", { id: toastId })
+            setFormData({
+                nome: "",
+                telefone: "",
+                email: "",
+                aceitaMarketing: false,
+            })
+            setImovelData({
+                tipoImovel: "",
+                finalidade: "",
+                tipologia: "",
+                observacoes: "",
+            })
+            setIsOpen(false)
+        } catch (error: any) {
+            toast.error(error.message || "Erro ao enviar avaliação. Tente novamente.", { id: toastId })
         }
     }
 
