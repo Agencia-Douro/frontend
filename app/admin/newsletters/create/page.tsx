@@ -25,6 +25,7 @@ export default function CreateNewsletterPage() {
     coverImage: "",
     propertyIds: [] as string[],
   })
+  const [customCategory, setCustomCategory] = useState("")
   const [uploadingImage, setUploadingImage] = useState(false)
   const [isPropertyModalOpen, setIsPropertyModalOpen] = useState(false)
 
@@ -68,7 +69,17 @@ export default function CreateNewsletterPage() {
       return
     }
 
-    createMutation.mutate(formData)
+    if (formData.category === "outro" && !customCategory) {
+      toast.error("Digite a categoria personalizada")
+      return
+    }
+
+    const dataToSubmit = {
+      ...formData,
+      category: formData.category === "outro" ? customCategory : formData.category
+    }
+
+    createMutation.mutate(dataToSubmit)
   }
 
   return (
@@ -128,7 +139,12 @@ export default function CreateNewsletterPage() {
                   <Label htmlFor="category">Categoria *</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                    onValueChange={(value) => {
+                      setFormData({ ...formData, category: value })
+                      if (value !== "outro") {
+                        setCustomCategory("")
+                      }
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione uma categoria" />
@@ -137,8 +153,20 @@ export default function CreateNewsletterPage() {
                       <SelectItem value="mercado">Mercado</SelectItem>
                       <SelectItem value="dicas">Dicas</SelectItem>
                       <SelectItem value="noticias">Notícias</SelectItem>
+                      <SelectItem value="outro">Outro</SelectItem>
                     </SelectContent>
                   </Select>
+
+                  {formData.category === "outro" && (
+                    <div className="mt-2">
+                      <Input
+                        placeholder="Digite a categoria personalizada"
+                        value={customCategory}
+                        onChange={(e) => setCustomCategory(e.target.value)}
+                        required
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">

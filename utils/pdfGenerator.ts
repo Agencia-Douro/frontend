@@ -58,18 +58,18 @@ export const generatePropertyPDF = async (property: Property, ref: any) => {
       allowTaint: true,
       scale: 2,
     });
-    const imgDta = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF({
-      orientation: "landscape",
+      orientation: "portrait",
       unit: "px",
       format: "a4",
     });
 
-    const width = pdf.internal.pageSize.getWidth();
-    const height = (canvas.height * width) / canvas.width;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
-    pdf.addImage(imgDta, "PNG", 0, 0, width, height);
+    pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
     pdf.save(`brochura-imovel-${property.id}.pdf`);
   } catch (error) {
     console.error("Erro ao gerar PDF:", error);

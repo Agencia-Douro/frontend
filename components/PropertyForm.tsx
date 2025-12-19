@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -17,6 +16,7 @@ import { toast } from "sonner"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
 import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 
 interface PropertyFormProps {
   initialData?: Property | null
@@ -382,7 +382,7 @@ export default function PropertyForm({
               {isEditMode && (
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>Status *</Label>
+                    <Label>Status <span className="text-red">*</span></Label>
                     <Select
                       value={formData.status}
                       onValueChange={(value) => updateField("status", value)}
@@ -410,7 +410,7 @@ export default function PropertyForm({
               )}
 
               <div className="space-y-2">
-                <Label>Título *</Label>
+                <Label>Título <span className="text-red">*</span></Label>
                 <Input
                   placeholder="Ex: Apartamento T3 no Centro do Porto"
                   value={formData.title}
@@ -432,18 +432,17 @@ export default function PropertyForm({
 
 
               <div className="space-y-2">
-                <Label>Descrição *</Label>
-                <Textarea
+                <Label>Descrição <span className="text-red">*</span></Label>
+                <RichTextEditor
                   placeholder="Descrição detalhada da propriedade..."
-                  className="min-h-[120px]"
                   value={formData.description}
-                  onChange={(e) => updateField("description", e.target.value)}
+                  onChange={(value) => updateField("description", value)}
                 />
               </div>
 
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <Label>Tipo de Transação *</Label>
+                  <Label>Tipo de Transação <span className="text-red">*</span></Label>
                   <Select
                     value={formData.transactionType}
                     onValueChange={(value) => updateField("transactionType", value)}
@@ -460,7 +459,7 @@ export default function PropertyForm({
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Tipo de Imóvel *</Label>
+                  <Label>Tipo de Imóvel <span className="text-red">*</span></Label>
                   <Select
                     value={formData.propertyType}
                     onValueChange={(value) => updateField("propertyType", value)}
@@ -497,7 +496,7 @@ export default function PropertyForm({
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-3">
                   <Checkbox
                     id="isEmpreendimento"
                     checked={formData.isEmpreendimento}
@@ -508,26 +507,21 @@ export default function PropertyForm({
                   </Label>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label>Classe Energética</Label>
-                  <Select
-                    value={formData.energyClass || ""}
-                    onValueChange={(value) => updateField("energyClass", value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="A+">A+</SelectItem>
-                      <SelectItem value="A">A</SelectItem>
-                      <SelectItem value="B">B</SelectItem>
-                      <SelectItem value="B-">B-</SelectItem>
-                      <SelectItem value="C">C</SelectItem>
-                      <SelectItem value="D">D</SelectItem>
-                      <SelectItem value="E">E</SelectItem>
-                      <SelectItem value="F">F</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex flex-wrap gap-2">
+                    {['A+', 'A', 'B', 'B-', 'C', 'D', 'E', 'F'].map((classe) => (
+                      <Button
+                        key={classe}
+                        type="button"
+                        variant={formData.energyClass === classe ? "brown" : "outline"}
+                        size="default"
+                        onClick={() => updateField("energyClass", classe)}
+                      >
+                        {classe}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -541,7 +535,7 @@ export default function PropertyForm({
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label>Preço (€) *</Label>
+                  <Label>Preço (€) <span className="text-red">*</span></Label>
                   <CurrencyInput
                     id="price-input"
                     name="price"
@@ -630,41 +624,38 @@ export default function PropertyForm({
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <Label>Quartos *</Label>
+                  <Label>Quartos <span className="text-red">*</span></Label>
                   <Input
                     type="number"
                     min="0"
                     placeholder="3"
-                    value={formData.bedrooms}
-                    onChange={(e) => updateField("bedrooms", parseInt(e.target.value))}
+                    onChange={(e) => updateField("bedrooms", parseInt(e.target.value) || 0)}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Casas de Banho *</Label>
+                  <Label>Casas de Banho <span className="text-red">*</span></Label>
                   <Input
                     type="number"
                     min="0"
                     placeholder="2"
-                    value={formData.bathrooms}
-                    onChange={(e) => updateField("bathrooms", parseInt(e.target.value))}
+                    onChange={(e) => updateField("bathrooms", parseInt(e.target.value) || 0)}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Garagem *</Label>
+                  <Label>Lugares de Garagem <span className="text-red">*</span></Label>
                   <Input
                     type="number"
                     min="0"
                     placeholder="1"
-                    value={formData.garageSpaces}
-                    onChange={(e) => updateField("garageSpaces", parseInt(e.target.value))}
+                    onChange={(e) => updateField("garageSpaces", parseInt(e.target.value) || 0)}
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 mt-4">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-3">
                   <Checkbox
                     id="hasOffice"
                     checked={formData.hasOffice}
@@ -675,7 +666,7 @@ export default function PropertyForm({
                   </Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-3">
                   <Checkbox
                     id="hasLaundry"
                     checked={formData.hasLaundry}
@@ -728,7 +719,7 @@ export default function PropertyForm({
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label>Distrito *</Label>
+                  <Label>Distrito <span className="text-red">*</span></Label>
                   <Select
                     value={formData.distrito || undefined}
                     onValueChange={(value) => updateField("distrito", value)}
@@ -747,7 +738,7 @@ export default function PropertyForm({
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Concelho *</Label>
+                  <Label>Concelho <span className="text-red">*</span></Label>
                   <Select
                     value={formData.concelho || undefined}
                     onValueChange={(value) => updateField("concelho", value)}
@@ -955,7 +946,7 @@ export default function PropertyForm({
                         <div key={index} className="border rounded-lg p-4 space-y-3">
                           <div className="flex gap-4 items-start">
                             <div className="flex-1 space-y-2">
-                              <Label htmlFor={`new-section-${index}-name`}>Nome da Seção *</Label>
+                              <Label htmlFor={`new-section-${index}-name`}>Nome da Seção <span className="text-red">*</span></Label>
                               <Select
                                 value={section.sectionName}
                                 onValueChange={(value) => updateNewSection(index, 'sectionName', value)}
