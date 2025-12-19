@@ -72,6 +72,7 @@ export default function PropertyForm({
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [imageToRemove, setImageToRemove] = useState<string>("")
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [activeTab, setActiveTab] = useState("info")
 
   // Estados para Image Sections
   const [imageSections, setImageSections] = useState<PropertyImageSection[]>([])
@@ -330,9 +331,17 @@ export default function PropertyForm({
     }
   }
 
+  const goToNextTab = () => {
+    const tabs = ["info", "features", "location", "images"]
+    const currentIndex = tabs.indexOf(activeTab)
+    if (currentIndex < tabs.length - 1) {
+      setActiveTab(tabs[currentIndex + 1])
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <Tabs defaultValue="info" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3 mb-6">
           <TabsTrigger
             value="info"
@@ -1038,22 +1047,33 @@ export default function PropertyForm({
         </TabsContent>
       </Tabs>
 
-      <div className="flex gap-4">
-        {onCancel && (
+      <div className="flex gap-4 justify-end">
+        {activeTab === "images" ? (
+          <>
+            {onCancel && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={onCancel}
+              >
+                {cancelButtonText}
+              </Button>
+            )}
+            <Button
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Salvando..." : submitButtonText}
+            </Button>
+          </>
+        ) : (
           <Button
             type="button"
-            variant="ghost"
-            onClick={onCancel}
+            onClick={goToNextTab}
           >
-            {cancelButtonText}
+            Próxima
           </Button>
         )}
-        <Button
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? "Salvando..." : submitButtonText}
-        </Button>
       </div>
     </form>
   )
