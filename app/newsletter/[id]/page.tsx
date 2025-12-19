@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { newslettersApi } from "@/services/api";
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "@/components/Sections/Footer/Footer";
 
 export default function NewsletterDetailsPage() {
     const params = useParams();
@@ -97,7 +98,7 @@ export default function NewsletterDetailsPage() {
 
                         <article className="mb-5 sm:mb-10">
                             <div
-                                className="prose prose-brown max-w-none break-words"
+                                className="prose prose-brown max-w-none break-words [&>p>img]:mt-10 [&>p>strong]:mt-10"
                                 dangerouslySetInnerHTML={{ __html: newsletter.content }}
                             />
                         </article>
@@ -146,6 +147,7 @@ export default function NewsletterDetailsPage() {
                     </div>
                 </div>
             </section>
+            <Footer/>
         </>
     );
 }

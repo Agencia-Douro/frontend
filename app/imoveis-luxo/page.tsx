@@ -8,7 +8,7 @@ import Sidebar from "@/components/sidebar";
 import { propertiesApi, PropertyFilters } from "@/services/api";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-flat";
-import imgTest from "@/public/test-Image.jpg";
+import imgTest from "@/public/test-images/test-Image.jpg";
 
 function ImoveisContent() {
     const searchParams = useSearchParams();

@@ -1,82 +1,97 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { newslettersApi } from "@/services/api";
-import Link from "next/link";
+import Footer from "@/components/Sections/Footer/Footer";
+import PerguntasFrequentes from "@/components/Sections/Testemunhos/Testemunhos";
+import NewsletterCard from "@/components/NewsletterCard";
+import { Button } from "@/components/ui/button";
+
+const CATEGORIES = [
+    { value: "mercado", label: "Mercado" },
+    { value: "dicas", label: "Dicas" },
+    { value: "noticias", label: "Notícias" },
+] as const;
 
 export default function NewsletterPage() {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    
     const { data: newsletters, isLoading, error } = useQuery({
         queryKey: ["newsletters"],
         queryFn: () => newslettersApi.getAll(),
     });
 
+    const filteredNewsletters = useMemo(() => {
+        if (!newsletters) return [];
+        if (!selectedCategory) return newsletters;
+        return newsletters.filter((newsletter) => newsletter.category === selectedCategory);
+    }, [newsletters, selectedCategory]);
+
     return (
         <>
-            <section className="bg-deaf min-h-screen overflow-x-hidden">
-                <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
-                    <div className="max-w-6xl mx-auto">
-                        <h1 className="heading-dois-medium text-center mb-2 sm:mb-4 text-2xl sm:text-3xl">
-                            Newsletters
-                        </h1>
-                        <p className="body-16-regular text-black-muted text-center mb-6 sm:mb-12 text-sm sm:text-base">
-                            Fique por dentro das últimas novidades do mercado imobiliário
-                        </p>
+            <section className="container">
+                <div className="pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+                    <div className="lg:space-y-6 space-y-4">
+                        <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">Newsletter</h2>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full">Fique por dentro das últimas novidades do mercado imobiliário</p>
+                    </div>
+                    {isLoading && (
+                        <div className="text-center mt-8 sm:py-12">
+                            <p className="body-16-regular text-brown">A carregar newsletters...</p>
+                        </div>
+                    )}
 
-                        {isLoading && (
-                            <div className="text-center py-8 sm:py-12">
-                                <p className="body-16-regular text-brown">Carregando newsletters...</p>
-                            </div>
-                        )}
+                    {error && (
+                        <div className="text-center mt-8 sm:py-12">
+                            <p className="body-16-regular text-red">Erro ao carregar newsletters.</p>
+                        </div>
+                    )}
 
-                        {error && (
-                            <div className="text-center py-8 sm:py-12">
-                                <p className="body-16-regular text-red">Erro ao carregar newsletters</p>
-                            </div>
-                        )}
+                    {!isLoading && !error && newsletters && newsletters.length === 0 && (
+                        <div className="text-center mt-8 sm:py-12">
+                            <p className="body-16-regular text-brown/50">Nenhuma newsletter disponível.</p>
+                        </div>
+                    )}
 
-                        {!isLoading && !error && newsletters && newsletters.length === 0 && (
-                            <div className="text-center py-8 sm:py-12">
-                                <p className="body-16-regular text-brown/50">Nenhuma newsletter disponível</p>
-                            </div>
-                        )}
-
-                        {!isLoading && !error && newsletters && newsletters.length > 0 && (
-                            <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                                {newsletters.map((newsletter) => (
-                                    <Link
-                                        key={newsletter.id}
-                                        href={`/newsletter/${newsletter.id}`}
-                                        className="group"
-                                    >
-                                        <article className="bg-white p-4 sm:p-6 h-full flex flex-col border border-brown/10 hover:border-brown/30 transition-all duration-200 shadow-sm hover:shadow-md">
-                                            <div className="mb-3 sm:mb-4">
-                                                <span className="body-12-medium text-gold uppercase tracking-wider">
-                                                    {newsletter.category}
-                                                </span>
-                                            </div>
-                                            <h3 className="heading-quatro-medium text-brown mb-2 sm:mb-3 group-hover:text-gold transition-colors line-clamp-2 text-lg sm:text-xl">
-                                                {newsletter.title}
-                                            </h3>
-                                            <div className="mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between text-brown/50 gap-1 sm:gap-0">
-                                                <span className="body-14-regular">
-                                                    {newsletter.readingTime} min de leitura
-                                                </span>
-                                                <span className="body-14-regular">
-                                                    {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
-                                                        day: '2-digit',
-                                                        month: 'short',
-                                                        year: 'numeric'
-                                                    })}
-                                                </span>
-                                            </div>
-                                        </article>
-                                    </Link>
+                    {!isLoading && !error && newsletters && newsletters.length > 0 && (
+                        <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-6 gap-6">
+                            <div className="flex flex-col gap-1 pr-6 border-r border-brown/10 sticky top-0 col-span-1">
+                                <Button 
+                                    variant={selectedCategory === null ? "brown" : "ghost"} 
+                                    className="w-min"
+                                    onClick={() => setSelectedCategory(null)}>
+                                    Todas
+                                </Button>
+                                {CATEGORIES.map((category) => (
+                                    <Button 
+                                        key={category.value}
+                                        variant={selectedCategory === category.value ? "brown" : "ghost"} 
+                                        className="w-min"
+                                        onClick={() => setSelectedCategory(category.value)}>
+                                        {category.label}
+                                    </Button>
                                 ))}
                             </div>
-                        )}
-                    </div>
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-5 h-63">
+                                {filteredNewsletters.length > 0 ? (
+                                    filteredNewsletters.map((newsletter) => (
+                                        <NewsletterCard key={newsletter.id} newsletter={newsletter} />
+                                    ))
+                                ) : (
+                                    <div className="col-span-full text-center py-12">
+                                        <span className="body-16-regular text-brown/50">
+                                            Nenhuma newsletter encontrada nesta categoria.
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
+            <PerguntasFrequentes/>
+            <Footer/>
         </>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Property } from "@/types/property";
+import Image from "next/image";
 
 interface ImagensImoveisProps {
   property: Property;
@@ -149,7 +150,7 @@ export default function ImagensImoveis({
       {/* Mantemos o wrapper no DOM enquanto showPanel ou estamos no processo de fechar */}
       {(showPanel || panelClosing) && (
         <div
-          className="bg-deaf block overflow-hidden fixed inset-0 z-50"
+          className="bg-deaf block overflow-hidden fixed inset-0 z-1000"
           // wrapper que tem a transição de transform inline — por isso onTransitionEnd aqui é fiável
           onTransitionEnd={onTransitionEnd}
           role="dialog"
@@ -164,7 +165,7 @@ export default function ImagensImoveis({
           <div style={{ height: "100%", overflowY: "auto" }}>
             <div className="container relative" style={{ minHeight: "100%" }}>
               <button
-                className="flex items-center gap-2 px-1.5 py-1 fixed mt-8 z-100 body-16-medium text-brown hover:text-gold transition-colors cursor-pointer"
+                className="flex items-center gap-2 px-1.5 py-1 absolute lg:fixed mt-4 lg:mt-8 z-100 body-16-medium text-brown hover:text-gold transition-colors cursor-pointer"
                 onClick={handleClose}
                 disabled={panelClosing}
                 aria-disabled={panelClosing}>
@@ -184,20 +185,26 @@ export default function ImagensImoveis({
                     const imagesToShow = section.images.slice(0, 3);
 
                     return (
-                      <div key={section.id} className={`grid grid-cols-6 ${sectionIndex === property.imageSections!.length - 1 ? 'pb-8' : ''}`}>
-                        <span className="col-start-1 col-end-3 text-end text-brown body-18-medium sticky top-0 pt-8 h-min">
+                      <div key={section.id} className={`grid grid-cols-1 lg:grid-cols-6 ${sectionIndex === property.imageSections!.length - 1 ? 'pb-8' : ''}`}>
+                        <span className="text-brown body-18-medium pt-4 md:pt-6 xl:pt-8 lg:col-start-1 lg:col-end-3 text-end lg:sticky lg:top-0 h-min">
                           {section.sectionName}
                         </span>
-                        <div className={`col-start-4 col-end-7 pt-8 ${imageCount === 1 ? 'pb-8' : ''}`}>
+                        <div className={`pt-4 lg:pt-8 lg:col-start-4 lg:col-end-7 ${imageCount === 1 ? 'pb-8' : ''}`}>
                           <div className={`grid gap-4 ${imageCount >= 2 ? 'grid-cols-2 grid-rows-2' : 'grid-cols-1'}`}>
                             {imagesToShow.map((image, imageIndex) => (
                               <div
                                 key={imageIndex}
-                                className={`h-[406px] bg-cover bg-center overflow-hidden ${imageCount >= 2 && imageIndex === 0 ? 'col-span-2' : ''
-                                  } ${imageCount >= 2 && imageIndex > 0 ? 'row-start-2' : ''
-                                  }`}
+                                className={`w-full bg-cover bg-center overflow-hidden ${
+                                  imageCount >= 2 && imageIndex === 0 
+                                    ? 'col-span-2 aspect-5/3' 
+                                    : imageCount >= 2 && imageIndex > 0 
+                                    ? 'row-start-2 aspect-5/6' 
+                                    : 'aspect-5/3'
+                                }`}
                               >
-                                <img
+                                <Image
+                                  width={1000}
+                                  height={1000}
                                   src={image}
                                   alt={`${section.sectionName} - ${imageIndex + 1}`}
                                   className="w-full h-full object-cover"

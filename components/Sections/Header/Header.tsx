@@ -61,7 +61,7 @@ export default function Header() {
                                 { href: "/imoveis-luxo?tipo=venda", label: "Venda" },
                                 { href: "/imoveis-luxo?tipo=arrendamento", label: "Arrendamento" },
                             ]}
-                        />
+                        />{/*
                         <NavLinkDropdown
                             trigger="Institucional"
                             items={[
@@ -70,13 +70,14 @@ export default function Header() {
                                 { href: "/institucional/contacto", label: "Contacto" },
                             ]}
                         />
+                        */}
                         <NavLink href="/newsletter">Newsletter</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
-                        <Button variant="brown" asChild className="hidden sm:inline-flex">
-                            <Link href="/contacto">Contacto</Link>
+                        <Button variant="brown" asChild>
+                            <Link href="/" id="">Contacto</Link>
                         </Button>
-                        <button className="block p-1 lg:hidden cursor-pointer z-[1001]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                        <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
                                     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
@@ -119,11 +120,6 @@ export default function Header() {
                             >
                                 Newsletter
                             </Link>
-                            <Button variant="brown" asChild className="w-full">
-                                <Link href="/contacto" onClick={() => setMobileMenuOpen(false)}>
-                                    Contacto
-                                </Link>
-                            </Button>
                 </nav>
             </div>
         </header>

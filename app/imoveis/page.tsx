@@ -145,7 +145,7 @@ function ImoveisContent() {
                                 <p className="body-16-medium text-brown">Nenhum correspondência.</p>
                                 <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
                             </div>) : (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
                                     {filteredData.data.map((property) => (
                                         <Card
                                             key={property.id}

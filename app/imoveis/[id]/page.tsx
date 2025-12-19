@@ -18,6 +18,7 @@ import { generatePropertyPDF } from "@/utils/pdfGenerator"
 import ImagensImoveis from "@/components/Sections/ImagensImoveis"
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
+import Footer from "@/components/Sections/Footer/Footer"
 
 export default function ImovelDetails() {
     const params = useParams()
@@ -170,16 +171,16 @@ export default function ImovelDetails() {
         <>
             <section className="bg-deaf overflow-x-hidden">
                 <div className="container pb-16">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-4 gap-4">
-                        <div className="flex flex-row items-center gap-3 flex-wrap">
+                    <div className="flex justify-between items-center py-4 gap-4">
+                        <div className="flex items-center gap-3">
                             <Link
                                 href="/imoveis"
-                                className="flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
+                                className="hidden md:flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
                                 </svg>Voltar
                             </Link>
-                            <div className="w-px h-3 bg-brown/20"></div>
+                            <div className="hidden md:block w-px h-3 bg-brown/20"></div>
                             <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
                                 <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.transactionType}</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
@@ -214,8 +215,8 @@ export default function ImovelDetails() {
                         return (
                             <>
                                 {/* Grid de 4 imagens - visible only on md and up */}
-                                <div className="hidden md:grid h-96 grid-cols-12 w-full gap-4">
-                                    <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
+                                <div className="hidden md:grid md:grid-cols-2 md:grid-rows-2 h-96 lg:grid-cols-12 w-full gap-4">
+                                    <div className="bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden">
                                         {property.image && (
                                             <Image
                                                 width={1000}
@@ -226,7 +227,7 @@ export default function ImovelDetails() {
                                             />
                                         )}
                                     </div>
-                                    <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
+                                    <div className="bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block">
                                         {allImages[0] && (
                                             <Image
                                                 width={1000}
@@ -237,7 +238,7 @@ export default function ImovelDetails() {
                                             />
                                         )}
                                     </div>
-                                    <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    <div className="bg-brown/10 lg:col-span-3 overflow-hidden">
                                         {allImages[1] && (
                                             <Image
                                                 width={1000}
@@ -248,7 +249,7 @@ export default function ImovelDetails() {
                                             />
                                         )}
                                     </div>
-                                    <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
+                                    <div className="bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden">
                                         {allImages[2] && (
                                             <Image
                                                 width={1000}
@@ -262,7 +263,7 @@ export default function ImovelDetails() {
                                 </div>
                                 
                                 {/* Imagem principal - visible only on mobile */}
-                                <div className="md:hidden w-full h-96 border border-brown/10 overflow-hidden rounded-lg">
+                                <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden">
                                     {property.image && (
                                         <Image
                                             width={1000}
@@ -270,27 +271,27 @@ export default function ImovelDetails() {
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
+                                            style={{ aspectRatio: "16/9" }}
                                         />
                                     )}
                                 </div>
                             </>
                         );
                     })()}
-
                     <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 min-w-0">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 body-16-medium text-brown flex-wrap">
+                        <div className="flex items-center gap-4 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto">
                             <span>{property.concelho}, {property.distrito}</span>
-                            <div className="hidden sm:block h-3 w-px bg-brown/30"></div>
+                            <div className="block h-3 w-px bg-brown/30"></div>
                             <span className="capitalize">{property.propertyType}</span>
-                            <div className="hidden sm:block h-3 w-px bg-brown/30"></div>
+                            <div className="block h-3 w-px bg-brown/30"></div>
                             <p><span className="text-brown/50">#</span>{property.reference}</p>
                         </div>
                         <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                     </div>
-                    <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
-                    <div className="pt-6 flex flex-col lg:flex-row gap-8 lg:gap-0 justify-between">
-                        <div className="flex-1">
-                            <div className="w-full lg:w-154 [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
+                    <h2 className="pt-4 md:pt-5 lg:pt-6 heading-quatro-medium lg:heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
+                    <div className="pt-4 md:pt-5 lg:pt-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div className="lg:col-span-6 order-2 lg:order-1">
+                            <div className="w-full [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
                                 <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
                                 {property.deliveryDate && (
                                     <>
@@ -305,7 +306,17 @@ export default function ImovelDetails() {
                                     </>
                                 )}
                             </div>
-                            <div className="mt-4">
+                            <iframe
+                                className="mt-6 h-75 border-0 lg:hidden block"
+                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
+                                    `${property.concelho}, ${property.distrito}, Portugal`
+                                )}`}
+                                width="100%"
+                                allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                            />
+                            <div className="mt-4 w-full">
                                 <div className="flex flex-col sm:flex-row gap-4 w-full">
                                     <Button
                                         variant={fav ? "gold" : "muted"}
@@ -408,7 +419,7 @@ export default function ImovelDetails() {
 
                             </div>
                         </div>
-                        <div className="w-full lg:w-[512px] sticky top-0">
+                        <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2">
                             {property.totalArea && property.totalArea > 0 && (
                                 <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
                             )}
@@ -442,7 +453,7 @@ export default function ImovelDetails() {
                                 <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
                             )}
                             <iframe
-                                className="mt-6 h-75 border-0"
+                                className="mt-6 h-75 border-0 hidden lg:block"
                                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
                                     `${property.concelho}, ${property.distrito}, Portugal`
                                 )}`}
@@ -464,6 +475,7 @@ export default function ImovelDetails() {
             <div className="fixed -left-[9999px] top-0 pointer-events-none" ref={pdfRef}>
                 <PropertyPDFTemplate property={property} />
             </div>
+            <Footer />
         </>
     );
 }
