@@ -196,7 +196,7 @@ export default function CreateNewsletterPage() {
                 <div className="space-y-2">
                   <Label htmlFor="content">Conteúdo *</Label>
                   <RichTextEditor
-                    content={formData.content}
+                    value={formData.content}
                     onChange={(content) => setFormData({ ...formData, content })}
                     placeholder="Digite o conteúdo da newsletter..."
                   />

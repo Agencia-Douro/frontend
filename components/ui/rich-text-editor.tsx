@@ -16,7 +16,11 @@ interface RichTextEditorProps {
 export function RichTextEditor({ value, onChange, placeholder, className }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        hardBreak: {
+          keepMarks: false,
+        },
+      }),
       Placeholder.configure({
         placeholder: placeholder || "Escreva aqui...",
       }),
@@ -29,6 +33,14 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
     editorProps: {
       attributes: {
         class: "tiptap min-h-[120px] px-3 py-2",
+      },
+      handleKeyDown: (view, event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault()
+          view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.hardBreak.create()).scrollIntoView())
+          return true
+        }
+        return false
       },
     },
   })

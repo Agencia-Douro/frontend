@@ -180,7 +180,7 @@ export default function PropertyForm({
     'Sala de Jantar',
     'Quartos',
     'Quarto Principal',
-    'Banheiros',
+    'Casas de Banho',
     'Escritório',
     'Lavandaria',
     'Garagem',
