@@ -5,7 +5,7 @@ import {
 } from "@/types/property";
 import { Newsletter } from "@/types/newsletter";
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = "https://novo.agenciadouro.pt/api";
 //const API_BASE_URL = "http://localhost:3008";
 
 export interface PropertyFilters {
