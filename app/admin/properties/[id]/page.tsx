@@ -17,6 +17,7 @@ import Link from "next/link"
 import ImagensImoveis from "@/components/Sections/ImagensImoveis"
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Trash2, Pencil, Star } from "lucide-react"
+import Image from "next/image"
 
 export default function PropertyDetailsPage() {
     const params = useParams()
@@ -191,7 +192,9 @@ export default function PropertyDetailsPage() {
                             <div className="h-96 grid grid-cols-12 w-full gap-4">
                                 <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
                                     {property.image && (
-                                        <img
+                                        <Image
+                                            width={1000}
+                                            height={1000}
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
@@ -200,7 +203,9 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
                                     {allImages[0] && (
-                                        <img
+                                        <Image
+                                            width={1000}
+                                            height={1000}
                                             src={allImages[0].url}
                                             alt={`${property.title} - ${allImages[0].name}`}
                                             className="w-full h-full object-cover"
@@ -209,7 +214,9 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                     {allImages[1] && (
-                                        <img
+                                        <Image
+                                            width={1000}
+                                            height={1000}
                                             src={allImages[1].url}
                                             alt={`${property.title} - ${allImages[1].name}`}
                                             className="w-full h-full object-cover"
@@ -218,7 +225,9 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                     {allImages[2] && (
-                                        <img
+                                        <Image
+                                            width={1000}
+                                            height={1000}
                                             src={allImages[2].url}
                                             alt={`${property.title} - ${allImages[2].name}`}
                                             className="w-full h-full object-cover"
@@ -247,13 +256,13 @@ export default function PropertyDetailsPage() {
                         <div className="w-full mr-10">
                             <div className="tiptap max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
                             {property.deliveryDate && (
-                                <div className="mt-6 p-4 bg-muted border border-brown/10 rounded">
+                                <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
                                     <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
                                     <p className="body-16-regular text-brown">{property.deliveryDate}</p>
                                 </div>
                             )}
                             {property.paymentConditions && (
-                                <div className="mt-4 p-4 bg-muted border border-brown/10 rounded">
+                                <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
                                     <h6 className="body-16-medium text-brown mb-2">Condições de Pagamento:</h6>
                                     <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
                                 </div>

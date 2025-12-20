@@ -280,13 +280,13 @@ export default function ImovelDetails() {
                             <div className="w-full">
                                 <div className="tiptap max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
                                 {property.deliveryDate && (
-                                    <div className="mt-6 p-4 bg-muted border border-brown/10 rounded">
+                                    <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
                                         <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
                                         <p className="body-16-regular text-brown">{property.deliveryDate}</p>
                                     </div>
                                 )}
                                 {property.paymentConditions && (
-                                    <div className="mt-4 p-4 bg-muted border border-brown/10 rounded">
+                                    <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
                                         <h6 className="body-16-medium text-brown mb-2">Condições de Pagamento:</h6>
                                         <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
                                     </div>
