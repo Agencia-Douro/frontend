@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Property } from "@/types/property"
 import { cn } from "@/lib/utils"
+import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 
 interface CardsProps {
     properties: Property[]
@@ -31,6 +32,11 @@ export default function Cards({ properties, className }: CardsProps) {
         return area ? `${area}m²` : 'N/A'
     }
 
+    const getPropertyTypeLabel = (propertyType: string) => {
+        const tipo = TIPOS_IMOVEL.find(t => t.value === propertyType)
+        return tipo ? tipo.label : propertyType
+    }
+
     return (
         <div className={`mt-8 flex items-center gap-4 overflow-x-auto remove-scrollbar`}>
             {properties.map((property, index) => (
@@ -47,7 +53,9 @@ export default function Cards({ properties, className }: CardsProps) {
                                 fill
                                 className="object-cover"/>
                         )}
-                        {property.isEmpreendimento && (<div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">Empreendimento</div>)}
+                        <div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">
+                            {property.isEmpreendimento ? "Empreendimento" : getPropertyTypeLabel(property.propertyType)}
+                        </div>
                     </div>
                     <div className="flex flex-col gap-2 py-3 px-4">
                         <div className="flex justify-between text-black body-18-medium">
