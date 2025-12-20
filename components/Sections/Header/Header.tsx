@@ -61,16 +61,15 @@ export default function Header() {
                                 { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
                             ]}
-                        />{/*
+                        />
                         <NavLinkDropdown
                             trigger="Institucional"
+                            triggerHref="/institucional/sobre-nos"
                             items={[
-                                { href: "/institucional", label: "Sobre Nós" },
-                                { href: "/institucional/equipa", label: "Equipa" },
-                                { href: "/institucional/contacto", label: "Contacto" },
+                                { href: "/institucional/sobre-nos", label: "Sobre Nós" },
+                                { href: "/institucional/podcast", label: "Podcast" },
                             ]}
                         />
-                        */}
                         <NavLink href="/newsletter">Newsletter</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">

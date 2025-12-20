@@ -59,14 +59,29 @@ export default function NewsletterDetailsPage() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>
+                    <p className="body-16-medium text-black-muted capitalize">{newsletter.category}</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
+                        <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
+                    </svg>
                     <p className="body-16-medium text-brown capitalize whitespace-nowrap">{newsletter.title}</p>
                 </div>
                 {/* Title */}
                 <h1 className="heading-tres-regular lg:heading-dois-regular xl:heading-um-regular text-balance text-black lg:mt-8">{newsletter.title}</h1>
+                <div className="flex items-center gap-2 mt-4">
+                    <p className="body-14-regular text-black-muted">
+                        {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        })}
+                    </p>
+                    <span>∙</span>
+                    <p className="body-14-regular text-black-muted">{newsletter.readingTime} min de leitura</p>
+                </div>
 
                 {/* Cover Image */}
                 {newsletter.coverImage && (
-                    <div className="relative w-full h-140 overflow-hidden mt-8">
+                    <div className="relative w-full h-140 overflow-hidden mt-4">
                         <Image
                             src={newsletter.coverImage}
                             alt={newsletter.title}

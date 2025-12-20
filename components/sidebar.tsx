@@ -209,7 +209,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                             <SelectTrigger id="tipo" name="tipo">
                                                 <SelectValue placeholder="Selecione o tipo de imóvel" />
                                             </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                            <SelectContent>
                                                 {TIPOS_IMOVEL.map((tipo) => (
                                                     <SelectItem key={tipo.value} value={tipo.value}>
                                                         {tipo.label}

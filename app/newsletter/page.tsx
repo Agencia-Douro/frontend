@@ -56,7 +56,7 @@ export default function NewsletterPage() {
 
                     {!isLoading && !error && newsletters && newsletters.length > 0 && (
                         <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-12 gap-6">
-                            <div className="flex lg:flex-col gap-1 pr-6 border-r border-brown/10 lg:sticky lg:top-0 col-span-12 lg:col-span-4 xl:col-span-3">
+                            <div className="flex lg:flex-col gap-1 pr-6 border-r border-brown/10 lg:sticky lg:top-0 col-span-12 lg:col-span-3 xl:col-span-2">
                                 <Button 
                                     variant={selectedCategory === null ? "brown" : "ghost"} 
                                     className="w-min"
@@ -73,7 +73,7 @@ export default function NewsletterPage() {
                                     </Button>
                                 ))}
                             </div>
-                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 col-span-12 lg:col-span-8 xl:col-span-9 lg:min-h-63">
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 col-span-12 lg:col-span-9 xl:col-span-10 lg:min-h-63">
                                 {filteredNewsletters.length > 0 ? (
                                     filteredNewsletters.map((newsletter) => (
                                         <NewsletterCard key={newsletter.id} newsletter={newsletter} />

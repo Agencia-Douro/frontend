@@ -6,48 +6,32 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-function Select({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />
+function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
+    return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
-function SelectGroup({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Group>) {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />
+function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
+    return <SelectPrimitive.Group data-slot="select-group" {...props} />
 }
 
-function SelectValue({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />
+function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {
+    return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default"
-}) {
-  return (
-    <SelectPrimitive.Trigger
-      data-slot="select-trigger"
-      data-size={size}
-      className={cn(
-        "flex justify-between w-full items-center body-14-medium text-black-muted py-2 border-b border-b-gold placeholder:text-black-muted px-0 data-[state=open]:border-b-brown group focus-within:outline-none focus-within:border-b-brown",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-4 text-brown group-[data-state=open]:text-gold" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
-  )
+function SelectTrigger({ className, size = "default", children, ...props }: React.ComponentProps<typeof SelectPrimitive.Trigger> & { size?: "sm" | "default" }) {
+    return (
+        <SelectPrimitive.Trigger
+            data-slot="select-trigger"
+            data-size={size}
+            className={cn("flex justify-between w-full items-center body-14-medium py-2 px-0 group", 
+                "text-black-muted border-b border-b-gold placeholder:text-black-muted data-[state=open]:border-brown data-[state=closed]:border-gold focus-within:outline-none focus-within:border-b-brown", className)}
+            {...props}>
+            {children}
+            <SelectPrimitive.Icon asChild>
+                <ChevronDownIcon className="size-4 group-data-[state=closed]:text-gold group-data-[state=open]:text-brown group-data-[state=open]:-rotate-180 duration-200 transition-all" />
+            </SelectPrimitive.Icon>
+        </SelectPrimitive.Trigger>
+    )
 }
 
 function SelectContent({
@@ -70,7 +54,7 @@ function SelectContent({
             position={position} align={align} {...props}>
             <SelectScrollUpButton />
             <SelectPrimitive.Viewport
-                className={cn("p-1 grid md:grid-cols-3 grid-cols-2 gap-1", position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1")}>
+                className={cn("p-1 grid md:grid-cols-3 grid-cols-2 gap-1", position === "popper" && "h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width] scroll-my-1")}>
                 {children}
             </SelectPrimitive.Viewport>
             <SelectScrollDownButton />
@@ -102,7 +86,7 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         "focus:bg-muted hover:text-brown hover:bg-muted focus:text-brown button-14-medium relative flex w-full cursor-default items-center gap-2 py-1.5 pr-8 pl-2 outline-hidden select-none",
-        "[&_svg:not([class*='text-'])]:text-muted-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "[&_svg:not([class*='text-'])]:text-muted-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}

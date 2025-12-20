@@ -302,7 +302,14 @@ body {
 }
 
 .tiptap strong {
-    font-weight: 500;
+    font-size: var(--text-medium);
+    line-height: var(--text-medium--line-height);
+    letter-spacing: var(--text-medium--letter-spacing);
+    font-weight: var(--font-medium);
+}
+
+.tiptap p {
+    padding-top: 1rem;
 }
 
 .tiptap em {

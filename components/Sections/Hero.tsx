@@ -53,7 +53,7 @@ export default function Hero() {
     return (
         <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative flex justify-center lg:block">
             <div className="flex flex-col md:items-center lg:items-start md:max-w-[616px] z-100 w-full">
-                <h1 className="text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium md:text-center lg:text-start">A imobiliária mais exclusiva de portugal.</h1>
+                <h1 className="text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium md:text-center lg:text-start">A imobiliária mais exclusiva de Portugal.</h1>
                 <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] md:text-center lg:text-start text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
                 <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full" onSubmit={handleSearch}>
                     <div className="flex justify-between items-center w-full">

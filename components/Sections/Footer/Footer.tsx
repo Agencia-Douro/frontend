@@ -61,9 +61,9 @@ export default function Footer() {
                         <div className="text-white flex flex-col md:flex-row justify-between">
                             <p>© Agência Douro. AMI 17 632</p>
                             <div className="button-14-medium flex md:flex-row flex-col md:gap-2 gap-3 md:mt-0 mt-4">
-                                <Link href="#">Termos e condições</Link>
+                                <Link href="/termos-condicoes">Termos e condições</Link>
                                 <span className="hidden md:block">∙</span>
-                                <Link href="#">Livro Reclamações Online</Link>
+                                <Link href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">Livro Reclamações Online</Link>
                             </div>
                         </div>
                     </div>
