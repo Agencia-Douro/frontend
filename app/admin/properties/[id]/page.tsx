@@ -244,22 +244,20 @@ export default function PropertyDetailsPage() {
                     <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
 
                     <div className="pt-6 flex justify-between">
-                        <div>
-                            <div className="w-154 [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
-                                <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
-                                {property.deliveryDate && (
-                                    <>
-                                        <h6>Previsão de entrega:</h6>
-                                        <p>{property.deliveryDate}</p>
-                                    </>
-                                )}
-                                {property.paymentConditions && (
-                                    <>
-                                        <h6>Condições de Pagamento:</h6>
-                                        <div dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
-                                    </>
-                                )}
-                            </div>
+                        <div className="w-full mr-10">
+                            <div className="tiptap max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
+                            {property.deliveryDate && (
+                                <div className="mt-6 p-4 bg-muted border border-brown/10 rounded">
+                                    <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
+                                    <p className="body-16-regular text-brown">{property.deliveryDate}</p>
+                                </div>
+                            )}
+                            {property.paymentConditions && (
+                                <div className="mt-4 p-4 bg-muted border border-brown/10 rounded">
+                                    <h6 className="body-16-medium text-brown mb-2">Condições de Pagamento:</h6>
+                                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
+                                </div>
+                            )}
                         </div>
 
                         <div className="w-lg sticky top-0">
