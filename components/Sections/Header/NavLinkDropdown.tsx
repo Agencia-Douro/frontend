@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,13 +13,14 @@ import NavLink from "./NavLink";
 
 interface NavLinkDropdownProps {
   trigger: string;
+  triggerHref?: string;
   items: Array<{
     href: string;
     label: string;
   }>;
 }
 
-export default function NavLinkDropdown({ trigger, items }: NavLinkDropdownProps) {
+export default function NavLinkDropdown({ trigger, triggerHref, items }: NavLinkDropdownProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-0">
@@ -35,7 +35,17 @@ export default function NavLinkDropdown({ trigger, items }: NavLinkDropdownProps
               "cursor-pointer"
             )}
           >
-            <NavLink href={trigger}>{trigger}</NavLink>
+            {triggerHref ? (
+              <NavLink href={triggerHref}>{trigger}</NavLink>
+            ) : (
+              <span className={cn(
+                "text-black-muted hover:text-black text-center",
+                "transition-colors whitespace-nowrap relative",
+                "after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:bg-gold after:rounded after:scale-x-0",
+                "after:origin-left after:transition-transform after:duration-300 after:ease-out",
+                "hover:after:scale-x-100"
+              )}>{trigger}</span>
+            )}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

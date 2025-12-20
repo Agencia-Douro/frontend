@@ -48,6 +48,7 @@ export default function Header() {
                     <nav className="hidden lg:flex items-center gap-6">
                         <NavLinkDropdown
                             trigger="Imóveis"
+                            triggerHref="/imoveis"
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis?transactionType=arrendar", label: "Arrendar" },
@@ -56,6 +57,7 @@ export default function Header() {
                         />
                         <NavLinkDropdown
                             trigger="Imóveis de luxo"
+                            triggerHref="/imoveis-luxo"
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
