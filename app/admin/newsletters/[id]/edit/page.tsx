@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RichTextEditor } from "@/components/RichTextEditor"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
@@ -206,8 +206,8 @@ export default function EditNewsletterPage() {
                   {uploadingImage && <p className="body-14-regular text-black-muted">Enviando imagem...</p>}
                   {formData.coverImage && (
                     <Image src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover border mt-2"
-                        width={500}
-                        height={500}
+                      width={500}
+                      height={500}
                     />
                   )}
                 </div>
@@ -225,7 +225,7 @@ export default function EditNewsletterPage() {
                   <Label htmlFor="content">Conteúdo *</Label>
                   <RichTextEditor
                     key={id}
-                    content={formData.content}
+                    value={formData.content}
                     onChange={(content) => setFormData({ ...formData, content })}
                     placeholder="Digite o conteúdo da newsletter..."
                   />

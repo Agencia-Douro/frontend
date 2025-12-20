@@ -175,9 +175,9 @@ export default function NewslettersPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedNewsletters.map((newsletter) => (
-          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer p-0">
+          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer p-0 flex flex-col h-full">
             {newsletter.coverImage && (
-              <div className="w-full h-48 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden flex-shrink-0">
                 <img
                   src={newsletter.coverImage}
                   alt={newsletter.title}
@@ -185,9 +185,9 @@ export default function NewslettersPage() {
                 />
               </div>
             )}
-            <CardContent className="pb-5">
+            <CardContent className="pb-5 flex flex-col flex-1">
               <CardTitle className="text-lg line-clamp-2 mb-5">{newsletter.title}</CardTitle>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-auto">
                 <Button
                   variant="outline"
                   size="default"

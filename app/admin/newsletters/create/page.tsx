@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RichTextEditor } from "@/components/RichTextEditor"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
@@ -196,7 +196,7 @@ export default function CreateNewsletterPage() {
                 <div className="space-y-2">
                   <Label htmlFor="content">Conteúdo *</Label>
                   <RichTextEditor
-                    content={formData.content}
+                    value={formData.content}
                     onChange={(content) => setFormData({ ...formData, content })}
                     placeholder="Digite o conteúdo da newsletter..."
                   />
