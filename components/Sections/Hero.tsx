@@ -18,6 +18,11 @@ export default function Hero() {
     const [tipo, setTipo] = useState<string>("");
     const [preco, setPreco] = useState<string>("");
 
+    // Limpar preço quando mudar o tipo de transação
+    useEffect(() => {
+        setPreco("");
+    }, [transactionType]);
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -114,11 +119,24 @@ export default function Hero() {
                                     <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                    <SelectItem value="0-100000">100.000€</SelectItem>
-                                    <SelectItem value="100000-200000">200.000€</SelectItem>
-                                    <SelectItem value="100000-500000">500.000€</SelectItem>
-                                    <SelectItem value="500000-1000000">1.000.000€</SelectItem>
-                                    <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
+                                    {transactionType === "arrendar" ? (
+                                        <>
+                                            <SelectItem value="0-500">500€</SelectItem>
+                                            <SelectItem value="500-1000">1.000€</SelectItem>
+                                            <SelectItem value="1000-1500">1.500€</SelectItem>
+                                            <SelectItem value="1500-2000">2.000€</SelectItem>
+                                            <SelectItem value="2000-3000">3.000€</SelectItem>
+                                            <SelectItem value="3000-5000">5.000€</SelectItem>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <SelectItem value="0-100000">100.000€</SelectItem>
+                                            <SelectItem value="100000-200000">200.000€</SelectItem>
+                                            <SelectItem value="200000-500000">500.000€</SelectItem>
+                                            <SelectItem value="500000-1000000">1.000.000€</SelectItem>
+                                            <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
+                                        </>
+                                    )}
                                 </SelectContent>
                             </Select>
                         </div>
