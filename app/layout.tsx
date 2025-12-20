@@ -6,6 +6,7 @@ import Header from "@/components/Sections/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
 import { SocialMediaButton } from "@/components/SocialMediaButton/SocialMediaButton";
+import SplashScreen from "@/components/SplashScreen/SplashScreen";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-BR" className={monaSans.variable}>
       <body className="antialiased bg-muted max-w-screen overflow-x-hidden flex flex-col relative">
         <QueryProvider>
+          <SplashScreen />
           <Header />
           {children}
           <Toaster />
