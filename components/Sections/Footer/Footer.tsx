@@ -26,11 +26,11 @@ export default function Footer() {
                             <ul className="space-y-4">
                                 <li><Link href="/" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Ínicio</Link></li>
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Imóveis</Link></li>
-                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Sobre Nós</Link></li>
+                                <li><Link href="/newsletter" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Newsletter</Link></li>
                                 <li><Link href="#contacto" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Contacto</Link></li>
                             </ul>
                             {/* <ul className="space-y-4">
-                                <li><Link href="/institucional/novidades" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Novidades</Link></li>
+                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Sobre Nós</Link></li>
                                 <li><Link href="/newsletter" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Newsletter</Link></li>
                                 <li><Link href="/institucional/podcast" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Podcast</Link></li>
                             </ul> */}
