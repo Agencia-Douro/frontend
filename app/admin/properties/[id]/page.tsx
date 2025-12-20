@@ -105,7 +105,6 @@ export default function PropertyDetailsPage() {
     const transactionTypeMap: Record<string, string> = {
         comprar: "Compra",
         arrendar: "Arrendamento",
-        vender: "Venda"
     }
 
     return (

@@ -37,7 +37,6 @@ export default function Footer() {
                             <ul className="space-y-4">
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Comprar</Link></li>
                                 <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Arrendar</Link></li>
-                                <li><Link href="/imoveis?transactionType=vender" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Vender</Link></li>
                                 <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Empreendimentos</Link></li>
                                 <li><Link href="/imoveis-luxo?transactionType=comprar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Imóveis de luxo</Link></li>
                             </ul>

@@ -13,7 +13,7 @@ export interface Property {
   reference: string;
   title: string;
   description: string;
-  transactionType: "comprar" | "arrendar" | "vender";
+  transactionType: "comprar" | "arrendar";
   propertyType: string;
   isEmpreendimento: boolean;
   isFeatured: boolean;

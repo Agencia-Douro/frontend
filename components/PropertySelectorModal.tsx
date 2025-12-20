@@ -155,7 +155,6 @@ export default function PropertySelectorModal({
                 <SelectContent>
                   <SelectItem value="comprar">Comprar</SelectItem>
                   <SelectItem value="arrendar">Arrendar</SelectItem>
-                  <SelectItem value="vender">Vender</SelectItem>
                 </SelectContent>
               </Select>
             </div>

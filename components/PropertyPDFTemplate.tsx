@@ -8,7 +8,6 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
   const transactionTypeMap: Record<string, string> = {
     comprar: "Compra",
     arrendar: "Arrendamento",
-    vender: "Venda"
   };
 
   // Coletar todas as imagens disponíveis

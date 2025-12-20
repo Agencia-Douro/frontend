@@ -52,7 +52,6 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis?transactionType=arrendar", label: "Arrendar" },
-                                { href: "/imoveis?transactionType=vender", label: "Vender" },
                             ]}
                         />
                         <NavLinkDropdown
@@ -61,7 +60,6 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
-                                { href: "/imoveis-luxo?transactionType=vender", label: "Vender" },
                             ]}
                         />{/*
                         <NavLinkDropdown

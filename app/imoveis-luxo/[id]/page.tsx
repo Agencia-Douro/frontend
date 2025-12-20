@@ -98,7 +98,6 @@ export default function ImovelDetails() {
     const transactionTypeMap: Record<string, string> = {
         comprar: "Compra",
         arrendar: "Arrendamento",
-        vender: "Venda"
     }
 
     const handleCopyLink = async () => {
