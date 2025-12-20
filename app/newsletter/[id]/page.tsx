@@ -79,14 +79,14 @@ export default function NewsletterDetailsPage() {
 
                 <article className="mb-5 sm:mb-10">
                     <div
-                        className="prose prose-brown max-w-none [&>p>img]:mt-10 [&>p]:mt-6 [&>p>strong]:mb-4"
+                        className="tiptap max-w-none"
                         dangerouslySetInnerHTML={{ __html: newsletter.content }}
                     />
                 </article>
                 {/* Related Properties */}
                 {newsletter.properties && newsletter.properties.length > 0 && (
                     <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center">
-                         <Image
+                        <Image
                             className="mb-6 lg:mb-8"
                             src={Logo}
                             alt="Agência Douro Logótipo"
@@ -128,7 +128,7 @@ export default function NewsletterDetailsPage() {
             {/*
             <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover absolute bottom-125 left-1/2 -translate-x-1/2 h-8" />
             */}
-            <Footer/>
+            <Footer />
         </>
     );
 }

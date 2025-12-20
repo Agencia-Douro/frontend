@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import HardBreak from "@tiptap/extension-hard-break"
 import Underline from "@tiptap/extension-underline"
 import Link from "@tiptap/extension-link"
 import TextAlign from "@tiptap/extension-text-align"
@@ -42,6 +43,13 @@ export function RichTextEditor({ content, onChange, placeholder = "Digite o cont
     extensions: [
       StarterKit,
       Underline,
+      HardBreak.extend({
+        addKeyboardShortcuts() {
+          return {
+            Enter: () => this.editor.commands.setHardBreak(),
+          }
+        }
+      }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
