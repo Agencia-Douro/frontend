@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { propertiesApi, contactApi } from "@/services/api"
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
@@ -30,6 +30,7 @@ export default function ImovelDetails() {
     const [panelClosing, setPanelClosing] = useState(false)
     const [panelOpening, setPanelOpening] = useState(false)
     const pdfRef = useRef(null)
+    const router = useRouter()
 
     const [formData, setFormData] = useState({
         nome: "",
@@ -163,13 +164,13 @@ export default function ImovelDetails() {
                 <div className="container pb-16">
                     <div className="flex justify-between items-center py-4 gap-4">
                         <div className="flex items-center gap-3">
-                            <Link
-                                href="/imoveis"
-                                className="hidden md:flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
+                            <button
+                                onClick={() => router.back()}
+                                className="cursor-pointer hidden md:flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
                                 </svg>Voltar
-                            </Link>
+                            </button>
                             <div className="hidden md:block w-px h-3 bg-brown/20"></div>
                             <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
                                 <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.transactionType}</p>
@@ -251,7 +252,7 @@ export default function ImovelDetails() {
                                         )}
                                     </div>
                                 </div>
-                                
+
                                 {/* Imagem principal - visible only on mobile */}
                                 <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden">
                                     {property.image && (
