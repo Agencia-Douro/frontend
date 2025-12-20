@@ -13,7 +13,7 @@ export default function NewsletterCard({ newsletter }: NewsletterCardProps) {
             href={`/newsletter/${newsletter.id}`}
             className="group">
             <article className="transition-all duration-200">
-                <Image src={newsletter.coverImage} alt={newsletter.title} width={294} height={160} className="w-full h-40 object-cover" />
+                <Image src={newsletter.coverImage} alt={newsletter.title} width={294} height={160} className="w-full h-64 md:h-40 object-cover" />
                 <p className="body-14-regular text-black-muted mt-4">
                     {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
                         day: '2-digit',

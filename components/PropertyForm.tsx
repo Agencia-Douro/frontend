@@ -863,7 +863,7 @@ export default function PropertyForm({
             </CardHeader>
             <CardContent className="space-y-6">
               {isLoadingSections ? (
-                <p className="text-muted-foreground">Carregando seções...</p>
+                <p className="text-muted-foreground">A carregar seções...</p>
               ) : (
                 <>
                   {/* Seções Existentes (apenas no modo edição) */}

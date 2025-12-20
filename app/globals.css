@@ -281,13 +281,13 @@ body {
 
 .tiptap h2 {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 500;
     margin: 1rem 0;
 }
 
 .tiptap h3 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 500;
     margin: 1rem 0;
 }
 
@@ -302,7 +302,7 @@ body {
 }
 
 .tiptap strong {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .tiptap em {

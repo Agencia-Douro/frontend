@@ -10,9 +10,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import NavLink from "./NavLink";
 
 interface NavLinkDropdownProps {
-  trigger: ReactNode;
+  trigger: string;
   items: Array<{
     href: string;
     label: string;
@@ -34,17 +35,7 @@ export default function NavLinkDropdown({ trigger, items }: NavLinkDropdownProps
               "cursor-pointer"
             )}
           >
-            <span
-              className={cn(
-                "text-black-muted hover:text-black text-center",
-                "transition-colors whitespace-nowrap relative",
-                "after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:bg-gold after:rounded after:scale-x-0",
-                "after:origin-left after:transition-transform after:duration-300 after:ease-out",
-                "hover:after:scale-x-100 group-data-[state=open]:after:scale-x-100"
-              )}
-            >
-              {trigger}
-            </span>
+            <NavLink href={trigger}>{trigger}</NavLink>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

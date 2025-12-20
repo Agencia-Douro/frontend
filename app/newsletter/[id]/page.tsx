@@ -6,6 +6,7 @@ import { newslettersApi } from "@/services/api";
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Sections/Footer/Footer";
+import Logo from "@/public/Logo.svg";
 
 export default function NewsletterDetailsPage() {
     const params = useParams();
@@ -23,7 +24,7 @@ export default function NewsletterDetailsPage() {
                 <section className="bg-deaf overflow-x-hidden">
                     <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
                         <div className="max-w-3xl mx-auto">
-                            <p className="text-center text-brown">Carregando newsletter...</p>
+                            <p className="text-center text-brown">A carregar newsletter...</p>
                         </div>
                     </div>
                 </section>
@@ -52,7 +53,7 @@ export default function NewsletterDetailsPage() {
 
     return (
         <>
-            <section className="bg-muted container pt-6 md:pt-8 lg:pt-12 xl:pt-16">
+            <section className="bg-muted container pt-6 md:pt-8 lg:pt-12 xl:pt-16 relative">
                 <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
                     <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">Newsletter</Link>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
@@ -82,29 +83,35 @@ export default function NewsletterDetailsPage() {
                         dangerouslySetInnerHTML={{ __html: newsletter.content }}
                     />
                 </article>
-
                 {/* Related Properties */}
                 {newsletter.properties && newsletter.properties.length > 0 && (
-                    <div className="mt-8 sm:mt-16 mb-8 sm:mb-16">
-                        <h2 className="heading-tres-regular text-center mb-5 sm:mb-10">Imóveis Relacionados</h2>
+                    <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center">
+                         <Image
+                            className="mb-6 lg:mb-8"
+                            src={Logo}
+                            alt="Agência Douro Logótipo"
+                            width={213}
+                            height={96}
+                        />
+                        <h2 className="heading-tres-regular text mb-5 sm:mb-10">Imóveis Relacionados</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                             {newsletter.properties.map((property) => (
                                 <Link
                                     key={property.id}
                                     href={`/imoveis/${property.id}`}
-                                    className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                    className="w-full">
                                     <div className="relative w-full h-48 sm:h-56 md:h-64">
                                         <Image
                                             src={property.image}
                                             alt={property.title}
                                             fill
-                                            className="object-cover transition-transform duration-300"
+                                            className="h-40 w-full object-cover"
                                         />
                                     </div>
                                     <div className="p-4">
-                                        <p className="body-16-medium text-black line-clamp-2 mb-2">{property.title}</p>
-                                        <p className="body-14-medium text-grey mb-3">{property.concelho}, {property.distrito}</p>
-                                        <p className="body-20-medium text-brown">
+                                        <p className="body-16-medium text-black">{property.title}</p>
+                                        <p className="body-14-medium text-grey mt-1">{property.concelho}, {property.distrito}</p>
+                                        <p className="body-20-medium text-black mt-2">
                                             {new Intl.NumberFormat('pt-PT', {
                                                 style: 'currency',
                                                 currency: 'EUR',
@@ -118,6 +125,9 @@ export default function NewsletterDetailsPage() {
                     </div>
                 )}
             </section>
+            {/*
+            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover absolute bottom-125 left-1/2 -translate-x-1/2 h-8" />
+            */}
             <Footer/>
         </>
     );

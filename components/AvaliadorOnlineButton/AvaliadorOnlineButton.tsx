@@ -92,7 +92,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             {/* Botão Flutuante */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="cursor-pointer fixed bottom-6 right-6 z-40 bg-gold hover:bg-gold-muted will-change-transform text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 body-14-medium"
+                className="cursor-pointer fixed bottom-6 left-6 z-40 bg-gold hover:bg-gold-muted will-change-transform text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 body-14-medium"
             >
                 Avaliador Online
             </button>

@@ -85,7 +85,7 @@ export default function PropertyDetailsPage() {
         return (
             <section className="bg-deaf">
                 <div className="container pb-16 pt-20">
-                    <p className="text-center text-brown">Carregando...</p>
+                    <p className="text-center text-brown">A carregar...</p>
                 </div>
             </section>
         )

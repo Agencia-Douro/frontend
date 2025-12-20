@@ -1,11 +1,86 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import Testemunho from "./Testemunho";
 import testemunho1 from "@/public/testemunhos/1.png"
 import testemunho2 from "@/public/testemunhos/2.png"
 import testemunho3 from "@/public/testemunhos/3.png"
 import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
 
 export default function Testemunhos() {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [isAtStart, setIsAtStart] = useState(true);
+    const [isAtEnd, setIsAtEnd] = useState(false);
+
+    const testemunhos = [
+        { text: "A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!", image: testemunho1, name: "Lucimara Bordignon Borghetti" },
+        { text: "Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vania Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre.", image: testemunho2, name: "Maria Oliveira" },
+        { text: "Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vania Fernandes !", image: testemunho3, name: "Walter Martins" }
+    ];
+
+    const checkScrollPosition = () => {
+        if (!scrollContainerRef.current) return;
+        
+        const container = scrollContainerRef.current;
+        const { scrollLeft, scrollWidth, clientWidth } = container;
+        
+        setIsAtStart(scrollLeft <= 0);
+        setIsAtEnd(scrollLeft >= scrollWidth - clientWidth - 1);
+    };
+
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        checkScrollPosition();
+        container.addEventListener('scroll', checkScrollPosition);
+        
+        return () => {
+            container.removeEventListener('scroll', checkScrollPosition);
+        };
+    }, []);
+
+    const scrollToNext = () => {
+        if (!scrollContainerRef.current || isAtEnd) return;
+        
+        const container = scrollContainerRef.current;
+        const cards = container.querySelectorAll('div');
+        const currentScroll = container.scrollLeft;
+        const containerWidth = container.clientWidth;
+        
+        // Encontrar o próximo card que ainda não está totalmente visível
+        for (let i = 0; i < cards.length; i++) {
+            const card = cards[i] as HTMLElement;
+            const cardRight = card.offsetLeft + card.offsetWidth;
+            const visibleRight = currentScroll + containerWidth;
+            
+            if (cardRight > visibleRight + 10) { // 10px de tolerância
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                break;
+            }
+        }
+    };
+
+    const scrollToPrevious = () => {
+        if (!scrollContainerRef.current || isAtStart) return;
+        
+        const container = scrollContainerRef.current;
+        const cards = container.querySelectorAll('div');
+        const currentScroll = container.scrollLeft;
+        
+        // Encontrar o card anterior que não está totalmente visível
+        for (let i = cards.length - 1; i >= 0; i--) {
+            const card = cards[i] as HTMLElement;
+            const cardLeft = card.offsetLeft;
+            
+            if (cardLeft < currentScroll - 10) { // 10px de tolerância
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                break;
+            }
+        }
+    };
+
     return (
         <section className="py-6 md:py-10 lg:py-12 xl:py-16 container">
             <div className="flex flex-col lg:flex-row md:justify-center lg:justify-between lg:items-end md:w-[526px] lg:w-full md:text-center lg:text-start md:m-auto">
@@ -27,19 +102,35 @@ export default function Testemunhos() {
                     </div>
                 </div>
             </div>
-            <div className="mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex gap-4 overflow-x-auto">
-                <Testemunho text="A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!" image={testemunho1} name="Lucimara Bordignon Borghetti" />
-                <Testemunho text="Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vania Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre." image={testemunho2} name="Maria Oliveira" />
-                <Testemunho text="Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vania Fernandes !" image={testemunho3} name="Walter Martins" />
+            <div 
+                ref={scrollContainerRef}
+                className="remove-scrollbar mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [&>div]:snap-start"
+            >
+                {testemunhos.map((testemunho, index) => (
+                    <Testemunho 
+                        key={index}
+                        text={testemunho.text} 
+                        image={testemunho.image} 
+                        name={testemunho.name} 
+                    />
+                ))}
             </div>
             <div className="mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex items-center justify-between">
                 <div className="flex gap-2 items-center">
-                    <Button variant="icon-brown" size="icon">
+                    <Button 
+                        variant="icon-brown" 
+                        size="icon"
+                        onClick={scrollToPrevious}
+                        disabled={isAtStart}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown group-hover:text-white">
                             <path d="M6.52692 9.16658L10.9969 4.69657L9.81842 3.51807L3.33659 9.99992L9.81842 16.4817L10.9969 15.3032L6.52692 10.8332H16.6699V9.16658H6.52692Z" fill="currentColor"/>
                         </svg>
                     </Button>
-                    <Button variant="icon-brown" size="icon">
+                    <Button 
+                        variant="icon-brown" 
+                        size="icon"
+                        onClick={scrollToNext}
+                        disabled={isAtEnd}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown group-hover:text-white">
                             <path d="M13.4731 9.16658L9.00308 4.69657L10.1816 3.51807L16.6634 9.99992L10.1816 16.4817L9.00308 15.3032L13.4731 10.8332H3.33008V9.16658H13.4731Z" fill="currentColor"/>
                         </svg>

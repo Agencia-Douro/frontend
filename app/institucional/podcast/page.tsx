@@ -1,5 +1,5 @@
 export default function InstitucionalPage() {
     return (
-        <h1>ALo</h1>
+        <h1>Podcast</h1>
     )
 }

@@ -110,7 +110,7 @@ export default function EditNewsletterPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <p>Carregando...</p>
+        <p>A carregar...</p>
       </div>
     )
   }
@@ -203,9 +203,12 @@ export default function EditNewsletterPage() {
                     onChange={handleImageUpload}
                     disabled={uploadingImage}
                   />
-                  {uploadingImage && <p className="text-sm text-gray-500">Enviando imagem...</p>}
+                  {uploadingImage && <p className="body-14-regular text-black-muted">Enviando imagem...</p>}
                   {formData.coverImage && (
-                    <img src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover rounded border mt-2" />
+                    <Image src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover border mt-2"
+                        width={500}
+                        height={500}
+                    />
                   )}
                 </div>
               </CardContent>

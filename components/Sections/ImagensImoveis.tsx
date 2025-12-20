@@ -189,29 +189,44 @@ export default function ImagensImoveis({
                         <span className="text-brown body-18-medium pt-4 md:pt-6 xl:pt-8 lg:col-start-1 lg:col-end-3 text-end lg:sticky lg:top-0 h-min">
                           {section.sectionName}
                         </span>
-                        <div className={`pt-4 lg:pt-8 lg:col-start-4 lg:col-end-7 ${imageCount === 1 ? 'pb-8' : ''}`}>
-                          <div className={`grid gap-4 ${imageCount >= 2 ? 'grid-cols-2 grid-rows-2' : 'grid-cols-1'}`}>
-                            {imagesToShow.map((image, imageIndex) => (
-                              <div
-                                key={imageIndex}
-                                className={`w-full bg-cover bg-center overflow-hidden ${
-                                  imageCount >= 2 && imageIndex === 0 
-                                    ? 'col-span-2 aspect-5/3' 
-                                    : imageCount >= 2 && imageIndex > 0 
-                                    ? 'row-start-2 aspect-5/6' 
-                                    : 'aspect-5/3'
-                                }`}
-                              >
+                        <div className={`pt-4 md:pt-6 lg:pt-4 lg:col-start-4 lg:col-end-7 ${imageCount === 1 ? 'pb-4' : ''}`}>
+                          {imageCount >= 2 ? (
+                            <div className="grid grid-cols-2 gap-4" style={{ gridTemplateRows: 'auto 1fr' }}>
+                              <div className="col-span-2 aspect-5/3 w-full bg-cover bg-center overflow-hidden">
                                 <Image
                                   width={1000}
                                   height={1000}
-                                  src={image}
-                                  alt={`${section.sectionName} - ${imageIndex + 1}`}
+                                  src={imagesToShow[0]}
+                                  alt={`${section.sectionName} - 1`}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
-                            ))}
-                          </div>
+                              {imagesToShow.slice(1).map((image, imageIndex) => (
+                                <div
+                                  key={imageIndex + 1}
+                                  className="w-full h-full bg-cover bg-center overflow-hidden"
+                                >
+                                  <Image
+                                    width={1000}
+                                    height={1000}
+                                    src={image}
+                                    alt={`${section.sectionName} - ${imageIndex + 2}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="w-full bg-cover bg-center overflow-hidden aspect-5/3">
+                              <Image
+                                width={1000}
+                                height={1000}
+                                src={imagesToShow[0]}
+                                alt={`${section.sectionName} - 1`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
                         </div>
                       </div>
                     );

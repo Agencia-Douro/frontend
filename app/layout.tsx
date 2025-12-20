@@ -5,6 +5,7 @@ import { QueryProvider } from "@/providers/query-provider";
 import Header from "@/components/Sections/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
+import { SocialMediaButton } from "@/components/SocialMediaButton/SocialMediaButton";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <Toaster />
           <AvaliadorOnlineButton />
+          <SocialMediaButton />
         </QueryProvider>
       </body>
     </html>

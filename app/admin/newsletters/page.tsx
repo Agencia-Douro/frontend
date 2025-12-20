@@ -91,7 +91,7 @@ export default function NewslettersPage() {
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold mb-6">Gerenciar Newsletters</h1>
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Carregando newsletters...</p>
+          <p className="text-muted-foreground">A carregar newsletters...</p>
         </div>
       </div>
     )

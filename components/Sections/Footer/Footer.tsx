@@ -1,8 +1,5 @@
 import Link from "next/link"
-import Folha from "../../Folha"
-import { DropdownMenu, DropdownMenuItem, DropdownMenuContent, DropdownMenuTrigger } from "../../ui/dropdown-menu"
-import Image from "next/image"
-import flag from "@/public/flags/portugal.png"  
+import Folha from "../../Folha" 
 import FooterIcons from "./FooterIcons"
 
 export default function Footer() {
@@ -41,7 +38,7 @@ export default function Footer() {
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Comprar</Link></li>
                                 <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Arrendar</Link></li>
                                 <li><Link href="/imoveis?transactionType=vender" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Vender</Link></li>
-                                <li><Link href="/moveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Empreendimentos</Link></li>
+                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Empreendimentos</Link></li>
                                 <li><Link href="/imoveis-luxo?transactionType=comprar" className="body-14-medium text-white hover:text-gold transition-colors button-14-medium">Imóveis de luxo</Link></li>
                             </ul>
                         </div>

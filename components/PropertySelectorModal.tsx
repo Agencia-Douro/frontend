@@ -174,7 +174,7 @@ export default function PropertySelectorModal({
         {/* Grid de Imóveis */}
         <div className="flex-1 overflow-y-auto py-4 px-2">
           {isLoading ? (
-            <p className="text-center text-gray-500 py-12">Carregando imóveis...</p>
+            <p className="text-center text-gray-500 py-12">A carregar imóveis...</p>
           ) : propertiesResponse?.data && propertiesResponse.data.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {propertiesResponse.data.map((property) => (

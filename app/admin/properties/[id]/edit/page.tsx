@@ -81,7 +81,7 @@ export default function EditPropertyPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <p>Carregando...</p>
+        <p>A carregar...</p>
       </div>
     )
   }

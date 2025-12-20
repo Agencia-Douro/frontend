@@ -21,7 +21,7 @@ export default function ImoveisDestacados() {
 
                 {isLoading && (
                     <div className="mt-8 text-center">
-                        <p className="text-medium text-black-muted">Carregando imóveis destacados...</p>
+                        <p className="text-medium text-black-muted">A carregar imóveis destacados...</p>
                     </div>
                 )}
 

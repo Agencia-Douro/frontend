@@ -38,7 +38,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice }:
                     <h2 className="text-heading-tres text-brown">Imóveis Relacionados</h2>
                 </div>
                 <div className="pt-6">
-                    <p className="text-brown/50 body-16-regular">Carregando imóveis relacionados...</p>
+                    <p className="text-brown/50 body-16-regular">A carregar imóveis relacionados...</p>
                 </div>
             </section>
         );

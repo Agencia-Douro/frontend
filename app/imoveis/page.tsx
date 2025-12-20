@@ -98,7 +98,7 @@ function ImoveisContent() {
                                 onClick={() => setSidebarOpen(true)}
                                 className="xl:hidden bg-white shadow-pretty p-1.5 cursor-pointer hover:bg-deaf text-black-muted body-14-medium flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-grey">
-                                    <path d="M8 4V16M16.4 4H3.6C2.71634 4 2 4.59695 2 5.33333V14.6667C2 15.4031 2.71634 16 3.6 16H16.4C17.2837 16 18 15.4031 18 14.6667V5.33333C18 4.59695 17.2837 4 16.4 4Z" stroke="currentColor" strokeWidth="1.25" stroke-linejoin="round"/>
+                                    <path d="M8 4V16M16.4 4H3.6C2.71634 4 2 4.59695 2 5.33333V14.6667C2 15.4031 2.71634 16 3.6 16H16.4C17.2837 16 18 15.4031 18 14.6667V5.33333C18 4.59695 17.2837 4 16.4 4Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round"/>
                                 </svg>
                                 Filtrar
                             </button>
@@ -139,24 +139,29 @@ function ImoveisContent() {
                             </Select>
                         </div>
                     </div>
-                    {isLoading ? (<div className="grid place-content-center h-full"><p>A carregar imóveis</p></div>) : error ?
-                        (<div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
-                            (<div className="grid place-content-center h-full text-center p-4">
-                                <p className="body-16-medium text-brown">Nenhum correspondência.</p>
-                                <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
-                            </div>) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                                    {filteredData.data.map((property) => (
-                                        <Card
-                                            key={property.id}
-                                            image={property.image}
-                                            href={`/imoveis/${property.id}`}
-                                            titulo={property.title}
-                                            localizacao={`${property.concelho}, ${property.distrito}`}
-                                            preco={property.price}
-                                        />))}
-                                </div>
-                            )}
+                    {isLoading ? 
+                    (<div className="grid place-content-center h-full">
+                        <p>A carregar imóveis</p>
+                    </div>) : error ?
+                    (<div className="grid place-content-center h-full">
+                        <p>Erro ao carregar imóveis</p>
+                    </div>) : !filteredData || filteredData.data.length === 0 ?
+                    (<div className="grid place-content-center h-full text-center p-4">
+                        <p className="body-16-medium text-brown">Nenhum correspondência.</p>
+                        <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
+                    </div>) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                        {filteredData.data.map((property) => (
+                            <Card
+                                key={property.id}
+                                image={property.image}
+                                href={`/imoveis/${property.id}`}
+                                titulo={property.title}
+                                localizacao={`${property.concelho}, ${property.distrito}`}
+                                preco={property.price}
+                            />))}
+                    </div>
+                    )}
                 </div>
             </div>
         </section>

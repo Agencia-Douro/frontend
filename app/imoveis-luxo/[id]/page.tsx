@@ -76,7 +76,7 @@ export default function ImovelDetails() {
             <>
                 <section className="bg-deaf">
                     <div className="container pb-16 pt-20">
-                        <p className="text-center text-brown">Carregando...</p>
+                        <p className="text-center text-brown">A carregar...</p>
                     </div>
                 </section>
             </>
@@ -118,7 +118,7 @@ export default function ImovelDetails() {
 
     const handleDownloadPDF = async () => {
         try {
-            toast.loading("Gerando brochura em PDF...")
+            toast.loading("A gerar brochura em PDF...")
             await generatePropertyPDF(property, pdfRef)
             toast.dismiss()
             toast.success("Brochura gerada com sucesso!")
@@ -159,7 +159,7 @@ export default function ImovelDetails() {
 
     return (
         <>
-            <section className="bg-deaf overflow-x-hidden">
+            <section className="bg-deaf">
                 <div className="container pb-16">
                     <div className="flex justify-between items-center py-4 gap-4">
                         <div className="flex items-center gap-3">
@@ -279,8 +279,8 @@ export default function ImovelDetails() {
                         <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                     </div>
                     <h2 className="pt-4 md:pt-5 lg:pt-6 heading-quatro-medium lg:heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
-                    <div className="pt-4 md:pt-5 lg:pt-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        <div className="lg:col-span-6 order-2 lg:order-1">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
                             <div className="w-full [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
                                 <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
                                 {property.deliveryDate && (
@@ -409,7 +409,7 @@ export default function ImovelDetails() {
 
                             </div>
                         </div>
-                        <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2">
+                        <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 lg:sticky lg:top-4 pt-4 md:pt-5 lg:pt-6 h-min">
                             {property.totalArea && property.totalArea > 0 && (
                                 <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
                             )}
