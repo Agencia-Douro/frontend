@@ -14,6 +14,11 @@ const monaSans = Mona_Sans({
 export const metadata: Metadata = {
   title: "Página Inicial - Agência Douro",
   description: "Casas, apartamentos, escritórios, terrenos para venda e aluguel, temos várias opções em diversas localidades. Fale com um de nossos representantes e agende",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
