@@ -58,8 +58,8 @@ export default function Header() {
                             trigger="Imóveis de luxo"
                             items={[
                                 { href: "/imoveis-luxo", label: "Todos os Imóveis de Luxo" },
-                                { href: "/imoveis-luxo?tipo=venda", label: "Venda" },
-                                { href: "/imoveis-luxo?tipo=arrendamento", label: "Arrendamento" },
+                                { href: "/imoveis-luxo?transactionType=vender", label: "Venda" },
+                                { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
                             ]}
                         />{/*
                         <NavLinkDropdown
@@ -92,34 +92,34 @@ export default function Header() {
                 </div>
                 {/* Mobile Menu */}
                 <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-center py-24 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                            <Link
-                                href="/imoveis"
-                                className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Imóveis
-                            </Link>
-                            <Link
-                                href="/imoveis-luxo"
-                                className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Imóveis de luxo
-                            </Link>
-                            <Link
-                                href="/institucional"
-                                className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Institucional
-                            </Link>
-                            <Link
-                                href="/newsletter"
-                                className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Newsletter
-                            </Link>
+                    <Link
+                        href="/imoveis"
+                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Imóveis
+                    </Link>
+                    <Link
+                        href="/imoveis-luxo"
+                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Imóveis de luxo
+                    </Link>
+                    <Link
+                        href="/institucional"
+                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Institucional
+                    </Link>
+                    <Link
+                        href="/newsletter"
+                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Newsletter
+                    </Link>
                 </nav>
             </div>
         </header>
