@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Property } from "@/types/property";
 import Image from "next/image";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 interface ImagensImoveisProps {
   property: Property;
@@ -26,6 +28,28 @@ export default function ImagensImoveis({
   const [showPanelLocal, setShowPanelLocal] = useState(false);
   const [panelClosingLocal, setPanelClosingLocal] = useState(false);
   const [panelOpeningLocal, setPanelOpeningLocal] = useState(false);
+
+  // --- estados do lightbox ---
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  // --- preparar todas as imagens para o lightbox ---
+  const allImages = property.imageSections?.flatMap(section =>
+    section.images.map(src => ({ src }))
+  ) || [];
+
+  // --- função para abrir lightbox na imagem correta ---
+  const openLightbox = (sectionIndex: number, imageIndex: number) => {
+    // calcular o índice global da imagem
+    let globalIndex = 0;
+    for (let i = 0; i < sectionIndex; i++) {
+      globalIndex += property.imageSections![i].images.length;
+    }
+    globalIndex += imageIndex;
+
+    setPhotoIndex(globalIndex);
+    setLightboxOpen(true);
+  };
 
   // --- usar props se fornecidas, senão usar estados locais ---
   const isControlled = showPanelProp !== undefined;
@@ -192,38 +216,39 @@ export default function ImagensImoveis({
                         <div className={`pt-4 md:pt-6 lg:pt-4 lg:col-start-4 lg:col-end-7 ${imageCount === 1 ? 'pb-4' : ''}`}>
                           {imageCount >= 2 ? (
                             <div className="grid grid-cols-2 gap-4" style={{ gridTemplateRows: 'auto 1fr' }}>
-                              <div className="col-span-2 aspect-5/3 w-full bg-cover bg-center overflow-hidden">
+                              <div className="col-span-2 aspect-5/3 w-full bg-cover bg-center overflow-hidden cursor-pointer" onClick={() => openLightbox(sectionIndex, 0)}>
                                 <Image
                                   width={1000}
                                   height={1000}
                                   src={imagesToShow[0]}
                                   alt={`${section.sectionName} - 1`}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                 />
                               </div>
                               {imagesToShow.slice(1).map((image, imageIndex) => (
                                 <div
                                   key={imageIndex + 1}
-                                  className="w-full h-full bg-cover bg-center overflow-hidden"
+                                  className="w-full h-full bg-cover bg-center overflow-hidden cursor-pointer"
+                                  onClick={() => openLightbox(sectionIndex, imageIndex + 1)}
                                 >
                                   <Image
                                     width={1000}
                                     height={1000}
                                     src={image}
                                     alt={`${section.sectionName} - ${imageIndex + 2}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                   />
                                 </div>
                               ))}
                             </div>
                           ) : (
-                            <div className="w-full bg-cover bg-center overflow-hidden aspect-5/3">
+                            <div className="w-full bg-cover bg-center overflow-hidden aspect-5/3 cursor-pointer" onClick={() => openLightbox(sectionIndex, 0)}>
                               <Image
                                 width={1000}
                                 height={1000}
                                 src={imagesToShow[0]}
                                 alt={`${section.sectionName} - 1`}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                               />
                             </div>
                           )}
@@ -241,6 +266,13 @@ export default function ImagensImoveis({
           </div>
         </div>
       )}
+
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={allImages}
+        index={photoIndex}
+      />
     </>
   );
 }
