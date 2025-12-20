@@ -7,6 +7,7 @@ import Footer from "@/components/Sections/Footer/Footer";
 import PerguntasFrequentes from "@/components/Sections/Testemunhos/Testemunhos";
 import NewsletterCard from "@/components/NewsletterCard";
 import { Button } from "@/components/ui/button";
+import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 
 const CATEGORIES = [
     { value: "mercado", label: "Mercado" },
@@ -91,6 +92,7 @@ export default function NewsletterPage() {
                 </div>
             </section>
             <PerguntasFrequentes/>
+            <FaleConnosco/>
             <Footer/>
         </>
     );

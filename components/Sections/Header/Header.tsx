@@ -57,9 +57,9 @@ export default function Header() {
                         <NavLinkDropdown
                             trigger="Imóveis de luxo"
                             items={[
-                                { href: "/imoveis-luxo", label: "Todos os Imóveis de Luxo" },
-                                { href: "/imoveis-luxo?transactionType=vender", label: "Venda" },
+                                { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
+                                { href: "/imoveis-luxo?transactionType=vender", label: "Vender" },
                             ]}
                         />{/*
                         <NavLinkDropdown
@@ -74,8 +74,20 @@ export default function Header() {
                         <NavLink href="/newsletter">Newsletter</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
-                        <Button variant="brown" asChild>
-                            <Link href="/" id="">Contacto</Link>
+                        <Button 
+                            variant="brown" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const contactoSection = document.getElementById('contacto');
+                                if (contactoSection) {
+                                    contactoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                } else {
+                                    // Se não estiver na página inicial, navega para lá
+                                    window.location.href = '/#contacto';
+                                }
+                            }}
+                        >
+                            Contacto
                         </Button>
                         <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (

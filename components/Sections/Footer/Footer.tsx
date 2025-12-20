@@ -47,7 +47,8 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <div className="flex justify-between itens-center md:items-end">
+                        <div className="flex justify-end itens-center md:items-end">
+                            {/*
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
                                     <Image width={27} height={20} src={flag} alt="Bandeira" />Português</DropdownMenuTrigger>
@@ -57,6 +58,7 @@ export default function Footer() {
                                     <DropdownMenuItem>Inglês</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
+                            */}
                             <FooterIcons />
                         </div>
                         <div className="h-px bg-grey w-full"></div>
