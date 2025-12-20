@@ -28,8 +28,6 @@ export default function Hero() {
             params.set("transactionType", "comprar");
         } else if (transactionType === "arrendar") {
             params.set("transactionType", "arrendar");
-        } else if (transactionType === "investir") {
-            params.set("transactionType", "vender");
         }
 
         // Localização = distrito
@@ -70,14 +68,6 @@ export default function Hero() {
                                 onClick={() => setTransactionType("arrendar")}
                             >
                                 Arrendar
-                            </Button>
-                            <Button
-                                type="button"
-                                variant={transactionType === "investir" ? "gold" : "ghost"}
-                                className="px-4.5 w-1/3 md:w-min"
-                                onClick={() => setTransactionType("investir")}
-                            >
-                                Investir
                             </Button>
                         </div>
                         <Button type="submit" variant="brown" className="px-4.5 hidden md:block">
