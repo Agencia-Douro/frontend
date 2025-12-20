@@ -556,10 +556,10 @@ export default function PropertyForm({
 
                 <div className="space-y-2">
                   <Label>Condições de Pagamento</Label>
-                  <Input
-                    placeholder="Ex: Aceita financiamento"
+                  <RichTextEditor
+                    placeholder="Ex: Aceita financiamento, entrada de 30%, etc..."
                     value={formData.paymentConditions || ""}
-                    onChange={(e) => updateField("paymentConditions", e.target.value)}
+                    onChange={(value) => updateField("paymentConditions", value)}
                   />
                 </div>
               </div>
