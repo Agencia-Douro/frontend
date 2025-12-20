@@ -490,27 +490,21 @@ export const contactApi = {
     nome,
     telefone,
     mensagem,
-    aceitaMarketing,
+    aceitaMarketing = false,
   }: ContactData): Promise<{ message: string }> => {
-    const response = await fetch(
-      `https://api.hubapi.com/crm/v3/objects/contacts/contacts`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer pat-na1-8d5a7b5c-ef55-4332-b543-b2310ccfac05`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          properties: {
-            email: email,
-            firstname: nome,
-            phone: telefone,
-            message: mensagem,
-            hs_marketable_status: aceitaMarketing ? "true" : "false",
-          },
-        }),
-      }
-    );
+    const response = await fetch("/internal-api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        nome,
+        telefone,
+        mensagem,
+        aceitaMarketing,
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
