@@ -32,7 +32,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
     },
     editorProps: {
       attributes: {
-        class: "tiptap min-h-[120px] px-3 py-2",
+        class: "tiptap min-h-[120px] px-2 py-1.5 text-black-muted body-14-medium outline-none",
       },
       handleKeyDown: (view, event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
@@ -52,13 +52,13 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
   return (
     <div className={className}>
       {/* Toolbar */}
-      <div className="border border-b-0 rounded-t-md bg-gray-50 p-2 flex gap-1">
+      <div className="bg-white shadow-pretty border-b border-[#EAE6DF] px-2 py-1.5 flex gap-1">
         <Button
           type="button"
           variant={editor.isActive("bold") ? "brown" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className="h-8 w-8"
+          className="h-7 w-7"
         >
           <Bold className="h-4 w-4" />
         </Button>
@@ -67,7 +67,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
           variant={editor.isActive("italic") ? "brown" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className="h-8 w-8"
+          className="h-7 w-7"
         >
           <Italic className="h-4 w-4" />
         </Button>
@@ -76,7 +76,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
           variant={editor.isActive("bulletList") ? "brown" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className="h-8 w-8"
+          className="h-7 w-7"
         >
           <List className="h-4 w-4" />
         </Button>
@@ -85,7 +85,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
           variant={editor.isActive("orderedList") ? "brown" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className="h-8 w-8"
+          className="h-7 w-7"
         >
           <ListOrdered className="h-4 w-4" />
         </Button>
@@ -94,7 +94,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
       {/* Editor */}
       <EditorContent
         editor={editor}
-        className="border rounded-b-md bg-white"
+        className="w-full shadow-pretty bg-white"
       />
     </div>
   )
