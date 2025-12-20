@@ -516,3 +516,40 @@ export const contactApi = {
     return response.json();
   },
 };
+
+export interface SiteConfig {
+  clientesSatisfeitos: number;
+  rating: number;
+}
+
+export const siteConfigApi = {
+  get: async (): Promise<SiteConfig> => {
+    const response = await fetch(`${API_BASE_URL}/site-config`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar configurações do site");
+    }
+
+    return response.json();
+  },
+
+  update: async (data: SiteConfig): Promise<SiteConfig> => {
+    const response = await fetch(`${API_BASE_URL}/site-config`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar configurações (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};

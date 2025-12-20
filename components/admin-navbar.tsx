@@ -68,6 +68,14 @@ export function AdminNavbar() {
             >
               Newsletters
             </Link>
+            <Link
+              href="/admin/site-config"
+              className={`body-16-medium transition-colors ${
+                pathname?.includes("/admin/site-config") ? "text-gold" : "text-brown hover:text-gold"
+              }`}
+            >
+              Configurações
+            </Link>
           </nav>
 
           {/* Logout Button + Mobile Menu Toggle */}
@@ -93,7 +101,7 @@ export function AdminNavbar() {
         </div>
 
         {/* Mobile Menu */}
-        <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-center py-24 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-center pt-8 gap-6 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <Link
             href="/admin"
             className="body-16-medium text-brown hover:text-gold transition-colors px-2"
@@ -114,6 +122,13 @@ export function AdminNavbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Newsletters
+          </Link>
+          <Link
+            href="/admin/site-config"
+            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Configurações
           </Link>
           <Button
             variant="brown"
