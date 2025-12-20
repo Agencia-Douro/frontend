@@ -31,6 +31,7 @@ export default function EditNewsletterPage() {
   })
   const [uploadingImage, setUploadingImage] = useState(false)
   const [isPropertyModalOpen, setIsPropertyModalOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState("info")
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -90,6 +91,14 @@ export default function EditNewsletterPage() {
     },
   })
 
+  const goToNextTab = () => {
+    const tabs = ["info", "content", "properties"]
+    const currentIndex = tabs.indexOf(activeTab)
+    if (currentIndex < tabs.length - 1) {
+      setActiveTab(tabs[currentIndex + 1])
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -137,7 +146,7 @@ export default function EditNewsletterPage() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <Tabs defaultValue="info" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3">
             <TabsTrigger
               value="info"
@@ -296,20 +305,28 @@ export default function EditNewsletterPage() {
           </TabsContent>
         </Tabs>
 
-        <div className="flex gap-4 mt-6">
-          <Button
-            type="submit"
-            disabled={updateMutation.isPending}
-          >
-            {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.push("/admin/newsletters")}
-          >
-            Cancelar
-          </Button>
+        <div className="flex gap-4 mt-6 justify-end">
+          {activeTab === "properties" ? (
+            <>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/admin/newsletters")}
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                disabled={updateMutation.isPending}
+              >
+                {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}
+              </Button>
+            </>
+          ) : (
+            <Button type="button" onClick={goToNextTab}>
+              Próximo
+            </Button>
+          )}
         </div>
       </form>
 
