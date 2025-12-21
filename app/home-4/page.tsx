@@ -26,6 +26,7 @@ import testemunho3 from "@/public/testemunhos/3.png";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import { Property } from "@/types/property";
 import { propertiesApi, siteConfigApi, contactApi } from "@/services/api";
+import Folha from "@/components/Folha";
 
 type TransactionType = "comprar" | "arrendar" | "investir";
 
@@ -38,9 +39,6 @@ export default function Home() {
   const [preco, setPreco] = useState<string>("");
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const [isTitleVisible, setIsTitleVisible] = useState(false);
-  const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
-  const [isImageVisible, setIsImageVisible] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     telefone: "",
@@ -53,34 +51,6 @@ export default function Home() {
   useEffect(() => {
     setPreco("");
   }, [transactionType]);
-
-  // Animações de entrada - começam quando a splash screen está quase a acabar
-  useEffect(() => {
-    // A splash screen tem mínimo de 2s, depois 400ms de fade out
-    // Começamos as animações aos 2.2s (quando a splash está no meio do fade out)
-    const animationStartTime = 2200; // 2.2 segundos - quando splash está quase a acabar
-
-    // Animação do título (começa quando splash está quase a acabar)
-    const titleTimer = setTimeout(() => {
-      setIsTitleVisible(true);
-    }, animationStartTime);
-
-    // Animação do subtítulo (começa 50ms depois)
-    const subtitleTimer = setTimeout(() => {
-      setIsSubtitleVisible(true);
-    }, animationStartTime + 50);
-
-    // Animação da imagem (começa 100ms depois)
-    const imageTimer = setTimeout(() => {
-      setIsImageVisible(true);
-    }, animationStartTime + 100);
-
-    return () => {
-      clearTimeout(titleTimer);
-      clearTimeout(subtitleTimer);
-      clearTimeout(imageTimer);
-    };
-  }, []);
 
   // Query para imóveis destacados
   const { data: properties = [], isLoading, isError } = useQuery<Property[], Error>({
@@ -218,41 +188,118 @@ export default function Home() {
 
   return (
     <>
+      {/* Folhas decorativas no background */}
+      <Folha className="top-[150px] left-[0px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[330px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[670px] left-[840px] rotate-40 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1100px] left-[50px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1400px] left-[1450px] rotate-320 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1800px] left-[700px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[2200px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[2600px] left-[100px] rotate-40 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3000px] left-[1400px] rotate-330 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3400px] left-[50px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3800px] left-[1450px] rotate-320 opacity-30 hidden lg:block text-brown" />
       {/* Hero Section */}
-      <section className="min-h-screen container relative flex items-center gap-30 justify-center lg:block lg:flex lg:items-center">
+      <section className="min-h-screen container relative flex justify-center lg:block mt-50">
         <div className="flex flex-col md:items-center lg:items-start md:max-w-[616px] z-100 w-full">
-          <h1
-            className="text-balance heading-tres-medium md:heading-dois-medium lg:heading-um-medium xl:text-6xl md:text-center lg:text-start"
-            style={{
-              opacity: isTitleVisible ? 1 : 0,
-              transform: isTitleVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
-            }}
-          >
-            A imobiliária mais exclusiva de Portugal.
-          </h1>
-          <p
-            className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] md:text-center lg:text-start text-balance"
-            style={{
-              opacity: isSubtitleVisible ? 1 : 0,
-              transform: isSubtitleVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
-            }}
-          >
-            Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.
-          </p>
+          <h1 className="text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium md:text-center lg:text-start">A imobiliária mais exclusiva de Portugal.</h1>
+          <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] md:text-center lg:text-start text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
+          <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full" onSubmit={handleSearch}>
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-row w-full">
+                <Button
+                  type="button"
+                  variant={transactionType === "comprar" ? "gold" : "ghost"}
+                  className="px-4.5 w-1/3 md:w-min"
+                  onClick={() => setTransactionType("comprar")}
+                >
+                  Comprar
+                </Button>
+                <Button
+                  type="button"
+                  variant={transactionType === "arrendar" ? "gold" : "ghost"}
+                  className="px-4.5 w-1/3 md:w-min"
+                  onClick={() => setTransactionType("arrendar")}
+                >
+                  Arrendar
+                </Button>
+              </div>
+              <Button type="submit" variant="brown" className="px-4.5 hidden md:block">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="size-5">
+                  <path d="M14.1666 14.1667L17.5 17.5M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Button>
+            </div>
+            <div className="p-4 flex flex-col md:flex-row gap-4 bg-white">
+              <div className="flex flex-col gap-1 w-full">
+                <Label htmlFor="localizacao">Localização</Label>
+                <Select value={localizacao} onValueChange={setLocalizacao}>
+                  <SelectTrigger id="localizacao" name="localizacao">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DISTRITOS.map((distrito) => (
+                      <SelectItem key={distrito} value={distrito}>
+                        {distrito}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <Label htmlFor="tipo">Tipo</Label>
+                <Select value={tipo} onValueChange={setTipo}>
+                  <SelectTrigger id="tipo" name="tipo">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                    {TIPOS_IMOVEL.map((tipo) => (
+                      <SelectItem key={tipo.value} value={tipo.value}>
+                        {tipo.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <Label htmlFor="preco">Preço Máximo</Label>
+                <Select value={preco} onValueChange={setPreco}>
+                  <SelectTrigger id="preco" name="preco">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                    {transactionType === "arrendar" ? (
+                      <>
+                        <SelectItem value="0-500">500€</SelectItem>
+                        <SelectItem value="500-1000">1.000€</SelectItem>
+                        <SelectItem value="1000-1500">1.500€</SelectItem>
+                        <SelectItem value="1500-2000">2.000€</SelectItem>
+                        <SelectItem value="2000-3000">3.000€</SelectItem>
+                        <SelectItem value="3000-5000">5.000€</SelectItem>
+                      </>
+                    ) : (
+                      <>
+                        <SelectItem value="0-100000">100.000€</SelectItem>
+                        <SelectItem value="100000-200000">200.000€</SelectItem>
+                        <SelectItem value="200000-500000">500.000€</SelectItem>
+                        <SelectItem value="500000-1000000">1.000.000€</SelectItem>
+                        <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
+                      </>
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
+          </form>
         </div>
         <Image
           src={HeroImage}
           alt="Hero Image"
           width={511}
           height={382}
-          className="-z-10 hidden lg:block"
-          style={{
-            opacity: isImageVisible ? 1 : 0,
-            transform: isImageVisible ? 'translateX(0)' : 'translateX(50px)',
-            transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
-          }}
+          className="absolute top-px left-[58.5%] -z-10 hidden lg:block"
         />
       </section>
 

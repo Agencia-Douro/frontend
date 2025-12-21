@@ -26,6 +26,7 @@ import testemunho3 from "@/public/testemunhos/3.png";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import { Property } from "@/types/property";
 import { propertiesApi, siteConfigApi, contactApi } from "@/services/api";
+import Folha from "@/components/Folha";
 
 type TransactionType = "comprar" | "arrendar" | "investir";
 
@@ -218,6 +219,19 @@ export default function Home() {
 
   return (
     <>
+      {/* Folhas decorativas no background */}
+      <Folha className="top-[150px] left-[0px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[330px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[670px] left-[840px] rotate-40 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1100px] left-[50px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1400px] left-[1450px] rotate-320 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[1800px] left-[700px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[2200px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[2600px] left-[100px] rotate-40 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3000px] left-[1400px] rotate-330 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3400px] left-[50px] rotate-30 opacity-30 hidden lg:block text-brown" />
+      <Folha className="top-[3800px] left-[1450px] rotate-320 opacity-30 hidden lg:block text-brown" />
+
       {/* Hero Section */}
       <section className="min-h-screen container relative flex items-center gap-30 justify-center lg:block lg:flex lg:items-center">
         <div className="flex flex-col md:items-center lg:items-start md:max-w-[616px] z-100 w-full">
