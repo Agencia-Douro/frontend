@@ -7,7 +7,7 @@ interface TestemunhoProps {
 
 export default function Testemunho({text, image, name}: TestemunhoProps) {
     return (
-        <div className="flex flex-col p-6 gap-5 min-w-117 md:min-w-[511px] bg-white">
+        <div className="flex flex-col p-6 gap-5 min-w-117 md:min-w-[511px] bg-deaf">
             <div className="space-y-2">
                 <Image src={image} alt="testemunho-image" width={32} height={32} />
                 <p className="text-brown body-18-medium">{name}</p>

@@ -4,7 +4,9 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 import {
     Dialog,
+    DialogClose,
     DialogContent,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
@@ -99,20 +101,19 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
 
             {/* Modal */}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="w-[calc(100%-2rem)] md:w-full md:max-w-2xl max-h-[90vh] overflow-y-auto mx-0">
                     <DialogHeader>
                         <DialogTitle className="body-18-medium">Avaliador Online</DialogTitle>
+                        <DialogClose />
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                    <form onSubmit={handleSubmit} className="space-y-4 mt-4 bg-deaf">
                         {/* Dados Pessoais */}
                         <div className="space-y-4">
                             <h3 className="body-16-medium text-black">Dados Pessoais</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-nome" className="body-14-medium text-black">
-                                        Nome *
-                                    </Label>
+                                    <Label htmlFor="modal-nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-nome"
                                         placeholder="Tomas Ribeiro Silva"
@@ -122,9 +123,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-telefone" className="body-14-medium text-black">
-                                        Número de Telemóvel *
-                                    </Label>
+                                    <Label htmlFor="modal-telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-telefone"
                                         placeholder="+351 919 766 323"
@@ -136,9 +135,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="modal-email" className="body-14-medium text-black">
-                                    Email *
-                                </Label>
+                                <Label htmlFor="modal-email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
                                 <Input
                                     id="modal-email"
                                     type="email"
@@ -153,20 +150,16 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                         {/* Dados do Imóvel */}
                         <div className="space-y-4 pt-4">
                             <h3 className="body-16-medium text-black">Dados do Imóvel</h3>
-
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipo" className="body-14-medium text-black">
-                                        Tipo de Imóvel *
-                                    </Label>
+                                    <Label htmlFor="modal-tipo" className="body-14-medium text-black">Tipo de Imóvel <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipoImovel}
-                                        onValueChange={(value) => setImovelData({ ...imovelData, tipoImovel: value })}
-                                    >
+                                        onValueChange={(value) => setImovelData({ ...imovelData, tipoImovel: value })}>
                                         <SelectTrigger id="modal-tipo">
                                             <SelectValue placeholder="Selecione o tipo" />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="z-2001">
                                             {TIPOS_IMOVEL.map((tipo) => (
                                                 <SelectItem key={tipo.value} value={tipo.value}>
                                                     {tipo.label}
@@ -177,9 +170,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-black">
-                                        Finalidade *
-                                    </Label>
+                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-black">Finalidade <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.finalidade}
                                         onValueChange={(value) => setImovelData({ ...imovelData, finalidade: value })}
@@ -187,7 +178,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                         <SelectTrigger id="modal-finalidade">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="z-2001">
                                             <SelectItem value="Venda">Venda</SelectItem>
                                             <SelectItem value="Arrendar">Arrendar</SelectItem>
                                         </SelectContent>
@@ -195,9 +186,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-black">
-                                        Tipologia *
-                                    </Label>
+                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-black">Tipologia <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipologia}
                                         onValueChange={(value) => setImovelData({ ...imovelData, tipologia: value })}
@@ -205,7 +194,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                         <SelectTrigger id="modal-tipologia">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="z-2001">
                                             <SelectItem value="T0">T0</SelectItem>
                                             <SelectItem value="T1">T1</SelectItem>
                                             <SelectItem value="T2">T2</SelectItem>
@@ -240,17 +229,11 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                     setFormData({ ...formData, aceitaMarketing: checked as boolean })
                                 }
                             />
-                            <label
-                                htmlFor="modal-marketing"
-                                className="body-14-medium text-black-muted cursor-pointer"
-                            >
-                                Autorizo a Agência Douro a guardar estes dados
-                            </label>
+                            <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados</label>
                         </div>
-
-                        <Button type="submit" variant="gold" className="w-full">
-                            SOLICITAR AVALIAÇÃO
-                        </Button>
+                        <DialogFooter>
+                            <Button type="submit" variant="gold" className="w-full">Solicitar Avaliação</Button>
+                        </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>

@@ -149,7 +149,7 @@ export default function PodcastPage() {
                         <p className="text-black-muted md:body-18-regular body-16-regular w-full">Fique por dentro das últimas novidades do mercado imobiliário</p>
                     </div>
 
-                    <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-4 gap-6">
+                    <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {allEpisodes.map((episode) => (
                             <Link
                                 key={episode.id}
@@ -173,16 +173,9 @@ export default function PodcastPage() {
                                             />
                                         )}
                                     </div>
-                                    <div className="flex justify-between gap-2 items-center mt-4">
-                                        <p className="body-14-regular text-black-muted">
-                                            {episode.season && episode.episodeNumber 
-                                                ? `Temporada ${episode.season} • Episódio ${episode.episodeNumber}`
-                                                : episode.date || ""
-                                            }
-                                        </p>
-                                        <p className="body-14-regular text-black-muted">{episode.readingTime}</p>
+                                    <div className="flex justify-between gap-2 items-center mt-1 lg:mt-2">
+                                        <h3 className="body-18-medium text-black">{episode.title}</h3>
                                     </div>
-                                    <h3 className="body-18-medium text-black mt-2">{episode.title}</h3>
                                 </article>
                             </Link>
                         ))}

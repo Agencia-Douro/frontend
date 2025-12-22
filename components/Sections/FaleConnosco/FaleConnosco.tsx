@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import Link from "next/link"
 import { contactApi } from "@/services/api"
+import Folha from "@/components/Folha"
 
 export const FaleConnosco = () => {
     const [formData, setFormData] = useState({
@@ -41,8 +42,8 @@ export const FaleConnosco = () => {
     }
 
     return (
-        <section className="bg-deaf py-6 md:py-10 lg:py-12 xl:py-16" id="contacto">
-            <div className="container">
+        <section className="bg-deaf py-6 md:py-10 lg:py-12 xl:py-16 scroll-mt-6 md:scroll-mt-10 lg:scroll-mt-12 xl:scroll-mt-16" id="contacto">
+            <div className="relative container">
                 <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">Fale connosco</h2>
                 <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                     {/* Mapa */}
@@ -147,6 +148,7 @@ export const FaleConnosco = () => {
                         </p>
                     </div>
                 </div>
+                <Folha className="top-8 right-0 text-brown -rotate-380"/>
             </div>
         </section>
     )

@@ -31,7 +31,7 @@ export default function Header() {
     }
 
     return (
-        <header className="border-b border-[#EAE6DF]">
+        <header className="border-b border-[#EAE6DF] sticky top-0 w-full bg-muted z-50">
             <div className="container">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">

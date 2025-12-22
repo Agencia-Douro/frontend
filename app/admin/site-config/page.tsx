@@ -74,8 +74,8 @@ export default function SiteConfigPage() {
           <CardHeader>
             <CardTitle>Estatísticas do Site</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-2">
+          <CardContent className="flex gap-6">
+            <div className="space-y-1 w-full">
               <Label htmlFor="clientesSatisfeitos">Clientes Satisfeitos</Label>
               <Input
                 id="clientesSatisfeitos"
@@ -93,7 +93,7 @@ export default function SiteConfigPage() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1 w-full">
               <Label htmlFor="rating">Rating (0-5)</Label>
               <Input
                 id="rating"
