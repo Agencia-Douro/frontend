@@ -618,6 +618,107 @@ export const propertyFilesApi = {
   },
 };
 
+export const propertyRelationshipsApi = {
+  getRelated: async (propertyId: string): Promise<Property[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/related`
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar propriedades relacionadas");
+    }
+
+    return response.json();
+  },
+
+  getSimilar: async (propertyId: string, limit: number = 5): Promise<Property[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/similar?limit=${limit}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar propriedades similares");
+    }
+
+    return response.json();
+  },
+
+  addRelated: async (
+    propertyId: string,
+    relatedPropertyIds: string[]
+  ): Promise<Property> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/related`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ relatedPropertyIds }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao adicionar propriedades relacionadas (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  removeRelated: async (
+    propertyId: string,
+    relatedPropertyIds: string[]
+  ): Promise<{ message: string; property: Property }> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/related`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ relatedPropertyIds }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao remover propriedades relacionadas (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  setRelated: async (
+    propertyId: string,
+    relatedPropertyIds: string[]
+  ): Promise<Property> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/related`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ relatedPropertyIds }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao definir propriedades relacionadas (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};
+
 export interface ContactData {
   nome: string;
   telefone: string;

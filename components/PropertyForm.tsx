@@ -17,6 +17,7 @@ import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { FileManagement } from "@/components/FileManagement"
+import { PropertyRelationships } from "@/components/PropertyRelationships"
 
 interface PropertyFormProps {
   initialData?: Property | null
@@ -332,7 +333,7 @@ export default function PropertyForm({
   }
 
   const goToNextTab = () => {
-    const tabs = ["info", "features", "location", "images", "files"]
+    const tabs = ["info", "features", "location", "images", "files", "relationships"]
     const currentIndex = tabs.indexOf(activeTab)
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1])
@@ -372,6 +373,12 @@ export default function PropertyForm({
             className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
           >
             Arquivos
+          </TabsTrigger>
+          <TabsTrigger
+            value="relationships"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Relacionamentos
           </TabsTrigger>
         </TabsList>
 
@@ -1058,10 +1065,27 @@ export default function PropertyForm({
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="relationships" className="space-y-6 mt-0">
+          <Card>
+            <CardHeader>
+              <CardTitle>Propriedades Relacionadas</CardTitle>
+              <CardDescription>
+                Gerencie propriedades relacionadas para exibir como sugestões similares na página de detalhes
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PropertyRelationships
+                propertyId={initialData?.id}
+                isEditMode={isEditMode}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
 
       <div className="flex gap-4 justify-end">
-        {activeTab === "images" || activeTab === "files" ? (
+        {activeTab === "images" || activeTab === "files" || activeTab === "relationships" ? (
           <>
             {onCancel && (
               <Button

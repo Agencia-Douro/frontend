@@ -49,6 +49,7 @@ export interface Property {
   address: string | null;
   image: string;
   imageSections?: PropertyImageSection[];
+  relatedProperties?: Property[];
   paymentConditions: string | null;
   status: "active" | "inactive" | "sold" | "rented";
   createdAt: string;
