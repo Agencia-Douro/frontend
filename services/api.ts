@@ -491,9 +491,7 @@ export const propertyFilesApi = {
   },
 
   getById: async (fileId: string): Promise<PropertyFile> => {
-    const response = await fetch(
-      `${API_BASE_URL}/properties/files/${fileId}`
-    );
+    const response = await fetch(`${API_BASE_URL}/properties/files/${fileId}`);
 
     if (!response.ok) {
       throw new Error("Arquivo não encontrado");
@@ -528,7 +526,8 @@ export const propertyFilesApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao fazer upload do arquivo (${response.status})`;
+        errorData.message ||
+        `Erro ao fazer upload do arquivo (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -564,7 +563,8 @@ export const propertyFilesApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao fazer upload dos arquivos (${response.status})`;
+        errorData.message ||
+        `Erro ao fazer upload dos arquivos (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -578,16 +578,13 @@ export const propertyFilesApi = {
       isVisible?: boolean;
     }
   ): Promise<PropertyFile> => {
-    const response = await fetch(
-      `${API_BASE_URL}/properties/files/${fileId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/properties/files/${fileId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -599,13 +596,12 @@ export const propertyFilesApi = {
     return response.json();
   },
 
-  delete: async (fileId: string): Promise<{ message: string; file: PropertyFile }> => {
-    const response = await fetch(
-      `${API_BASE_URL}/properties/files/${fileId}`,
-      {
-        method: "DELETE",
-      }
-    );
+  delete: async (
+    fileId: string
+  ): Promise<{ message: string; file: PropertyFile }> => {
+    const response = await fetch(`${API_BASE_URL}/properties/files/${fileId}`, {
+      method: "DELETE",
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -631,7 +627,10 @@ export const propertyRelationshipsApi = {
     return response.json();
   },
 
-  getSimilar: async (propertyId: string, limit: number = 5): Promise<Property[]> => {
+  getSimilar: async (
+    propertyId: string,
+    limit: number = 5
+  ): Promise<Property[]> => {
     const response = await fetch(
       `${API_BASE_URL}/properties/${propertyId}/similar?limit=${limit}`
     );
@@ -661,7 +660,8 @@ export const propertyRelationshipsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao adicionar propriedades relacionadas (${response.status})`;
+        errorData.message ||
+        `Erro ao adicionar propriedades relacionadas (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -686,7 +686,8 @@ export const propertyRelationshipsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao remover propriedades relacionadas (${response.status})`;
+        errorData.message ||
+        `Erro ao remover propriedades relacionadas (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -711,7 +712,8 @@ export const propertyRelationshipsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao definir propriedades relacionadas (${response.status})`;
+        errorData.message ||
+        `Erro ao definir propriedades relacionadas (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -763,6 +765,8 @@ export const contactApi = {
 export interface SiteConfig {
   clientesSatisfeitos: number;
   rating: number;
+  anosExperiencia: number;
+  imoveisVendidos: number;
 }
 
 export const siteConfigApi = {

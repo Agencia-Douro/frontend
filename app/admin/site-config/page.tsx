@@ -14,6 +14,8 @@ export default function SiteConfigPage() {
   const [formData, setFormData] = useState({
     clientesSatisfeitos: 0,
     rating: 0,
+    imoveisVendidos: 0,
+    anosExperiencia: 0,
   })
 
   const { data: config, isLoading } = useQuery({
@@ -26,6 +28,8 @@ export default function SiteConfigPage() {
       setFormData({
         clientesSatisfeitos: config.clientesSatisfeitos || 0,
         rating: config.rating || 0,
+        imoveisVendidos: config.imoveisVendidos || 0,
+        anosExperiencia: config.anosExperiencia || 0,
       })
     }
   }, [config])
@@ -74,7 +78,7 @@ export default function SiteConfigPage() {
           <CardHeader>
             <CardTitle>Estatísticas do Site</CardTitle>
           </CardHeader>
-          <CardContent className="flex gap-6">
+          <CardContent className="grid grid-cols-2 gap-4">
             <div className="space-y-1 w-full">
               <Label htmlFor="clientesSatisfeitos">Clientes Satisfeitos</Label>
               <Input
@@ -114,6 +118,40 @@ export default function SiteConfigPage() {
               <p className="body-14-regular text-grey">
                 Insira um valor entre 0 e 5 (pode usar decimais, ex: 4.5)
               </p>
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="anos">Anos de Experiência</Label>
+              <Input
+                id="anos"
+                type="number"
+                value={formData.anosExperiencia}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    anosExperiencia: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite os anos de experiencia"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="imoveis">Imóveis Vendidos</Label>
+              <Input
+                id="imoveis"
+                type="number"
+                value={formData.imoveisVendidos}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    imoveisVendidos: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite a quantidade de imóveis vendidos"
+                required
+              />
             </div>
           </CardContent>
         </Card>

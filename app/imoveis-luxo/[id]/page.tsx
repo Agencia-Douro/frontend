@@ -98,6 +98,7 @@ export default function ImovelDetails() {
     const transactionTypeMap: Record<string, string> = {
         comprar: "Compra",
         arrendar: "Arrendamento",
+        trespasse: "Trespasse",
     }
 
     const handleCopyLink = async () => {
@@ -250,7 +251,7 @@ export default function ImovelDetails() {
                                         )}
                                     </div>
                                 </div>
-                                
+
                                 {/* Imagem principal - visible only on mobile */}
                                 <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden">
                                     {property.image && (

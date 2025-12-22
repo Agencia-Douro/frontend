@@ -131,17 +131,17 @@ export default function PropertyForm({
     const newErrors = { ...errors }
     const areas = { ...formData, [field]: value }
 
-    // Área construída não pode ser maior que área total
+    // Área bruta não pode ser maior que área total
     if (areas.builtArea && areas.totalArea && areas.builtArea > areas.totalArea) {
-      newErrors.builtArea = "Área construída não pode ser maior que área total"
+      newErrors.builtArea = "Área bruta não pode ser maior que área total"
     } else {
       delete newErrors.builtArea
     }
 
-    // Área útil não pode ser maior que área construída ou total
+    // Área útil não pode ser maior que área bruta ou total
     if (areas.usefulArea) {
       if (areas.builtArea && areas.usefulArea > areas.builtArea) {
-        newErrors.usefulArea = "Área útil não pode ser maior que área construída"
+        newErrors.usefulArea = "Área útil não pode ser maior que área bruta"
       } else if (areas.totalArea && areas.usefulArea > areas.totalArea) {
         newErrors.usefulArea = "Área útil não pode ser maior que área total"
       } else {
@@ -406,6 +406,7 @@ export default function PropertyForm({
                       <SelectContent>
                         <SelectItem value="active">Ativo</SelectItem>
                         <SelectItem value="inactive">Inativo</SelectItem>
+                        <SelectItem value="reserved">Reservado</SelectItem>
                         <SelectItem value="sold">Vendido</SelectItem>
                         <SelectItem value="rented">Arrendado</SelectItem>
                       </SelectContent>
@@ -466,6 +467,7 @@ export default function PropertyForm({
                     <SelectContent>
                       <SelectItem value="comprar">Comprar</SelectItem>
                       <SelectItem value="arrendar">Arrendar</SelectItem>
+                      <SelectItem value="trespasse">Trespasse</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -598,7 +600,7 @@ export default function PropertyForm({
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Área Construída (m²)</Label>
+                  <Label>Área Bruta (m²)</Label>
                   <Input
                     type="number"
                     placeholder="120"

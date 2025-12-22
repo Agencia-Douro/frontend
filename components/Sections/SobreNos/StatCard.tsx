@@ -12,7 +12,7 @@ export function StatCard({ value, label }: StatCardProps) {
             </div>
             <div>
                 <div className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-brown mb-1">
-                    {value}
+                    +{value}
                 </div>
                 <p className="body-16-medium text-brown">
                     {label}

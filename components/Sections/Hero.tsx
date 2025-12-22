@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import HeroImage from "@/public/hero-image.png";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 
-type TransactionType = "comprar" | "arrendar" | "investir";
+type TransactionType = "comprar" | "arrendar" | "trespasse";
 
 export default function Hero() {
     const router = useRouter();
@@ -73,6 +73,14 @@ export default function Hero() {
                                 onClick={() => setTransactionType("arrendar")}
                             >
                                 Arrendar
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={transactionType === "trespasse" ? "gold" : "ghost"}
+                                className="px-4.5 w-1/3 md:w-min"
+                                onClick={() => setTransactionType("trespasse")}
+                            >
+                                Trespasse
                             </Button>
                         </div>
                         <Button type="submit" variant="brown" className="px-4.5 hidden md:block">

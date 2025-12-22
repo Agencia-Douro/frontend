@@ -162,6 +162,17 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 >
                                     Arrendar
                                 </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setTransactionType("trespasse")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
+                                        ? "text-white bg-brown"
+                                        : "text-brown bg-muted"
+                                        }`}
+                                >
+                                    Trespasse
+                                </button>
                             </div>
                         </div>
                         <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
@@ -471,6 +482,17 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         }`}
                                 >
                                     Arrendar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setTransactionType("trespasse")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
+                                        ? "text-white bg-brown"
+                                        : "text-brown bg-muted"
+                                        }`}
+                                >
+                                    Trespasse
                                 </button>
                             </div>
                         </div>

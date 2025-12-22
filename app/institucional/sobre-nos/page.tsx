@@ -1,3 +1,5 @@
+"use client"
+
 import type { Metadata } from "next";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Footer from "@/components/Sections/Footer/Footer";
@@ -9,25 +11,21 @@ import { ServicoCard } from "@/components/Sections/SobreNos/ServicoCard";
 import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-    title: "Sobre Nós - Agência Douro",
-    description: "Conheça a Agência Douro, especializada em imóveis de luxo em Portugal. Descubra nossa história, valores e compromisso com a excelência no mercado imobiliário.",
-    keywords: "sobre nós, Agência Douro, imobiliária, história, valores, Portugal",
-    openGraph: {
-        title: "Sobre Nós - Agência Douro",
-        description: "Conheça a Agência Douro, especializada em imóveis de luxo em Portugal.",
-        type: "website",
-    },
-};
+import { siteConfigApi } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
 
 export default function InstitucionalPage() {
+    const { data: siteConfig } = useQuery({
+        queryKey: ["site-config"],
+        queryFn: () => siteConfigApi.get(),
+    });
+
     return (
         <>
             {/* Primeira Seção - Apresentação */}
             <section className="bg-deaf relative">
                 <div className="container py-6 md:py-10 lg:py-12 xl:py-16">
-                    <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338"/>
+                    <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
                     <div className="lg:space-y-6 space-y-4">
                         <div><span className="body-14-medium text-gold uppercase tracking-wider">Quem Somos</span></div>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">Sobre Nós</h1>
@@ -36,9 +34,9 @@ export default function InstitucionalPage() {
                         <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">A atuar no mercado nacional e internacional, a Agência Douro é reconhecida pela sua transparência, responsabilidade e compromisso em proporcionar tranquilidade em cada transação. Seja para habitação própria ou para investimento, oferecemos um apoio completo para garantir que o seu negócio seja seguro e eficaz.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        <StatCard value="15+" label="Anos de Experiência" />
-                        <StatCard value="500+" label="Imóveis Vendidos" />
-                        <StatCard value="800+" label="Clientes Satisfeitos" />
+                        <StatCard value={siteConfig?.anosExperiencia.toString() || ""} label="Anos de Experiência" />
+                        <StatCard value={siteConfig?.imoveisVendidos.toString() || ""} label="Imóveis Vendidos" />
+                        <StatCard value={siteConfig?.clientesSatisfeitos.toString() || ""} label="Clientes Satisfeitos" />
                     </div>
                 </div>
             </section>
@@ -115,11 +113,11 @@ export default function InstitucionalPage() {
                             title="Parceiros de crédito imobiliário"
                             description="Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
                         />
-                        
+
                     </div>
                 </section>
             </div>
-            <Testemunhos/>
+            <Testemunhos />
             <FaleConnosco />
             <Footer />
         </>

@@ -52,6 +52,7 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis?transactionType=arrendar", label: "Arrendar" },
+                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
                             ]}
                         />
                         <NavLinkDropdown
@@ -60,6 +61,7 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
                                 { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
+                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
                             ]}
                         />
                         <NavLinkDropdown
@@ -73,8 +75,8 @@ export default function Header() {
                         <NavLink href="/newsletter">Newsletter</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
-                        <Button 
-                            variant="brown" 
+                        <Button
+                            variant="brown"
                             onClick={(e) => {
                                 e.preventDefault();
                                 const contactoSection = document.getElementById('contacto');

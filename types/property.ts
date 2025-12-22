@@ -51,7 +51,7 @@ export interface Property {
   imageSections?: PropertyImageSection[];
   relatedProperties?: Property[];
   paymentConditions: string | null;
-  status: "active" | "inactive" | "sold" | "rented";
+  status: "active" | "inactive" | "sold" | "rented" | "reserved";
   createdAt: string;
   updatedAt: string;
 }
