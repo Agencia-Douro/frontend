@@ -7,6 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Sections/Footer/Footer";
 import Logo from "@/public/Logo.svg";
+import Divider from "@/public/divider.png";
+import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 
 export default function NewsletterDetailsPage() {
     const params = useParams();
@@ -98,18 +100,19 @@ export default function NewsletterDetailsPage() {
                         dangerouslySetInnerHTML={{ __html: newsletter.content }}
                     />
                 </article>
-                {/* Related Properties */}
+            </section>
+                <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8" />
                 {newsletter.properties && newsletter.properties.length > 0 && (
-                    <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center">
+                    <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center container">
                         <Image
-                            className="mb-6 lg:mb-8"
+                            className="mb-6 lg:mb-8 h-16"
                             src={Logo}
                             alt="Agência Douro Logótipo"
                             width={213}
                             height={96}
                         />
                         <h2 className="heading-tres-regular text mb-5 sm:mb-10">Imóveis Relacionados</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {newsletter.properties.map((property) => (
                                 <Link
                                     key={property.id}
@@ -120,7 +123,7 @@ export default function NewsletterDetailsPage() {
                                             src={property.image}
                                             alt={property.title}
                                             fill
-                                            className="h-40 w-full object-cover"
+                                            className="w-full object-cover"
                                         />
                                     </div>
                                     <div className="p-4">
@@ -139,10 +142,8 @@ export default function NewsletterDetailsPage() {
                         </div>
                     </div>
                 )}
-            </section>
-            {/*
-            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover absolute bottom-125 left-1/2 -translate-x-1/2 h-8" />
-            */}
+            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8" />
+            <FaleConnosco/>
             <Footer />
         </>
     );
