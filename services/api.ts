@@ -2,6 +2,7 @@ import {
   PropertiesResponse,
   Property,
   PropertyImageSection,
+  PropertyFile,
 } from "@/types/property";
 import { Newsletter } from "@/types/newsletter";
 
@@ -473,6 +474,147 @@ export const imageSectionsApi = {
         `Erro ao deletar seção de imagens (${response.status})`;
       throw new Error(errorMessage);
     }
+  },
+};
+
+export const propertyFilesApi = {
+  getAll: async (propertyId: string): Promise<PropertyFile[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/files`
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar arquivos da propriedade");
+    }
+
+    return response.json();
+  },
+
+  getById: async (fileId: string): Promise<PropertyFile> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/files/${fileId}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Arquivo não encontrado");
+    }
+
+    return response.json();
+  },
+
+  uploadSingle: async (
+    propertyId: string,
+    file: File,
+    title?: string,
+    isVisible: boolean = true
+  ): Promise<PropertyFile> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    if (title) {
+      formData.append("title", title);
+    }
+
+    formData.append("isVisible", isVisible.toString());
+
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/files`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao fazer upload do arquivo (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  uploadMultiple: async (
+    propertyId: string,
+    files: File[],
+    title?: string,
+    isVisible: boolean = true
+  ): Promise<{ message: string; files: PropertyFile[] }> => {
+    const formData = new FormData();
+
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+
+    if (title) {
+      formData.append("title", title);
+    }
+
+    formData.append("isVisible", isVisible.toString());
+
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/files/multiple`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao fazer upload dos arquivos (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    fileId: string,
+    data: {
+      title?: string;
+      isVisible?: boolean;
+    }
+  ): Promise<PropertyFile> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/files/${fileId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar arquivo (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (fileId: string): Promise<{ message: string; file: PropertyFile }> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/files/${fileId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar arquivo (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
   },
 };
 

@@ -8,6 +8,20 @@ export interface PropertyImageSection {
   updatedAt: string;
 }
 
+export interface PropertyFile {
+  id: string;
+  propertyId: string;
+  title: string | null;
+  isVisible: boolean;
+  filename: string;
+  originalName: string;
+  mimeType: string;
+  fileSize: number;
+  filePath: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Property {
   id: string;
   reference: string;

@@ -16,6 +16,7 @@ import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distr
 import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { FileManagement } from "@/components/FileManagement"
 
 interface PropertyFormProps {
   initialData?: Property | null
@@ -331,7 +332,7 @@ export default function PropertyForm({
   }
 
   const goToNextTab = () => {
-    const tabs = ["info", "features", "location", "images"]
+    const tabs = ["info", "features", "location", "images", "files"]
     const currentIndex = tabs.indexOf(activeTab)
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1])
@@ -365,6 +366,12 @@ export default function PropertyForm({
             className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
           >
             Imagens
+          </TabsTrigger>
+          <TabsTrigger
+            value="files"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Arquivos
           </TabsTrigger>
         </TabsList>
 
@@ -1034,10 +1041,27 @@ export default function PropertyForm({
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="files" className="space-y-6 mt-0">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gestão de Arquivos</CardTitle>
+              <CardDescription>
+                Faça upload e gerencie documentos, PDFs, plantas, certificados e outros arquivos da propriedade
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FileManagement
+                propertyId={initialData?.id}
+                isEditMode={isEditMode}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
 
       <div className="flex gap-4 justify-end">
-        {activeTab === "images" ? (
+        {activeTab === "images" || activeTab === "files" ? (
           <>
             {onCancel && (
               <Button
