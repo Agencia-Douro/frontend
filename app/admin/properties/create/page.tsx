@@ -16,8 +16,12 @@ export default function CreatePropertyPage() {
   const createMutation = useMutation({
     mutationFn: ({ data, images }: { data: any; images: File[] }) =>
       propertiesApi.create(data, images),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["properties"] })
+    onSuccess: async (data) => {
+      // Invalidar cache de todas as propriedades
+      await queryClient.invalidateQueries({ queryKey: ["properties"] })
+      // Invalidar cache específico da propriedade criada
+      await queryClient.invalidateQueries({ queryKey: ["property", data.id] })
+
       toast.success("Propriedade criada com sucesso!")
       router.push(`/admin/properties/${data.id}`)
     },
@@ -83,6 +87,9 @@ export default function CreatePropertyPage() {
                 toast.error("Erro ao relacionar propriedades")
               }
             }
+
+            // Invalidar cache novamente após upload de arquivos e relacionamentos
+            await queryClient.invalidateQueries({ queryKey: ["property", property.id] })
 
             resolve(property)
           },
