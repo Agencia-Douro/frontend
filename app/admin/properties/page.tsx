@@ -316,7 +316,7 @@ export default function PropertiesPage() {
           <ImovelCard
             href={`properties/${property.id}`}
             image={property.image}
-            localizacao={property.concelho + property.distrito}
+            localizacao={property.concelho + ", " + property.distrito}
             preco={property.price}
             titulo={property.title}
             key={property.id}

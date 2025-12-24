@@ -14,10 +14,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 interface FileManagementProps {
   propertyId?: string
   isEditMode?: boolean
+  onPendingFilesChange?: (files: File[]) => void
+  pendingFiles?: File[]
 }
 
-export function FileManagement({ propertyId, isEditMode = false }: FileManagementProps) {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+export function FileManagement({
+  propertyId,
+  isEditMode = false,
+  onPendingFilesChange,
+  pendingFiles = []
+}: FileManagementProps) {
+  const [selectedFiles, setSelectedFiles] = useState<File[]>(pendingFiles)
   const [uploading, setUploading] = useState(false)
   const [editingFileId, setEditingFileId] = useState<string | null>(null)
   const [editTitle, setEditTitle] = useState("")
@@ -78,6 +85,13 @@ export function FileManagement({ propertyId, isEditMode = false }: FileManagemen
       toast.error(error.message || "Erro ao deletar arquivo")
     },
   })
+
+  // Notificar mudanças nos arquivos pendentes para o componente pai
+  useEffect(() => {
+    if (!isEditMode && onPendingFilesChange) {
+      onPendingFilesChange(selectedFiles)
+    }
+  }, [selectedFiles, isEditMode, onPendingFilesChange])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -184,21 +198,24 @@ export function FileManagement({ propertyId, isEditMode = false }: FileManagemen
             onChange={handleFileChange}
             className="hidden"
             id="file-upload"
-            disabled={uploading || !isEditMode}
+            disabled={uploading}
           />
           <label
             htmlFor="file-upload"
-            className={`cursor-pointer flex flex-col items-center gap-2 ${!isEditMode ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className="cursor-pointer flex flex-col items-center gap-2"
           >
             <Upload className="h-10 w-10 text-gray-400" />
             <span className="text-sm text-gray-500">
-              {isEditMode
-                ? "Clique para selecionar arquivos (máx. 20 arquivos, 200MB cada)"
-                : "Salve a propriedade primeiro para fazer upload de arquivos"}
+              Clique para selecionar arquivos (máx. 20 arquivos, 200MB cada)
             </span>
             <span className="text-xs text-gray-400">
               Todos os tipos de arquivo são aceitos
             </span>
+            {!isEditMode && (
+              <span className="text-xs text-yellow-600 mt-2">
+                Os arquivos serão enviados após criar a propriedade
+              </span>
+            )}
           </label>
         </div>
 
@@ -209,24 +226,26 @@ export function FileManagement({ propertyId, isEditMode = false }: FileManagemen
               <Label className="text-sm font-medium">
                 Arquivos selecionados ({selectedFiles.length})
               </Label>
-              <Button
-                type="button"
-                onClick={handleUpload}
-                disabled={uploading || !propertyId}
-                size="default"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-4 w-4 mr-2" />
-                    Enviar {selectedFiles.length} arquivo(s)
-                  </>
-                )}
-              </Button>
+              {isEditMode && (
+                <Button
+                  type="button"
+                  onClick={handleUpload}
+                  disabled={uploading || !propertyId}
+                  size="default"
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4 mr-2" />
+                      Enviar {selectedFiles.length} arquivo(s)
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
 
             <div className="space-y-2">

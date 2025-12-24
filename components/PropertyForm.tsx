@@ -21,7 +21,13 @@ import { PropertyRelationships } from "@/components/PropertyRelationships"
 
 interface PropertyFormProps {
   initialData?: Property | null
-  onSubmit: (data: any, images: File[], imagesToRemove?: string[]) => Promise<Property> | void
+  onSubmit: (
+    data: any,
+    images: File[],
+    imagesToRemove?: string[],
+    pendingFiles?: File[],
+    pendingRelated?: string[]
+  ) => Promise<Property> | void
   isLoading?: boolean
   submitButtonText?: string
   cancelButtonText?: string
@@ -86,6 +92,10 @@ export default function PropertyForm({
   const [loadingDeleteSection, setLoadingDeleteSection] = useState<string | null>(null)
   const [loadingRemoveImage, setLoadingRemoveImage] = useState<string | null>(null)
   const [loadingAddImage, setLoadingAddImage] = useState<string | null>(null)
+
+  // Estados para arquivos e relacionamentos no modo de criação
+  const [pendingFiles, setPendingFiles] = useState<File[]>([])
+  const [pendingRelated, setPendingRelated] = useState<string[]>([])
 
   // Get municipios based on selected distrito
   const municipios = formData.distrito ? DISTRITO_MUNICIPIOS[formData.distrito] || [] : []
@@ -315,7 +325,13 @@ export default function PropertyForm({
       const images = selectedImage ? [selectedImage] : []
       const imagesToRemove = imageToRemove ? [imageToRemove] : []
 
-      const result = await onSubmit(formData, images, imagesToRemove)
+      const result = await onSubmit(
+        formData,
+        images,
+        imagesToRemove,
+        isEditMode ? undefined : pendingFiles,
+        isEditMode ? undefined : pendingRelated
+      )
 
       // Se retornar uma propriedade e houver novas seções, criar as seções
       if (result && result.id && newSections.length > 0) {
@@ -1063,6 +1079,8 @@ export default function PropertyForm({
               <FileManagement
                 propertyId={initialData?.id}
                 isEditMode={isEditMode}
+                onPendingFilesChange={setPendingFiles}
+                pendingFiles={pendingFiles}
               />
             </CardContent>
           </Card>
@@ -1080,6 +1098,8 @@ export default function PropertyForm({
               <PropertyRelationships
                 propertyId={initialData?.id}
                 isEditMode={isEditMode}
+                onPendingRelatedChange={setPendingRelated}
+                pendingRelated={pendingRelated}
               />
             </CardContent>
           </Card>
@@ -1087,7 +1107,8 @@ export default function PropertyForm({
       </Tabs>
 
       <div className="flex gap-4 justify-end">
-        {activeTab === "images" || activeTab === "files" || activeTab === "relationships" ? (
+        {isEditMode ? (
+          // Modo de edição - sempre mostrar botão de submit
           <>
             {onCancel && (
               <Button
@@ -1106,12 +1127,33 @@ export default function PropertyForm({
             </Button>
           </>
         ) : (
-          <Button
-            type="button"
-            onClick={goToNextTab}
-          >
-            Próxima
-          </Button>
+          // Modo de criação - mostrar botão de submit apenas nas últimas abas
+          activeTab === "images" || activeTab === "files" || activeTab === "relationships" ? (
+            <>
+              {onCancel && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={onCancel}
+                >
+                  {cancelButtonText}
+                </Button>
+              )}
+              <Button
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Salvando..." : submitButtonText}
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="button"
+              onClick={goToNextTab}
+            >
+              Próxima
+            </Button>
+          )
         )}
       </div>
     </form>

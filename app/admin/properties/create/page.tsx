@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { propertiesApi } from "@/services/api"
+import { propertiesApi, propertyFilesApi, propertyRelationshipsApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
@@ -41,7 +41,13 @@ export default function CreatePropertyPage() {
     },
   })
 
-  const handleSubmit = async (data: any, images: File[]): Promise<Property> => {
+  const handleSubmit = async (
+    data: any,
+    images: File[],
+    imagesToRemove?: string[],
+    pendingFiles?: File[],
+    pendingRelated?: string[]
+  ): Promise<Property> => {
     // Validar se tem exatamente uma imagem
     if (images.length === 0) {
       toast.error("A propriedade precisa ter uma imagem principal")
@@ -55,7 +61,29 @@ export default function CreatePropertyPage() {
           images,
         },
         {
-          onSuccess: (property) => {
+          onSuccess: async (property) => {
+            // Processar arquivos pendentes se houver
+            if (pendingFiles && pendingFiles.length > 0) {
+              try {
+                await propertyFilesApi.uploadMultiple(property.id, pendingFiles, undefined, true)
+                toast.success(`${pendingFiles.length} arquivo(s) enviado(s) com sucesso!`)
+              } catch (error) {
+                console.error("Erro ao enviar arquivos:", error)
+                toast.error("Erro ao enviar alguns arquivos")
+              }
+            }
+
+            // Processar relacionamentos pendentes se houver
+            if (pendingRelated && pendingRelated.length > 0) {
+              try {
+                await propertyRelationshipsApi.setRelated(property.id, pendingRelated)
+                toast.success(`${pendingRelated.length} propriedade(s) relacionada(s) com sucesso!`)
+              } catch (error) {
+                console.error("Erro ao definir propriedades relacionadas:", error)
+                toast.error("Erro ao relacionar propriedades")
+              }
+            }
+
             resolve(property)
           },
           onError: (error) => {
