@@ -1128,7 +1128,7 @@ export default function PropertyForm({
           </>
         ) : (
           // Modo de criação - mostrar botão de submit apenas nas últimas abas
-          activeTab === "images" || activeTab === "files" || activeTab === "relationships" ? (
+          activeTab === "relationships" ? (
             <>
               {onCancel && (
                 <Button
