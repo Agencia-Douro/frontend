@@ -19,6 +19,44 @@ import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Trash2, Pencil, Star } from "lucide-react"
 import Image from "next/image"
 
+// Helper function to check if URL is a video
+const isVideoUrl = (url: string): boolean => {
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
+    return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
+
+// Helper component to render media (image or video)
+const MediaItem = ({
+    src,
+    alt,
+    className,
+}: {
+    src: string;
+    alt: string;
+    className?: string;
+}) => {
+    if (isVideoUrl(src)) {
+        return (
+            <video
+                src={src}
+                controls
+                className={className}
+                preload="metadata"
+            />
+        );
+    }
+
+    return (
+        <Image
+            width={1000}
+            height={1000}
+            src={src}
+            alt={alt}
+            className={className}
+        />
+    );
+};
+
 export default function PropertyDetailsPage() {
     const params = useParams()
     const router = useRouter()
@@ -192,9 +230,7 @@ export default function PropertyDetailsPage() {
                             <div className="h-96 grid grid-cols-12 w-full gap-4">
                                 <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
                                     {property.image && (
-                                        <Image
-                                            width={1000}
-                                            height={1000}
+                                        <MediaItem
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
@@ -203,9 +239,7 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
                                     {allImages[0] && (
-                                        <Image
-                                            width={1000}
-                                            height={1000}
+                                        <MediaItem
                                             src={allImages[0].url}
                                             alt={`${property.title} - ${allImages[0].name}`}
                                             className="w-full h-full object-cover"
@@ -214,9 +248,7 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                     {allImages[1] && (
-                                        <Image
-                                            width={1000}
-                                            height={1000}
+                                        <MediaItem
                                             src={allImages[1].url}
                                             alt={`${property.title} - ${allImages[1].name}`}
                                             className="w-full h-full object-cover"
@@ -225,9 +257,7 @@ export default function PropertyDetailsPage() {
                                 </div>
                                 <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
                                     {allImages[2] && (
-                                        <Image
-                                            width={1000}
-                                            height={1000}
+                                        <MediaItem
                                             src={allImages[2].url}
                                             alt={`${property.title} - ${allImages[2].name}`}
                                             className="w-full h-full object-cover"

@@ -19,6 +19,48 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
 
+// Helper function to check if URL is a video
+const isVideoUrl = (url: string): boolean => {
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
+    return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
+
+// Helper component to render media (image or video)
+const MediaItem = ({
+    src,
+    alt,
+    className,
+}: {
+    src: string;
+    alt: string;
+    className?: string;
+}) => {
+    const isVideo = isVideoUrl(src);
+    console.log('MediaItem:', { src, isVideo });
+
+    if (isVideo) {
+        return (
+            <video
+                src={src}
+                controls
+                className={className}
+                preload="metadata"
+            />
+        );
+    }
+
+    return (
+        <Image
+            width={1000}
+            height={1000}
+            src={src}
+            alt={alt}
+            className={className}
+            unoptimized={isVideoUrl(src)}
+        />
+    );
+};
+
 export default function ImovelDetails() {
     const params = useParams()
     const id = params.id as string
@@ -200,13 +242,11 @@ export default function ImovelDetails() {
 
                         return (
                             <>
-                                {/* Grid de 4 imagens - visible only on md and up */}
+                                {/* Grid de 4 mídias - visible only on md and up */}
                                 <div className="hidden md:grid md:grid-cols-2 md:grid-rows-2 h-96 lg:grid-cols-12 w-full gap-4">
                                     <div className="bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden">
                                         {property.image && (
-                                            <Image
-                                                width={1000}
-                                                height={1000}
+                                            <MediaItem
                                                 src={property.image}
                                                 alt={property.title}
                                                 className="w-full h-full object-cover"
@@ -215,9 +255,7 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block">
                                         {allImages[0] && (
-                                            <Image
-                                                width={1000}
-                                                height={1000}
+                                            <MediaItem
                                                 src={allImages[0].url}
                                                 alt={`${property.title} - ${allImages[0].name}`}
                                                 className="w-full h-full object-cover"
@@ -226,9 +264,7 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="bg-brown/10 lg:col-span-3 overflow-hidden">
                                         {allImages[1] && (
-                                            <Image
-                                                width={1000}
-                                                height={1000}
+                                            <MediaItem
                                                 src={allImages[1].url}
                                                 alt={`${property.title} - ${allImages[1].name}`}
                                                 className="w-full h-full object-cover"
@@ -237,9 +273,7 @@ export default function ImovelDetails() {
                                     </div>
                                     <div className="bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden">
                                         {allImages[2] && (
-                                            <Image
-                                                width={1000}
-                                                height={1000}
+                                            <MediaItem
                                                 src={allImages[2].url}
                                                 alt={`${property.title} - ${allImages[2].name}`}
                                                 className="w-full h-full object-cover"
@@ -248,16 +282,13 @@ export default function ImovelDetails() {
                                     </div>
                                 </div>
 
-                                {/* Imagem principal - visible only on mobile */}
+                                {/* Mídia principal - visible only on mobile */}
                                 <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden">
                                     {property.image && (
-                                        <Image
-                                            width={1000}
-                                            height={1000}
+                                        <MediaItem
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
-                                            style={{ aspectRatio: "16/9" }}
                                         />
                                     )}
                                 </div>

@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Property } from "@/types/property";
 import Image from "next/image";
 import Lightbox from "yet-another-react-lightbox";
+import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
 
 interface ImagensImoveisProps {
@@ -14,6 +15,50 @@ interface ImagensImoveisProps {
   handleClosePanel?: () => void;
   handleTransitionEnd?: () => void;
 }
+
+// Helper function to check if URL is a video
+const isVideoUrl = (url: string): boolean => {
+  const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
+  return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
+
+// Helper component to render media (image or video)
+const MediaItem = ({
+  src,
+  alt,
+  className,
+  onClick
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  onClick?: () => void;
+}) => {
+  const isVideo = isVideoUrl(src);
+
+  if (isVideo) {
+    return (
+      <video
+        src={src}
+        controls
+        className={className}
+        onClick={onClick}
+        preload="metadata"
+      />
+    );
+  }
+
+  return (
+    <Image
+      width={1000}
+      height={1000}
+      src={src}
+      alt={alt}
+      className={className}
+      onClick={onClick}
+    />
+  );
+};
 
 export default function ImagensImoveis({
   property,
@@ -33,9 +78,13 @@ export default function ImagensImoveis({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  // --- preparar todas as imagens para o lightbox ---
-  const allImages = property.imageSections?.flatMap(section =>
-    section.images.map(src => ({ src }))
+  // --- preparar todas as mídias (imagens e vídeos) para o lightbox ---
+  const allMedia = property.imageSections?.flatMap(section =>
+    section.images.map(src =>
+      isVideoUrl(src)
+        ? { type: 'video' as const, sources: [{ src, type: 'video/mp4' }] }
+        : { src }
+    )
   ) || [];
 
   // --- função para abrir lightbox na imagem correta ---
@@ -217,9 +266,7 @@ export default function ImagensImoveis({
                           {imageCount >= 2 ? (
                             <div className="grid grid-cols-2 gap-4" style={{ gridTemplateRows: 'auto 1fr' }}>
                               <div className="col-span-2 aspect-5/3 w-full bg-cover bg-center overflow-hidden cursor-pointer" onClick={() => openLightbox(sectionIndex, 0)}>
-                                <Image
-                                  width={1000}
-                                  height={1000}
+                                <MediaItem
                                   src={imagesToShow[0]}
                                   alt={`${section.sectionName} - 1`}
                                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
@@ -231,9 +278,7 @@ export default function ImagensImoveis({
                                   className="w-full h-full bg-cover bg-center overflow-hidden cursor-pointer"
                                   onClick={() => openLightbox(sectionIndex, imageIndex + 1)}
                                 >
-                                  <Image
-                                    width={1000}
-                                    height={1000}
+                                  <MediaItem
                                     src={image}
                                     alt={`${section.sectionName} - ${imageIndex + 2}`}
                                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
@@ -243,9 +288,7 @@ export default function ImagensImoveis({
                             </div>
                           ) : (
                             <div className="w-full bg-cover bg-center overflow-hidden aspect-5/3 cursor-pointer" onClick={() => openLightbox(sectionIndex, 0)}>
-                              <Image
-                                width={1000}
-                                height={1000}
+                              <MediaItem
                                 src={imagesToShow[0]}
                                 alt={`${section.sectionName} - 1`}
                                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
@@ -270,8 +313,9 @@ export default function ImagensImoveis({
       <Lightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
-        slides={allImages}
+        slides={allMedia}
         index={photoIndex}
+        plugins={[Video]}
       />
     </>
   );

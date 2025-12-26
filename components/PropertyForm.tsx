@@ -35,6 +35,16 @@ interface PropertyFormProps {
   onSuccess?: () => void
 }
 
+// Helper functions to check if file/URL is video
+const isVideoFile = (file: File): boolean => {
+  return file.type.startsWith('video/')
+}
+
+const isVideoUrl = (url: string): boolean => {
+  const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v']
+  return videoExtensions.some(ext => url.toLowerCase().endsWith(ext))
+}
+
 export default function PropertyForm({
   initialData,
   onSubmit,
@@ -382,7 +392,7 @@ export default function PropertyForm({
             value="images"
             className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
           >
-            Imagens
+            Mídia
           </TabsTrigger>
           <TabsTrigger
             value="files"
@@ -809,25 +819,33 @@ export default function PropertyForm({
         </TabsContent>
 
         <TabsContent value="images" className="space-y-6 mt-0">
-          {/* Imagem Principal */}
+          {/* Imagem/Vídeo Principal */}
           <Card>
             <CardHeader>
-              <CardTitle>Imagem Principal *</CardTitle>
+              <CardTitle>Mídia Principal *</CardTitle>
               <CardDescription>
-                {isEditMode ? "Gerencie a foto de capa da propriedade" : "Adicione a foto de capa da propriedade"}
+                {isEditMode ? "Gerencie a imagem ou vídeo de capa da propriedade" : "Adicione a imagem ou vídeo de capa da propriedade"}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {isEditMode && formData.image && (
                   <div>
-                    <h3 className="text-body-small font-medium mb-2">Imagem Atual</h3>
+                    <h3 className="text-body-small font-medium mb-2">Mídia Atual</h3>
                     <div className="relative group w-fit">
-                      <img
-                        src={formData.image}
-                        alt="Imagem principal"
-                        className="w-64 h-48 object-cover rounded"
-                      />
+                      {isVideoUrl(formData.image) ? (
+                        <video
+                          src={formData.image}
+                          controls
+                          className="w-64 h-48 object-cover rounded"
+                        />
+                      ) : (
+                        <img
+                          src={formData.image}
+                          alt="Imagem principal"
+                          className="w-64 h-48 object-cover rounded"
+                        />
+                      )}
                       <Button
                         type="button"
                         variant="brown"
@@ -844,11 +862,11 @@ export default function PropertyForm({
                 {(!isEditMode || !formData.image) && !selectedImage && (
                   <div>
                     <h3 className="text-body-small font-medium mb-2">
-                      {isEditMode ? "Adicionar Nova Imagem" : "Imagem"}
+                      {isEditMode ? "Adicionar Nova Mídia" : "Imagem ou Vídeo"}
                     </h3>
                     <Input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,video/*"
                       onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
                           handleImageChange(e.target.files[0])
@@ -860,13 +878,21 @@ export default function PropertyForm({
 
                 {selectedImage && (
                   <div>
-                    <h3 className="text-body-small font-medium mb-2">Nova Imagem</h3>
+                    <h3 className="text-body-small font-medium mb-2">Nova Mídia</h3>
                     <div className="relative group w-fit">
-                      <img
-                        src={URL.createObjectURL(selectedImage)}
-                        alt="Nova imagem principal"
-                        className="w-64 h-48 object-cover rounded"
-                      />
+                      {isVideoFile(selectedImage) ? (
+                        <video
+                          src={URL.createObjectURL(selectedImage)}
+                          controls
+                          className="w-64 h-48 object-cover rounded"
+                        />
+                      ) : (
+                        <img
+                          src={URL.createObjectURL(selectedImage)}
+                          alt="Nova imagem principal"
+                          className="w-64 h-48 object-cover rounded"
+                        />
+                      )}
                       <Button
                         type="button"
                         variant="brown"
@@ -888,7 +914,7 @@ export default function PropertyForm({
             <CardHeader>
               <CardTitle>Galeria Organizada por Seções</CardTitle>
               <CardDescription>
-                Organize as imagens por ambientes (ex: Cozinha, Sala, Quartos, etc.)
+                Organize imagens e vídeos por ambientes (ex: Cozinha, Sala, Quartos, etc.)
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -920,11 +946,19 @@ export default function PropertyForm({
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                               {section.images.map((url, imgIndex) => (
                                 <div key={imgIndex} className="relative group">
-                                  <img
-                                    src={url}
-                                    alt={`${section.sectionName} ${imgIndex + 1}`}
-                                    className="w-full h-32 object-cover rounded"
-                                  />
+                                  {isVideoUrl(url) ? (
+                                    <video
+                                      src={url}
+                                      controls
+                                      className="w-full h-32 object-cover rounded"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={url}
+                                      alt={`${section.sectionName} ${imgIndex + 1}`}
+                                      className="w-full h-32 object-cover rounded"
+                                    />
+                                  )}
                                   <Button
                                     type="button"
                                     variant="brown"
@@ -946,12 +980,12 @@ export default function PropertyForm({
 
                           <div>
                             <Label htmlFor={`section-${section.id}-images`} className="text-sm">
-                              {loadingAddImage === section.id ? "Adicionando imagens..." : "Adicionar Imagens"}
+                              {loadingAddImage === section.id ? "Adicionando mídia..." : "Adicionar Imagens/Vídeos"}
                             </Label>
                             <Input
                               id={`section-${section.id}-images`}
                               type="file"
-                              accept="image/*"
+                              accept="image/*,video/*"
                               multiple
                               disabled={loadingAddImage === section.id}
                               onChange={(e) => {
@@ -1009,11 +1043,19 @@ export default function PropertyForm({
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                               {section.images.map((file, imgIndex) => (
                                 <div key={imgIndex} className="relative group">
-                                  <img
-                                    src={URL.createObjectURL(file)}
-                                    alt={`${section.sectionName} ${imgIndex + 1}`}
-                                    className="w-full h-32 object-cover rounded"
-                                  />
+                                  {isVideoFile(file) ? (
+                                    <video
+                                      src={URL.createObjectURL(file)}
+                                      controls
+                                      className="w-full h-32 object-cover rounded"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={URL.createObjectURL(file)}
+                                      alt={`${section.sectionName} ${imgIndex + 1}`}
+                                      className="w-full h-32 object-cover rounded"
+                                    />
+                                  )}
                                   <Button
                                     type="button"
                                     variant="brown"
@@ -1030,12 +1072,12 @@ export default function PropertyForm({
 
                           <div>
                             <Label htmlFor={`new-section-${index}-images`} className="text-sm">
-                              Adicionar Imagens
+                              Adicionar Imagens/Vídeos
                             </Label>
                             <Input
                               id={`new-section-${index}-images`}
                               type="file"
-                              accept="image/*"
+                              accept="image/*,video/*"
                               multiple
                               onChange={(e) => {
                                 if (e.target.files) {

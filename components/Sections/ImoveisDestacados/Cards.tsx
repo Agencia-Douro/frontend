@@ -4,6 +4,12 @@ import { Property } from "@/types/property"
 import { cn } from "@/lib/utils"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 
+// Helper function to check if URL is a video
+const isVideoUrl = (url: string): boolean => {
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
+    return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
+
 interface CardsProps {
     properties: Property[]
     className?: string
@@ -47,11 +53,21 @@ export default function Cards({ properties, className }: CardsProps) {
                 >
                     <div className="card-image-overlay h-64 xl:h-93 relative">
                         {property.image && (
-                            <Image
-                                src={property.image}
-                                alt={`Imóvel em ${property.concelho}`}
-                                fill
-                                className="object-cover"/>
+                            isVideoUrl(property.image) ? (
+                                <video
+                                    src={property.image}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    muted
+                                    loop
+                                    playsInline
+                                />
+                            ) : (
+                                <Image
+                                    src={property.image}
+                                    alt={`Imóvel em ${property.concelho}`}
+                                    fill
+                                    className="object-cover"/>
+                            )
                         )}
                         <div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">
                             {property.isEmpreendimento ? "Empreendimento" : getPropertyTypeLabel(property.propertyType)}
