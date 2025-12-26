@@ -2,36 +2,50 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { propertiesApi } from "@/services/api";
+import { Property } from "@/types/property";
 import Card from "../Imoveis/Card";
 
 interface ImoveisRelacionadosProps {
     currentPropertyId: string;
     currentPrice: string | number;
+    property?: Property;
 }
 
-export default function ImoveisRelacionados({ currentPropertyId, currentPrice }: ImoveisRelacionadosProps) {
-    // Calcular faixa de preço (±20% do preço atual)
+export default function ImoveisRelacionados({ currentPropertyId, currentPrice, property }: ImoveisRelacionadosProps) {
+    // Verificar se existem relacionamentos manuais
+    const hasManualRelated = property?.relatedProperties && property.relatedProperties.length > 0;
+
+    // Calcular faixa de preço (±20% do preço atual) - só usado se não houver relacionamentos manuais
     const price = typeof currentPrice === 'string' ? parseFloat(currentPrice) : currentPrice;
     const minPrice = Math.floor(price * 0.8);
     const maxPrice = Math.ceil(price * 1.2);
 
+    // Buscar propriedades por faixa de preço apenas se não houver relacionamentos manuais
     const { data, isLoading } = useQuery({
-        queryKey: ["related-properties", currentPropertyId, minPrice, maxPrice],
+        queryKey: ["related-properties-by-price", currentPropertyId, minPrice, maxPrice],
         queryFn: () => propertiesApi.getAll({
             minPrice,
             maxPrice,
             status: "active",
             limit: 3
         }),
+        enabled: !hasManualRelated, // Só faz a query se não houver relacionamentos manuais
     });
 
-    // Filtrar o imóvel atual dos resultados
-    const relatedProperties = data?.data?.filter(p => p.id !== currentPropertyId) || [];
+    // Determinar quais propriedades mostrar
+    let displayProperties: Property[] = [];
 
-    // Pegar apenas os 3 primeiros se houver mais
-    const displayProperties = relatedProperties.slice(0, 3);
+    if (hasManualRelated) {
+        // Usar todos os relacionamentos manuais (sem limite)
+        displayProperties = property!.relatedProperties!;
+    } else if (data?.data) {
+        // Usar busca por faixa de preço (limitado a 3)
+        const relatedByPrice = data.data.filter(p => p.id !== currentPropertyId);
+        displayProperties = relatedByPrice.slice(0, 3);
+    }
 
-    if (isLoading) {
+    // Só mostrar loading se estiver fazendo a busca por preço (não tem relacionamentos manuais)
+    if (!hasManualRelated && isLoading) {
         return (
             <section className="container py-16">
                 <div className="flex justify-between items-center">

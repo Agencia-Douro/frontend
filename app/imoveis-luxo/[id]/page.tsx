@@ -459,6 +459,7 @@ export default function ImovelDetails() {
             <ImoveisRelacionados
                 currentPropertyId={property.id}
                 currentPrice={property.price}
+                property={property}
             />
 
             {/* Template invisível para geração de PDF */}
