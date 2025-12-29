@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
@@ -60,20 +61,51 @@ export default function Hero() {
         <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative">
             <Folha className="top-12 left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
             <div className="flex justify-between items-center gap-4">
-                <div className="flex flex-col md:max-w-[616px] w-full">
-                    <h1 className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}>A imobiliária mais exclusiva de Portugal.</h1>
-                    <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
-                </div>
-                <ModelViewer
-                    src="/model3.gltf"
-                    alt="Modelo 3D"
-                    autoRotate
-                    cameraControls
+                <motion.div
+                    className="flex flex-col md:max-w-[616px] w-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                    <motion.h1
+                        className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    >
+                        A imobiliária mais exclusiva de Portugal.
+                    </motion.h1>
+                    <motion.p
+                        className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                    >
+                        Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.
+                    </motion.p>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                     className="hidden lg:block"
-                    style={{ width: '700px', height: '550px' }}
-                />
+                >
+                    <ModelViewer
+                        src="/model3.gltf"
+                        alt="Modelo 3D"
+                        autoRotate
+                        cameraControls
+                        style={{ width: '700px', height: '550px' }}
+                    />
+                </motion.div>
             </div>
-            <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto" onSubmit={handleSearch}>
+            <motion.form
+                className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
+                onSubmit={handleSearch}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            >
                 <div className="flex justify-between items-center w-full">
                     <div className="flex flex-row w-full">
                         <Button
@@ -168,7 +200,7 @@ export default function Hero() {
                     </div>
                 </div>
                 <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
-            </form>
+            </motion.form>
         </section>
     )
 }
