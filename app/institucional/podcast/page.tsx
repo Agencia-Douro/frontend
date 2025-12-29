@@ -7,6 +7,8 @@ import Link from "next/link";
 import { StatCard } from "@/components/Sections/SobreNos/StatCard";
 import { CulturaCard } from "@/components/Sections/SobreNos/CulturaCard";
 import Folha from "@/components/Folha";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { siteConfigApi } from "@/services/api";
 
 // Episódios em destaque
 const FEATURED_EPISODES = [
@@ -49,6 +51,11 @@ const FEATURED_EPISODES = [
 ];
 
 export default function PodcastPage() {
+    const { data: config } = useSuspenseQuery({
+        queryKey: ["site-config"],
+        queryFn: () => siteConfigApi.get(),
+    })
+
     return (
         <>
             {/* Primeira Seção - Apresentação do Podcast */}
@@ -70,9 +77,9 @@ export default function PodcastPage() {
                         </p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        <StatCard value="10+" label="Episódios" />
-                        <StatCard value="1000+" label="Temporadas" />
-                        <StatCard value="15+" label="Convidados" />
+                        <StatCard value={config?.episodiosPublicados?.toString() || ""} label="Episódios" />
+                        <StatCard value={config?.temporadas?.toString() || ""} label="Temporadas" />
+                        <StatCard value={config?.especialistasConvidados?.toString() || ""} label="Convidados" />
                     </div>
                 </div>
             </section>
