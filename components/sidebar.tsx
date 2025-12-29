@@ -41,9 +41,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
 
     const [resetKey, setResetKey] = useState(0)
 
-    const [imovelOpen, setImovelOpen] = useState(true)
+    const [tipoImovelOpen, setTipoImovelOpen] = useState(true)
+    const [quartosCasasBanhoOpen, setQuartosCasasBanhoOpen] = useState(true)
+    const [precosAreaOpen, setPrecosAreaOpen] = useState(true)
     const [localizacaoOpen, setLocalizacaoOpen] = useState(true)
-    const [outroOpen, setOutroOpen] = useState(true)
+    const [estadoClasseOpen, setEstadoClasseOpen] = useState(true)
 
     // Get municipios based on selected distrito
     const municipios = distrito ? DISTRITO_MUNICIPIOS[distrito] || [] : []
@@ -175,36 +177,21 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                             </div>
                         </div>
-                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
-                            <Switch
-                                checked={isEmpreendimento}
-                                onCheckedChange={setIsEmpreendimento}
-                                className="cursor-pointer"
-                            />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
-                        </div>
-                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
-                            <Switch
-                                checked={onlyFavorites}
-                                onCheckedChange={setOnlyFavorites}
-                                className="cursor-pointer"
-                            />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
-                        </div>
+                        {/* 1. Tipo de Imóvel */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
-                                onClick={() => setImovelOpen(!imovelOpen)}
+                                onClick={() => setTipoImovelOpen(!tipoImovelOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Imóvel</p>
+                                <p className="body-16-medium text-black">Tipo de Imóvel</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
                                     height="20"
                                     viewBox="0 0 20 20"
                                     fill="none"
-                                    className={`text-gold transition-transform duration-200 ${imovelOpen ? "" : "rotate-180"}`}
+                                    className={`text-gold transition-transform duration-200 ${tipoImovelOpen ? "" : "rotate-180"}`}
                                 >
                                     <path
                                         d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
@@ -212,58 +199,161 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     />
                                 </svg>
                             </button>
-                            {imovelOpen && (
+                            {tipoImovelOpen && (
+                                <div className="space-y-3">
+                                    <Label htmlFor="tipo">Tipo de Imóvel</Label>
+                                    <Select key={`propertyType-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
+                                        <SelectTrigger id="tipo" name="tipo">
+                                            <SelectValue placeholder="Selecione o tipo de imóvel" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {TIPOS_IMOVEL.map((tipo) => (
+                                                <SelectItem key={tipo.value} value={tipo.value}>
+                                                    {tipo.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
+                        </div>
+                        {/* 2. Quartos e Casas de banho */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
+                            <button
+                                type="button"
+                                onClick={() => setQuartosCasasBanhoOpen(!quartosCasasBanhoOpen)}
+                                className="flex items-center justify-between w-full cursor-pointer"
+                            >
+                                <p className="body-16-medium text-black">Quartos e Casas de banho</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    className={`text-gold transition-transform duration-200 ${quartosCasasBanhoOpen ? "" : "rotate-180"}`}
+                                >
+                                    <path
+                                        d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                            {quartosCasasBanhoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="tipo">Tipo de Imóvel</Label>
-                                        <Select key={`propertyType-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
-                                            <SelectTrigger id="tipo" name="tipo">
-                                                <SelectValue placeholder="Selecione o tipo de imóvel" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {TIPOS_IMOVEL.map((tipo) => (
-                                                    <SelectItem key={tipo.value} value={tipo.value}>
-                                                        {tipo.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                        <Label>Quartos</Label>
+                                        <div className="flex gap-2">
+                                            {[0, 1, 2, 3, 4].map((num) => (
+                                                <div key={num} className="flex items-center gap-1.5">
+                                                    <Checkbox
+                                                        id={`bedroom-${num}`}
+                                                        checked={bedrooms.includes(num)}
+                                                        onCheckedChange={() => toggleBedroom(num)}
+                                                    />
+                                                    <label
+                                                        htmlFor={`bedroom-${num}`}
+                                                        className="text-body-small font-medium cursor-pointer"
+                                                    >
+                                                        T{num}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="estado">Estado do imóvel</Label>
-                                        <Select key={`propertyState-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
-                                            <SelectTrigger id="estado" name="estado">
-                                                <SelectValue placeholder="Novo" />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="novo">Novo</SelectItem>
-                                                <SelectItem value="usado">Usado</SelectItem>
-                                                <SelectItem value="renovado">Renovado</SelectItem>
-                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <Label htmlFor="classe">Classe energética</Label>
-                                        <Select key={`energyClass-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
-                                            <SelectTrigger id="classe" name="classe">
-                                                <SelectValue placeholder="A+" />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="A+">A+</SelectItem>
-                                                <SelectItem value="A">A</SelectItem>
-                                                <SelectItem value="B">B</SelectItem>
-                                                <SelectItem value="B-">B-</SelectItem>
-                                                <SelectItem value="C">C</SelectItem>
-                                                <SelectItem value="D">D</SelectItem>
-                                                <SelectItem value="E">E</SelectItem>
-                                                <SelectItem value="F">F</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        <Label>Casas de banho</Label>
+                                        <div className="flex gap-2">
+                                            {[1, 2, 3, 4, 5].map((num) => (
+                                                <div key={num} className="flex items-center gap-1.5">
+                                                    <Checkbox
+                                                        id={`bathroom-${num}`}
+                                                        checked={bathrooms.includes(num)}
+                                                        onCheckedChange={() => toggleBathroom(num)}
+                                                    />
+                                                    <label
+                                                        htmlFor={`bathroom-${num}`}
+                                                        className="text-body-small font-medium cursor-pointer"
+                                                    >
+                                                        {num}{num === 5 ? "+" : ""}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </>
                             )}
                         </div>
+                        {/* 4. Preço e Área útil */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
+                            <button
+                                type="button"
+                                onClick={() => setPrecosAreaOpen(!precosAreaOpen)}
+                                className="flex items-center justify-between w-full cursor-pointer"
+                            >
+                                <p className="body-16-medium text-black">Preço e Área útil</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    className={`text-gold transition-transform duration-200 ${precosAreaOpen ? "" : "rotate-180"}`}
+                                >
+                                    <path
+                                        d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                            {precosAreaOpen && (
+                                <div className="space-y-3">
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Preço mínimo</Label>
+                                            <Input
+                                                key={`minPrice-${resetKey}`}
+                                                type="number"
+                                                placeholder="Mínimo"
+                                                value={minPrice}
+                                                onChange={(e) => setMinPrice(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Preço máximo</Label>
+                                            <Input
+                                                key={`maxPrice-${resetKey}`}
+                                                type="number"
+                                                placeholder="Máximo"
+                                                value={maxPrice}
+                                                onChange={(e) => setMaxPrice(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Área útil mínima</Label>
+                                            <Input
+                                                key={`minUsefulArea-${resetKey}`}
+                                                type="number"
+                                                placeholder="Mínimo"
+                                                value={minUsefulArea}
+                                                onChange={(e) => setMinUsefulArea(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Área útil máxima</Label>
+                                            <Input
+                                                key={`maxUsefulArea-${resetKey}`}
+                                                type="number"
+                                                placeholder="Máximo"
+                                                value={maxUsefulArea}
+                                                onChange={(e) => setMaxUsefulArea(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {/* 5. Localização */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
@@ -337,10 +427,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </>
                             )}
                         </div>
-                        <div className="p-4 flex flex-col gap-2">
+                        {/* 6. Estado do imóvel e Classe energética */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
-                                onClick={() => setOutroOpen(!outroOpen)}
+                                onClick={() => setEstadoClasseOpen(!estadoClasseOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
                                 <p className="body-16-medium text-black">Outro</p>
@@ -350,7 +441,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     height="20"
                                     viewBox="0 0 20 20"
                                     fill="none"
-                                    className={`text-gold transition-transform duration-200 ${outroOpen ? "" : "rotate-180"}`}
+                                    className={`text-gold transition-transform duration-200 ${estadoClasseOpen ? "" : "rotate-180"}`}
                                 >
                                     <path
                                         d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
@@ -358,95 +449,58 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     />
                                 </svg>
                             </button>
-                            {outroOpen && (
+                            {estadoClasseOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label>Preço e Área útil</Label>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Preço mínimo</Label>
-                                                <Input
-                                                    key={`minPrice-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Mínimo"
-                                                    value={minPrice}
-                                                    onChange={(e) => setMinPrice(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Preço máximo</Label>
-                                                <Input
-                                                    key={`maxPrice-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Máximo"
-                                                    value={maxPrice}
-                                                    onChange={(e) => setMaxPrice(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Área útil mínima</Label>
-                                                <Input
-                                                    key={`minUsefulArea-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Mínimo"
-                                                    value={minUsefulArea}
-                                                    onChange={(e) => setMinUsefulArea(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Área útil máxima</Label>
-                                                <Input
-                                                    key={`maxUsefulArea-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Máximo"
-                                                    value={maxUsefulArea}
-                                                    onChange={(e) => setMaxUsefulArea(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
+                                        <Label htmlFor="estado">Estado do imóvel</Label>
+                                        <Select key={`propertyState-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
+                                            <SelectTrigger id="estado" name="estado">
+                                                <SelectValue placeholder="Novo" />
+                                            </SelectTrigger>
+                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                <SelectItem value="novo">Novo</SelectItem>
+                                                <SelectItem value="usado">Usado</SelectItem>
+                                                <SelectItem value="renovado">Renovado</SelectItem>
+                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label>Quartos</Label>
-                                        <div className="flex gap-2">
-                                            {[0, 1, 2, 3, 4].map((num) => (
-                                                <div key={num} className="flex items-center gap-1.5">
-                                                    <Checkbox
-                                                        id={`bedroom-${num}`}
-                                                        checked={bedrooms.includes(num)}
-                                                        onCheckedChange={() => toggleBedroom(num)}
-                                                    />
-                                                    <label
-                                                        htmlFor={`bedroom-${num}`}
-                                                        className="text-body-small font-medium cursor-pointer"
-                                                    >
-                                                        T{num}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <Label>Casas de banho</Label>
-                                        <div className="flex gap-2">
-                                            {[1, 2, 3, 4, 5].map((num) => (
-                                                <div key={num} className="flex items-center gap-1.5">
-                                                    <Checkbox
-                                                        id={`bathroom-${num}`}
-                                                        checked={bathrooms.includes(num)}
-                                                        onCheckedChange={() => toggleBathroom(num)}
-                                                    />
-                                                    <label
-                                                        htmlFor={`bathroom-${num}`}
-                                                        className="text-body-small font-medium cursor-pointer"
-                                                    >
-                                                        {num}{num === 5 ? "+" : ""}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        <Label htmlFor="classe">Classe energética</Label>
+                                        <Select key={`energyClass-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
+                                            <SelectTrigger id="classe" name="classe">
+                                                <SelectValue placeholder="A+" />
+                                            </SelectTrigger>
+                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                <SelectItem value="A+">A+</SelectItem>
+                                                <SelectItem value="A">A</SelectItem>
+                                                <SelectItem value="B">B</SelectItem>
+                                                <SelectItem value="B-">B-</SelectItem>
+                                                <SelectItem value="C">C</SelectItem>
+                                                <SelectItem value="D">D</SelectItem>
+                                                <SelectItem value="E">E</SelectItem>
+                                                <SelectItem value="F">F</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </>
                             )}
+                        </div>
+                        <div className="p-4 border-t border-[#EAE6DF] flex gap-2 items-center">
+                            <Switch
+                                checked={isEmpreendimento}
+                                onCheckedChange={setIsEmpreendimento}
+                                className="cursor-pointer"
+                            />
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
+                        </div>
+                        <div className="p-4 border-t border-[#EAE6DF] flex gap-2 items-center">
+                            <Switch
+                                checked={onlyFavorites}
+                                onCheckedChange={setOnlyFavorites}
+                                className="cursor-pointer"
+                            />
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
                         </div>
                     </div>
                     <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">
@@ -496,36 +550,21 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                             </div>
                         </div>
-                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
-                            <Switch
-                                checked={isEmpreendimento}
-                                onCheckedChange={setIsEmpreendimento}
-                                className="cursor-pointer"
-                            />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
-                        </div>
-                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
-                            <Switch
-                                checked={onlyFavorites}
-                                onCheckedChange={setOnlyFavorites}
-                                className="cursor-pointer"
-                            />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
-                        </div>
+                        {/* 1. Tipo de Imóvel */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
-                                onClick={() => setImovelOpen(!imovelOpen)}
+                                onClick={() => setTipoImovelOpen(!tipoImovelOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Imóvel</p>
+                                <p className="body-16-medium text-black">Tipo de Imóvel</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
                                     height="20"
                                     viewBox="0 0 20 20"
                                     fill="none"
-                                    className={`text-gold transition-transform duration-200 ${imovelOpen ? "" : "rotate-180"}`}
+                                    className={`text-gold transition-transform duration-200 ${tipoImovelOpen ? "" : "rotate-180"}`}
                                 >
                                     <path
                                         d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
@@ -533,58 +572,161 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     />
                                 </svg>
                             </button>
-                            {imovelOpen && (
+                            {tipoImovelOpen && (
+                                <div className="space-y-3">
+                                    <Label htmlFor="tipo-mobile">Tipo de Imóvel</Label>
+                                    <Select key={`propertyType-mobile-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
+                                        <SelectTrigger id="tipo-mobile" name="tipo-mobile">
+                                            <SelectValue placeholder="Selecione o tipo de imóvel" />
+                                        </SelectTrigger>
+                                        <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                            {TIPOS_IMOVEL.map((tipo) => (
+                                                <SelectItem key={tipo.value} value={tipo.value}>
+                                                    {tipo.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
+                        </div>
+                        {/* 2. Quartos e Casas de banho */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
+                            <button
+                                type="button"
+                                onClick={() => setQuartosCasasBanhoOpen(!quartosCasasBanhoOpen)}
+                                className="flex items-center justify-between w-full cursor-pointer"
+                            >
+                                <p className="body-16-medium text-black">Quartos e Casas de banho</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    className={`text-gold transition-transform duration-200 ${quartosCasasBanhoOpen ? "" : "rotate-180"}`}
+                                >
+                                    <path
+                                        d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                            {quartosCasasBanhoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="tipo-mobile">Tipo de Imóvel</Label>
-                                        <Select key={`propertyType-mobile-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
-                                            <SelectTrigger id="tipo-mobile" name="tipo-mobile">
-                                                <SelectValue placeholder="Selecione o tipo de imóvel" />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {TIPOS_IMOVEL.map((tipo) => (
-                                                    <SelectItem key={tipo.value} value={tipo.value}>
-                                                        {tipo.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                        <Label>Quartos</Label>
+                                        <div className="flex gap-2">
+                                            {[0, 1, 2, 3, 4].map((num) => (
+                                                <div key={num} className="flex items-center gap-1.5">
+                                                    <Checkbox
+                                                        id={`bedroom-mobile-${num}`}
+                                                        checked={bedrooms.includes(num)}
+                                                        onCheckedChange={() => toggleBedroom(num)}
+                                                    />
+                                                    <label
+                                                        htmlFor={`bedroom-mobile-${num}`}
+                                                        className="text-body-small font-medium cursor-pointer"
+                                                    >
+                                                        T{num}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="estado-mobile">Estado do imóvel</Label>
-                                        <Select key={`propertyState-mobile-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
-                                            <SelectTrigger id="estado-mobile" name="estado-mobile">
-                                                <SelectValue placeholder="Novo" />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="novo">Novo</SelectItem>
-                                                <SelectItem value="usado">Usado</SelectItem>
-                                                <SelectItem value="renovado">Renovado</SelectItem>
-                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <Label htmlFor="classe-mobile">Classe energética</Label>
-                                        <Select key={`energyClass-mobile-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
-                                            <SelectTrigger id="classe-mobile" name="classe-mobile">
-                                                <SelectValue placeholder="A+" />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="A+">A+</SelectItem>
-                                                <SelectItem value="A">A</SelectItem>
-                                                <SelectItem value="B">B</SelectItem>
-                                                <SelectItem value="B-">B-</SelectItem>
-                                                <SelectItem value="C">C</SelectItem>
-                                                <SelectItem value="D">D</SelectItem>
-                                                <SelectItem value="E">E</SelectItem>
-                                                <SelectItem value="F">F</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        <Label>Casas de banho</Label>
+                                        <div className="flex gap-2">
+                                            {[1, 2, 3, 4, 5].map((num) => (
+                                                <div key={num} className="flex items-center gap-1.5">
+                                                    <Checkbox
+                                                        id={`bathroom-mobile-${num}`}
+                                                        checked={bathrooms.includes(num)}
+                                                        onCheckedChange={() => toggleBathroom(num)}
+                                                    />
+                                                    <label
+                                                        htmlFor={`bathroom-mobile-${num}`}
+                                                        className="text-body-small font-medium cursor-pointer"
+                                                    >
+                                                        {num}{num === 5 ? "+" : ""}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </>
                             )}
                         </div>
+                        {/* 4. Preço e Área útil */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
+                            <button
+                                type="button"
+                                onClick={() => setPrecosAreaOpen(!precosAreaOpen)}
+                                className="flex items-center justify-between w-full cursor-pointer"
+                            >
+                                <p className="body-16-medium text-black">Preço e Área útil</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    className={`text-gold transition-transform duration-200 ${precosAreaOpen ? "" : "rotate-180"}`}
+                                >
+                                    <path
+                                        d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                            {precosAreaOpen && (
+                                <div className="space-y-3">
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Preço mínimo</Label>
+                                            <Input
+                                                key={`minPrice-mobile-${resetKey}`}
+                                                type="number"
+                                                placeholder="Mínimo"
+                                                value={minPrice}
+                                                onChange={(e) => setMinPrice(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Preço máximo</Label>
+                                            <Input
+                                                key={`maxPrice-mobile-${resetKey}`}
+                                                type="number"
+                                                placeholder="Máximo"
+                                                value={maxPrice}
+                                                onChange={(e) => setMaxPrice(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Área útil mínima</Label>
+                                            <Input
+                                                key={`minUsefulArea-mobile-${resetKey}`}
+                                                type="number"
+                                                placeholder="Mínimo"
+                                                value={minUsefulArea}
+                                                onChange={(e) => setMinUsefulArea(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <Label className="text-xs text-black-muted">Área útil máxima</Label>
+                                            <Input
+                                                key={`maxUsefulArea-mobile-${resetKey}`}
+                                                type="number"
+                                                placeholder="Máximo"
+                                                value={maxUsefulArea}
+                                                onChange={(e) => setMaxUsefulArea(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {/* 5. Localização */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
@@ -658,10 +800,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </>
                             )}
                         </div>
-                        <div className="p-4 flex flex-col gap-2">
+                        {/* 6. Estado do imóvel e Classe energética */}
+                        <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
                             <button
                                 type="button"
-                                onClick={() => setOutroOpen(!outroOpen)}
+                                onClick={() => setEstadoClasseOpen(!estadoClasseOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
                                 <p className="body-16-medium text-black">Outro</p>
@@ -671,7 +814,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     height="20"
                                     viewBox="0 0 20 20"
                                     fill="none"
-                                    className={`text-gold transition-transform duration-200 ${outroOpen ? "" : "rotate-180"}`}
+                                    className={`text-gold transition-transform duration-200 ${estadoClasseOpen ? "" : "rotate-180"}`}
                                 >
                                     <path
                                         d="M9.99996 9.14777L13.8889 13.125L15 11.9886L9.99996 6.875L5 11.9886L6.11111 13.125L9.99996 9.14777Z"
@@ -679,95 +822,59 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     />
                                 </svg>
                             </button>
-                            {outroOpen && (
+                            {estadoClasseOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label>Preço e Área útil</Label>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Preço mínimo</Label>
-                                                <Input
-                                                    key={`minPrice-mobile-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Mínimo"
-                                                    value={minPrice}
-                                                    onChange={(e) => setMinPrice(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Preço máximo</Label>
-                                                <Input
-                                                    key={`maxPrice-mobile-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Máximo"
-                                                    value={maxPrice}
-                                                    onChange={(e) => setMaxPrice(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Área útil mínima</Label>
-                                                <Input
-                                                    key={`minUsefulArea-mobile-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Mínimo"
-                                                    value={minUsefulArea}
-                                                    onChange={(e) => setMinUsefulArea(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <Label className="text-xs text-black-muted">Área útil máxima</Label>
-                                                <Input
-                                                    key={`maxUsefulArea-mobile-${resetKey}`}
-                                                    type="number"
-                                                    placeholder="Máximo"
-                                                    value={maxUsefulArea}
-                                                    onChange={(e) => setMaxUsefulArea(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
+                                        <Label htmlFor="estado-mobile">Estado do imóvel</Label>
+                                        <Select key={`propertyState-mobile-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
+                                            <SelectTrigger id="estado-mobile" name="estado-mobile">
+                                                <SelectValue placeholder="Novo" />
+                                            </SelectTrigger>
+                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                <SelectItem value="novo">Novo</SelectItem>
+                                                <SelectItem value="usado">Usado</SelectItem>
+                                                <SelectItem value="renovado">Renovado</SelectItem>
+                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label>Quartos</Label>
-                                        <div className="flex gap-2">
-                                            {[0, 1, 2, 3, 4].map((num) => (
-                                                <div key={num} className="flex items-center gap-1.5">
-                                                    <Checkbox
-                                                        id={`bedroom-mobile-${num}`}
-                                                        checked={bedrooms.includes(num)}
-                                                        onCheckedChange={() => toggleBedroom(num)}
-                                                    />
-                                                    <label
-                                                        htmlFor={`bedroom-mobile-${num}`}
-                                                        className="text-body-small font-medium cursor-pointer"
-                                                    >
-                                                        T{num}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <Label>Casas de banho</Label>
-                                        <div className="flex gap-2">
-                                            {[1, 2, 3, 4, 5].map((num) => (
-                                                <div key={num} className="flex items-center gap-1.5">
-                                                    <Checkbox
-                                                        id={`bathroom-mobile-${num}`}
-                                                        checked={bathrooms.includes(num)}
-                                                        onCheckedChange={() => toggleBathroom(num)}
-                                                    />
-                                                    <label
-                                                        htmlFor={`bathroom-mobile-${num}`}
-                                                        className="text-body-small font-medium cursor-pointer"
-                                                    >
-                                                        {num}{num === 5 ? "+" : ""}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        <Label htmlFor="classe-mobile">Classe energética</Label>
+                                        <Select key={`energyClass-mobile-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
+                                            <SelectTrigger id="classe-mobile" name="classe-mobile">
+                                                <SelectValue placeholder="A+" />
+                                            </SelectTrigger>
+                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                <SelectItem value="A+">A+</SelectItem>
+                                                <SelectItem value="A">A</SelectItem>
+                                                <SelectItem value="B">B</SelectItem>
+                                                <SelectItem value="B-">B-</SelectItem>
+                                                <SelectItem value="C">C</SelectItem>
+                                                <SelectItem value="D">D</SelectItem>
+                                                <SelectItem value="E">E</SelectItem>
+                                                <SelectItem value="F">F</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </>
                             )}
+                        </div>
+                        {/* Filtros adicionais mantidos */}
+                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
+                            <Switch
+                                checked={isEmpreendimento}
+                                onCheckedChange={setIsEmpreendimento}
+                                className="cursor-pointer"
+                            />
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
+                        </div>
+                        <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
+                            <Switch
+                                checked={onlyFavorites}
+                                onCheckedChange={setOnlyFavorites}
+                                className="cursor-pointer"
+                            />
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
                         </div>
                     </div>
                     <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">

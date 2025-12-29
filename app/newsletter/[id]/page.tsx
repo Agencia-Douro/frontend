@@ -94,9 +94,9 @@ export default function NewsletterDetailsPage() {
                     </div>
                 )}
 
-                <article className="mb-5 sm:mb-10">
+                <article className="md:mb-5 mb-10">
                     <div
-                        className="tiptap max-w-none"
+                        className="tiptap-newsletter max-w-none"
                         dangerouslySetInnerHTML={{ __html: newsletter.content }}
                     />
                 </article>

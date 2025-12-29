@@ -321,6 +321,85 @@ body {
     text-decoration: underline;
 }
 
+/* Tiptap Newsletter Styles */
+.tiptap-newsletter {
+    outline: none;
+}
+
+.tiptap-newsletter p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
+.tiptap-newsletter ul,
+.tiptap-newsletter ol {
+    padding: 0 1rem;
+    margin: 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.tiptap-newsletter ul {
+    list-style: disc;
+}
+
+.tiptap-newsletter ol {
+    list-style: decimal;
+}
+
+.tiptap-newsletter h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.tiptap-newsletter h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.tiptap-newsletter a {
+    color: #2563eb;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.tiptap-newsletter a:hover {
+    color: #1d4ed8;
+}
+
+.tiptap-newsletter strong {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.tiptap-newsletter p {
+    padding-top: 1rem;
+    text-wrap: wrap;
+    font-size: 1.25rem;
+    font-weight: 400;
+    text-align: justify;
+}
+
+.tiptap-newsletter em {
+    font-style: italic;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.tiptap-newsletter u {
+    text-decoration: underline;
+    font-size: 1.25rem;
+    font-weight: 500;
+    
+}
+
 /* Splash Screen Animations */
 @keyframes fadeInScale {
     0% {

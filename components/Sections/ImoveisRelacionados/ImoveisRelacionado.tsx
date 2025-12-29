@@ -47,7 +47,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
     // Só mostrar loading se estiver fazendo a busca por preço (não tem relacionamentos manuais)
     if (!hasManualRelated && isLoading) {
         return (
-            <section className="container py-16">
+            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
                 <div className="flex justify-between items-center">
                     <h2 className="text-heading-tres text-brown">Imóveis Relacionados</h2>
                 </div>
@@ -63,10 +63,8 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
     }
 
     return (
-        <section className="container py-16">
-            <div className="flex justify-between items-center">
-                <h2 className="text-heading-tres text-brown">Imóveis Relacionados</h2>
-            </div>
+        <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+            <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">Imóveis Relacionados</h2>
             <div className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayProperties.map((property) => (
                     <Card

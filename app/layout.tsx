@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import Header from "@/components/Sections/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
-import { SocialMediaButton } from "@/components/SocialMediaButton/SocialMediaButton";
 import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2";
 
@@ -27,6 +27,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR" className={monaSans.variable}>
       <body className="antialiased bg-muted max-w-screen overflow-x-hidden flex flex-col relative">
+        <Script
+          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+          strategy="beforeInteractive"
+        />
         <QueryProvider>
           <SplashScreen />
           <Header />

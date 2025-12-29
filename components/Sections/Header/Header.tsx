@@ -65,7 +65,7 @@ export default function Header() {
                             ]}
                         />
                         <NavLinkDropdown
-                            trigger="Institucional"
+                            trigger="Quem Somos"
                             triggerHref="/institucional/sobre-nos"
                             items={[
                                 { href: "/institucional/sobre-nos", label: "Sobre Nós" },

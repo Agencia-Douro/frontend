@@ -1,13 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
-import HeroImage from "@/public/hero-image.png";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
+import Folha from "../Folha";
+import { Pinyon_Script } from "next/font/google";
+import ModelViewer from "../ModelViewer";
+import model3d from "@/public/model.gltf";
+
+const pynionScript = Pinyon_Script({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 type TransactionType = "comprar" | "arrendar" | "trespasse";
 
@@ -51,11 +58,23 @@ export default function Hero() {
     };
 
     return (
-        <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative flex justify-center lg:block">
-            <div className="flex flex-col md:items-center lg:items-start md:max-w-[616px] z-100 w-full">
-                <h1 className="text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium md:text-center lg:text-start">A imobiliária mais exclusiva de Portugal.</h1>
-                <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] md:text-center lg:text-start text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
-                <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full" onSubmit={handleSearch}>
+        <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative">
+            <Folha className="top-12 left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
+            <div className="flex justify-between items-center gap-4">
+                <div className="flex flex-col md:max-w-[616px] w-full">
+                    <h1 className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}>A imobiliária mais exclusiva de Portugal.</h1>
+                    <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
+                </div>
+                <ModelViewer
+                    src={model3d}
+                    alt="Modelo 3D"
+                    autoRotate
+                    cameraControls
+                    className="hidden lg:block h-96"
+                    style={{ width: '512px', height: '384px' }}
+                />
+            </div>
+            <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto" onSubmit={handleSearch}>
                     <div className="flex justify-between items-center w-full">
                         <div className="flex flex-row w-full">
                             <Button
@@ -150,15 +169,7 @@ export default function Hero() {
                         </div>
                     </div>
                     <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
-                </form>
-            </div>
-            <Image
-                src={HeroImage}
-                alt="Hero Image"
-                width={511}
-                height={382}
-                className="absolute top-px left-[58.5%] -z-10 hidden lg:block"
-            />
+            </form>
         </section>
     )
 }

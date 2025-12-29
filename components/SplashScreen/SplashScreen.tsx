@@ -6,7 +6,7 @@ import Logo from "@/public/Logo.svg";
 
 // Controle para ativar/desativar a splash screen durante o desenvolvimento
 // Mude para false para desativar a animação
-const ENABLE_SPLASH_SCREEN = true;
+const ENABLE_SPLASH_SCREEN = false;
 
 export default function SplashScreen() {
     const [opacity, setOpacity] = useState(1);
