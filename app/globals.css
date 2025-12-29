@@ -310,6 +310,7 @@ body {
 
 .tiptap p {
     padding-top: 1rem;
+    text-wrap: wrap;
 }
 
 .tiptap em {

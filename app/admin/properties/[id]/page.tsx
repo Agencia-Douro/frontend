@@ -282,9 +282,12 @@ export default function PropertyDetailsPage() {
 
                     <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
 
-                    <div className="pt-6 flex justify-between">
-                        <div className="w-full mr-10">
-                            <div className="tiptap max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
+                        <div
+                                className="tiptap max-w-none break-words whitespace-pre-line"
+                                style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
+                                dangerouslySetInnerHTML={{ __html: property.description }} />
                             {property.deliveryDate && (
                                 <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
                                     <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
@@ -299,7 +302,7 @@ export default function PropertyDetailsPage() {
                             )}
                         </div>
 
-                        <div className="w-lg sticky top-0">
+                        <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 lg:sticky lg:top-4 pt-4 md:pt-5 lg:pt-6 h-min">
                             {property.totalArea && property.totalArea > 0 && (
                                 <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
                             )}
