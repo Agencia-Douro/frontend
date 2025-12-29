@@ -17,6 +17,9 @@ export default function SiteConfigPage() {
     rating: 0,
     imoveisVendidos: 0,
     anosExperiencia: 0,
+    temporadas: 0,
+    episodiosPublicados: 0,
+    especialistasConvidados: 0
   })
 
   const [memberFormData, setMemberFormData] = useState({
@@ -45,6 +48,9 @@ export default function SiteConfigPage() {
         rating: config.rating || 0,
         imoveisVendidos: config.imoveisVendidos || 0,
         anosExperiencia: config.anosExperiencia || 0,
+        temporadas: config.temporadas || 0,
+        episodiosPublicados: config.episodiosPublicados || 0,
+        especialistasConvidados: config.especialistasConvidados || 0
       })
     }
   }, [config])
@@ -251,6 +257,65 @@ export default function SiteConfigPage() {
           </CardContent>
         </Card>
 
+        <Card className="mt-10">
+          <CardHeader>
+            <CardTitle>Estatísticas do Podcast</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-2 gap-4">
+            <div className="space-y-1 w-full">
+              <Label htmlFor="temporadas">Temporadas</Label>
+              <Input
+                id="temporadas"
+                type="number"
+                min="0"
+                value={formData.temporadas}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    temporadas: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite o número de temporadas"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="episodios">Episodios Publicados</Label>
+              <Input
+                id="episodios"
+                type="number"
+                value={formData.episodiosPublicados}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    episodiosPublicados: parseFloat(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite o número de episódios publicados"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="convidados">Número de Convidados</Label>
+              <Input
+                id="convidados"
+                type="number"
+                value={formData.especialistasConvidados}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    especialistasConvidados: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite o número de convidados"
+                required
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="flex gap-4 mt-6 justify-end">
           <Button
             type="submit"
@@ -351,8 +416,8 @@ export default function SiteConfigPage() {
                   {createMemberMutation.isPending || updateMemberMutation.isPending
                     ? "Salvando..."
                     : editingMember
-                    ? "Atualizar"
-                    : "Adicionar"}
+                      ? "Atualizar"
+                      : "Adicionar"}
                 </Button>
               </div>
             </form>

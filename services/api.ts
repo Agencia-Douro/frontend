@@ -784,6 +784,7 @@ export const siteConfigApi = {
   },
 
   update: async (data: SiteConfig): Promise<SiteConfig> => {
+    console.log(data);
     const response = await fetch(`${API_BASE_URL}/site-config`, {
       method: "PATCH",
       headers: {
