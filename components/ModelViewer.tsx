@@ -47,6 +47,9 @@ function LoadingFallback() {
   );
 }
 
+// Preload the model
+useGLTF.preload("/model3.gltf");
+
 export default function ModelViewer({
   src,
   alt = "Modelo 3D",
@@ -57,16 +60,24 @@ export default function ModelViewer({
 }: ModelViewerProps) {
   return (
     <div className={className} style={style}>
-      <Canvas
-        camera={{ position: [0, 2, 15], fov: 50 }}
-        style={{ width: '100%', height: '100%' }}
-        gl={{ antialias: true }}
-      >
-        <Suspense fallback={null}>
+      <Suspense fallback={<LoadingFallback />}>
+        <Canvas
+          camera={{ position: [0, 2, 15], fov: 50 }}
+          style={{ width: '100%', height: '100%' }}
+          gl={{
+            antialias: true,
+            powerPreference: "high-performance"
+          }}
+          dpr={[1, 2]}
+          performance={{ min: 0.5 }}
+        >
+          <Suspense fallback={null}>
           <ambientLight intensity={0.6} />
           <directionalLight position={[10, 10, 5]} intensity={0.8} />
           <directionalLight position={[-10, -10, -5]} intensity={0.4} />
-          <Environment preset="sunset" />
+          <Suspense fallback={null}>
+            <Environment preset="sunset" />
+          </Suspense>
 
           <Model src={src} autoRotate={autoRotate} />
 
@@ -81,7 +92,8 @@ export default function ModelViewer({
             />
           )}
         </Suspense>
-      </Canvas>
+        </Canvas>
+      </Suspense>
     </div>
   );
 }

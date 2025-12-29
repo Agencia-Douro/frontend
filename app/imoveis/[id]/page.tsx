@@ -355,7 +355,7 @@ export default function ImovelDetails() {
                                             <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                         </svg>
                                     )}
-                                    {fav ? "Favorito" : "Favorito"}
+                                    FAVORITO
                                 </Button>
                                 <Button variant="brown" className="grow" onClick={handleCopyLink}>
                                     {linkCopied ? (
