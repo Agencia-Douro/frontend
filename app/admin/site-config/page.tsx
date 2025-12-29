@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { siteConfigApi } from "@/services/api"
+import { siteConfigApi, teamMembersApi, TeamMember } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
+import { Pencil, Trash2, Plus, X } from "lucide-react"
 
 export default function SiteConfigPage() {
   const queryClient = useQueryClient()
@@ -18,9 +19,23 @@ export default function SiteConfigPage() {
     anosExperiencia: 0,
   })
 
+  const [memberFormData, setMemberFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  })
+
+  const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
+  const [showMemberForm, setShowMemberForm] = useState(false)
+
   const { data: config, isLoading } = useQuery({
     queryKey: ["site-config"],
     queryFn: () => siteConfigApi.get(),
+  })
+
+  const { data: teamMembers, isLoading: isLoadingMembers } = useQuery({
+    queryKey: ["team-members"],
+    queryFn: () => teamMembersApi.getAll(),
   })
 
   useEffect(() => {
@@ -45,6 +60,42 @@ export default function SiteConfigPage() {
     },
   })
 
+  const createMemberMutation = useMutation({
+    mutationFn: (data: Omit<TeamMember, "id">) => teamMembersApi.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["team-members"] })
+      toast.success("Membro adicionado com sucesso!")
+      resetMemberForm()
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Erro ao adicionar membro")
+    },
+  })
+
+  const updateMemberMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<TeamMember> }) =>
+      teamMembersApi.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["team-members"] })
+      toast.success("Membro atualizado com sucesso!")
+      resetMemberForm()
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Erro ao atualizar membro")
+    },
+  })
+
+  const deleteMemberMutation = useMutation({
+    mutationFn: (id: string) => teamMembersApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["team-members"] })
+      toast.success("Membro removido com sucesso!")
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Erro ao remover membro")
+    },
+  })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -54,6 +105,50 @@ export default function SiteConfigPage() {
     }
 
     updateMutation.mutate(formData)
+  }
+
+  const handleMemberSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!memberFormData.name || !memberFormData.phone || !memberFormData.email) {
+      toast.error("Todos os campos são obrigatórios")
+      return
+    }
+
+    if (editingMember) {
+      updateMemberMutation.mutate({
+        id: editingMember.id,
+        data: memberFormData,
+      })
+    } else {
+      createMemberMutation.mutate(memberFormData)
+    }
+  }
+
+  const handleEditMember = (member: TeamMember) => {
+    setEditingMember(member)
+    setMemberFormData({
+      name: member.name,
+      phone: member.phone,
+      email: member.email,
+    })
+    setShowMemberForm(true)
+  }
+
+  const handleDeleteMember = (id: string) => {
+    if (confirm("Tem certeza que deseja remover este membro?")) {
+      deleteMemberMutation.mutate(id)
+    }
+  }
+
+  const resetMemberForm = () => {
+    setMemberFormData({
+      name: "",
+      phone: "",
+      email: "",
+    })
+    setEditingMember(null)
+    setShowMemberForm(false)
   }
 
   if (isLoading) {
@@ -166,6 +261,154 @@ export default function SiteConfigPage() {
           </Button>
         </div>
       </form>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>Membros da Equipa</CardTitle>
+            <Button
+              onClick={() => setShowMemberForm(!showMemberForm)}
+              variant="brown"
+            >
+              {showMemberForm ? (
+                <>
+                  <X className="w-4 h-4 mr-2" />
+                  Cancelar
+                </>
+              ) : (
+                <>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Adicionar Membro
+                </>
+              )}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {showMemberForm && (
+            <form onSubmit={handleMemberSubmit} className="mb-6 p-4 border rounded-lg bg-gray-50">
+              <h3 className="text-lg font-medium mb-4">
+                {editingMember ? "Editar Membro" : "Novo Membro"}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <Label htmlFor="member-name">Nome</Label>
+                  <Input
+                    id="member-name"
+                    type="text"
+                    value={memberFormData.name}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, name: e.target.value })
+                    }
+                    placeholder="Digite o nome"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-phone">Telefone</Label>
+                  <Input
+                    id="member-phone"
+                    type="tel"
+                    value={memberFormData.phone}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, phone: e.target.value })
+                    }
+                    placeholder="Digite o telefone"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-email">Email</Label>
+                  <Input
+                    id="member-email"
+                    type="email"
+                    value={memberFormData.email}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, email: e.target.value })
+                    }
+                    placeholder="Digite o email"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2 mt-4 justify-end">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={resetMemberForm}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  variant="brown"
+                  disabled={
+                    createMemberMutation.isPending || updateMemberMutation.isPending
+                  }
+                >
+                  {createMemberMutation.isPending || updateMemberMutation.isPending
+                    ? "Salvando..."
+                    : editingMember
+                    ? "Atualizar"
+                    : "Adicionar"}
+                </Button>
+              </div>
+            </form>
+          )}
+
+          {isLoadingMembers ? (
+            <p>A carregar membros...</p>
+          ) : teamMembers && teamMembers.length > 0 ? (
+            <div className="space-y-3">
+              {teamMembers.map((member) => (
+                <div
+                  key={member.id}
+                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Nome</p>
+                      <p className="font-medium">{member.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Telefone</p>
+                      <p className="font-medium">{member.phone}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="font-medium">{member.email}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 ml-4">
+                    <Button
+                      onClick={() => handleEditMember(member)}
+                      variant="outline"
+                      className="px-2 py-1"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      onClick={() => handleDeleteMember(member.id)}
+                      variant="red"
+                      className="px-2 py-1"
+                      disabled={deleteMemberMutation.isPending}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-center py-8">
+              Nenhum membro da equipa cadastrado. Clique em "Adicionar Membro" para
+              começar.
+            </p>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }
