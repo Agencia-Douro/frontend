@@ -21,7 +21,7 @@ export default function ZonasMaisDesejadas() {
         <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 mt-6 md:mt-10 lg:mt-12 xl:mt-16">
             <div className="text-center flex flex-col items-center lg:gap-6 gap-4">
                 <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">As zonas mais desejadas</h2>
-                <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance">Descubra as regiões que atraem quem busca exclusividade, conforto e um estilo de vida sem igual.</p>
+                <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance hidden md:block">Descubra as regiões que atraem quem busca exclusividade, conforto e um estilo de vida sem igual.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                 {zonas.map(({ nome, src }) => (

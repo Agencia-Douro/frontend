@@ -93,7 +93,7 @@ export default function Testemunhos() {
             <div className="flex flex-col lg:flex-row md:justify-center lg:justify-between lg:items-end md:w-[526px] lg:w-full md:text-center lg:text-start md:m-auto">
                 <div className="lg:space-y-6 space-y-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">Palavras com chave na mão</h2>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full lg:w-[618px] text-balance">Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.</p>
+                    <p className="text-black-muted md:body-18-regular body-16-regular w-full lg:w-[618px] text-balance hidden md:block">Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.</p>
                 </div>
                 <div className="flex flex-col md:items-center gap-2 lg:items-end mt-4 md:mt-5 lg:mt-0">
                     <p className="body-18-medium text-black-muted">

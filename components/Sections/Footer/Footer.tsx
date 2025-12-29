@@ -4,7 +4,7 @@ import FooterIcons from "./FooterIcons"
 
 export default function Footer() {
     return (
-        <footer className="py-6 md:py-10 lg:py-12 xl:py-16">
+        <footer className="py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7]">
             <div className="container space-y-4 md:space-y-8">
                 <div className="flex flex-col gap-8 md:flex-row justify-between relative">
                     <Folha className="rotate-338 top-5 left-0 text-brown" />
