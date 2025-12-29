@@ -767,6 +767,9 @@ export interface SiteConfig {
   rating: number;
   anosExperiencia: number;
   imoveisVendidos: number;
+  episodiosPublicados?: number;
+  temporadas?: number;
+  especialistasConvidados?: number;
 }
 
 export const siteConfigApi = {
@@ -841,14 +844,18 @@ export const teamMembersApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao criar membro da equipa (${response.status})`;
+        errorData.message ||
+        `Erro ao criar membro da equipa (${response.status})`;
       throw new Error(errorMessage);
     }
 
     return response.json();
   },
 
-  update: async (id: string, data: Partial<TeamMember>): Promise<TeamMember> => {
+  update: async (
+    id: string,
+    data: Partial<TeamMember>
+  ): Promise<TeamMember> => {
     const response = await fetch(`${API_BASE_URL}/team-members/${id}`, {
       method: "PATCH",
       headers: {
@@ -860,7 +867,8 @@ export const teamMembersApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao atualizar membro da equipa (${response.status})`;
+        errorData.message ||
+        `Erro ao atualizar membro da equipa (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -875,7 +883,8 @@ export const teamMembersApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao deletar membro da equipa (${response.status})`;
+        errorData.message ||
+        `Erro ao deletar membro da equipa (${response.status})`;
       throw new Error(errorMessage);
     }
   },

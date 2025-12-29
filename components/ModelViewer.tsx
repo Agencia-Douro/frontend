@@ -1,6 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF, OrbitControls, Environment, Center } from "@react-three/drei";
+import * as THREE from "three";
+
+interface ModelProps {
+  src: string;
+  autoRotate?: boolean;
+}
+
+function Model({ src, autoRotate }: ModelProps) {
+  const { scene } = useGLTF(src);
+  const modelRef = useRef<THREE.Group>(null);
+
+  useFrame(() => {
+    if (modelRef.current && autoRotate) {
+      modelRef.current.rotation.y += 0.005;
+    }
+  });
+
+  return (
+    <Center scale={0.5} position={[0, -0.3, 0]}>
+      <primitive ref={modelRef} object={scene} />
+    </Center>
+  );
+}
 
 interface ModelViewerProps {
   src: string;
@@ -11,6 +36,17 @@ interface ModelViewerProps {
   style?: React.CSSProperties;
 }
 
+function LoadingFallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brown mx-auto mb-2"></div>
+        <p className="text-sm text-gray-600">Carregando modelo 3D...</p>
+      </div>
+    </div>
+  );
+}
+
 export default function ModelViewer({
   src,
   alt = "Modelo 3D",
@@ -19,85 +55,34 @@ export default function ModelViewer({
   className,
   style,
 }: ModelViewerProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  return (
+    <div className={className} style={style}>
+      <Canvas
+        camera={{ position: [0, 2, 15], fov: 50 }}
+        style={{ width: '100%', height: '100%' }}
+        gl={{ antialias: true }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[10, 10, 5]} intensity={0.8} />
+          <directionalLight position={[-10, -10, -5]} intensity={0.4} />
+          <Environment preset="sunset" />
 
-  useEffect(() => {
-    // Verificar se o script já foi carregado
-    const checkScript = () => {
-      if (customElements.get("model-viewer")) {
-        setIsScriptLoaded(true);
-        return true;
-      }
-      return false;
-    };
+          <Model src={src} autoRotate={autoRotate} />
 
-    // Se já estiver carregado, definir como carregado
-    if (checkScript()) {
-      return;
-    }
-
-    // Aguardar o script ser carregado
-    const interval = setInterval(() => {
-      if (checkScript()) {
-        clearInterval(interval);
-      }
-    }, 100);
-
-    // Timeout de segurança
-    const timeout = setTimeout(() => {
-      clearInterval(interval);
-      // Tentar mesmo assim se o script não carregar
-      setIsScriptLoaded(true);
-    }, 5000);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!containerRef.current || !isScriptLoaded) return;
-
-    // Verificar se customElements está disponível e se model-viewer está registrado
-    if (!customElements.get("model-viewer")) {
-      return;
-    }
-
-    // Criar o elemento model-viewer
-    const modelViewer = document.createElement("model-viewer");
-    modelViewer.setAttribute("src", src);
-    modelViewer.setAttribute("alt", alt);
-    
-    if (autoRotate) {
-      modelViewer.setAttribute("auto-rotate", "");
-    }
-    
-    if (cameraControls) {
-      modelViewer.setAttribute("camera-controls", "");
-    }
-
-    // Aplicar estilos
-    if (className) {
-      modelViewer.className = className;
-    }
-    
-    if (style) {
-      Object.assign(modelViewer.style, style);
-    }
-
-    // Limpar container e adicionar o model-viewer
-    containerRef.current.innerHTML = "";
-    containerRef.current.appendChild(modelViewer);
-
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-      }
-    };
-  }, [src, alt, autoRotate, cameraControls, className, style, isScriptLoaded]);
-
-  return <div ref={containerRef} />;
+          {cameraControls && (
+            <OrbitControls
+              enablePan={false}
+              enableZoom={true}
+              minDistance={15}
+              maxDistance={15}
+              autoRotate={false}
+              target={[0, 0, 0]}
+            />
+          )}
+        </Suspense>
+      </Canvas>
+    </div>
+  );
 }
 

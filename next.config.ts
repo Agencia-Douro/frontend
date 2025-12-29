@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: "novo.agenciadouro.pt",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        pathname: "/vi/**",
+      },
     ],
   },
 };

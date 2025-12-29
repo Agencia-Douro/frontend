@@ -9,11 +9,10 @@ import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import Folha from "../Folha";
 import { Pinyon_Script } from "next/font/google";
 import ModelViewer from "../ModelViewer";
-import model3d from "@/public/model.gltf";
 
 const pynionScript = Pinyon_Script({
-  weight: "400",
-  subsets: ["latin"],
+    weight: "400",
+    subsets: ["latin"],
 });
 
 type TransactionType = "comprar" | "arrendar" | "trespasse";
@@ -66,109 +65,109 @@ export default function Hero() {
                     <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
                 </div>
                 <ModelViewer
-                    src={model3d}
+                    src="/model3.gltf"
                     alt="Modelo 3D"
                     autoRotate
                     cameraControls
-                    className="hidden lg:block h-96"
-                    style={{ width: '512px', height: '384px' }}
+                    className="hidden lg:block"
+                    style={{ width: '700px', height: '550px' }}
                 />
             </div>
             <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto" onSubmit={handleSearch}>
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex flex-row w-full">
-                            <Button
-                                type="button"
-                                variant={transactionType === "comprar" ? "gold" : "ghost"}
-                                className="px-4.5 w-1/3 md:w-min"
-                                onClick={() => setTransactionType("comprar")}
-                            >
-                                Comprar
-                            </Button>
-                            <Button
-                                type="button"
-                                variant={transactionType === "arrendar" ? "gold" : "ghost"}
-                                className="px-4.5 w-1/3 md:w-min"
-                                onClick={() => setTransactionType("arrendar")}
-                            >
-                                Arrendar
-                            </Button>
-                            <Button
-                                type="button"
-                                variant={transactionType === "trespasse" ? "gold" : "ghost"}
-                                className="px-4.5 w-1/3 md:w-min"
-                                onClick={() => setTransactionType("trespasse")}
-                            >
-                                Trespasse
-                            </Button>
-                        </div>
-                        <Button type="submit" variant="brown" className="px-4.5 hidden md:block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="size-5">
-                                <path d="M14.1666 14.1667L17.5 17.5M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                <div className="flex justify-between items-center w-full">
+                    <div className="flex flex-row w-full">
+                        <Button
+                            type="button"
+                            variant={transactionType === "comprar" ? "gold" : "ghost"}
+                            className="px-4.5 w-1/3 md:w-min"
+                            onClick={() => setTransactionType("comprar")}
+                        >
+                            Comprar
+                        </Button>
+                        <Button
+                            type="button"
+                            variant={transactionType === "arrendar" ? "gold" : "ghost"}
+                            className="px-4.5 w-1/3 md:w-min"
+                            onClick={() => setTransactionType("arrendar")}
+                        >
+                            Arrendar
+                        </Button>
+                        <Button
+                            type="button"
+                            variant={transactionType === "trespasse" ? "gold" : "ghost"}
+                            className="px-4.5 w-1/3 md:w-min"
+                            onClick={() => setTransactionType("trespasse")}
+                        >
+                            Trespasse
                         </Button>
                     </div>
-                    <div className="p-4 flex flex-col md:flex-row gap-4 bg-white">
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="localizacao">Localização</Label>
-                            <Select value={localizacao} onValueChange={setLocalizacao}>
-                                <SelectTrigger id="localizacao" name="localizacao">
-                                    <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {DISTRITOS.map((distrito) => (
-                                        <SelectItem key={distrito} value={distrito}>
-                                            {distrito}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="tipo">Tipo</Label>
-                            <Select value={tipo} onValueChange={setTipo}>
-                                <SelectTrigger id="tipo" name="tipo">
-                                    <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                                <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                    {TIPOS_IMOVEL.map((tipo) => (
-                                        <SelectItem key={tipo.value} value={tipo.value}>
-                                            {tipo.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className="flex flex-col gap-1 w-full">
-                            <Label htmlFor="preco">Preço Máximo</Label>
-                            <Select value={preco} onValueChange={setPreco}>
-                                <SelectTrigger id="preco" name="preco">
-                                    <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                                <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                    {transactionType === "arrendar" ? (
-                                        <>
-                                            <SelectItem value="0-500">500€</SelectItem>
-                                            <SelectItem value="500-1000">1.000€</SelectItem>
-                                            <SelectItem value="1000-1500">1.500€</SelectItem>
-                                            <SelectItem value="1500-2000">2.000€</SelectItem>
-                                            <SelectItem value="2000-3000">3.000€</SelectItem>
-                                            <SelectItem value="3000-5000">5.000€</SelectItem>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <SelectItem value="0-100000">100.000€</SelectItem>
-                                            <SelectItem value="100000-200000">200.000€</SelectItem>
-                                            <SelectItem value="200000-500000">500.000€</SelectItem>
-                                            <SelectItem value="500000-1000000">1.000.000€</SelectItem>
-                                            <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
-                                        </>
-                                    )}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                    <Button type="submit" variant="brown" className="px-4.5 hidden md:block">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="size-5">
+                            <path d="M14.1666 14.1667L17.5 17.5M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </Button>
+                </div>
+                <div className="p-4 flex flex-col md:flex-row gap-4 bg-white">
+                    <div className="flex flex-col gap-1 w-full">
+                        <Label htmlFor="localizacao">Localização</Label>
+                        <Select value={localizacao} onValueChange={setLocalizacao}>
+                            <SelectTrigger id="localizacao" name="localizacao">
+                                <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {DISTRITOS.map((distrito) => (
+                                    <SelectItem key={distrito} value={distrito}>
+                                        {distrito}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
-                    <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
+                    <div className="flex flex-col gap-1 w-full">
+                        <Label htmlFor="tipo">Tipo</Label>
+                        <Select value={tipo} onValueChange={setTipo}>
+                            <SelectTrigger id="tipo" name="tipo">
+                                <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                {TIPOS_IMOVEL.map((tipo) => (
+                                    <SelectItem key={tipo.value} value={tipo.value}>
+                                        {tipo.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex flex-col gap-1 w-full">
+                        <Label htmlFor="preco">Preço Máximo</Label>
+                        <Select value={preco} onValueChange={setPreco}>
+                            <SelectTrigger id="preco" name="preco">
+                                <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                {transactionType === "arrendar" ? (
+                                    <>
+                                        <SelectItem value="0-500">500€</SelectItem>
+                                        <SelectItem value="500-1000">1.000€</SelectItem>
+                                        <SelectItem value="1000-1500">1.500€</SelectItem>
+                                        <SelectItem value="1500-2000">2.000€</SelectItem>
+                                        <SelectItem value="2000-3000">3.000€</SelectItem>
+                                        <SelectItem value="3000-5000">5.000€</SelectItem>
+                                    </>
+                                ) : (
+                                    <>
+                                        <SelectItem value="0-100000">100.000€</SelectItem>
+                                        <SelectItem value="100000-200000">200.000€</SelectItem>
+                                        <SelectItem value="200000-500000">500.000€</SelectItem>
+                                        <SelectItem value="500000-1000000">1.000.000€</SelectItem>
+                                        <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
+                                    </>
+                                )}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
             </form>
         </section>
     )
