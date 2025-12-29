@@ -1,13 +1,12 @@
-import Image from "next/image";
+import { Mail, Phone } from "lucide-react";
 
 interface EquipaCardProps {
     name: string;
-    role: string;
-    description?: string;
-    image?: string;
+    email: string;
+    phone?: string;
 }
 
-export function EquipaCard({ name, role, description, image }: EquipaCardProps) {
+export function EquipaCard({ name, email, phone }: EquipaCardProps) {
     return (
         <div className="flex flex-col gap-4">
             <div className="flex gap-4">
@@ -16,22 +15,18 @@ export function EquipaCard({ name, role, description, image }: EquipaCardProps) 
                     <div className="w-px bg-brown/20 h-2/3"></div>
                 </div>
                 <div className="flex-1 space-y-2">
-                    {image && (
-                        <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-gray-200">
-                            <Image
-                                src={image}
-                                alt={name}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                    )}
                     <div>
                         <h3 className="body-18-medium text-black">{name}</h3>
-                        <p className="body-14-medium text-gold mt-1">{role}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Mail className="w-4 h-4 text-gold" />
+                            <p className="body-14-medium text-gold">{email}</p>
+                        </div>
                     </div>
-                    {description && (
-                        <p className="body-16-regular text-black-muted mt-2">{description}</p>
+                    {phone && (
+                        <div className="flex items-center gap-2 mt-2">
+                            <Phone className="w-4 h-4 text-black-muted" />
+                            <p className="body-16-regular text-black-muted">{phone}</p>
+                        </div>
                     )}
                 </div>
             </div>

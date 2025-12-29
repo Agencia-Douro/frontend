@@ -51,7 +51,7 @@ const FEATURED_EPISODES = [
 ];
 
 export default function PodcastPage() {
-    const { data: config } = useSuspenseQuery({
+    const { data: config } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
     })

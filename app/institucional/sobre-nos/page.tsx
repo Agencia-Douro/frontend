@@ -11,14 +11,19 @@ import { EquipaCard } from "@/components/Sections/SobreNos/EquipaCard";
 import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { siteConfigApi } from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
+import { siteConfigApi, teamMembersApi } from "@/services/api";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 export default function InstitucionalPage() {
     const { data: siteConfig } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
     });
+
+    const { data: teamMembers } = useQuery({
+        queryKey: ["team-members"],
+        queryFn: () => teamMembersApi.getAll(),
+    })
 
     return (
         <>
@@ -122,21 +127,14 @@ export default function InstitucionalPage() {
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <EquipaCard
-                        name="João Silva"
-                        role="Diretor Comercial"
-                        description="Com mais de 15 anos de experiência no mercado imobiliário de luxo, especializado em propriedades exclusivas."
-                    />
-                    <EquipaCard
-                        name="Maria Santos"
-                        role="Consultora Imobiliária"
-                        description="Especialista em investimentos imobiliários e consultoria para clientes internacionais."
-                    />
-                    <EquipaCard
-                        name="Pedro Costa"
-                        role="Gestor de Projetos"
-                        description="Responsável pela gestão de projetos imobiliários e coordenação de equipas multidisciplinares."
-                    />
+                    {teamMembers?.map((member) => (
+                        <EquipaCard
+                            key={member.id}
+                            name={member.name}
+                            email={member.email}
+                            phone={member.phone}
+                        />
+                    ))}
                 </div>
             </section>
 
