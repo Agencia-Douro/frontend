@@ -282,8 +282,12 @@ export default function ImovelDetails() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                         <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
                             <div className="w-full [&>p]:first:p-0 [&>p]:pt-2 [&>h6]:first:p-0 [&>h6]:pt-4 [&>ul]:first:p-0 [&>ul]:pt-2 [&>p]:text-brown [&>p]:body-16-regular [&>h6]:body-16-medium [&>ul]:list-disc [&>ul]:list-inside">
-                                <div className="prose prose-brown max-w-none" dangerouslySetInnerHTML={{ __html: property.description }} />
-                                {property.deliveryDate && (
+                                <div
+                                    className="tiptap max-w-none break-words whitespace-pre-line"
+                                    style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
+                                    dangerouslySetInnerHTML={{ __html: property.description }} />
+                            </div>
+                            {property.deliveryDate && (
                                     <>
                                         <h6>Previsão de entrega:</h6>
                                         <p>{property.deliveryDate}</p>

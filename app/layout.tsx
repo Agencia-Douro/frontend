@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
 import { SocialMediaButton } from "@/components/SocialMediaButton/SocialMediaButton";
 import SplashScreen from "@/components/SplashScreen/SplashScreen";
+import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <Toaster />
           <AvaliadorOnlineButton />
-          <SocialMediaButton />
+          <SocialMediaButtonV2 />
         </QueryProvider>
       </body>
     </html>

@@ -94,9 +94,18 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             {/* Botão Flutuante */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="cursor-pointer fixed bottom-6 left-6 z-40 bg-gold hover:bg-gold-muted will-change-transform text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 body-14-medium"
+                className="cursor-pointer fixed right-0 top-[40%] -translate-y-1/2 z-40 bg-brown hover:bg-brown/90 will-change-transform text-white px-5 py-3.5 rounded-l-lg shadow-lg transition-all duration-300 hover:scale-105 hidden md:flex flex-col items-center gap-2"
             >
-                Avaliador Online
+                <div className="bg-white rounded-full p-2.5 md:p-3 w-11 h-11 md:w-13 md:h-13 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brown md:w-7 md:h-7">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <div className="text-center leading-tight">
+                    <div className="font-semibold text-[11px] md:text-sm tracking-wide">AVALIADOR</div>
+                    <div className="font-semibold text-[11px] md:text-sm tracking-wide">ONLINE</div>
+                </div>
             </button>
 
             {/* Modal */}

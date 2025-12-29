@@ -310,7 +310,7 @@ export default function ImovelDetails() {
                         <div className="w-full">
                             <div
                                 className="tiptap max-w-none break-words whitespace-pre-line"
-                                style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
+                                style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
                                 dangerouslySetInnerHTML={{ __html: property.description }} />
                             {property.deliveryDate && (
                                 <div className="mt-4 px-4 border-l-3 border-brown">
