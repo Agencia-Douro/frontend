@@ -8,8 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import Folha from "../Folha";
 import { Pinyon_Script } from "next/font/google";
-import ModelViewer from "../ModelViewer";
-import model3d from "@/public/model.gltf";
 
 const pynionScript = Pinyon_Script({
   weight: "400",
@@ -65,14 +63,6 @@ export default function Hero() {
                     <h1 className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}>A imobiliária mais exclusiva de Portugal.</h1>
                     <p className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance">Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.</p>
                 </div>
-                <ModelViewer
-                    src={model3d}
-                    alt="Modelo 3D"
-                    autoRotate
-                    cameraControls
-                    className="hidden lg:block h-96"
-                    style={{ width: '512px', height: '384px' }}
-                />
             </div>
             <form className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto" onSubmit={handleSearch}>
                     <div className="flex justify-between items-center w-full">
