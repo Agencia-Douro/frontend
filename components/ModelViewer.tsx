@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Environment, Center } from "@react-three/drei";
 import * as THREE from "three";
@@ -58,8 +58,41 @@ export default function ModelViewer({
   className,
   style,
 }: ModelViewerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Permitir scroll da página mesmo quando o rato está sobre o canvas
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Interceptar o scroll e redirecionar para a página
+      // Isto permite que o utilizador faça scroll mesmo quando o rato está sobre o modelo 3D
+      window.scrollBy({
+        top: e.deltaY,
+        behavior: 'auto'
+      });
+      // Prevenir que o OrbitControls capture o evento
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const canvas = container.querySelector('canvas');
+    if (canvas) {
+      // Usar capture phase para interceptar antes do OrbitControls
+      canvas.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+      return () => {
+        canvas.removeEventListener('wheel', handleWheel, { capture: true } as EventListenerOptions);
+      };
+    }
+  }, []);
+
   return (
-    <div className={className} style={style}>
+    <div 
+      ref={containerRef}
+      className={className} 
+      style={style}
+    >
       <Suspense fallback={<LoadingFallback />}>
         <Canvas
           camera={{ position: [0, 2, 15], fov: 50 }}
@@ -84,7 +117,8 @@ export default function ModelViewer({
           {cameraControls && (
             <OrbitControls
               enablePan={false}
-              enableZoom={true}
+              enableZoom={false}
+              enableRotate={true}
               minDistance={15}
               maxDistance={15}
               autoRotate={false}

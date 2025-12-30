@@ -58,7 +58,7 @@ export default function Cards({ properties, className }: CardsProps) {
                         key={property.id}
                         className={cn(`w-full bg-white`, index === 0 ? 'lg:mb-16' : index === 1 ? 'lg:mt-16' : 'lg:mb-16', className)}
                     >
-                        <Link href={`/imoveis/${property.id}`}>
+                        <article onClick={() => setSelectedProperty(property)}>
                             <div className="card-image-overlay h-64 xl:h-93 relative">
                                 {property.image && (
                                     isVideoUrl(property.image) ? (
@@ -133,15 +133,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
-
-                        <Button
-                            variant="brown"
-                            className="w-full rounded-none rounded-b-md"
-                            onClick={() => setSelectedProperty(property)}
-                        >
-                            Ver detalhes
-                        </Button>
+                        </article>
                     </div>
                 ))}
             </div>

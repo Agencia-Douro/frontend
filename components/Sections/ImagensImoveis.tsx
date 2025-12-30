@@ -216,7 +216,7 @@ export default function ImagensImoveis({
 
   return (
     <>
-      <Button variant="outline" onClick={handleOpen}>
+      <Button variant="outline" className="w-full md:w-auto" onClick={handleOpen}>
         Ver Todas
       </Button>
 

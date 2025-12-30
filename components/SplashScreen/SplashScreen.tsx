@@ -1,22 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/public/Logo.svg";
 
-// Controle para ativar/desativar a splash screen durante o desenvolvimento
-// Mude para false para desativar a animação
-const ENABLE_SPLASH_SCREEN = false;
-
 export default function SplashScreen() {
+    const pathname = usePathname();
     const [opacity, setOpacity] = useState(1);
-    const [isVisible, setIsVisible] = useState(ENABLE_SPLASH_SCREEN);
+    // Iniciar como true se estiver na home para evitar flash da página
+    const [isVisible, setIsVisible] = useState(pathname === "/");
+    
+    // Verificar se estamos na home (rota "/")
+    const isHomePage = pathname === "/";
 
     useEffect(() => {
-        // Se a splash screen estiver desativada, não fazer nada
-        if (!ENABLE_SPLASH_SCREEN) {
+        // Se não estivermos na home, não mostrar a splash screen
+        if (!isHomePage) {
+            setIsVisible(false);
             return;
         }
+
+        // Mostrar a splash screen apenas na home
+        setIsVisible(true);
 
         // Bloquear scroll enquanto a splash screen está visível
         document.body.style.overflow = "hidden";
@@ -52,14 +58,14 @@ export default function SplashScreen() {
             window.removeEventListener("load", handleLoad);
             document.body.style.overflow = "";
         };
-    }, []);
+    }, [isHomePage]);
 
-    // Se a splash screen estiver desativada ou não visível, não renderizar nada
-    if (!ENABLE_SPLASH_SCREEN || !isVisible) return null;
+    // Se não estivermos na home ou a splash screen não estiver visível, não renderizar nada
+    if (!isHomePage || !isVisible) return null;
 
     return (
         <div
-            className="fixed inset-0 z-9999 flex items-center justify-center bg-deaf"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-deaf"
             style={{
                 opacity,
                 transition: "opacity 400ms ease-out",

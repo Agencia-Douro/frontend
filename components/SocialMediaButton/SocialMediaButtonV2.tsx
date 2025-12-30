@@ -16,7 +16,7 @@ export const SocialMediaButtonV2 = () => {
             href="https://wa.me/351919766323"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-5 right-5 md:bottom-6 md:right-6 z-40 bg-[#25D366] hover:bg-[#20BD5A] will-change-transform text-white p-2.5 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+            className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 bg-[#25D366] hover:bg-[#20BD5A] will-change-transform text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
             aria-label="WhatsApp"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none" className="md:w-8 md:h-8">

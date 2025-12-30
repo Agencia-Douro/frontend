@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
 import { Button } from "@/components/ui/button";
@@ -104,36 +105,93 @@ export default function Header() {
                     </div>
                 </div>
                 {/* Mobile Menu */}
-                <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-center pt-8 gap-6 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                    <Link
-                        href="/imoveis"
-                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Imóveis
-                    </Link>
-                    <Link
-                        href="/imoveis-luxo"
-                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Imóveis de luxo
-                    </Link>
-                    <Link
-                        href="/institucional"
-                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Institucional
-                    </Link>
-                    <Link
-                        href="/newsletter"
-                        className="body-16-medium text-brown hover:text-gold transition-colors px-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Newsletter
-                    </Link>
-                </nav>
+                <AnimatePresence>
+                    {mobileMenuOpen && (
+                        <>
+                            {/* Overlay com blur */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                                className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-[999] top-16"
+                                onClick={() => setMobileMenuOpen(false)}
+                            />
+                            {/* Menu */}
+                            <motion.nav
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{
+                                    duration: 0.6,
+                                    ease: [0.25, 0.1, 0.25, 1],
+                                }}
+                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-end py-16 pr-8 gap-6 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
+                            >
+                                <motion.div
+                                    initial="closed"
+                                    animate="open"
+                                    variants={{
+                                        open: {
+                                            transition: {
+                                                staggerChildren: 0.08,
+                                                delayChildren: 0.2,
+                                            },
+                                        },
+                                        closed: {
+                                            transition: {
+                                                staggerChildren: 0.05,
+                                                staggerDirection: -1,
+                                            },
+                                        },
+                                    }}
+                                    className="flex flex-col justify-between items-end h-full"
+                                >
+                                    {[
+                                        { href: "/imoveis", label: "Imóveis" },
+                                        { href: "/imoveis-luxo", label: "Imóveis de luxo" },
+                                        { href: "/institucional", label: "Institucional" },
+                                        { href: "/newsletter", label: "Newsletter" },
+                                    ].map((item) => (
+                                        <motion.div
+                                            key={item.href}
+                                            variants={{
+                                                open: {
+                                                    opacity: 1,
+                                                    x: 0,
+                                                    filter: "blur(0px)",
+                                                },
+                                                closed: {
+                                                    opacity: 0,
+                                                    x: 40,
+                                                    filter: "blur(10px)",
+                                                },
+                                            }}
+                                            transition={{
+                                                duration: 0.7,
+                                                ease: [0.25, 0.1, 0.25, 1],
+                                            }}
+                                        >
+                                            <Link
+                                                href={item.href}
+                                                className="heading-quatro-medium text-brown hover:text-gold transition-colors px-2 block relative group"
+                                                onClick={() => setMobileMenuOpen(false)}
+                                            >
+                                                <span className="relative z-10">{item.label}</span>
+                                                <motion.span
+                                                    className="absolute bottom-0 left-0 h-[2px] bg-gold origin-left"
+                                                    initial={{ scaleX: 0 }}
+                                                    whileHover={{ scaleX: 1 }}
+                                                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                                                />
+                                            </Link>
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            </motion.nav>
+                        </>
+                    )}
+                </AnimatePresence>
             </div>
         </header>
     );

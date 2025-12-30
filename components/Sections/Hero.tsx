@@ -24,11 +24,22 @@ export default function Hero() {
     const [localizacao, setLocalizacao] = useState<string>("");
     const [tipo, setTipo] = useState<string>("");
     const [preco, setPreco] = useState<string>("");
+    const [shouldAnimate, setShouldAnimate] = useState(false);
 
     // Limpar preço quando mudar o tipo de transação
     useEffect(() => {
         setPreco("");
     }, [transactionType]);
+
+    // Iniciar animações após a splash screen desaparecer
+    // Splash screen: 2s mínimo + 400ms fade out = 2.4s total
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShouldAnimate(true);
+        }, 2400);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -64,13 +75,13 @@ export default function Hero() {
                 <motion.div
                     className="flex flex-col md:max-w-[616px] w-full"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.h1
                         className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     >
                         A imobiliária mais exclusiva de Portugal.
@@ -78,7 +89,7 @@ export default function Hero() {
                     <motion.p
                         className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block"
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                     >
                         Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.
@@ -86,7 +97,7 @@ export default function Hero() {
                 </motion.div>
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                     className="hidden lg:block"
                 >
@@ -103,7 +114,7 @@ export default function Hero() {
                 className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
             >
                 <div className="flex justify-between items-center w-full">
