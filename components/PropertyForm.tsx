@@ -197,6 +197,7 @@ export default function PropertyForm({
   // Funções para gerenciar seções de imagens
   const suggestedSections = [
     'Cozinha',
+    'Salas',
     'Sala de Estar',
     'Sala de Jantar',
     'Quartos',
