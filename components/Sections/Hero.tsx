@@ -81,7 +81,7 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                    className="lg:order-2"
+                    className="w-full lg:w-auto flex justify-center lg:justify-start lg:order-2"
                 >
                     <ModelViewer
                         src="/model3.gltf"

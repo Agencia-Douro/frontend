@@ -18,7 +18,7 @@ export default function ZonasMaisDesejadas() {
         { nome: "Lisboa", src: lisboa },
     ];
     return (
-        <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 mt-6 md:mt-10 lg:mt-12 xl:mt-16">
+        <section className="container pt-12 md:pt-10 lg:pt-12 xl:pt-16 mt-6 md:mt-10 lg:mt-12 xl:mt-16">
             <div className="text-center flex flex-col items-center lg:gap-6 gap-4">
                 <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">As zonas mais desejadas</h2>
                 <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance hidden md:block">Descubra as regiões que atraem quem busca exclusividade, conforto e um estilo de vida sem igual.</p>

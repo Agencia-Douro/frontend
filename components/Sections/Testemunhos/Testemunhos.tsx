@@ -131,7 +131,7 @@ export default function Testemunhos() {
     };
 
     return (
-        <section className="relative pt-6 md:pt-10 lg:pt-12 xl:pt-16 container">
+        <section className="relative pt-12 md:pt-10 lg:pt-12 xl:pt-16 container">
             <div className="flex flex-col @container @min-[475px]:bg-red lg:flex-row md:justify-center lg:justify-between lg:items-end md:w-[526px] lg:w-full md:text-center lg:text-start md:m-auto">
                 <div className="lg:space-y-6 space-y-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">Palavras com chave na mão</h2>
