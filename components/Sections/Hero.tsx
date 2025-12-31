@@ -69,9 +69,13 @@ export default function Hero() {
     };
 
     return (
+
         <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative">
+
+            <Folha className="top-[50px] left-0 rotate-30 opacity-30 block lg:hidden text-brown" />
+            <Folha className="top-[400px] left-[150px] rotate-310 opacity-30 block lg:hidden text-brown" />
             <Folha className="top-12 left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
-            <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-4 min-h-[85vh] lg:min-h-0">
+            <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-0 lg:gap-4 min-h-[60vh] lg:min-h-0">
                 {/* Logo 3D - aparece primeiro no mobile, à direita no desktop */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -84,8 +88,8 @@ export default function Hero() {
                         alt="Modelo 3D"
                         autoRotate
                         cameraControls
-                        style={{ width: '400px', height: '400px' }}
-                        className="lg:w-[700px]! lg:h-[550px]!"
+                        style={{ width: '450px', height: '450px' }}
+                        className="lg:w-[700px]! lg:h-[550px]! mx-auto lg:mx-0"
                     />
                 </motion.div>
 
@@ -97,7 +101,7 @@ export default function Hero() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.h1
-                        className={`text-balance heading-tres-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
+                        className={`text-balance heading-tres-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -115,7 +119,7 @@ export default function Hero() {
                 </motion.div>
             </div>
             <motion.form
-                className="mt-16 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
+                className="mt-20 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
