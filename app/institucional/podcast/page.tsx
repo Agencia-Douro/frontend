@@ -10,6 +10,7 @@ import Folha from "@/components/Folha";
 import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi } from "@/services/api";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
+import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 
 // Episódios em destaque
 const FEATURED_EPISODES = [
@@ -82,6 +83,8 @@ export default function PodcastPage() {
                     <StatCard value={config?.especialistasConvidados?.toString() || ""} label="Convidados" />
                 </div>
             </section>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-4 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <Apresentadora />
 
             {/* Segunda Seção - O Que Abordamos */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
