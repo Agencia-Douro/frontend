@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi } from "@/services/api";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
+import Logo from "@/public/Logo.svg";
 
 // Episódios em destaque
 const FEATURED_EPISODES = [
@@ -84,7 +85,10 @@ export default function PodcastPage() {
                 </div>
             </section>
             <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-4 md:mt-8 lg:mt-12 xl:mt-16"></div>
+
             <Apresentadora />
+
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-4 md:mt-8 lg:mt-12 xl:mt-16"></div>
 
             {/* Segunda Seção - O Que Abordamos */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
@@ -120,6 +124,10 @@ export default function PodcastPage() {
                 </div>
             </section>
 
+            <div className="hidden lg:flex justify-center mt-20">
+                <Image src={Logo} alt="logo" width={200} height={90} className="hidden lg:block " />
+            </div>
+
             {/* Terceira Seção - Episódios */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
                 <div className="lg:space-y-6 space-y-4 mb-6 md:mb-8 lg:mb-10 xl:mb-12">
@@ -132,7 +140,7 @@ export default function PodcastPage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                     {FEATURED_EPISODES.map((episode, index) => (
                         <Link
                             key={episode.id}
@@ -169,7 +177,7 @@ export default function PodcastPage() {
                     ))}
                 </div>
             </section>
-            <Testemunhos/>
+            <Testemunhos />
             <FaleConnosco />
             <Footer />
         </>

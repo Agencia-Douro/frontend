@@ -770,6 +770,7 @@ export interface SiteConfig {
   episodiosPublicados?: number;
   temporadas?: number;
   especialistasConvidados?: number;
+  eurosEmTransacoes?: number;
 }
 
 export const siteConfigApi = {

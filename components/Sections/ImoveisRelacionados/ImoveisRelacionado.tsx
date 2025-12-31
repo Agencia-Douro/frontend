@@ -63,7 +63,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
     }
 
     return (
-        <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+        <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 mb-10">
             <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">Imóveis Relacionados</h2>
             <div className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayProperties.map((property) => (

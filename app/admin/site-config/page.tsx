@@ -19,7 +19,8 @@ export default function SiteConfigPage() {
     anosExperiencia: 0,
     temporadas: 0,
     episodiosPublicados: 0,
-    especialistasConvidados: 0
+    especialistasConvidados: 0,
+    eurosEmTransacoes: 0,
   })
 
   const [memberFormData, setMemberFormData] = useState({
@@ -50,7 +51,8 @@ export default function SiteConfigPage() {
         anosExperiencia: config.anosExperiencia || 0,
         temporadas: config.temporadas || 0,
         episodiosPublicados: config.episodiosPublicados || 0,
-        especialistasConvidados: config.especialistasConvidados || 0
+        especialistasConvidados: config.especialistasConvidados || 0,
+        eurosEmTransacoes: config.eurosEmTransacoes || 0,
       })
     }
   }, [config])
@@ -251,6 +253,23 @@ export default function SiteConfigPage() {
                   })
                 }
                 placeholder="Digite a quantidade de imóveis vendidos"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="euros">Euros em Transações</Label>
+              <Input
+                id="euros"
+                type="number"
+                value={formData.eurosEmTransacoes}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    eurosEmTransacoes: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite a quantidade de euros em transações"
                 required
               />
             </div>

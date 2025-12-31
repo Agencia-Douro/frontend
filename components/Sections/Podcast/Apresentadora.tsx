@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import vaniaPodcast from "@/public/vania-podcast.png";
+import { siteConfigApi } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
 
 export function Apresentadora() {
+    const { data: siteConfig } = useQuery({
+        queryKey: ["site-config"],
+        queryFn: () => siteConfigApi.get(),
+    });
+
     return (
         <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
@@ -20,7 +27,7 @@ export function Apresentadora() {
                     <div className="grid grid-cols-2 gap-6 md:gap-8 pt-4">
                         <div className="flex flex-col gap-2">
                             <div className="heading-tres-regular md:heading-dois-regular text-gold">
-                                15+
+                                {siteConfig?.anosExperiencia}+
                             </div>
                             <p className="body-16-medium text-black">
                                 Anos de Experiência
@@ -28,7 +35,7 @@ export function Apresentadora() {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="heading-tres-regular md:heading-dois-regular text-gold">
-                                100M+
+                                {siteConfig?.eurosEmTransacoes}M+
                             </div>
                             <p className="body-16-medium text-black">
                                 Euros em Transações
@@ -36,7 +43,7 @@ export function Apresentadora() {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="heading-tres-regular md:heading-dois-regular text-gold">
-                                500+
+                                {siteConfig?.clientesSatisfeitos}+
                             </div>
                             <p className="body-16-medium text-black">
                                 Clientes Satisfeitos
@@ -44,7 +51,7 @@ export function Apresentadora() {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="heading-tres-regular md:heading-dois-regular text-gold">
-                                50+
+                                {siteConfig?.episodiosPublicados}+
                             </div>
                             <p className="body-16-medium text-black">
                                 Episódios Gravados
