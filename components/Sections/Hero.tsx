@@ -71,15 +71,33 @@ export default function Hero() {
     return (
         <section className="mt-6 md:mt-10 lg:mt-12 xl:mt-16 container relative">
             <Folha className="top-12 left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-4 min-h-[85vh] lg:min-h-0">
+                {/* Logo 3D - aparece primeiro no mobile, à direita no desktop */}
                 <motion.div
-                    className="flex flex-col md:max-w-[616px] w-full"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    className="lg:order-2"
+                >
+                    <ModelViewer
+                        src="/model3.gltf"
+                        alt="Modelo 3D"
+                        autoRotate
+                        cameraControls
+                        style={{ width: '400px', height: '400px' }}
+                        className="lg:w-[700px]! lg:h-[550px]!"
+                    />
+                </motion.div>
+
+                {/* Conteúdo de texto - aparece segundo no mobile, à esquerda no desktop */}
+                <motion.div
+                    className="flex flex-col md:max-w-[616px] w-full text-center lg:text-left lg:order-1"
                     initial={{ opacity: 0, y: 20 }}
                     animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.h1
-                        className={`text-balance heading-quatro-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
+                        className={`text-balance heading-tres-regular md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -87,7 +105,7 @@ export default function Hero() {
                         A imobiliária mais exclusiva de Portugal.
                     </motion.h1>
                     <motion.p
-                        className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block"
+                        className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block mx-auto lg:mx-0"
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -95,23 +113,9 @@ export default function Hero() {
                         Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.
                     </motion.p>
                 </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                    className="hidden lg:block"
-                >
-                    <ModelViewer
-                        src="/model3.gltf"
-                        alt="Modelo 3D"
-                        autoRotate
-                        cameraControls
-                        style={{ width: '700px', height: '550px' }}
-                    />
-                </motion.div>
             </div>
             <motion.form
-                className="mt-4 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
+                className="mt-16 md:mt-6 lg:mt-10 xl:mt-12 w-full max-w-6xl mx-auto"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
