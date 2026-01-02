@@ -284,7 +284,7 @@ export default function PropertyDetailsPage() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
-                        <div
+                            <div
                                 className="tiptap max-w-none break-words whitespace-pre-line"
                                 style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
                                 dangerouslySetInnerHTML={{ __html: property.description }} />

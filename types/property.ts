@@ -50,6 +50,7 @@ export interface Property {
   image: string;
   imageSections?: PropertyImageSection[];
   relatedProperties?: Property[];
+  files?: PropertyFile[];
   paymentConditions: string | null;
   status: "active" | "inactive" | "sold" | "rented" | "reserved";
   teamMemberId: string | null;

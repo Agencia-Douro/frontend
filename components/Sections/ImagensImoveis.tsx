@@ -223,7 +223,7 @@ export default function ImagensImoveis({
       {/* Mantemos o wrapper no DOM enquanto showPanel ou estamos no processo de fechar */}
       {(showPanel || panelClosing) && (
         <div
-          className="bg-deaf block overflow-hidden fixed inset-0 z-1000"
+          className="bg-muted block overflow-hidden fixed inset-0 z-1000"
           // wrapper que tem a transição de transform inline — por isso onTransitionEnd aqui é fiável
           onTransitionEnd={onTransitionEnd}
           role="dialog"
