@@ -128,6 +128,10 @@ export const propertiesApi = {
     if (data.paymentConditions)
       formData.append("paymentConditions", data.paymentConditions);
 
+    // Campos opcionais - Team Member
+    if (data.teamMemberId)
+      formData.append("teamMemberId", data.teamMemberId);
+
     // Adicionar imagem se existir
     if (images && images.length > 0) {
       formData.append("image", images[0]);
@@ -202,6 +206,10 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions", data.paymentConditions);
+
+    // Campos opcionais - Team Member
+    if (data.teamMemberId)
+      formData.append("teamMemberId", data.teamMemberId);
 
     // Adicionar nova imagem (substitui a existente)
     if (imagesToAdd && imagesToAdd.length > 0) {

@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { X, Plus, Trash2 } from "lucide-react"
 import { Property, PropertyImageSection } from "@/types/property"
-import { imageSectionsApi } from "@/services/api"
+import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
 import { toast } from "sonner"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
 import CurrencyInput from "react-currency-input-field"
@@ -83,6 +83,7 @@ export default function PropertyForm({
       paymentConditions: "",
       status: "active",
       image: "",
+      teamMemberId: null as string | null,
     }
   )
 
@@ -107,6 +108,10 @@ export default function PropertyForm({
   const [pendingFiles, setPendingFiles] = useState<File[]>([])
   const [pendingRelated, setPendingRelated] = useState<string[]>([])
 
+  // Estados para team members
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  const [isLoadingTeamMembers, setIsLoadingTeamMembers] = useState(false)
+
   // Get municipios based on selected distrito
   const municipios = formData.distrito ? DISTRITO_MUNICIPIOS[formData.distrito] || [] : []
 
@@ -120,6 +125,24 @@ export default function PropertyForm({
       }
     }
   }, [initialData])
+
+  // Buscar team members ao montar o componente
+  useEffect(() => {
+    const loadTeamMembers = async () => {
+      try {
+        setIsLoadingTeamMembers(true)
+        const members = await teamMembersApi.getAll()
+        setTeamMembers(members)
+      } catch (error) {
+        console.error("Erro ao carregar membros da equipa:", error)
+        toast.error("Erro ao carregar membros da equipa")
+      } finally {
+        setIsLoadingTeamMembers(false)
+      }
+    }
+
+    loadTeamMembers()
+  }, [])
 
   // Reset concelho when distrito changes
   useEffect(() => {
@@ -210,6 +233,7 @@ export default function PropertyForm({
     'Jardim',
     'Piscina',
     'Varanda',
+    'Terraço',
     'Vista',
     'Área Comum',
     'Ginásio',
@@ -360,7 +384,7 @@ export default function PropertyForm({
   }
 
   const goToNextTab = () => {
-    const tabs = ["info", "features", "location", "images", "files", "relationships"]
+    const tabs = ["info", "features", "location", "team", "images", "files", "relationships"]
     const currentIndex = tabs.indexOf(activeTab)
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1])
@@ -388,6 +412,12 @@ export default function PropertyForm({
             className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
           >
             Localização
+          </TabsTrigger>
+          <TabsTrigger
+            value="team"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Corretor Responsável
           </TabsTrigger>
           <TabsTrigger
             value="images"
@@ -814,6 +844,43 @@ export default function PropertyForm({
                   value={formData.address || ""}
                   onChange={(e) => updateField("address", e.target.value)}
                 />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="team" className="space-y-6 mt-0">
+          {/* Corretor Responsável */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Corretor Responsável</CardTitle>
+              <CardDescription>
+                Selecione o membro da equipa responsável por esta propriedade
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <Label>Corretor</Label>
+                {isLoadingTeamMembers ? (
+                  <p className="text-muted-foreground text-sm">A carregar membros da equipa...</p>
+                ) : (
+                  <Select
+                    value={formData.teamMemberId || undefined}
+                    onValueChange={(value) => updateField("teamMemberId", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione um corretor" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">Nenhum</SelectItem>
+                      {teamMembers.map((member) => (
+                        <SelectItem key={member.id} value={member.id}>
+                          {member.name} ({member.email})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               </div>
             </CardContent>
           </Card>
