@@ -5,9 +5,14 @@ import FooterIcons from "./FooterIcons"
 export default function Footer() {
     return (
         <>
-            <svg className="w-screen h-auto" viewBox="0 0 1440 78" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <path d="M273.374 77.9092H0V37.2842C0 37.2842 160.624 75.7895 273.374 77.9092H291.86C423.461 75.1985 489.881 34.1897 623.5 33.3856C788.781 32.3909 871.186 77.7995 1036.3 77.9092H1037.5C1199.11 77.8019 1440 0 1440 0V77.9092H1037.5H1036.3H291.86C285.873 78.0325 279.699 78.0281 273.374 77.9092Z" fill="#EDE3D7" />
-            </svg>
+            <div className="relative w-screen">
+                <svg className="w-full h-auto" viewBox="0 0 1440 128" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <path d="M1440 127.851H0V61.1843C0 61.1843 179.15 130.661 291.86 126.851C423.461 122.403 489.881 56.1062 623.5 54.7866C789.18 53.1504 871.583 127.032 1037.5 126.851C1199.11 126.675 1440 0 1440 0V127.851Z" fill="#EDE3D7"/>
+                </svg>
+                <svg className="absolute top-0 left-0 w-full h-auto" viewBox="0 0 1440 131" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <path d="M1441 1.76953C1441 1.76953 1199.78 128.442 1037.94 128.618C871.794 128.799 789.276 54.9191 623.366 56.5553C489.562 57.8749 423.049 124.17 291.265 128.618C178.399 132.428 -1 62.9528 -1 62.9528" stroke="#DCB053" strokeWidth="2"/>
+                </svg>
+            </div>
             <footer className="py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7]">
                 <div className="container space-y-4 md:space-y-8">
                     <div className="flex flex-col gap-8 md:flex-row justify-between relative">
