@@ -64,45 +64,54 @@ export default function NewsletterDetailsPage() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>
-                    <p className="body-16-medium text-black-muted capitalize">{newsletter.category}</p>
+                    <p className="body-16-medium text-brown capitalize">{newsletter.category}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>
                     <p className="body-16-medium text-brown capitalize whitespace-nowrap">{newsletter.title}</p>
                 </div>
-                {/* Title */}
-                <h1 className="heading-tres-regular lg:heading-dois-regular xl:heading-um-regular text-balance text-black lg:mt-8">{newsletter.title}</h1>
-                <div className="flex items-center gap-2 mt-4">
-                    <p className="body-14-regular text-black-muted">
-                        {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: 'numeric'
-                        })}
-                    </p>
-                    <span>∙</span>
-                    <p className="body-14-regular text-black-muted">{newsletter.readingTime} min de leitura</p>
-                </div>
 
-                {/* Cover Image */}
-                {newsletter.coverImage && (
-                    <div className="relative w-full h-140 overflow-hidden mt-4">
-                        <Image
-                            src={newsletter.coverImage}
-                            alt={newsletter.title}
-                            width={100}
-                            height={300}
-                            className="w-full object-contain bg-center"
-                        />
+                {/* Header and Content Section */}
+                <div className="mt-6 lg:mt-8">
+                    {/* Cover Image - Floated Left */}
+                    {newsletter.coverImage && (
+                        <div className="float-none lg:float-left w-full lg:w-1/3 mb-6 lg:mb-0 lg:mr-6">
+                            <div className="relative w-full h-64 lg:h-80 overflow-hidden">
+                                <Image
+                                    src={newsletter.coverImage}
+                                    alt={newsletter.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Title and Info */}
+                    <h1 className="heading-tres-regular lg:heading-dois-regular text-balance text-black">{newsletter.title}</h1>
+                    <div className="flex items-center gap-2 mt-4">
+                        <p className="body-14-regular text-black-muted">
+                            {new Date(newsletter.createdAt).toLocaleDateString('pt-PT', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            })}
+                        </p>
+                        <span>∙</span>
+                        <p className="body-14-regular text-black-muted">{newsletter.readingTime} min de leitura</p>
                     </div>
-                )}
 
-                <article className="md:mb-5 mb-10">
-                    <div
-                        className="tiptap-newsletter max-w-none"
-                        dangerouslySetInnerHTML={{ __html: newsletter.content }}
-                    />
-                </article>
+                    {/* Content */}
+                    <article className="mt-6 md:mb-5 mb-10">
+                        <div
+                            className="tiptap-newsletter max-w-none"
+                            dangerouslySetInnerHTML={{ __html: newsletter.content }}
+                        />
+                    </article>
+
+                    {/* Clear float */}
+                    <div className="clear-both"></div>
+                </div>
             </section>
             <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8" />
             {newsletter.properties && newsletter.properties.length > 0 && (

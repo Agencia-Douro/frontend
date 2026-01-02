@@ -24,7 +24,7 @@ export default function PropertiesPage() {
   const [searchInput, setSearchInput] = useState("")
   const [filters, setFilters] = useState<PropertyFilters>({
     page: 1,
-    limit: 12,
+    limit: 9,
     sortBy: "-createdAt",
   })
 
@@ -66,7 +66,7 @@ export default function PropertiesPage() {
     setSearchInput("")
     setFilters({
       page: 1,
-      limit: 12,
+      limit: 9,
       sortBy: "-createdAt",
     })
   }

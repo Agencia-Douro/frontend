@@ -16,13 +16,13 @@ function Model({ src, autoRotate }: ModelProps) {
 
   useFrame(() => {
     if (modelRef.current && autoRotate) {
-      modelRef.current.rotation.y += 0.005;
+      modelRef.current.rotation.y += 0.002;
     }
   });
 
   return (
     <Center scale={0.5} position={[0, -0.3, 0]}>
-      <primitive ref={modelRef} object={scene} />
+      <primitive ref={modelRef} object={scene} rotation={[0, 0, 0]} />
     </Center>
   );
 }
@@ -88,9 +88,9 @@ export default function ModelViewer({
   }, []);
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className={className} 
+      className={className}
       style={style}
     >
       <Suspense fallback={<LoadingFallback />}>
@@ -105,27 +105,27 @@ export default function ModelViewer({
           performance={{ min: 0.5 }}
         >
           <Suspense fallback={null}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[10, 10, 5]} intensity={0.8} />
-          <directionalLight position={[-10, -10, -5]} intensity={0.4} />
-          <Suspense fallback={null}>
-            <Environment preset="sunset" />
+            <ambientLight intensity={0.6} />
+            <directionalLight position={[10, 10, 5]} intensity={0.8} />
+            <directionalLight position={[-10, -10, -5]} intensity={0.4} />
+            <Suspense fallback={null}>
+              <Environment preset="sunset" />
+            </Suspense>
+
+            <Model src={src} autoRotate={autoRotate} />
+
+            {cameraControls && (
+              <OrbitControls
+                enablePan={false}
+                enableZoom={false}
+                enableRotate={false}
+                minDistance={15}
+                maxDistance={15}
+                autoRotate={false}
+                target={[0, 0, 0]}
+              />
+            )}
           </Suspense>
-
-          <Model src={src} autoRotate={autoRotate} />
-
-          {cameraControls && (
-            <OrbitControls
-              enablePan={false}
-              enableZoom={false}
-              enableRotate={true}
-              minDistance={15}
-              maxDistance={15}
-              autoRotate={false}
-              target={[0, 0, 0]}
-            />
-          )}
-        </Suspense>
         </Canvas>
       </Suspense>
     </div>

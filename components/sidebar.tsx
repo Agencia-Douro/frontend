@@ -19,8 +19,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     const router = useRouter()
     const searchParams = useSearchParams()
 
-    const [transactionType, setTransactionType] = useState(searchParams.get("transactionType") || "comprar")
-    const [isEmpreendimento, setIsEmpreendimento] = useState(searchParams.get("isEmpreendimento") === "true")
+    const [transactionType, setTransactionType] = useState(searchParams.get("transactionType") || searchParams.get("isEmpreendimento") === "true" ? "empreendimentos" : "comprar")
+    const [isArrendar, setIsArrendar] = useState(searchParams.get("transactionType") === "arrendar")
     const [onlyFavorites, setOnlyFavorites] = useState(searchParams.get("onlyFavorites") === "true")
     const [propertyType, setPropertyType] = useState(searchParams.get("propertyType") || "")
     const [propertyState, setPropertyState] = useState(searchParams.get("propertyState") || "")
@@ -76,8 +76,12 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     useEffect(() => {
         const params = new URLSearchParams()
 
-        if (transactionType) params.set("transactionType", transactionType)
-        if (isEmpreendimento) params.set("isEmpreendimento", "true")
+        if (transactionType === "empreendimentos") {
+            params.set("isEmpreendimento", "true")
+        } else if (transactionType) {
+            params.set("transactionType", transactionType)
+        }
+        if (isArrendar) params.set("transactionType", "arrendar")
         if (onlyFavorites) params.set("onlyFavorites", "true")
         if (propertyType) params.set("propertyType", propertyType)
         if (propertyState) params.set("propertyState", propertyState)
@@ -94,7 +98,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         router.push(`${basePath}?${params.toString()}`)
     }, [
         transactionType,
-        isEmpreendimento,
+        isArrendar,
         onlyFavorites,
         propertyType,
         propertyState,
@@ -113,7 +117,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
 
     const handleReset = () => {
         setTransactionType("comprar")
-        setIsEmpreendimento(false)
+        setIsArrendar(false)
         setOnlyFavorites(false)
         setPropertyType("")
         setPropertyState("")
@@ -156,13 +160,13 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("arrendar")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "arrendar"
+                                    onClick={() => setTransactionType("empreendimentos")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
                                         ? "text-white bg-brown"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Arrendar
+                                    Empreendimentos
                                 </button>
 
                                 <button
@@ -488,11 +492,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                         </div>
                         <div className="p-4 border-t border-[#EAE6DF] flex gap-2 items-center">
                             <Switch
-                                checked={isEmpreendimento}
-                                onCheckedChange={setIsEmpreendimento}
+                                checked={isArrendar}
+                                onCheckedChange={setIsArrendar}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>Arrendar</p>
                         </div>
                         <div className="p-4 border-t border-[#EAE6DF] flex gap-2 items-center">
                             <Switch
@@ -529,13 +533,13 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("arrendar")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "arrendar"
+                                    onClick={() => setTransactionType("empreendimentos")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
                                         ? "text-white bg-brown"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Arrendar
+                                    Empreendimentos
                                 </button>
 
                                 <button
@@ -862,11 +866,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                         {/* Filtros adicionais mantidos */}
                         <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
                             <Switch
-                                checked={isEmpreendimento}
-                                onCheckedChange={setIsEmpreendimento}
+                                checked={isArrendar}
+                                onCheckedChange={setIsArrendar}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsEmpreendimento(!isEmpreendimento)}>Empreendimentos</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>Arrendar</p>
                         </div>
                         <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
                             <Switch

@@ -16,7 +16,7 @@ const pynionScript = Pinyon_Script({
     subsets: ["latin"],
 });
 
-type TransactionType = "comprar" | "arrendar" | "trespasse";
+type TransactionType = "comprar" | "empreendimentos" | "trespasse";
 
 export default function Hero() {
     const router = useRouter();
@@ -49,8 +49,10 @@ export default function Hero() {
         // Mapear transactionType para o formato correto da API
         if (transactionType === "comprar") {
             params.set("transactionType", "comprar");
-        } else if (transactionType === "arrendar") {
-            params.set("transactionType", "arrendar");
+        } else if (transactionType === "empreendimentos") {
+            params.set("isEmpreendimento", "true");
+        } else if (transactionType === "trespasse") {
+            params.set("transactionType", "trespasse");
         }
 
         // Localização = distrito
@@ -137,11 +139,11 @@ export default function Hero() {
                         </Button>
                         <Button
                             type="button"
-                            variant={transactionType === "arrendar" ? "gold" : "ghost"}
+                            variant={transactionType === "empreendimentos" ? "gold" : "ghost"}
                             className="px-4.5 w-1/3 md:w-min"
-                            onClick={() => setTransactionType("arrendar")}
+                            onClick={() => setTransactionType("empreendimentos")}
                         >
-                            Arrendar
+                            Empreendimentos
                         </Button>
                         <Button
                             type="button"
@@ -196,24 +198,11 @@ export default function Hero() {
                                 <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                {transactionType === "arrendar" ? (
-                                    <>
-                                        <SelectItem value="0-500">500€</SelectItem>
-                                        <SelectItem value="500-1000">1.000€</SelectItem>
-                                        <SelectItem value="1000-1500">1.500€</SelectItem>
-                                        <SelectItem value="1500-2000">2.000€</SelectItem>
-                                        <SelectItem value="2000-3000">3.000€</SelectItem>
-                                        <SelectItem value="3000-5000">5.000€</SelectItem>
-                                    </>
-                                ) : (
-                                    <>
-                                        <SelectItem value="0-100000">100.000€</SelectItem>
-                                        <SelectItem value="100000-200000">200.000€</SelectItem>
-                                        <SelectItem value="200000-500000">500.000€</SelectItem>
-                                        <SelectItem value="500000-1000000">1.000.000€</SelectItem>
-                                        <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
-                                    </>
-                                )}
+                                <SelectItem value="0-100000">100.000€</SelectItem>
+                                <SelectItem value="100000-200000">200.000€</SelectItem>
+                                <SelectItem value="200000-500000">500.000€</SelectItem>
+                                <SelectItem value="500000-1000000">1.000.000€</SelectItem>
+                                <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

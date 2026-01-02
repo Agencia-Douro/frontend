@@ -37,7 +37,7 @@ function ImoveisContent() {
         propertyState: searchParams.get("propertyState") || undefined,
         energyClass: searchParams.get("energyClass") || undefined,
         page: searchParams.get("page") ? Number(searchParams.get("page")) : 1,
-        limit: 12,
+        limit: 9,
         sortBy: searchParams.get("sortBy") || "-createdAt",
     };
 
@@ -53,11 +53,11 @@ function ImoveisContent() {
         ...data,
         data: data.data.filter(property => favorites.includes(property.id)),
         total: data.data.filter(property => favorites.includes(property.id)).length,
-        totalPages: Math.ceil(data.data.filter(property => favorites.includes(property.id)).length / (filters.limit || 12))
+        totalPages: Math.ceil(data.data.filter(property => favorites.includes(property.id)).length / (filters.limit || 9))
     } : data;
 
     const currentPage = filters.page || 1;
-    const itemsPerPage = filters.limit || 12;
+    const itemsPerPage = filters.limit || 9;
     const totalItems = filteredData?.total || 0;
     const totalPages = filteredData?.totalPages || 1;
 
