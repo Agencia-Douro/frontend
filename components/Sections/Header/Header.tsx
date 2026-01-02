@@ -52,7 +52,7 @@ export default function Header() {
                             triggerHref="/imoveis"
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis?transactionType=arrendar", label: "Arrendar" },
+                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
                                 { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
                             ]}
                         />
@@ -61,7 +61,7 @@ export default function Header() {
                             triggerHref="/imoveis-luxo"
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis-luxo?transactionType=arrendar", label: "Arrendar" },
+                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
                                 { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
                             ]}
                         />

@@ -22,6 +22,15 @@ export interface PropertyFile {
   updatedAt: string;
 }
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Property {
   id: string;
   reference: string;
@@ -54,6 +63,7 @@ export interface Property {
   paymentConditions: string | null;
   status: "active" | "inactive" | "sold" | "rented" | "reserved";
   teamMemberId: string | null;
+  teamMember?: TeamMember;
   createdAt: string;
   updatedAt: string;
 }

@@ -43,7 +43,7 @@ export default function PropertiesPage() {
   })
 
   const updateFilter = (key: keyof PropertyFilters, value: any) => {
-    setFilters(prev => ({ ...prev, [key]: value, page: 1 }))
+    setFilters(prev => ({ ...prev, [key]: value, ...(key !== "page" && { page: 1 }) }))
   }
 
   const toggleBedrooms = (value: number) => {
