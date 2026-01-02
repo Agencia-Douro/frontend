@@ -15,7 +15,7 @@ export function Apresentadora() {
         <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
                 <div className="space-y-6 md:space-y-8 text-center lg:text-left">
-                    <span className="body-14-medium text-gold uppercase tracking-wider">Apresentadora</span>
+                    <span className="body-14-medium text-brown uppercase tracking-wider">Apresentadora</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">Vânia Fernandes</h2>
 
                     <div className="space-y-4">
@@ -26,7 +26,7 @@ export function Apresentadora() {
                     {/* Estatísticas */}
                     <div className="grid grid-cols-2 gap-6 md:gap-8 pt-4">
                         <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-gold">
+                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.anosExperiencia}+
                             </div>
                             <p className="body-16-medium text-black">
@@ -34,7 +34,7 @@ export function Apresentadora() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-gold">
+                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.eurosEmTransacoes}M+
                             </div>
                             <p className="body-16-medium text-black">
@@ -42,7 +42,7 @@ export function Apresentadora() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-gold">
+                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.clientesSatisfeitos}+
                             </div>
                             <p className="body-16-medium text-black">
@@ -50,7 +50,7 @@ export function Apresentadora() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-gold">
+                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.episodiosPublicados}+
                             </div>
                             <p className="body-16-medium text-black">

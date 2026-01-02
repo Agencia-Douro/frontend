@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi } from "@/services/api";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
-import Logo from "@/public/Logo.svg";
+import logoPodcast from "@/public/logoPodcast.jpg";
 
 // Episódios em destaque
 const FEATURED_EPISODES = [
@@ -125,7 +125,7 @@ export default function PodcastPage() {
             </section>
 
             <div className="hidden lg:flex justify-center mt-20">
-                <Image src={Logo} alt="logo" width={200} height={90} className="hidden lg:block " />
+                <Image src={logoPodcast} alt="logo podcast" width={200} height={90} className="hidden lg:block " />
             </div>
 
             {/* Terceira Seção - Episódios */}
