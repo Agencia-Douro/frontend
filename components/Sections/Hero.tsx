@@ -78,8 +78,8 @@ export default function Hero() {
             <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-0 lg:gap-4 min-h-[60vh] lg:min-h-0">
                 {/* Logo 3D - aparece primeiro no mobile, à direita no desktop */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                     className="w-full lg:w-auto flex justify-center lg:justify-start lg:order-2"
                 >

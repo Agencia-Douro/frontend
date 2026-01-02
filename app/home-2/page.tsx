@@ -213,8 +213,8 @@ export default function Home() {
 
   const testemunhos = [
     { text: "A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!", image: testemunho1, name: "Lucimara Bordignon Borghetti" },
-    { text: "Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vania Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre.", image: testemunho2, name: "Maria Oliveira" },
-    { text: "Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vania Fernandes !", image: testemunho3, name: "Walter Martins" }
+    { text: "Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vânia Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre.", image: testemunho2, name: "Maria Oliveira" },
+    { text: "Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vânia Fernandes !", image: testemunho3, name: "Walter Martins" }
   ];
 
   return (
