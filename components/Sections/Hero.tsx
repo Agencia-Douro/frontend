@@ -8,11 +8,11 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import Folha from "../Folha";
-import { Pinyon_Script } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import ModelViewer from "../ModelViewer";
 
-const pynionScript = Pinyon_Script({
-    weight: "400",
+const playfairDisplay = Playfair_Display({
+    weight: ["400", "700"],
     subsets: ["latin"],
 });
 
@@ -103,12 +103,12 @@ export default function Hero() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.h1
-                        className={`text-balance heading-tres-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${pynionScript.className}`}
+                        className={`text-balance heading-tres-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${playfairDisplay.className}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     >
-                        A imobiliária mais exclusiva de Portugal.
+                        <span className="whitespace-nowrap">A imobiliária mais</span> <span className="whitespace-nowrap">exclusiva de Portugal.</span>
                     </motion.h1>
                     <motion.p
                         className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block mx-auto lg:mx-0"
