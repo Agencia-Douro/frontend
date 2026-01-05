@@ -77,7 +77,7 @@ export default function Header() {
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
                         <Button
-                            variant="brown"
+                            variant="gold"
                             onClick={(e) => {
                                 e.preventDefault();
                                 const contactoSection = document.getElementById('contacto');

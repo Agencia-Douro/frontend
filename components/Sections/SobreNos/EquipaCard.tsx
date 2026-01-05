@@ -36,3 +36,4 @@ export function EquipaCard({ name, email, phone }: EquipaCardProps) {
 
 
 
+

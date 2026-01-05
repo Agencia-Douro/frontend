@@ -82,11 +82,11 @@ function ImoveisContent() {
     };
 
     return (
-        <section>
+        <section className="h-[calc(100vh-73px)] overflow-hidden">
             <div className="container flex flex-col lg:flex-row lg:divide-x divide-[#EAE6DF] h-full overflow-hidden">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} basePath="/imoveis-luxo" />
-                <div className="border-r border-[#EAE6DF] bg-deaf w-full">
-                    <div className="px-4 md:px-6 py-4 flex flex-col sm:flex-row gap-4 sm:justify-between border-b border-[#EAE6DF]">
+                <div className="border-r border-[#EAE6DF] bg-deaf w-full flex flex-col overflow-hidden min-h-0">
+                    <div className="px-4 md:px-6 py-4 flex flex-col sm:flex-row gap-4 sm:justify-between border-b border-[#EAE6DF] shrink-0">
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => setSidebarOpen(true)}
@@ -133,24 +133,26 @@ function ImoveisContent() {
                             </Select>
                         </div>
                     </div>
-                    {isLoading ? (<div className="grid place-content-center h-full"><p>A carregar imóveis</p></div>) : error ?
-                        (<div className="grid place-content-center h-full"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
-                            (<div className="grid place-content-center h-full text-center p-4">
-                                <p className="body-16-medium text-brown">Nenhum correspondência.</p>
-                                <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
-                            </div>) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                                    {filteredData.data.map((property) => (
-                                        <Card
-                                            key={property.id}
-                                            image={property.image}
-                                            href={`/imoveis/${property.id}`}
-                                            titulo={property.title}
-                                            localizacao={`${property.concelho}, ${property.distrito}`}
-                                            preco={property.price}
-                                        />))}
-                                </div>
-                            )}
+                    <div className="flex-1 overflow-y-auto min-h-0">
+                        {isLoading ? (<div className="grid place-content-center h-full min-h-[400px]"><p>A carregar imóveis</p></div>) : error ?
+                            (<div className="grid place-content-center h-full min-h-[400px]"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
+                                (<div className="grid place-content-center h-full min-h-[400px] text-center p-4">
+                                    <p className="body-16-medium text-brown">Nenhum correspondência.</p>
+                                    <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
+                                </div>) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                                        {filteredData.data.map((property) => (
+                                            <Card
+                                                key={property.id}
+                                                image={property.image}
+                                                href={`/imoveis/${property.id}`}
+                                                titulo={property.title}
+                                                localizacao={`${property.concelho}, ${property.distrito}`}
+                                                preco={property.price}
+                                            />))}
+                                    </div>
+                                )}
+                    </div>
                 </div>
             </div>
         </section>
