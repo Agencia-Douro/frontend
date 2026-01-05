@@ -34,7 +34,6 @@ interface ModelViewerProps {
   cameraControls?: boolean;
   className?: string;
   style?: React.CSSProperties;
-  hideLoadingFallback?: boolean;
 }
 
 function LoadingFallback() {
@@ -58,7 +57,6 @@ export default function ModelViewer({
   cameraControls = true,
   className,
   style,
-  hideLoadingFallback = false,
 }: ModelViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -95,7 +93,7 @@ export default function ModelViewer({
       className={className}
       style={style}
     >
-      <Suspense fallback={hideLoadingFallback ? null : <LoadingFallback />}>
+      <Suspense fallback={<LoadingFallback />}>
         <Canvas
           camera={{ position: [0, 2, 15], fov: 50 }}
           style={{ width: '100%', height: '100%' }}

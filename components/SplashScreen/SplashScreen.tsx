@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/public/Logo.svg";
-import ModelViewer from "../ModelViewer";
 
 export default function SplashScreen() {
     const pathname = usePathname();
@@ -66,40 +65,22 @@ export default function SplashScreen() {
 
     return (
         <div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-deaf overflow-hidden"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-deaf"
             style={{
                 opacity,
                 transition: "opacity 400ms ease-out",
             }}>
-            {/* Modelo 3D com tamanho do logo */}
-            <div className="absolute z-0 w-[140px] h-[63px] md:w-[168px] md:h-[76px] lg:w-[196px] lg:h-[88px] pointer-events-none">
-                <ModelViewer
-                    src="/model3.gltf"
-                    alt="Modelo 3D"
-                    autoRotate
-                    cameraControls={false}
-                    hideLoadingFallback={true}
-                    style={{ 
-                        width: '100%', 
-                        height: '100%'
-                    }}
-                />
-            </div>
-            
-            {/* Logo no centro */}
-            <div className="absolute z-10">
-                <Image
-                    src={Logo}
-                    alt="Agência Douro"
-                    width={200}
-                    height={90}
-                    className="w-auto h-20 md:h-24 lg:h-28"
-                    style={{
-                        transform: "scale(0.7)",
-                    }}
-                    priority
-                />
-            </div>
+            <Image
+                src={Logo}
+                alt="Agência Douro"
+                width={200}
+                height={90}
+                className="w-auto h-20 md:h-24 lg:h-28"
+                style={{
+                    transform: "scale(0.7)",
+                }}
+                priority
+            />
         </div>
     );
 }
