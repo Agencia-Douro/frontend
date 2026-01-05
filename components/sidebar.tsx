@@ -160,17 +160,6 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("empreendimentos")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
-                                        ? "text-white bg-brown"
-                                        : "text-brown bg-muted"
-                                        }`}
-                                >
-                                    Empreendimentos
-                                </button>
-
-                                <button
-                                    type="button"
                                     onClick={() => setTransactionType("trespasse")}
                                     className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
                                         ? "text-white bg-brown"
@@ -180,6 +169,16 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     Trespasse
                                 </button>
                             </div>
+                            <button
+                                    type="button"
+                                    onClick={() => setTransactionType("empreendimentos")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer w-full ${transactionType === "empreendimentos"
+                                        ? "text-white bg-brown"
+                                        : "text-brown bg-muted"
+                                        }`}
+                                >
+                                    Empreendimentos
+                                </button>
                         </div>
                         {/* 1. Tipo de Imóvel */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
