@@ -75,7 +75,7 @@ export default function SplashScreen() {
                 alt="Agência Douro"
                 width={200}
                 height={90}
-                className="w-auto h-20 md:h-24 lg:h-28"
+                className="w-auto h-24 md:h-32 lg:h-40"
                 style={{
                     transform: "scale(0.7)",
                 }}
