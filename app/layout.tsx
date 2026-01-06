@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={monaSans.variable}>
+    <html lang="pt-BR" className={`${monaSans.variable} overflow-x-hidden`}>
       <body className="antialiased bg-muted max-w-screen overflow-x-hidden flex flex-col relative">
         <QueryProvider>
           <SplashScreen />

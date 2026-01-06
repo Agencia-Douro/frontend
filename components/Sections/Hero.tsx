@@ -90,8 +90,8 @@ export default function Hero() {
                         alt="Modelo 3D"
                         autoRotate
                         cameraControls
-                        style={{ width: '450px', height: '450px' }}
-                        className="lg:w-[700px]! lg:h-[550px]! mx-auto lg:mx-0 pointer-events-none lg:pointer-events-auto"
+                        style={{ width: '100%', maxWidth: '450px', height: '450px' }}
+                        className="lg:!w-[700px] lg:!h-[550px] lg:!max-w-none mx-auto lg:mx-0 pointer-events-none lg:pointer-events-auto"
                     />
                 </motion.div>
 
