@@ -91,7 +91,7 @@ export default function Hero() {
                         autoRotate
                         cameraControls
                         style={{ width: '450px', height: '450px' }}
-                        className="lg:w-[700px]! lg:h-[550px]! mx-auto lg:mx-0"
+                        className="lg:w-[700px]! lg:h-[550px]! mx-auto lg:mx-0 pointer-events-none lg:pointer-events-auto"
                     />
                 </motion.div>
 
