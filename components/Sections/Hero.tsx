@@ -23,13 +23,8 @@ export default function Hero() {
     const [transactionType, setTransactionType] = useState<TransactionType>("comprar");
     const [localizacao, setLocalizacao] = useState<string>("");
     const [tipo, setTipo] = useState<string>("");
-    const [preco, setPreco] = useState<string>("");
+    const [tipologia, setTipologia] = useState<string>("");
     const [shouldAnimate, setShouldAnimate] = useState(false);
-
-    // Limpar preço quando mudar o tipo de transação
-    useEffect(() => {
-        setPreco("");
-    }, [transactionType]);
 
     // Iniciar animações após a splash screen desaparecer
     // Splash screen: 2s mínimo + 400ms fade out = 2.4s total
@@ -61,11 +56,8 @@ export default function Hero() {
         // Tipo = propertyType
         if (tipo) params.set("propertyType", tipo);
 
-        // Preço = maxPrice (extrair o valor máximo do range)
-        if (preco) {
-            const maxPrice = preco.split("-")[1];
-            params.set("maxPrice", maxPrice);
-        }
+        // Tipologia = bedrooms
+        if (tipologia) params.set("bedrooms", tipologia);
 
         router.push(`/imoveis?${params.toString()}`);
     };
@@ -193,17 +185,17 @@ export default function Hero() {
                         </Select>
                     </div>
                     <div className="flex flex-col gap-1 w-full">
-                        <Label htmlFor="preco">Preço Máximo</Label>
-                        <Select value={preco} onValueChange={setPreco}>
-                            <SelectTrigger id="preco" name="preco">
+                        <Label htmlFor="tipologia">Tipologia</Label>
+                        <Select value={tipologia} onValueChange={setTipologia}>
+                            <SelectTrigger id="tipologia" name="tipologia">
                                 <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                <SelectItem value="0-100000">100.000€</SelectItem>
-                                <SelectItem value="100000-200000">200.000€</SelectItem>
-                                <SelectItem value="200000-500000">500.000€</SelectItem>
-                                <SelectItem value="500000-1000000">1.000.000€</SelectItem>
-                                <SelectItem value="1000000-2000000">2.000.000€</SelectItem>
+                                <SelectItem value="0">T0</SelectItem>
+                                <SelectItem value="1">T1</SelectItem>
+                                <SelectItem value="2">T2</SelectItem>
+                                <SelectItem value="3">T3</SelectItem>
+                                <SelectItem value="4">T4</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
