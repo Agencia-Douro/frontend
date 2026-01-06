@@ -63,7 +63,7 @@ export default function ModelViewer({
 }: ModelViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Permitir scroll da página mesmo quando o rato está sobre o canvas
+  // Permitir scroll da página mesmo quando o rato/dedo está sobre o canvas
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -80,12 +80,37 @@ export default function ModelViewer({
       e.stopPropagation();
     };
 
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchY;
+
+      // Permitir scroll da página
+      window.scrollBy({
+        top: deltaY,
+        behavior: 'auto'
+      });
+
+      touchStartY = touchY;
+    };
+
     const canvas = container.querySelector('canvas');
     if (canvas) {
-      // Usar capture phase para interceptar antes do OrbitControls
+      // Desktop: Usar capture phase para interceptar antes do OrbitControls
       canvas.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+
+      // Mobile: Adicionar listeners de touch
+      canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
+      canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+
       return () => {
         canvas.removeEventListener('wheel', handleWheel, { capture: true } as EventListenerOptions);
+        canvas.removeEventListener('touchstart', handleTouchStart);
+        canvas.removeEventListener('touchmove', handleTouchMove);
       };
     }
   }, []);

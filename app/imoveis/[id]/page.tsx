@@ -555,7 +555,7 @@ export default function ImovelDetails() {
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">Ficheiros</p>
                                 <Button
-                                    variant="brown"
+                                    variant="gold"
                                     size="default"
                                     onClick={() => setShowFilesModal(true)}
                                 >
