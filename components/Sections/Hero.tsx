@@ -103,7 +103,7 @@ export default function Hero() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.h1
-                        className={`text-balance heading-tres-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${playfairDisplay.className}`}
+                        className={`text-balance text-[2rem] leading-tight font-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${playfairDisplay.className}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
