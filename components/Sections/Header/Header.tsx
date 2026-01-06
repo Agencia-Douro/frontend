@@ -140,7 +140,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
+                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto"
                             >
                                 <motion.div
                                     initial="closed"
@@ -159,7 +159,7 @@ export default function Header() {
                                             },
                                         },
                                     }}
-                                    className="flex flex-col justify-between items-end h-full"
+                                    className="flex flex-col items-end gap-10"
                                 >
                                     {[
                                         { href: "/imoveis", label: "Imóveis" },
