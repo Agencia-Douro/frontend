@@ -165,6 +165,7 @@ export default function Header() {
                                         { href: "/imoveis", label: "Imóveis" },
                                         { href: "/imoveis-luxo", label: "Imóveis de luxo" },
                                         { href: "/institucional/sobre-nos", label: "Institucional" },
+                                        { href: "/institucional/podcast", label: "Podcast" },
                                         { href: "/newsletter", label: "Newsletter" },
                                     ].map((item) => (
                                         <motion.div
