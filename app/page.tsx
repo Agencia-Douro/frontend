@@ -34,7 +34,6 @@ export default function Home() {
       <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-8 lg:mt-12 xl:mt-16"></div>
       <Testemunhos />
       <FaleConnosco />
-      
       <Footer />
     </>
   );

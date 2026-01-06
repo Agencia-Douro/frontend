@@ -128,30 +128,30 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
             >
                 <div className="flex justify-between items-center w-full">
-                    <div className="flex flex-row w-full">
+                    <div className="grid grid-cols-2 md:flex md:flex-row w-full gap-0">
                         <Button
                             type="button"
                             variant={transactionType === "comprar" ? "gold" : "ghost"}
-                            className="px-4.5 w-1/3 md:w-min"
+                            className="px-4.5 md:w-min"
                             onClick={() => setTransactionType("comprar")}
                         >
                             Comprar
                         </Button>
                         <Button
                             type="button"
-                            variant={transactionType === "empreendimentos" ? "gold" : "ghost"}
-                            className="px-4.5 w-1/3 md:w-min"
-                            onClick={() => setTransactionType("empreendimentos")}
-                        >
-                            Empreendimentos
-                        </Button>
-                        <Button
-                            type="button"
                             variant={transactionType === "trespasse" ? "gold" : "ghost"}
-                            className="px-4.5 w-1/3 md:w-min"
+                            className="px-4.5 md:w-min"
                             onClick={() => setTransactionType("trespasse")}
                         >
                             Trespasse
+                        </Button>
+                        <Button
+                            type="button"
+                            variant={transactionType === "empreendimentos" ? "gold" : "ghost"}
+                            className="px-4.5 col-span-2 md:col-span-1 md:w-min"
+                            onClick={() => setTransactionType("empreendimentos")}
+                        >
+                            Empreendimentos
                         </Button>
                     </div>
                     <Button type="submit" variant="gold" className="px-4.5 hidden md:block">
