@@ -8,9 +8,10 @@ import * as THREE from "three";
 interface ModelProps {
   src: string;
   autoRotate?: boolean;
+  initialRotation?: [number, number, number];
 }
 
-function Model({ src, autoRotate }: ModelProps) {
+function Model({ src, autoRotate, initialRotation = [0, 0, 0] }: ModelProps) {
   const { scene } = useGLTF(src);
   const modelRef = useRef<THREE.Group>(null);
 
@@ -22,7 +23,7 @@ function Model({ src, autoRotate }: ModelProps) {
 
   return (
     <Center scale={0.5} position={[0, -0.3, 0]}>
-      <primitive ref={modelRef} object={scene} rotation={[0, 0, 0]} />
+      <primitive ref={modelRef} object={scene} rotation={initialRotation} />
     </Center>
   );
 }
@@ -34,6 +35,7 @@ interface ModelViewerProps {
   cameraControls?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  initialRotation?: [number, number, number];
 }
 
 function LoadingFallback() {
@@ -57,6 +59,7 @@ export default function ModelViewer({
   cameraControls = true,
   className,
   style,
+  initialRotation,
 }: ModelViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -96,7 +99,7 @@ export default function ModelViewer({
       <Suspense fallback={<LoadingFallback />}>
         <Canvas
           camera={{ position: [0, 2, 15], fov: 50 }}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', touchAction: 'pan-y' }}
           gl={{
             antialias: true,
             powerPreference: "high-performance"
@@ -112,7 +115,7 @@ export default function ModelViewer({
               <Environment preset="sunset" />
             </Suspense>
 
-            <Model src={src} autoRotate={autoRotate} />
+            <Model src={src} autoRotate={autoRotate} initialRotation={initialRotation} />
 
             {cameraControls && (
               <OrbitControls
