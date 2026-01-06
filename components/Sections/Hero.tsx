@@ -207,7 +207,7 @@ export default function Hero() {
                         </Select>
                     </div>
                 </div>
-                <Button type="submit" variant="brown" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
+                <Button type="submit" variant="gold" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
             </motion.form>
         </section>
     )
