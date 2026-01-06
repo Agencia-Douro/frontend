@@ -100,7 +100,12 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
-                <div className="flex flex-col items-center">
+                {/* Mobile - apenas "Avaliador" */}
+                <div className="flex md:hidden flex-col items-center">
+                    <div className="text-[10px] font-bold leading-tight">AVALIADOR</div>
+                </div>
+                {/* Desktop - "Avaliador Online" */}
+                <div className="hidden md:flex flex-col items-center">
                     <div className="button-14-medium">AVALIADOR</div>
                     <div className="button-14-medium">ONLINE</div>
                 </div>
