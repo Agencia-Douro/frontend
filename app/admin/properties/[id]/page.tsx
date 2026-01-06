@@ -70,6 +70,8 @@ export default function PropertyDetailsPage() {
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", propertyId],
         queryFn: () => propertiesApi.getById(propertyId),
+        refetchInterval: 2000,
+        refetchIntervalInBackground: true,
     })
 
     const deleteMutation = useMutation({

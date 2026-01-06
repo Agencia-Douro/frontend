@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
       {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3008",
+        pathname: "/uploads/**",
+      },
+      {
         protocol: "https",
         hostname: "novo.agenciadouro.pt",
         pathname: "/**",

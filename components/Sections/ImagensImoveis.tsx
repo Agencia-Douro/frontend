@@ -255,7 +255,7 @@ export default function ImagensImoveis({
                 {property.imageSections && property.imageSections.length > 0 ? (
                   property.imageSections.map((section, sectionIndex) => {
                     const imageCount = section.images.length;
-                    const imagesToShow = section.images.slice(0, 3);
+                    const imagesToShow = section.images
 
                     return (
                       <div key={section.id} className={`grid grid-cols-1 lg:grid-cols-6 ${sectionIndex === property.imageSections!.length - 1 ? 'pb-8' : ''}`}>
