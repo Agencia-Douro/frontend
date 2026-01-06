@@ -170,15 +170,15 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                             </div>
                             <button
-                                    type="button"
-                                    onClick={() => setTransactionType("empreendimentos")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer w-full ${transactionType === "empreendimentos"
-                                        ? "text-white bg-brown"
-                                        : "text-brown bg-muted"
-                                        }`}
-                                >
-                                    Empreendimentos
-                                </button>
+                                type="button"
+                                onClick={() => setTransactionType("empreendimentos")}
+                                className={`grow body-14-medium py-1.5 cursor-pointer w-full ${transactionType === "empreendimentos"
+                                    ? "text-white bg-brown"
+                                    : "text-brown bg-muted"
+                                    }`}
+                            >
+                                Empreendimentos
+                            </button>
                         </div>
                         {/* 1. Tipo de Imóvel */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
@@ -519,11 +519,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                 <div className="flex flex-col h-full">
                     <div className="flex flex-col flex-1 overflow-y-auto remove-scrollbar">
                         <div className="p-4 border-b border-[#EAE6DF]">
-                            <div className="flex">
+                            <div className="grid grid-cols-2 gap-0">
                                 <button
                                     type="button"
                                     onClick={() => setTransactionType("comprar")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
+                                    className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
                                         ? "text-white bg-brown"
                                         : "text-brown bg-muted"
                                         }`}
@@ -532,24 +532,23 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("empreendimentos")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
-                                        ? "text-white bg-brown"
-                                        : "text-brown bg-muted"
-                                        }`}
-                                >
-                                    Empreendimentos
-                                </button>
-
-                                <button
-                                    type="button"
                                     onClick={() => setTransactionType("trespasse")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
+                                    className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
                                         ? "text-white bg-brown"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
                                     Trespasse
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setTransactionType("empreendimentos")}
+                                    className={`col-span-2 body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
+                                        ? "text-white bg-brown"
+                                        : "text-brown bg-muted"
+                                        }`}
+                                >
+                                    Empreendimentos
                                 </button>
                             </div>
                         </div>
