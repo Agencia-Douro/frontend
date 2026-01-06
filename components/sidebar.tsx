@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Switch } from "./ui/switch"
@@ -18,8 +18,17 @@ interface SidebarProps {
 export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose }: SidebarProps) {
     const router = useRouter()
     const searchParams = useSearchParams()
+    const isFirstRender = useRef(true)
 
-    const [transactionType, setTransactionType] = useState(searchParams.get("transactionType") || searchParams.get("isEmpreendimento") === "true" ? "empreendimentos" : "comprar")
+    // Determine initial selection based on URL params
+    const getInitialSelection = () => {
+        if (searchParams.get("isEmpreendimento") === "true") {
+            return "empreendimentos"
+        }
+        return searchParams.get("transactionType") || "comprar"
+    }
+
+    const [selection, setSelection] = useState(getInitialSelection())
     const [isArrendar, setIsArrendar] = useState(searchParams.get("transactionType") === "arrendar")
     const [onlyFavorites, setOnlyFavorites] = useState(searchParams.get("onlyFavorites") === "true")
     const [propertyType, setPropertyType] = useState(searchParams.get("propertyType") || "")
@@ -74,13 +83,22 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
 
     // Auto-apply filters when any field changes
     useEffect(() => {
+        // Skip the first render to avoid adding to history on initial page load
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
+
         const params = new URLSearchParams()
 
-        if (transactionType === "empreendimentos") {
+        // Handle selection: empreendimentos = comprar + isEmpreendimento=true
+        if (selection === "empreendimentos") {
+            params.set("transactionType", "comprar")
             params.set("isEmpreendimento", "true")
-        } else if (transactionType) {
-            params.set("transactionType", transactionType)
+        } else if (selection) {
+            params.set("transactionType", selection)
         }
+
         if (isArrendar) params.set("transactionType", "arrendar")
         if (onlyFavorites) params.set("onlyFavorites", "true")
         if (propertyType) params.set("propertyType", propertyType)
@@ -95,9 +113,9 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         if (bedrooms.length > 0) params.set("bedrooms", bedrooms.join(","))
         if (bathrooms.length > 0) params.set("bathrooms", bathrooms.join(","))
 
-        router.push(`${basePath}?${params.toString()}`)
+        router.replace(`${basePath}?${params.toString()}`)
     }, [
-        transactionType,
+        selection,
         isArrendar,
         onlyFavorites,
         propertyType,
@@ -116,7 +134,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     ])
 
     const handleReset = () => {
-        setTransactionType("comprar")
+        setSelection("comprar")
         setIsArrendar(false)
         setOnlyFavorites(false)
         setPropertyType("")
@@ -150,8 +168,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             <div className="flex">
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("comprar")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
+                                    onClick={() => setSelection("comprar")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${selection === "comprar"
                                         ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
@@ -160,8 +178,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("trespasse")}
-                                    className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
+                                    onClick={() => setSelection("trespasse")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${selection === "trespasse"
                                         ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
@@ -171,8 +189,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             </div>
                             <button
                                 type="button"
-                                onClick={() => setTransactionType("empreendimentos")}
-                                className={`grow body-14-medium py-1.5 cursor-pointer w-full ${transactionType === "empreendimentos"
+                                onClick={() => setSelection("empreendimentos")}
+                                className={`grow body-14-medium py-1.5 cursor-pointer w-full ${selection === "empreendimentos"
                                     ? "text-white bg-gold"
                                     : "text-brown bg-muted"
                                     }`}
@@ -519,11 +537,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                 <div className="flex flex-col h-full">
                     <div className="flex flex-col flex-1 overflow-y-auto remove-scrollbar">
                         <div className="p-4 border-b border-[#EAE6DF]">
-                            <div className="grid grid-cols-2 gap-0">
+                            <div className="flex">
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("comprar")}
-                                    className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
+                                    onClick={() => setSelection("comprar")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${selection === "comprar"
                                         ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
@@ -532,25 +550,25 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setTransactionType("trespasse")}
-                                    className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
+                                    onClick={() => setSelection("trespasse")}
+                                    className={`grow body-14-medium py-1.5 cursor-pointer ${selection === "trespasse"
                                         ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
                                     Trespasse
                                 </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setTransactionType("empreendimentos")}
-                                    className={`col-span-2 body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
-                                        ? "text-white bg-gold"
-                                        : "text-brown bg-muted"
-                                        }`}
-                                >
-                                    Empreendimentos
-                                </button>
                             </div>
+                            <button
+                                type="button"
+                                onClick={() => setSelection("empreendimentos")}
+                                className={`grow body-14-medium py-1.5 cursor-pointer w-full ${selection === "empreendimentos"
+                                    ? "text-white bg-gold"
+                                    : "text-brown bg-muted"
+                                    }`}
+                            >
+                                Empreendimentos
+                            </button>
                         </div>
                         {/* 1. Tipo de Imóvel */}
                         <div className="p-4 flex flex-col gap-2 border-b border-[#EAE6DF]">
