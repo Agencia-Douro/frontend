@@ -17,12 +17,26 @@ export default function Header() {
     // Bloquear scroll quando menu mobile está aberto
     useEffect(() => {
         if (mobileMenuOpen) {
-            document.body.style.overflow = "hidden";
+            // Guardar posição atual de scroll
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = "";
+            // Restaurar posição de scroll
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
         }
         return () => {
-            document.body.style.overflow = "";
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
         };
     }, [mobileMenuOpen]);
 
@@ -126,7 +140,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-end py-16 pr-8 gap-6 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
+                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col justify-between items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
                             >
                                 <motion.div
                                     initial="closed"
