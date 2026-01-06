@@ -5,15 +5,15 @@ import FooterIcons from "./FooterIcons"
 export default function Footer() {
     return (
         <>
-            <div className="relative w-screen">
+            <div className="relative w-screen hidden lg:block">
                 <svg className="w-full h-auto" viewBox="0 0 1440 128" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M1440 127.851H0V61.1843C0 61.1843 179.15 130.661 291.86 126.851C423.461 122.403 489.881 56.1062 623.5 54.7866C789.18 53.1504 871.583 127.032 1037.5 126.851C1199.11 126.675 1440 0 1440 0V127.851Z" fill="#EDE3D7"/>
+                    <path d="M1440 127.851H0V61.1843C0 61.1843 179.15 130.661 291.86 126.851C423.461 122.403 489.881 56.1062 623.5 54.7866C789.18 53.1504 871.583 127.032 1037.5 126.851C1199.11 126.675 1440 0 1440 0V127.851Z" fill="#EDE3D7" />
                 </svg>
                 <svg className="absolute top-0 left-0 w-full h-auto" viewBox="0 0 1440 131" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M1441 1.76953C1441 1.76953 1199.78 128.442 1037.94 128.618C871.794 128.799 789.276 54.9191 623.366 56.5553C489.562 57.8749 423.049 124.17 291.265 128.618C178.399 132.428 -1 62.9528 -1 62.9528" stroke="#DCB053" strokeWidth="2"/>
+                    <path d="M1441 1.76953C1441 1.76953 1199.78 128.442 1037.94 128.618C871.794 128.799 789.276 54.9191 623.366 56.5553C489.562 57.8749 423.049 124.17 291.265 128.618C178.399 132.428 -1 62.9528 -1 62.9528" stroke="#DCB053" strokeWidth="2" />
                 </svg>
             </div>
-            <footer className="py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7]">
+            <footer className="py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7] border-t border-t-gold lg:border-none">
                 <div className="container space-y-4 md:space-y-8">
                     <div className="flex flex-col gap-8 md:flex-row justify-between relative">
                         <Folha className="rotate-345 top-12 left-0 text-brown" />
@@ -29,7 +29,19 @@ export default function Footer() {
                                 </clipPath>
                             </defs>
                         </svg>
-                        <div className="flex gap-16 flex-wrap mt-12 md:mt-0">
+                        <div className="lg:hidden flex gap-16 flex-wrap mt-12 md:mt-0">
+                            <ul className="space-y-4">
+                                <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Ínicio</Link></li>
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Imóveis</Link></li>
+                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Sobre Nós</Link></li>
+                            </ul>
+                            <ul className="space-y-4">
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Comprar</Link></li>
+                                <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Arrendar</Link></li>
+                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Empreendimentos</Link></li>
+                            </ul>
+                        </div>
+                        <div className="hidden lg:flex gap-16 flex-wrap mt-12 md:mt-0">
                             <ul className="space-y-4">
                                 <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Ínicio</Link></li>
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Imóveis</Link></li>

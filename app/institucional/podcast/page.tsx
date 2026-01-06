@@ -69,26 +69,20 @@ export default function PodcastPage() {
                     <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">Podcast Agência Douro</h1>
                     <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">Conversas sobre o Mercado Imobiliário de Luxo em Portugal</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
-                        Um espaço criado para discutir as principais tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal. A cada episódio, recebemos especialistas, empreendedores e profissionais do ramo para partilhar insights valiosos, experiências e dicas práticas.
-                    </p>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
-                        Queremos ser uma fonte confiável de informação e inspiração para quem vive ou deseja ingressar neste mercado dinâmico. Seja você um investidor experiente, um corretor imobiliário ou alguém interessado no setor, o Podcast Agência Douro traz conversas envolventes e cheias de aprendizado sobre o mundo imobiliário e dos negócios.
-                    </p>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
-                        Fique ligado e siga as nossas redes sociais para mais novidades. Prepare-se para uma jornada pelo mercado imobiliário português!
+                        Um podcast dedicado a discutir tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal, com a participação de especialistas e profissionais do setor. O Podcast Agência Douro oferece insights práticos e conteúdos inspiradores para investidores, corretores e interessados no mercado imobiliário e nos negócios, sendo uma fonte confiável de informação sobre o setor português.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <StatCard value={config?.episodiosPublicados?.toString() || ""} label="Episódios" />
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                    <StatCard value={config?.episodiosPublicados?.toString() || ""} label="Episódios" className="hidden md:block" />
                     <StatCard value={config?.temporadas?.toString() || ""} label="Temporadas" />
                     <StatCard value={config?.especialistasConvidados?.toString() || ""} label="Convidados" />
                 </div>
             </section>
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-4 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
 
             <Apresentadora />
 
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-4 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
 
             {/* Segunda Seção - O Que Abordamos */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
@@ -101,22 +95,22 @@ export default function PodcastPage() {
                         title="Tendências de Mercado"
                         description="Análises profundas sobre as tendências atuais do mercado imobiliário de luxo em Portugal e oportunidades de investimento."
                     />
-                    <CulturaCard
+                    {/* <CulturaCard
                         title="Histórias de Sucesso"
                         description="Convidados partilham as suas experiências, desafios e conquistas no setor imobiliário português."
-                    />
+                    /> */}
                     <CulturaCard
                         title="Dicas de Investimento"
                         description="Conselhos práticos sobre como investir em imóveis de luxo, desde a escolha da localização até estratégias de valorização."
                     />
-                    <CulturaCard
+                    {/* <CulturaCard
                         title="Legislação e Processos"
                         description="Informações claras sobre aspectos legais, fiscais e burocráticos relacionados à compra e venda de imóveis."
-                    />
-                    <CulturaCard
+                    /> */}
+                    {/* <CulturaCard
                         title="Lifestyle & Design"
                         description="Discussões sobre arquitetura, design de interiores e o estilo de vida associado a imóveis de luxo."
-                    />
+                    /> */}
                     <CulturaCard
                         title="Visão Internacional"
                         description="Perspetivas sobre investidores estrangeiros em Portugal e comparações com outros mercados internacionais."
@@ -127,6 +121,9 @@ export default function PodcastPage() {
             <div className="hidden lg:flex justify-center mt-20">
                 <Image src={logoPodcast} alt="logo podcast" width={200} height={90} className="hidden lg:block " />
             </div>
+
+
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
 
             {/* Terceira Seção - Episódios */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">

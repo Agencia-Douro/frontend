@@ -19,8 +19,7 @@ export function Apresentadora() {
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">Vânia Fernandes</h2>
 
                     <div className="space-y-4">
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">Com mais de 15 anos de experiência no setor imobiliário do Norte de Portugal, Vânia Fernandes é uma voz respeitada e reconhecida no mercado. Especializada em imóveis residenciais e comerciais, já ajudou centenas de famílias a encontrar o lar dos seus sonhos.</p>
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">Como apresentadora do <strong>Podcast Norte Imobiliário & Business</strong>, partilha insights valiosos sobre o mercado, tendências de investimento e estratégias para compradores e vendedores. A sua paixão pelo setor e conhecimento profundo do mercado fazem dela a guia ideal para quem procura navegar no mundo imobiliário português.</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">Vânia Fernandes é uma profissional reconhecida do setor imobiliário no Norte de Portugal, com mais de 15 anos de experiência em imóveis residenciais e comerciais. Como apresentadora do Podcast Norte Imobiliário & Business, partilha conhecimentos, tendências e estratégias para compradores, vendedores e investidores no mercado imobiliário português.</p>
                     </div>
 
                     {/* Estatísticas */}
@@ -29,7 +28,7 @@ export function Apresentadora() {
                             <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.anosExperiencia}+
                             </div>
-                            <p className="body-16-medium text-black">
+                            <p className="body-16-medium text-brown">
                                 Anos de Experiência
                             </p>
                         </div>
@@ -37,7 +36,7 @@ export function Apresentadora() {
                             <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.eurosEmTransacoes}M+
                             </div>
-                            <p className="body-16-medium text-black">
+                            <p className="body-16-medium text-brown">
                                 Euros em Transações
                             </p>
                         </div>
@@ -45,7 +44,7 @@ export function Apresentadora() {
                             <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.clientesSatisfeitos}+
                             </div>
-                            <p className="body-16-medium text-black">
+                            <p className="body-16-medium text-brown">
                                 Clientes Satisfeitos
                             </p>
                         </div>
@@ -53,7 +52,7 @@ export function Apresentadora() {
                             <div className="heading-tres-regular md:heading-dois-regular text-brown">
                                 {siteConfig?.episodiosPublicados}+
                             </div>
-                            <p className="body-16-medium text-black">
+                            <p className="body-16-medium text-brown">
                                 Episódios Gravados
                             </p>
                         </div>
