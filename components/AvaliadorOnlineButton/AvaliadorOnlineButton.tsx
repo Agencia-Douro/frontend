@@ -239,7 +239,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                             <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados</label>
                         </div>
                         <DialogFooter>
-                            <Button type="submit" variant="brown" className="w-full">Solicitar Avaliação</Button>
+                            <Button type="submit" variant="gold" className="w-full">Solicitar Avaliação</Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>

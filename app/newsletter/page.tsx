@@ -58,7 +58,7 @@ export default function NewsletterPage() {
                         <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-12 gap-6">
                             <div className="flex lg:flex-col gap-1 pr-6 border-r border-brown/10 lg:sticky lg:top-0 col-span-12 lg:col-span-3 xl:col-span-2">
                                 <Button 
-                                    variant={selectedCategory === null ? "brown" : "ghost"} 
+                                    variant={selectedCategory === null ? "gold" : "ghost"} 
                                     className="w-min"
                                     onClick={() => setSelectedCategory(null)}>
                                     Todas
@@ -66,7 +66,7 @@ export default function NewsletterPage() {
                                 {CATEGORIES.map((category) => (
                                     <Button 
                                         key={category.value}
-                                        variant={selectedCategory === category.value ? "brown" : "ghost"} 
+                                        variant={selectedCategory === category.value ? "gold" : "ghost"} 
                                         className="w-min"
                                         onClick={() => setSelectedCategory(category.value)}>
                                         {category.label}

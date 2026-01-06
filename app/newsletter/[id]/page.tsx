@@ -113,7 +113,7 @@ export default function NewsletterDetailsPage() {
                     <div className="clear-both"></div>
                 </div>
             </section>
-            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8" />
+            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8 mt-4" />
             {newsletter.properties && newsletter.properties.length > 0 && (
                 <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center container">
                     <Image

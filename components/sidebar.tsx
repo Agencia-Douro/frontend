@@ -152,7 +152,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     type="button"
                                     onClick={() => setTransactionType("comprar")}
                                     className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
-                                        ? "text-white bg-brown"
+                                        ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
@@ -162,7 +162,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     type="button"
                                     onClick={() => setTransactionType("trespasse")}
                                     className={`grow body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
-                                        ? "text-white bg-brown"
+                                        ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
@@ -173,7 +173,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 type="button"
                                 onClick={() => setTransactionType("empreendimentos")}
                                 className={`grow body-14-medium py-1.5 cursor-pointer w-full ${transactionType === "empreendimentos"
-                                    ? "text-white bg-brown"
+                                    ? "text-white bg-gold"
                                     : "text-brown bg-muted"
                                     }`}
                             >
@@ -524,7 +524,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     type="button"
                                     onClick={() => setTransactionType("comprar")}
                                     className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "comprar"
-                                        ? "text-white bg-brown"
+                                        ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
@@ -534,7 +534,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     type="button"
                                     onClick={() => setTransactionType("trespasse")}
                                     className={`body-14-medium py-1.5 cursor-pointer ${transactionType === "trespasse"
-                                        ? "text-white bg-brown"
+                                        ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >
@@ -544,7 +544,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     type="button"
                                     onClick={() => setTransactionType("empreendimentos")}
                                     className={`col-span-2 body-14-medium py-1.5 cursor-pointer ${transactionType === "empreendimentos"
-                                        ? "text-white bg-brown"
+                                        ? "text-white bg-gold"
                                         : "text-brown bg-muted"
                                         }`}
                                 >

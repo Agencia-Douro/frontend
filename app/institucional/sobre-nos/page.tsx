@@ -73,7 +73,7 @@ export default function InstitucionalPage() {
                         <span className="button-14-medium text-gold">O Que Oferecemos</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">Os Nossos Serviços</h2>
                     </div>
-                    <Button variant="brown">
+                    <Button variant="gold">
                         <Link href="/institucional/sobre-nos#contacto">Pedir informações</Link>
                     </Button>
                 </div>
