@@ -341,5 +341,87 @@
     "viewFullPage": "Voir la page complète",
     "propertyIn": "Propriété à",
     "notAvailable": "N/A"
+  },
+  "VenderImovel": {
+    "hero": {
+      "badge": "Vendre votre propriété",
+      "title": "Demandez une évaluation gratuite de votre propriété",
+      "description": "Notre équipe d'experts est prête à évaluer votre propriété et à vous aider à obtenir la meilleure valeur sur le marché. Remplissez le formulaire et recevez une évaluation professionnelle sans engagement."
+    },
+    "form": {
+      "title": "Décrivez votre propriété",
+      "name": "Nom",
+      "namePlaceholder": "Jean Dupont",
+      "phone": "Numéro de téléphone",
+      "phonePlaceholder": "+351 919 766 323",
+      "email": "Email",
+      "emailPlaceholder": "contact@agenciadouro.pt",
+      "location": "Emplacement",
+      "locationPlaceholder": "Porto, Portugal",
+      "propertyType": "Type de propriété",
+      "propertyTypePlaceholder": "Appartement, Maison, Terrain...",
+      "message": "Message supplémentaire",
+      "messagePlaceholder": "Parlez-nous de votre propriété...",
+      "submit": "Demander une évaluation"
+    },
+    "sendingRequest": "Envoi de la demande...",
+    "requestSentSuccess": "Demande envoyée avec succès ! Nous vous contactons bientôt.",
+    "requestSendError": "Erreur lors de l'envoi de la demande. Veuillez réessayer.",
+    "stats": {
+      "badge": "Notre portée",
+      "title": "Un réseau mondial à votre service",
+      "description": "Agência Douro fait partie d'un réseau immobilier d'excellence, garantissant que votre propriété atteigne les bons acheteurs au Portugal et dans le monde.",
+      "reach": {
+        "label": "Portée mondiale",
+        "description": "Présence dans plusieurs pays et continents"
+      },
+      "clients": {
+        "label": "Clients actifs",
+        "description": "Base de clients qualifiés et intéressés"
+      },
+      "locations": {
+        "label": "Emplacements",
+        "description": "Couverture au Portugal et internationale"
+      },
+      "experience": {
+        "label": "Années d'expérience",
+        "description": "Connaissance approfondie du marché"
+      }
+    },
+    "marketing": {
+      "badge": "Comment nous promouvons",
+      "title": "Canaux de promotion de votre propriété",
+      "description": "Nous utilisons une stratégie marketing multicanal pour garantir une exposition maximale de votre propriété aux acheteurs potentiels.",
+      "channels": {
+        "website": {
+          "title": "Site Web",
+          "description": "Promotion sur notre portail immobilier de haute qualité",
+          "stat": "+50 000 visiteurs/mois"
+        },
+        "newsletter": {
+          "title": "Newsletter",
+          "description": "Envoi à notre base de clients qualifiés",
+          "stat": "+10 000 abonnés"
+        },
+        "agencies": {
+          "title": "Agences partenaires",
+          "description": "Exposition dans les vitrines et bureaux",
+          "stat": "Réseau de partenaires"
+        },
+        "media": {
+          "title": "Réseaux sociaux",
+          "description": "Promotion sur les principales plateformes numériques",
+          "stat": "Engagement élevé"
+        }
+      }
+    },
+    "whyChooseUs": {
+      "title": "Pourquoi choisir Agência Douro ?",
+      "reason1": "Évaluation professionnelle et rigoureuse de votre propriété basée sur des données de marché à jour et une analyse comparative.",
+      "reason2": "Stratégie marketing personnalisée avec photographie professionnelle, visites virtuelles et promotion sur plusieurs canaux.",
+      "reason3": "Support complet tout au long du processus de vente, de la documentation à la conclusion de l'affaire.",
+      "reason4": "Équipe dédiée de consultants expérimentés avec une connaissance approfondie des marchés locaux et internationaux.",
+      "cta": "En savoir plus sur nous"
+    }
   }
 }

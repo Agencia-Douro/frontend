@@ -341,5 +341,87 @@
     "viewFullPage": "View full page",
     "propertyIn": "Property in",
     "notAvailable": "N/A"
+  },
+  "VenderImovel": {
+    "hero": {
+      "badge": "Sell your property",
+      "title": "Request a free property evaluation",
+      "description": "Our team of experts is ready to evaluate your property and help you get the best market value. Fill out the form and receive a professional evaluation with no commitment."
+    },
+    "form": {
+      "title": "Describe your property",
+      "name": "Name",
+      "namePlaceholder": "John Smith",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+351 919 766 323",
+      "email": "Email",
+      "emailPlaceholder": "contact@agenciadouro.pt",
+      "location": "Location",
+      "locationPlaceholder": "Porto, Portugal",
+      "propertyType": "Property Type",
+      "propertyTypePlaceholder": "Apartment, House, Land...",
+      "message": "Additional Message",
+      "messagePlaceholder": "Tell us more about your property...",
+      "submit": "Request Evaluation"
+    },
+    "sendingRequest": "Sending request...",
+    "requestSentSuccess": "Request sent successfully! We will contact you soon.",
+    "requestSendError": "Error sending request. Please try again.",
+    "stats": {
+      "badge": "Our reach",
+      "title": "A global network at your service",
+      "description": "Agência Douro is part of an excellence real estate network, ensuring your property reaches the right buyers in Portugal and worldwide.",
+      "reach": {
+        "label": "Global Reach",
+        "description": "Presence in multiple countries and continents"
+      },
+      "clients": {
+        "label": "Active Clients",
+        "description": "Base of qualified and interested clients"
+      },
+      "locations": {
+        "label": "Locations",
+        "description": "Coverage in Portugal and international"
+      },
+      "experience": {
+        "label": "Years of Experience",
+        "description": "Deep market knowledge"
+      }
+    },
+    "marketing": {
+      "badge": "How we promote",
+      "title": "Your property promotion channels",
+      "description": "We use a multi-channel marketing strategy to ensure maximum exposure of your property to potential buyers.",
+      "channels": {
+        "website": {
+          "title": "Website",
+          "description": "Promotion on our high-quality real estate portal",
+          "stat": "+50,000 visitors/month"
+        },
+        "newsletter": {
+          "title": "Newsletter",
+          "description": "Sent to our qualified client base",
+          "stat": "+10,000 subscribers"
+        },
+        "agencies": {
+          "title": "Partner Agencies",
+          "description": "Exposure in storefronts and offices",
+          "stat": "Partner network"
+        },
+        "media": {
+          "title": "Social Media",
+          "description": "Promotion on main digital platforms",
+          "stat": "High engagement"
+        }
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why choose Agência Douro?",
+      "reason1": "Professional and rigorous evaluation of your property based on updated market data and comparative analysis.",
+      "reason2": "Personalized marketing strategy with professional photography, virtual tours and promotion across multiple channels.",
+      "reason3": "Complete support throughout the sales process, from documentation to closing the deal.",
+      "reason4": "Dedicated team of experienced consultants with deep knowledge of local and international markets.",
+      "cta": "Learn more about us"
+    }
   }
 }

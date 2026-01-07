@@ -307,7 +307,7 @@
     }
   },
   "Header": {
-    "home": "Home",
+    "home": "Início",
     "properties": "Imóveis",
     "buy": "Comprar",
     "developments": "Empreendimentos",
@@ -341,5 +341,87 @@
     "viewFullPage": "Ver página completa",
     "propertyIn": "Imóvel em",
     "notAvailable": "N/A"
+  },
+  "VenderImovel": {
+    "hero": {
+      "badge": "Vender o seu imóvel",
+      "title": "Solicite uma avaliação gratuita do seu imóvel",
+      "description": "A nossa equipa de especialistas está pronta para avaliar o seu imóvel e ajudá-lo a obter o melhor valor no mercado. Preencha o formulário e receba uma avaliação profissional sem compromisso."
+    },
+    "form": {
+      "title": "Descreva o seu imóvel",
+      "name": "Nome",
+      "namePlaceholder": "Tomas Ribeiro Silva",
+      "phone": "Número de Telemóvel",
+      "phonePlaceholder": "+351 919 766 323",
+      "email": "Email",
+      "emailPlaceholder": "contacto@agenciadouro.pt",
+      "location": "Localização",
+      "locationPlaceholder": "Porto, Portugal",
+      "propertyType": "Tipo de Imóvel",
+      "propertyTypePlaceholder": "Apartamento, Moradia, Terreno...",
+      "message": "Mensagem Adicional",
+      "messagePlaceholder": "Conte-nos mais sobre o seu imóvel...",
+      "submit": "Solicitar Avaliação"
+    },
+    "sendingRequest": "A enviar pedido...",
+    "requestSentSuccess": "Pedido enviado com sucesso! Entraremos em contacto em breve.",
+    "requestSendError": "Erro ao enviar pedido. Tente novamente.",
+    "stats": {
+      "badge": "O nosso alcance",
+      "title": "Uma rede global ao seu serviço",
+      "description": "A Agência Douro faz parte de uma rede imobiliária de excelência, garantindo que o seu imóvel chegue aos compradores certos em Portugal e no mundo.",
+      "reach": {
+        "label": "Alcance Global",
+        "description": "Presença em múltiplos países e continentes"
+      },
+      "clients": {
+        "label": "Clientes Ativos",
+        "description": "Base de clientes qualificados e interessados"
+      },
+      "locations": {
+        "label": "Localizações",
+        "description": "Cobertura em Portugal e internacional"
+      },
+      "experience": {
+        "label": "Anos de Experiência",
+        "description": "Conhecimento profundo do mercado"
+      }
+    },
+    "marketing": {
+      "badge": "Como promovemos",
+      "title": "Canais de promoção do seu imóvel",
+      "description": "Utilizamos uma estratégia de marketing multicanal para garantir a máxima exposição do seu imóvel aos potenciais compradores.",
+      "channels": {
+        "website": {
+          "title": "Website",
+          "description": "Divulgação no nosso portal imobiliário de alta qualidade",
+          "stat": "+50.000 visitantes/mês"
+        },
+        "newsletter": {
+          "title": "Newsletter",
+          "description": "Envio para a nossa base de clientes qualificados",
+          "stat": "+10.000 subscritores"
+        },
+        "agencies": {
+          "title": "Agências Parceiras",
+          "description": "Exposição em vitrinas e escritórios",
+          "stat": "Rede de parceiros"
+        },
+        "media": {
+          "title": "Redes Sociais",
+          "description": "Divulgação nas principais plataformas digitais",
+          "stat": "Alto engagement"
+        }
+      }
+    },
+    "whyChooseUs": {
+      "title": "Porque escolher a Agência Douro?",
+      "reason1": "Avaliação profissional e rigorosa do seu imóvel com base em dados de mercado atualizados e análise comparativa.",
+      "reason2": "Estratégia de marketing personalizada com fotografia profissional, tours virtuais e divulgação em múltiplos canais.",
+      "reason3": "Acompanhamento completo em todo o processo de venda, desde a documentação até ao fecho do negócio.",
+      "reason4": "Equipa dedicada de consultores experientes que conhecem profundamente o mercado local e internacional.",
+      "cta": "Saber mais sobre nós"
+    }
   }
 }
