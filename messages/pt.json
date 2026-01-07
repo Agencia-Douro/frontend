@@ -245,5 +245,26 @@
       "lowestPrice": "Menor preço",
       "highestPrice": "Maior preço"
     }
+  },
+  "ImoveisDestacados": {
+    "title": "Imóveis Destacados",
+    "description": "Uma seleção criteriosa de imóveis que representam o mais elevado padrão de qualidade, arquitetura e localização, pensada para atender aos clientes mais exigentes.",
+    "viewAll": "Ver tudo",
+    "loading": "A carregar imóveis destacados...",
+    "error": "Erro ao carregar imóveis destacados. Tente novamente mais tarde."
+  },
+  "Header": {
+    "properties": "Imóveis",
+    "luxuryProperties": "Imóveis de luxo",
+    "whoWeAre": "Quem Somos",
+    "aboutUs": "Sobre Nós",
+    "podcast": "Podcast",
+    "newsletter": "Newsletter",
+    "contact": "Contacto",
+    "institutional": "Institucional",
+    "buy": "Comprar",
+    "developments": "Empreendimentos",
+    "businessTransfer": "Trespasse",
+    "logoAlt": "Agência Douro Logótipo"
   }
 }

@@ -245,5 +245,26 @@
       "lowestPrice": "Lowest price",
       "highestPrice": "Highest price"
     }
+  },
+  "ImoveisDestacados": {
+    "title": "Featured Properties",
+    "description": "A careful selection of properties that represent the highest standard of quality, architecture and location, designed to meet the most demanding clients.",
+    "viewAll": "View all",
+    "loading": "Loading featured properties...",
+    "error": "Error loading featured properties. Please try again later."
+  },
+  "Header": {
+    "properties": "Properties",
+    "luxuryProperties": "Luxury Properties",
+    "whoWeAre": "Who We Are",
+    "aboutUs": "About Us",
+    "podcast": "Podcast",
+    "newsletter": "Newsletter",
+    "contact": "Contact",
+    "institutional": "Institutional",
+    "buy": "Buy",
+    "developments": "Developments",
+    "businessTransfer": "Business Transfer",
+    "logoAlt": "Agência Douro Logo"
   }
 }

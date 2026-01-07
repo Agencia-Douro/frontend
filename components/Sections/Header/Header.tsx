@@ -8,9 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
 import { Button } from "@/components/ui/button";
-import Logo from "@/public/Logo.svg"
+import Logo from "@/public/Logo.svg";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
+    const t = useTranslations("Header");
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -54,7 +56,7 @@ export default function Header() {
                             <Image
                                 className="xl:h-10 xl:w-22 h-8 w-[71px]"
                                 src={Logo}
-                                alt="Agência Douro Logótipo"
+                                alt={t("logoAlt")}
                                 width={88}
                                 height={40}
                             />
@@ -62,32 +64,32 @@ export default function Header() {
                     </div>
                     <nav className="hidden lg:flex items-center gap-6">
                         <NavLinkDropdown
-                            trigger="Imóveis"
+                            trigger={t("properties")}
                             triggerHref="/imoveis"
                             items={[
-                                { href: "/imoveis?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
-                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
+                                { href: "/imoveis?transactionType=comprar", label: t("buy") },
+                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
                         <NavLinkDropdown
-                            trigger="Imóveis de luxo"
+                            trigger={t("luxuryProperties")}
                             triggerHref="/imoveis-luxo"
                             items={[
-                                { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
-                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
+                                { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
+                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
                         <NavLinkDropdown
-                            trigger="Quem Somos"
+                            trigger={t("whoWeAre")}
                             triggerHref="/institucional/sobre-nos"
                             items={[
-                                { href: "/institucional/sobre-nos", label: "Sobre Nós" },
-                                { href: "/institucional/podcast", label: "Podcast" },
+                                { href: "/institucional/sobre-nos", label: t("aboutUs") },
+                                { href: "/institucional/podcast", label: t("podcast") },
                             ]}
                         />
-                        <NavLink href="/newsletter">Newsletter</NavLink>
+                        <NavLink href="/newsletter">{t("newsletter")}</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
                         <Button
@@ -103,7 +105,7 @@ export default function Header() {
                                 }
                             }}
                         >
-                            Contacto
+                            {t("contact")}
                         </Button>
                         <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
@@ -162,11 +164,11 @@ export default function Header() {
                                     className="flex flex-col items-end gap-10"
                                 >
                                     {[
-                                        { href: "/imoveis", label: "Imóveis" },
-                                        { href: "/imoveis-luxo", label: "Imóveis de luxo" },
-                                        { href: "/institucional/sobre-nos", label: "Institucional" },
-                                        { href: "/institucional/podcast", label: "Podcast" },
-                                        { href: "/newsletter", label: "Newsletter" },
+                                        { href: "/imoveis", label: t("properties") },
+                                        { href: "/imoveis-luxo", label: t("luxuryProperties") },
+                                        { href: "/institucional/sobre-nos", label: t("institutional") },
+                                        { href: "/institucional/podcast", label: t("podcast") },
+                                        { href: "/newsletter", label: t("newsletter") },
                                     ].map((item) => (
                                         <motion.div
                                             key={item.href}

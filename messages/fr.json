@@ -245,5 +245,26 @@
       "lowestPrice": "Prix le plus bas",
       "highestPrice": "Prix le plus élevé"
     }
+  },
+  "ImoveisDestacados": {
+    "title": "Propriétés en vedette",
+    "description": "Une sélection rigoureuse de propriétés qui représentent le plus haut standard de qualité, d'architecture et d'emplacement, conçue pour répondre aux clients les plus exigeants.",
+    "viewAll": "Voir tout",
+    "loading": "Chargement des propriétés en vedette...",
+    "error": "Erreur lors du chargement des propriétés en vedette. Veuillez réessayer plus tard."
+  },
+  "Header": {
+    "properties": "Propriétés",
+    "luxuryProperties": "Propriétés de luxe",
+    "whoWeAre": "Qui sommes-nous",
+    "aboutUs": "À propos de nous",
+    "podcast": "Podcast",
+    "newsletter": "Newsletter",
+    "contact": "Contact",
+    "institutional": "Institutionnel",
+    "buy": "Acheter",
+    "developments": "Développements",
+    "businessTransfer": "Cession de fonds",
+    "logoAlt": "Logo Agência Douro"
   }
 }
