@@ -210,12 +210,6 @@ export default function PropertyDetailsPage() {
                         </div>
                         <ImagensImoveis
                             property={property}
-                            showPanel={showPanel}
-                            panelClosing={panelClosing}
-                            panelOpening={panelOpening}
-                            handleOpenPanel={handleOpenPanel}
-                            handleClosePanel={handleClosePanel}
-                            handleTransitionEnd={handleTransitionEnd}
                         />
                     </div>
 

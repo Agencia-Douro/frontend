@@ -74,7 +74,7 @@ export default function ImagensImoveis({
 
   // --- preparar todas as mídias (imagens e vídeos) para o lightbox ---
   // Incluir a imagem principal primeiro, depois todas as outras
-  const allMedia = [
+  const allMedia: Array<{ src: string } | { type: 'video'; sources: Array<{ src: string; type: string }> }> = [
     // Imagem principal primeiro
     property.image && (isVideoUrl(property.image)
       ? { type: 'video' as const, sources: [{ src: property.image, type: 'video/mp4' }] }
@@ -88,7 +88,7 @@ export default function ImagensImoveis({
           : { src }
       )
     ) || [])
-  ].filter(Boolean) as Array<{ src?: string; type?: 'video'; sources?: Array<{ src: string; type: string }> }>;
+  ].filter(Boolean) as Array<{ src: string } | { type: 'video'; sources: Array<{ src: string; type: string }> }>;
 
   const handleClose = () => {
     if (onLightboxClose) {
