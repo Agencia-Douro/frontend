@@ -20,7 +20,7 @@ export default function ImoveisDestacados() {
                 <div className="md:text-center flex flex-col md:items-center lg:gap-6 gap-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
                     <p className="body-16-regular lg:body-18-regular text-black-muted md:w-[722px] hidden md:block">{t("description")}</p>
-                    <Button variant="brown" className="mt-4 md:mt-5 hidden md:block">
+                    <Button variant="gold" className="mt-4 md:mt-5 hidden md:block">
                         <Link href="/imoveis">{t("viewAll")}</Link>
                     </Button>
                 </div>
@@ -38,7 +38,7 @@ export default function ImoveisDestacados() {
                 )}
 
                 {!isLoading && !isError && <Cards className="min-w-80" properties={properties} />}
-                <Button variant="brown" className="mt-4 md:mt-5 block md:hidden w-full">
+                <Button variant="gold" className="mt-4 md:mt-5 block md:hidden w-full">
                     <Link href="/imoveis">{t("viewAllMobile")}</Link>
                 </Button>
             </div>
