@@ -38,6 +38,7 @@ export interface PropertyFilters {
   sortBy?: string;
   page?: number;
   limit?: number;
+  lang?: string;
 }
 
 export const propertiesApi = {
@@ -69,8 +70,17 @@ export const propertiesApi = {
     return response.json();
   },
 
-  getById: async (id: string): Promise<Property> => {
-    const response = await fetch(`${API_BASE_URL}/properties/${id}`);
+  getById: async (id: string, lang?: string): Promise<Property> => {
+    const params = new URLSearchParams();
+    if (lang) {
+      params.append("lang", lang);
+    }
+
+    const queryString = params.toString();
+    const url = `${API_BASE_URL}/properties/${id}${
+      queryString ? `?${queryString}` : ""
+    }`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Erro ao buscar propriedade");
