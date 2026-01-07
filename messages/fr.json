@@ -18,7 +18,7 @@
     "viewAll": "Voir tout"
   },
   "Testemunhos": {
-    "title": "Paroles avec clé en main",
+    "title": "Témoignages de nos clients",
     "description": "Chaque clé porte une histoire, chaque foyer accueille un rêve, ce sont les voix de ceux qui ont trouvé leur lieu parfait.",
     "satisfiedClients": "clients satisfaits",
     "viewMore": "Voir plus",
@@ -192,7 +192,18 @@
     "watchNow": "Regardez maintenant",
     "featuredEpisodes": "Épisodes en vedette",
     "episodesDescription": "Découvrez nos épisodes les plus regardés et restez informé des conversations qui transforment le marché immobilier de luxe.",
-    "episode": "Épisode"
+    "episode": "Épisode",
+    "apresentadora": {
+      "label": "Animatrice",
+      "description": "Vânia Fernandes est une professionnelle reconnue du secteur immobilier dans le Nord du Portugal, avec plus de 15 ans d'expérience dans les biens résidentiels et commerciaux. En tant qu'animatrice du Podcast Norte Imobiliário & Business, elle partage des connaissances, des tendances et des stratégies pour les acheteurs, les vendeurs et les investisseurs sur le marché immobilier portugais.",
+      "stats": {
+        "anosExperiencia": "Années d'expérience",
+        "eurosTransacoes": "Euros en transactions",
+        "clientesSatisfeitos": "Clients satisfaits",
+        "episodiosGravados": "Épisodes enregistrés"
+      },
+      "imageAlt": "Vânia Fernandes - Consultante immobilière & Animatrice"
+    }
   },
   "Sidebar": {
     "buy": "Acheter",
@@ -244,6 +255,53 @@
       "oldest": "Plus ancien",
       "lowestPrice": "Prix le plus bas",
       "highestPrice": "Prix le plus élevé"
+    }
+  },
+  "AvaliadorOnline": {
+    "button": {
+      "mobile": "ESTIMATEUR",
+      "desktop": {
+        "line1": "ESTIMATEUR",
+        "line2": "EN LIGNE"
+      }
+    },
+    "title": "Estimateur en ligne",
+    "personalData": {
+      "title": "Données personnelles",
+      "name": "Nom",
+      "phone": "Numéro de téléphone portable",
+      "email": "Email",
+      "namePlaceholder": "Tomas Ribeiro Silva",
+      "phonePlaceholder": "+351 919 766 323",
+      "emailPlaceholder": "contacto@agenciadouro.pt"
+    },
+    "propertyData": {
+      "title": "Données du bien immobilier",
+      "type": "Type de bien immobilier",
+      "purpose": "Finalité",
+      "typology": "Typologie",
+      "observations": "Observations supplémentaires",
+      "observationsPlaceholder": "Informations supplémentaires sur le bien immobilier...",
+      "selectType": "Sélectionnez le type",
+      "select": "Sélectionner",
+      "purposeOptions": {
+        "sale": "Vente",
+        "rent": "Location"
+      }
+    },
+    "marketingConsent": "J'autorise Agência Douro à conserver ces données",
+    "submitButton": "Demander une estimation",
+    "toast": {
+      "sending": "Envoi de l'estimation...",
+      "success": "Estimation envoyée avec succès !",
+      "error": "Erreur lors de l'envoi de l'estimation. Veuillez réessayer."
+    },
+    "emailMessage": {
+      "title": "=== DEMANDE D'ESTIMATION DE BIEN IMMOBILIER ===",
+      "type": "TYPE DE BIEN IMMOBILIER",
+      "purpose": "FINALITÉ",
+      "typology": "TYPOLOGIE",
+      "observations": "OBSERVATIONS"
     }
   }
 }

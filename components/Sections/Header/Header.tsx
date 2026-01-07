@@ -61,6 +61,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <nav className="hidden lg:flex items-center gap-6">
+                        <NavLink href="/">Home</NavLink>
                         <NavLinkDropdown
                             trigger="Imóveis"
                             triggerHref="/imoveis"
@@ -162,6 +163,7 @@ export default function Header() {
                                     className="flex flex-col items-end gap-10"
                                 >
                                     {[
+                                        { href: "/", label: "Home" },
                                         { href: "/imoveis", label: "Imóveis" },
                                         { href: "/imoveis-luxo", label: "Imóveis de luxo" },
                                         { href: "/institucional/sobre-nos", label: "Institucional" },

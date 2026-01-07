@@ -25,8 +25,10 @@ import {
 import { toast } from "sonner"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { contactApi } from "@/services/api"
+import { useTranslations } from "next-intl"
 
 export const AvaliadorOnlineButton = () => {
+    const t = useTranslations("AvaliadorOnline")
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
 
@@ -51,17 +53,17 @@ export const AvaliadorOnlineButton = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        const toastId = toast.loading("Enviando avaliação...")
+        const toastId = toast.loading(t("toast.sending"))
 
         // Formatar dados do imóvel em uma mensagem estruturada
         const mensagemFormatada = `
-=== SOLICITAÇÃO DE AVALIAÇÃO DE IMÓVEL ===
+${t("emailMessage.title")}
 
-TIPO DE IMÓVEL: ${imovelData.tipoImovel}
-FINALIDADE: ${imovelData.finalidade}
-TIPOLOGIA: ${imovelData.tipologia}
+${t("emailMessage.type")}: ${imovelData.tipoImovel}
+${t("emailMessage.purpose")}: ${imovelData.finalidade}
+${t("emailMessage.typology")}: ${imovelData.tipologia}
 
-${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
+${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.observacoes}` : ''}
         `.trim()
 
         try {
@@ -70,7 +72,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                 mensagem: mensagemFormatada,
             })
 
-            toast.success("Avaliação enviada com sucesso!", { id: toastId })
+            toast.success(t("toast.success"), { id: toastId })
             setFormData({
                 nome: "",
                 telefone: "",
@@ -85,7 +87,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             })
             setIsOpen(false)
         } catch (error: any) {
-            toast.error(error.message || "Erro ao enviar avaliação. Tente novamente.", { id: toastId })
+            toast.error(error.message || t("toast.error"), { id: toastId })
         }
     }
 
@@ -102,12 +104,12 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                 </svg>
                 {/* Mobile - apenas "Avaliador" */}
                 <div className="flex md:hidden flex-col items-center">
-                    <div className="text-[10px] font-bold leading-tight">AVALIADOR</div>
+                    <div className="text-[10px] font-bold leading-tight">{t("button.mobile")}</div>
                 </div>
                 {/* Desktop - "Avaliador Online" */}
                 <div className="hidden md:flex flex-col items-center">
-                    <div className="button-14-medium">AVALIADOR</div>
-                    <div className="button-14-medium">ONLINE</div>
+                    <div className="button-14-medium">{t("button.desktop.line1")}</div>
+                    <div className="button-14-medium">{t("button.desktop.line2")}</div>
                 </div>
             </button>
 
@@ -115,30 +117,30 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="w-[calc(100%-2rem)] md:w-full md:max-w-2xl max-h-[90vh] overflow-y-auto mx-0">
                     <DialogHeader>
-                        <DialogTitle className="body-18-medium">Avaliador Online</DialogTitle>
+                        <DialogTitle className="body-18-medium">{t("title")}</DialogTitle>
                         <DialogClose />
                     </DialogHeader>
 
                     <form onSubmit={handleSubmit} className="space-y-4 mt-4 bg-deaf">
                         {/* Dados Pessoais */}
                         <div className="space-y-4">
-                            <h3 className="body-16-medium text-black">Dados Pessoais</h3>
+                            <h3 className="body-16-medium text-black">{t("personalData.title")}</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-nome" className="body-14-medium text-black">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-nome"
-                                        placeholder="Tomas Ribeiro Silva"
+                                        placeholder={t("personalData.namePlaceholder")}
                                         value={formData.nome}
                                         onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                         required
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-telefone" className="body-14-medium text-black">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-telefone"
-                                        placeholder="+351 919 766 323"
+                                        placeholder={t("personalData.phonePlaceholder")}
                                         value={formData.telefone}
                                         onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                         required
@@ -147,11 +149,11 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="modal-email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
+                                <Label htmlFor="modal-email" className="body-14-medium text-black">{t("personalData.email")} <span className="text-red body-14-medium">*</span></Label>
                                 <Input
                                     id="modal-email"
                                     type="email"
-                                    placeholder="contacto@agenciadouro.pt"
+                                    placeholder={t("personalData.emailPlaceholder")}
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required
@@ -161,15 +163,15 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
 
                         {/* Dados do Imóvel */}
                         <div className="space-y-4 pt-4">
-                            <h3 className="body-16-medium text-black">Dados do Imóvel</h3>
+                            <h3 className="body-16-medium text-black">{t("propertyData.title")}</h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipo" className="body-14-medium text-black">Tipo de Imóvel <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-tipo" className="body-14-medium text-black">{t("propertyData.type")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipoImovel}
                                         onValueChange={(value) => setImovelData({ ...imovelData, tipoImovel: value })}>
                                         <SelectTrigger id="modal-tipo">
-                                            <SelectValue placeholder="Selecione o tipo" />
+                                            <SelectValue placeholder={t("propertyData.selectType")} />
                                         </SelectTrigger>
                                         <SelectContent className="z-2001">
                                             {TIPOS_IMOVEL.map((tipo) => (
@@ -182,29 +184,29 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-black">Finalidade <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-black">{t("propertyData.purpose")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.finalidade}
                                         onValueChange={(value) => setImovelData({ ...imovelData, finalidade: value })}
                                     >
                                         <SelectTrigger id="modal-finalidade">
-                                            <SelectValue placeholder="Selecione" />
+                                            <SelectValue placeholder={t("propertyData.select")} />
                                         </SelectTrigger>
                                         <SelectContent className="z-2001">
-                                            <SelectItem value="Venda">Venda</SelectItem>
-                                            <SelectItem value="Arrendar">Arrendar</SelectItem>
+                                            <SelectItem value="Venda">{t("propertyData.purposeOptions.sale")}</SelectItem>
+                                            <SelectItem value="Arrendar">{t("propertyData.purposeOptions.rent")}</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-black">Tipologia <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-black">{t("propertyData.typology")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipologia}
                                         onValueChange={(value) => setImovelData({ ...imovelData, tipologia: value })}
                                     >
                                         <SelectTrigger id="modal-tipologia">
-                                            <SelectValue placeholder="Selecione" />
+                                            <SelectValue placeholder={t("propertyData.select")} />
                                         </SelectTrigger>
                                         <SelectContent className="z-2001">
                                             <SelectItem value="T0">T0</SelectItem>
@@ -221,11 +223,11 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
 
                             <div className="space-y-2">
                                 <Label htmlFor="modal-observacoes" className="body-14-medium text-black">
-                                    Observações Adicionais
+                                    {t("propertyData.observations")}
                                 </Label>
                                 <Textarea
                                     id="modal-observacoes"
-                                    placeholder="Informações adicionais sobre o imóvel..."
+                                    placeholder={t("propertyData.observationsPlaceholder")}
                                     value={imovelData.observacoes}
                                     onChange={(e) => setImovelData({ ...imovelData, observacoes: e.target.value })}
                                     className="min-h-[100px]"
@@ -241,10 +243,10 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
                                     setFormData({ ...formData, aceitaMarketing: checked as boolean })
                                 }
                             />
-                            <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados</label>
+                            <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")}</label>
                         </div>
                         <DialogFooter>
-                            <Button type="submit" variant="gold" className="w-full">Solicitar Avaliação</Button>
+                            <Button type="submit" variant="gold" className="w-full">{t("submitButton")}</Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>

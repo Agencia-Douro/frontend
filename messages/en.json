@@ -18,7 +18,7 @@
     "viewAll": "View All"
   },
   "Testemunhos": {
-    "title": "Words with key in hand",
+    "title": "Testimonials from our clients",
     "description": "Each key carries a story, each home welcomes a dream, these are the voices of those who found their perfect place.",
     "satisfiedClients": "satisfied clients",
     "viewMore": "View more",
@@ -192,7 +192,18 @@
     "watchNow": "Watch Now",
     "featuredEpisodes": "Featured Episodes",
     "episodesDescription": "Check out our most watched episodes and stay up to date with the conversations that are transforming the luxury real estate market.",
-    "episode": "Episode"
+    "episode": "Episode",
+    "apresentadora": {
+      "label": "Host",
+      "description": "Vânia Fernandes is a recognized professional in the real estate sector in Northern Portugal, with over 15 years of experience in residential and commercial properties. As host of the Norte Imobiliário & Business Podcast, she shares knowledge, trends and strategies for buyers, sellers and investors in the Portuguese real estate market.",
+      "stats": {
+        "anosExperiencia": "Years of Experience",
+        "eurosTransacoes": "Euros in Transactions",
+        "clientesSatisfeitos": "Satisfied Clients",
+        "episodiosGravados": "Recorded Episodes"
+      },
+      "imageAlt": "Vânia Fernandes - Real Estate Consultant & Host"
+    }
   },
   "Sidebar": {
     "buy": "Buy",
@@ -244,6 +255,53 @@
       "oldest": "Oldest",
       "lowestPrice": "Lowest price",
       "highestPrice": "Highest price"
+    }
+  },
+  "AvaliadorOnline": {
+    "button": {
+      "mobile": "VALUER",
+      "desktop": {
+        "line1": "ONLINE",
+        "line2": "VALUER"
+      }
+    },
+    "title": "Online Valuer",
+    "personalData": {
+      "title": "Personal Data",
+      "name": "Name",
+      "phone": "Mobile Number",
+      "email": "Email",
+      "namePlaceholder": "Tomas Ribeiro Silva",
+      "phonePlaceholder": "+351 919 766 323",
+      "emailPlaceholder": "contacto@agenciadouro.pt"
+    },
+    "propertyData": {
+      "title": "Property Data",
+      "type": "Property Type",
+      "purpose": "Purpose",
+      "typology": "Typology",
+      "observations": "Additional Observations",
+      "observationsPlaceholder": "Additional information about the property...",
+      "selectType": "Select the type",
+      "select": "Select",
+      "purposeOptions": {
+        "sale": "Sale",
+        "rent": "Rent"
+      }
+    },
+    "marketingConsent": "I authorize Agência Douro to store this data",
+    "submitButton": "Request Valuation",
+    "toast": {
+      "sending": "Sending valuation...",
+      "success": "Valuation sent successfully!",
+      "error": "Error sending valuation. Please try again."
+    },
+    "emailMessage": {
+      "title": "=== PROPERTY VALUATION REQUEST ===",
+      "type": "PROPERTY TYPE",
+      "purpose": "PURPOSE",
+      "typology": "TYPOLOGY",
+      "observations": "OBSERVATIONS"
     }
   }
 }
