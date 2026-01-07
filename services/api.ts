@@ -42,6 +42,21 @@ export interface PropertyFilters {
 }
 
 export const propertiesApi = {
+  search: async (query: string, limit: number = 5, lang: string = 'pt'): Promise<Property[]> => {
+    const params = new URLSearchParams();
+    params.append('q', query);
+    params.append('limit', limit.toString());
+    params.append('lang', lang);
+
+    const response = await fetch(`${API_BASE_URL}/properties/search?${params.toString()}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar propriedades");
+    }
+
+    return response.json();
+  },
+
   getAll: async (filters?: PropertyFilters): Promise<PropertiesResponse> => {
     const params = new URLSearchParams();
 

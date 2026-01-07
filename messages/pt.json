@@ -9,7 +9,9 @@
     "type": "Tipo",
     "typology": "Tipologia",
     "select": "Selecione",
-    "search": "Pesquisar"
+    "search": "Pesquisar",
+    "searchPlaceholder": "Pesquisar por título, localização, referência...",
+    "noResults": "Nenhum resultado encontrado"
   },
   "ZonasMaisDesejadas": {
     "title": "As zonas mais desejadas",

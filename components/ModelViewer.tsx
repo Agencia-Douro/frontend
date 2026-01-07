@@ -48,7 +48,7 @@ function LoadingFallback() {
 }
 
 // Preload the model
-useGLTF.preload("./model3.gltf");
+useGLTF.preload("/model3.gltf");
 
 export default function ModelViewer({
   autoRotate = true,
@@ -136,7 +136,7 @@ export default function ModelViewer({
               <Environment preset="sunset" />
             </Suspense>
 
-            <Model src="./model3.gltf" autoRotate={autoRotate} initialRotation={initialRotation} />
+            <Model src="/model3.gltf" autoRotate={autoRotate} initialRotation={initialRotation} />
 
             {cameraControls && (
               <OrbitControls

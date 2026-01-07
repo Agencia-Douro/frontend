@@ -36,6 +36,22 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/:locale(pt|en|fr)/model3.gltf",
+        destination: "/model3.gltf",
+      },
+      {
+        source: "/:locale(pt|en|fr)/:path*.gltf",
+        destination: "/:path*.gltf",
+      },
+      {
+        source: "/:locale(pt|en|fr)/:path*.glb",
+        destination: "/:path*.glb",
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
