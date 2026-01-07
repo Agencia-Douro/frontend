@@ -555,7 +555,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                 </div>
             </aside>
             {/* Sidebar mobile */}
-            <aside className={`xl:hidden fixed top-16 left-0 min-w-[300px] max-w-[300px] border-r border-[#EAE6DF] h-[calc(100vh-64px)] bg-deaf z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <aside className={`xl:hidden fixed top-16 left-0 min-w-[300px] max-w-[300px] border-r border-[#EAE6DF] h-[calc(100dvh-64px)] bg-deaf z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex flex-col h-full">
                     <div className="flex flex-col flex-1 overflow-y-auto remove-scrollbar">
                         <div className="p-4 border-b border-[#EAE6DF]">
