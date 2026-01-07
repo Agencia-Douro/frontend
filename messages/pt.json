@@ -257,7 +257,55 @@
       "highestPrice": "Maior preço"
     }
   },
+  "AvaliadorOnline": {
+    "button": {
+      "mobile": "AVALIADOR",
+      "desktop": {
+        "line1": "AVALIADOR",
+        "line2": "ONLINE"
+      }
+    },
+    "title": "Avaliador Online",
+    "personalData": {
+      "title": "Dados Pessoais",
+      "name": "Nome",
+      "phone": "Número de Telemóvel",
+      "email": "Email",
+      "namePlaceholder": "Tomas Ribeiro Silva",
+      "phonePlaceholder": "+351 919 766 323",
+      "emailPlaceholder": "contacto@agenciadouro.pt"
+    },
+    "propertyData": {
+      "title": "Dados do Imóvel",
+      "type": "Tipo de Imóvel",
+      "purpose": "Finalidade",
+      "typology": "Tipologia",
+      "observations": "Observações Adicionais",
+      "observationsPlaceholder": "Informações adicionais sobre o imóvel...",
+      "selectType": "Selecione o tipo",
+      "select": "Selecione",
+      "purposeOptions": {
+        "sale": "Venda",
+        "rent": "Arrendar"
+      }
+    },
+    "marketingConsent": "Autorizo a Agência Douro a armazenar estes dados",
+    "submitButton": "Solicitar Avaliação",
+    "toast": {
+      "sending": "Enviando avaliação...",
+      "success": "Avaliação enviada com sucesso!",
+      "error": "Erro ao enviar avaliação. Tente novamente."
+    },
+    "emailMessage": {
+      "title": "=== PEDIDO DE AVALIAÇÃO DE IMÓVEL ===",
+      "type": "TIPO DE IMÓVEL",
+      "purpose": "FINALIDADE",
+      "typology": "TIPOLOGIA",
+      "observations": "OBSERVAÇÕES"
+    }
+  },
   "Header": {
+    "home": "Home",
     "properties": "Imóveis",
     "buy": "Comprar",
     "developments": "Empreendimentos",
@@ -289,6 +337,7 @@
     "garageSpaces": "lugares garagem",
     "development": "Empreendimento",
     "viewFullPage": "Ver página completa",
-    "propertyIn": "Imóvel em"
+    "propertyIn": "Imóvel em",
+    "notAvailable": "N/A"
   }
 }

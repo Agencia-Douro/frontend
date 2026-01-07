@@ -303,5 +303,41 @@
       "typology": "TYPOLOGY",
       "observations": "OBSERVATIONS"
     }
+  },
+  "Header": {
+    "home": "Home",
+    "properties": "Properties",
+    "buy": "Buy",
+    "developments": "Developments",
+    "businessTransfer": "Business Transfer",
+    "luxuryProperties": "Luxury Properties",
+    "whoWeAre": "Who We Are",
+    "aboutUs": "About Us",
+    "podcast": "Podcast",
+    "newsletter": "Newsletter",
+    "contact": "Contact",
+    "institutional": "Institutional",
+    "logoAlt": "Agência Douro Logo",
+    "sellMyProperty": "Sell my property"
+  },
+  "ImoveisDestacados": {
+    "title": "Featured Properties",
+    "description": "A careful selection of properties that represent the highest standard of quality, architecture and location, designed to meet the needs of the most demanding clients.",
+    "viewAll": "View all",
+    "viewAllMobile": "View All",
+    "loading": "Loading featured properties...",
+    "error": "Error loading featured properties. Please try again later.",
+    "noProperties": "No featured properties available at the moment.",
+    "area": "area",
+    "bathroom": "bathroom",
+    "bathrooms": "bathrooms",
+    "bedroom": "bedroom",
+    "bedrooms": "bedrooms",
+    "garageSpace": "garage space",
+    "garageSpaces": "garage spaces",
+    "development": "Development",
+    "viewFullPage": "View full page",
+    "propertyIn": "Property in",
+    "notAvailable": "N/A"
   }
 }

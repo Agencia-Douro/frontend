@@ -48,7 +48,7 @@ export default function Header() {
     }
 
     return (
-        <header className="border-b border-[#EAE6DF] sticky top-0 w-full max-w-full bg-muted z-50 left-0 right-0 overflow-x-hidden">
+        <header className="border-b border-[#EAE6DF] sticky top-0 w-full bg-muted z-50">
             <div className="container w-full max-w-full">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
@@ -63,7 +63,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <nav className="hidden lg:flex items-center gap-6">
-                        <NavLink href="/">Home</NavLink>
+                        <NavLink href="/">{t("home")}</NavLink>
                         <NavLinkDropdown
                             trigger={t("properties")}
                             triggerHref="/imoveis"
@@ -102,7 +102,7 @@ export default function Header() {
                         >
                             {t("contact")}
                         </Button>
-                        <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                        <button className="block p-1 lg:hidden cursor-pointer z-[60] relative" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
                                     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
@@ -159,9 +159,9 @@ export default function Header() {
                                     className="flex flex-col items-end gap-10"
                                 >
                                     {[
-                                        { href: "/", label: "Home" },
-                                        { href: "/imoveis", label: "Imóveis" },
-                                        { href: "/imoveis-luxo", label: "Imóveis de luxo" },
+                                        { href: "/", label: t("home") },
+                                        { href: "/imoveis", label: t("properties") },
+                                        { href: "/imoveis-luxo", label: t("luxuryProperties") },
                                         { href: "/sobre-nos", label: t("aboutUs") },
                                         { href: "/podcast", label: t("podcast") },
                                         { href: "/vender-imovel", label: t("sellMyProperty") },

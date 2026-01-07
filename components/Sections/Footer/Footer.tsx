@@ -17,7 +17,7 @@ export default function Footer() {
                     <path d="M1441 1.76953C1441 1.76953 1199.78 128.442 1037.94 128.618C871.794 128.799 789.276 54.9191 623.366 56.5553C489.562 57.8749 423.049 124.17 291.265 128.618C178.399 132.428 -1 62.9528 -1 62.9528" stroke="#DCB053" strokeWidth="2" />
                 </svg>
             </div>
-            <footer className="py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7] border-t border-t-gold lg:border-none">
+            <footer className="sticky bottom-0 py-6 md:py-10 lg:py-12 xl:py-16 bg-[#EDE3D7] border-t border-t-gold lg:border-none z-50">
                 <div className="container space-y-4 md:space-y-8">
                     <div className="flex flex-col gap-8 md:flex-row justify-between relative">
                         <Folha className="rotate-345 top-12 left-0 text-brown" />

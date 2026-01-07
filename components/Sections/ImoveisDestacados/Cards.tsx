@@ -44,7 +44,7 @@ export default function Cards({ properties, className }: CardsProps) {
 
     const getAreaDisplay = (property: Property) => {
         const area = property.totalArea || property.builtArea || property.usefulArea
-        return area ? `${area}m²` : 'N/A'
+        return area ? `${area}m²` : t("notAvailable")
     }
 
     const getPropertyTypeLabel = (propertyType: string) => {

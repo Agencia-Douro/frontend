@@ -257,7 +257,55 @@
       "highestPrice": "Prix le plus élevé"
     }
   },
+  "AvaliadorOnline": {
+    "button": {
+      "mobile": "ÉVALUATEUR",
+      "desktop": {
+        "line1": "ÉVALUATEUR",
+        "line2": "EN LIGNE"
+      }
+    },
+    "title": "Évaluateur en ligne",
+    "personalData": {
+      "title": "Données personnelles",
+      "name": "Nom",
+      "phone": "Numéro de téléphone portable",
+      "email": "Email",
+      "namePlaceholder": "Tomas Ribeiro Silva",
+      "phonePlaceholder": "+351 919 766 323",
+      "emailPlaceholder": "contacto@agenciadouro.pt"
+    },
+    "propertyData": {
+      "title": "Données de la propriété",
+      "type": "Type de propriété",
+      "purpose": "Finalité",
+      "typology": "Typologie",
+      "observations": "Observations supplémentaires",
+      "observationsPlaceholder": "Informations supplémentaires sur la propriété...",
+      "selectType": "Sélectionnez le type",
+      "select": "Sélectionner",
+      "purposeOptions": {
+        "sale": "Vente",
+        "rent": "Location"
+      }
+    },
+    "marketingConsent": "J'autorise Agência Douro à stocker ces données",
+    "submitButton": "Demander une évaluation",
+    "toast": {
+      "sending": "Envoi de l'évaluation...",
+      "success": "Évaluation envoyée avec succès !",
+      "error": "Erreur lors de l'envoi de l'évaluation. Veuillez réessayer."
+    },
+    "emailMessage": {
+      "title": "=== DEMANDE D'ÉVALUATION DE PROPRIÉTÉ ===",
+      "type": "TYPE DE PROPRIÉTÉ",
+      "purpose": "FINALITÉ",
+      "typology": "TYPOLOGIE",
+      "observations": "OBSERVATIONS"
+    }
+  },
   "Header": {
+    "home": "Accueil",
     "properties": "Propriétés",
     "buy": "Acheter",
     "developments": "Développements",
@@ -289,6 +337,7 @@
     "garageSpaces": "places de garage",
     "development": "Développement",
     "viewFullPage": "Voir la page complète",
-    "propertyIn": "Propriété à"
+    "propertyIn": "Propriété à",
+    "notAvailable": "N/A"
   }
 }
