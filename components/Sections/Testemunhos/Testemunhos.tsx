@@ -11,8 +11,10 @@ import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi } from "@/services/api";
 import Image from "next/image";
 import Logo from "@/public/Logo.svg";
+import { useTranslations } from "next-intl";
 
 export default function Testemunhos() {
+    const t = useTranslations("Testemunhos");
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [isAtStart, setIsAtStart] = useState(true);
     const [isAtEnd, setIsAtEnd] = useState(false);
@@ -23,9 +25,9 @@ export default function Testemunhos() {
     });
 
     const testemunhos = [
-        { text: "A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!", image: testemunho1, name: "Lucimara Bordignon Borghetti" },
-        { text: "Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vânia Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre.", image: testemunho2, name: "Maria Oliveira" },
-        { text: "Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vânia Fernandes !", image: testemunho3, name: "Walter Martins" }
+        { text: t("testimonial1.text"), image: testemunho1, name: t("testimonial1.name") },
+        { text: t("testimonial2.text"), image: testemunho2, name: t("testimonial2.name") },
+        { text: t("testimonial3.text"), image: testemunho3, name: t("testimonial3.name") }
     ];
 
     const checkScrollPosition = () => {
@@ -133,8 +135,8 @@ export default function Testemunhos() {
     return (
         <section className="relative pt-12 md:pt-10 lg:pt-12 xl:pt-16 container">
             <div className="lg:space-y-6 space-y-4">
-                <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black text-center lg:text-left">Palavras com chave na mão</h2>
-                <p className="text-black-muted md:body-18-regular body-16-regular w-full lg:w-[618px] text-balance hidden md:block text-center lg:text-left">Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.</p>
+                <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black text-center lg:text-left">{t("title")}</h2>
+                <p className="text-black-muted md:body-18-regular body-16-regular w-full lg:w-[618px] text-balance hidden md:block text-center lg:text-left">{t("description")}</p>
             </div>
             <div
                 ref={scrollContainerRef}
@@ -154,7 +156,7 @@ export default function Testemunhos() {
             <div className="mt-4 md:mt-5 lg:mt-6 flex flex-col md:flex-row gap-4 items-center justify-center lg:justify-start">
                 <div className="flex flex-col items-center lg:items-start gap-2">
                     <p className="body-18-medium text-black-muted whitespace-nowrap">
-                        {siteConfig?.clientesSatisfeitos || 800}+ clientes satisfeitos
+                        {siteConfig?.clientesSatisfeitos || 800}+ {t("satisfiedClients")}
                     </p>
                     <div className="flex gap-2 items-center">
                         <div className="flex gap-1">
@@ -221,7 +223,7 @@ export default function Testemunhos() {
                     </Button>
                 </div>
                 <Button variant="gold">
-                    <Link target="_blank" href="https://www.google.com/search?sa=X&sca_esv=75a4ac89eb4f2f79&rlz=1C5CHFA_enPT1081PT1081&sxsrf=AE3TifOiFTjsCAp8JGBMe6lHNXSapsBScQ:1764862760518&q=Ag%C3%AAncia+Douro+-+Media%C3%A7%C3%A3o+Imobili%C3%A1ria+AMI+17+632+Cr%C3%ADticas&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDWwNDMwN7MwMjK2tDCytDQxstjAyPiK0dYx_fCqvOTMRAWX_NKifAVdBd_UlMzEw8sPL85X8MzNT8rMyTy8sAgo7-jrqWBormBmbKTgXHR4bUlmcmLxIlbK9AMAVO_6DZsAAAA&rldimm=15096076822398299428&tbm=lcl&hl=pt-PT&ved=2ahUKEwj16KuPoqSRAxUM0gIHHX31C5QQ9fQKegQINBAF&biw=1439&bih=691&dpr=2#lkt=LocalPoiReviews">Ver mais</Link>
+                    <Link target="_blank" href="https://www.google.com/search?sa=X&sca_esv=75a4ac89eb4f2f79&rlz=1C5CHFA_enPT1081PT1081&sxsrf=AE3TifOiFTjsCAp8JGBMe6lHNXSapsBScQ:1764862760518&q=Ag%C3%AAncia+Douro+-+Media%C3%A7%C3%A3o+Imobili%C3%A1ria+AMI+17+632+Cr%C3%ADticas&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDWwNDMwN7MwMjK2tDCytDQxstjAyPiK0dYx_fCqvOTMRAWX_NKifAVdBd_UlMzEw8sPL85X8MzNT8rMyTy8sAgo7-jrqWBormBmbKTgXHR4bUlmcmLxIlbK9AMAVO_6DZsAAAA&rldimm=15096076822398299428&tbm=lcl&hl=pt-PT&ved=2ahUKEwj16KuPoqSRAxUM0gIHHX31C5QQ9fQKegQINBAF&biw=1439&bih=691&dpr=2#lkt=LocalPoiReviews">{t("viewMore")}</Link>
                 </Button>
             </div>
         </section>

@@ -10,8 +10,10 @@ import Logo from "@/public/Logo.svg";
 import Divider from "@/public/divider.png";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Folha from "@/components/Folha";
+import { useTranslations } from "next-intl";
 
 export default function NewsletterDetailsPage() {
+    const t = useTranslations("NewsletterDetails");
     const params = useParams();
     const id = params.id as string;
 
@@ -21,13 +23,22 @@ export default function NewsletterDetailsPage() {
         enabled: !!id,
     });
 
+    const getCategoryLabel = (category: string) => {
+        const categoryMap: Record<string, string> = {
+            mercado: t("categories.market"),
+            dicas: t("categories.tips"),
+            noticias: t("categories.news"),
+        };
+        return categoryMap[category] || category;
+    };
+
     if (isLoading) {
         return (
             <>
                 <section className="bg-deaf overflow-x-hidden">
                     <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
                         <div className="max-w-3xl mx-auto">
-                            <p className="text-center text-brown">A carregar newsletter...</p>
+                            <p className="text-center text-brown">{t("loading")}</p>
                         </div>
                     </div>
                 </section>
@@ -41,10 +52,10 @@ export default function NewsletterDetailsPage() {
                 <section className="bg-deaf overflow-x-hidden">
                     <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
                         <div className="max-w-3xl mx-auto">
-                            <p className="text-center text-red">Newsletter não encontrada</p>
+                            <p className="text-center text-red">{t("notFound")}</p>
                             <div className="text-center mt-6">
                                 <Link href="/newsletter" className="body-16-medium text-brown hover:text-gold transition-colors">
-                                    ← Voltar para newsletters
+                                    {t("backToNewsletters")}
                                 </Link>
                             </div>
                         </div>
@@ -60,11 +71,11 @@ export default function NewsletterDetailsPage() {
             <Folha className="top-[1900px] left-[0px] rotate-30 opacity-30 hidden lg:block text-brown" />
             <section className="bg-muted container pt-6 md:pt-8 lg:pt-12 xl:pt-16 relative">
                 <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
-                    <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">Newsletter</Link>
+                    <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">{t("newsletter")}</Link>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>
-                    <p className="body-16-medium text-brown capitalize">{newsletter.category}</p>
+                    <p className="body-16-medium text-brown capitalize">{getCategoryLabel(newsletter.category)}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>
@@ -98,7 +109,7 @@ export default function NewsletterDetailsPage() {
                             })}
                         </p>
                         <span>∙</span>
-                        <p className="body-14-regular text-black-muted">{newsletter.readingTime} min de leitura</p>
+                        <p className="body-14-regular text-black-muted">{newsletter.readingTime} {t("readingTime")}</p>
                     </div>
 
                     {/* Content */}
@@ -119,11 +130,11 @@ export default function NewsletterDetailsPage() {
                     <Image
                         className="mb-6 lg:mb-8 h-16"
                         src={Logo}
-                        alt="Agência Douro Logótipo"
+                        alt={t("logoAlt")}
                         width={213}
                         height={96}
                     />
-                    <h2 className="heading-tres-regular text mb-5 sm:mb-10">Imóveis Relacionados</h2>
+                    <h2 className="heading-tres-regular text mb-5 sm:mb-10">{t("relatedProperties")}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {newsletter.properties.map((property) => (
                             <Link

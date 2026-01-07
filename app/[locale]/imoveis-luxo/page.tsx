@@ -9,8 +9,10 @@ import { propertiesApi, PropertyFilters } from "@/services/api";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-flat";
 import useFavorites from "@/hooks/useFavorites";
+import { useTranslations } from "next-intl";
 
 function ImoveisContent() {
+    const t = useTranslations("Imoveis");
     const searchParams = useSearchParams();
     const router = useRouter();
     const { favorites } = useFavorites();
@@ -62,7 +64,7 @@ function ImoveisContent() {
     const handlePageChange = (newPage: number) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", newPage.toString());
-        router.push(`/imoveis?${params.toString()}`);
+        router.push(`/imoveis-luxo?${params.toString()}`);
     };
 
     const handleSortChange = (value: string) => {
@@ -78,7 +80,14 @@ function ImoveisContent() {
 
         params.set("sortBy", sortMap[value] || "-createdAt");
         params.delete("page"); // Reset para página 1 ao mudar ordenação
-        router.push(`/imoveis?${params.toString()}`);
+        router.push(`/imoveis-luxo?${params.toString()}`);
+    };
+
+    const getSortLabel = (sortBy: string) => {
+        if (sortBy === "createdAt") return "mais-antigos";
+        if (sortBy === "price") return "menor-preco";
+        if (sortBy === "-price") return "maior-preco";
+        return "mais-recentes";
     };
 
     return (
@@ -94,7 +103,7 @@ function ImoveisContent() {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-grey">
                                     <path d="M8 4V16M16.4 4H3.6C2.71634 4 2 4.59695 2 5.33333V14.6667C2 15.4031 2.71634 16 3.6 16H16.4C17.2837 16 18 15.4031 18 14.6667V5.33333C18 4.59695 17.2837 4 16.4 4Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                 </svg>
-                                Filtrar
+                                {t("filter")}
                             </button>
                             <div className="bg-white shadow-pretty divide-x divide-muted">
                                 <button
@@ -116,29 +125,29 @@ function ImoveisContent() {
                                     </svg>
                                 </button>
                             </div>
-                            <p className="text-sm md:text-base"><span>{startItem} - {endItem}</span> de <span>{totalItems}</span> imóveis </p>
+                            <p className="text-sm md:text-base"><span>{startItem} - {endItem}</span> {t("of")} <span>{totalItems}</span> {t("properties")}</p>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">Ordenar por:</Label>
-                            <Select value={filters.sortBy === "createdAt" ? "mais-antigos" : filters.sortBy === "price" ? "menor-preco" : filters.sortBy === "-price" ? "maior-preco" : "mais-recentes"} onValueChange={handleSortChange}>
+                            <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">{t("sortBy")}</Label>
+                            <Select value={getSortLabel(filters.sortBy || "-createdAt")} onValueChange={handleSortChange}>
                                 <SelectTrigger id="tipo" name="tipo">
-                                    <SelectValue placeholder="Mais recentes" />
+                                    <SelectValue placeholder={t("sortOptions.mostRecent")} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="mais-recentes">Mais recentes</SelectItem>
-                                    <SelectItem value="mais-antigos">Mais antigos</SelectItem>
-                                    <SelectItem value="menor-preco">Menor preço</SelectItem>
-                                    <SelectItem value="maior-preco">Maior preço</SelectItem>
+                                    <SelectItem value="mais-recentes">{t("sortOptions.mostRecent")}</SelectItem>
+                                    <SelectItem value="mais-antigos">{t("sortOptions.oldest")}</SelectItem>
+                                    <SelectItem value="menor-preco">{t("sortOptions.lowestPrice")}</SelectItem>
+                                    <SelectItem value="maior-preco">{t("sortOptions.highestPrice")}</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
                     </div>
                     <div className="flex-1 overflow-y-auto min-h-0">
-                        {isLoading ? (<div className="grid place-content-center h-full min-h-[400px]"><p>A carregar imóveis</p></div>) : error ?
-                            (<div className="grid place-content-center h-full min-h-[400px]"><p>Erro ao carregar imóveis</p></div>) : !filteredData || filteredData.data.length === 0 ?
+                        {isLoading ? (<div className="grid place-content-center h-full min-h-[400px]"><p>{t("loading")}</p></div>) : error ?
+                            (<div className="grid place-content-center h-full min-h-[400px]"><p>{t("error")}</p></div>) : !filteredData || filteredData.data.length === 0 ?
                                 (<div className="grid place-content-center h-full min-h-[400px] text-center p-4">
-                                    <p className="body-16-medium text-brown">Nenhum correspondência.</p>
-                                    <p className="body-14-regular mt-1 w-80 text-grey">Não encontramos nenhum imóvel com os padrões da sua pesquisa.</p>
+                                    <p className="body-16-medium text-brown">{t("noResults")}</p>
+                                    <p className="body-14-regular mt-1 w-80 text-grey">{t("noResultsDescription")}</p>
                                 </div>) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
                                         {filteredData.data.map((property) => (
@@ -160,8 +169,9 @@ function ImoveisContent() {
 }
 
 export default function Imoveis() {
+    const t = useTranslations("Imoveis");
     return (
-        <Suspense fallback={<div className="grid place-content-center h-screen">A carregar...</div>}>
+        <Suspense fallback={<div className="grid place-content-center h-screen">{t("loadingSuspense")}</div>}>
             <ImoveisContent />
         </Suspense>
     );

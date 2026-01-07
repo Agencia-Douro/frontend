@@ -1,0 +1,249 @@
+{
+  "Hero": {
+    "title": "A imobiliária mais exclusiva de Portugal.",
+    "description": "Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.",
+    "buy": "Comprar",
+    "developments": "Empreendimentos",
+    "businessTransfer": "Trespasse",
+    "location": "Localização",
+    "type": "Tipo",
+    "typology": "Tipologia",
+    "select": "Selecione",
+    "search": "Pesquisar"
+  },
+  "ZonasMaisDesejadas": {
+    "title": "As zonas mais desejadas",
+    "description": "Descubra as regiões que atraem quem busca exclusividade, conforto e um estilo de vida sem igual.",
+    "imageAlt": "Imagem de {nome}",
+    "viewAll": "Ver Todos"
+  },
+  "Testemunhos": {
+    "title": "Palavras com chave na mão",
+    "description": "Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.",
+    "satisfiedClients": "clientes satisfeitos",
+    "viewMore": "Ver mais",
+    "imageAlt": "testemunho-image",
+    "testimonial1": {
+      "text": "A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!",
+      "name": "Lucimara Bordignon Borghetti"
+    },
+    "testimonial2": {
+      "text": "Agência Douro fez toda diferença na venda da minha morada. A Venda aconteceu super rápido. A Vânia Fernandes, proprietária da Agência super simpática e competente, esteve sempre pronta para atender as minhas dúvidas. Recomendo sempre.",
+      "name": "Maria Oliveira"
+    },
+    "testimonial3": {
+      "text": "Ótimo atendimento diferenciado de todas as imobiliárias que conheci no Porto,Ética ,comprometimento, conhecer a empresa,para mim foi um presente do céu. Parabéns Agência Douro. Parabéns empresária Vânia Fernandes !",
+      "name": "Walter Martins"
+    }
+  },
+  "FaleConnosco": {
+    "title": "Fale connosco",
+    "sendingMessage": "Enviando mensagem...",
+    "messageSentSuccess": "Mensagem enviada com sucesso!",
+    "messageSendError": "Erro ao enviar mensagem. Tente novamente.",
+    "name": "Nome",
+    "namePlaceholder": "Tomas Ribeiro Silva",
+    "phoneNumber": "Número de Telemóvel",
+    "phonePlaceholder": "+351 919 766 323",
+    "email": "Email",
+    "emailPlaceholder": "contacto@agenciadouro.pt",
+    "message": "Mensagem",
+    "messagePlaceholder": "Envie-nos uma mensagem!",
+    "marketingConsent": "Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.",
+    "send": "Enviar",
+    "emailDescription": "Envie-nos a sua dúvida ou questão para o nosso email.",
+    "contact": "Contacto",
+    "contactDescription": "Pode também falar conosco através do telefone.",
+    "socialMedia": "Redes Sociais",
+    "socialMediaDescription": "Somos bastante ativos nas redes, siga-nos!",
+    "address": "Morada",
+    "addressDescription": "Venha fazer-nos uma visita, ficamos por cá à sua espera"
+  },
+  "Footer": {
+    "home": "Ínicio",
+    "properties": "Imóveis",
+    "aboutUs": "Sobre Nós",
+    "contact": "Contacto",
+    "newsletter": "Newsletter",
+    "podcast": "Podcast",
+    "buy": "Comprar",
+    "rent": "Arrendar",
+    "developments": "Empreendimentos",
+    "luxuryProperties": "Imóveis de luxo",
+    "copyright": "© Agência Douro. AMI 17 632",
+    "termsAndConditions": "Termos e condições",
+    "complaintsBook": "Livro Reclamações Online"
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Fique por dentro das últimas novidades do mercado imobiliário",
+    "loading": "A carregar newsletters...",
+    "error": "Erro ao carregar newsletters.",
+    "noNewsletters": "Nenhuma newsletter disponível.",
+    "all": "Todas",
+    "categories": {
+      "market": "Mercado",
+      "tips": "Dicas",
+      "news": "Notícias"
+    },
+    "noNewslettersInCategory": "Nenhuma newsletter encontrada nesta categoria."
+  },
+  "NewsletterDetails": {
+    "loading": "A carregar newsletter...",
+    "notFound": "Newsletter não encontrada",
+    "backToNewsletters": "← Voltar para newsletters",
+    "newsletter": "Newsletter",
+    "readingTime": "min de leitura",
+    "logoAlt": "Agência Douro Logótipo",
+    "relatedProperties": "Imóveis Relacionados",
+    "categories": {
+      "market": "Mercado",
+      "tips": "Dicas",
+      "news": "Notícias"
+    }
+  },
+  "SobreNos": {
+    "whoWeAre": "Quem Somos",
+    "title": "Sobre Nós",
+    "subtitle": "Especialistas em Imóveis de Luxo em Portugal",
+    "description1": "Na Agência Douro, a nossa missão é transformar sonhos em realidade, sempre com um compromisso inabalável com a transparência e a responsabilidade. A nossa equipa é composta por profissionais altamente qualificados, prontos para o ajudar a realizar o sonho da sua vida.",
+    "description2": "A atuar no mercado nacional e internacional, a Agência Douro é reconhecida pela sua transparência, responsabilidade e compromisso em proporcionar tranquilidade em cada transação. Seja para habitação própria ou para investimento, oferecemos um apoio completo para garantir que o seu negócio seja seguro e eficaz.",
+    "yearsExperience": "Anos de Experiência",
+    "propertiesSold": "Imóveis Vendidos",
+    "satisfiedClients": "Clientes Satisfeitos",
+    "ourIdentity": "Nossa Identidade",
+    "ourCulture": "A Nossa Cultura",
+    "culture": {
+      "excellence": {
+        "title": "Excelência",
+        "description": "Acreditamos na excelência como padrão, na transparência como base de confiança e na integridade como princípio inegociável."
+      },
+      "dedication": {
+        "title": "Dedicação",
+        "description": "Valorizamos o atendimento personalizado e dedicado, reconhecendo que cada cliente tem necessidades únicas."
+      },
+      "innovation": {
+        "title": "Inovação",
+        "description": "A inovação e a adaptação às necessidades do mercado são pilares da nossa cultura, permitindo-nos oferecer sempre o melhor serviço possível."
+      }
+    },
+    "whatWeOffer": "O Que Oferecemos",
+    "ourServices": "Os Nossos Serviços",
+    "requestInfo": "Pedir informações",
+    "services": {
+      "legalConsulting": {
+        "title": "Consultoria Jurídica",
+        "description": "Garantimos que todas as transações imobiliárias sejam realizadas de forma segura e conforme a legislação vigente."
+      },
+      "mortgageConsulting": {
+        "title": "Consultoria para Crédito Imobiliário",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      },
+      "realEstatePromotion": {
+        "title": "Promoção Imobiliária",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      },
+      "projectManagement": {
+        "title": "Gestão de projetos imobiliários",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      },
+      "realEstateInvestments": {
+        "title": "Investimentos imobiliários",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      },
+      "goldenVisa": {
+        "title": "Visto Gold",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      },
+      "mortgagePartners": {
+        "title": "Parceiros de crédito imobiliário",
+        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+      }
+    },
+    "meetOurTeam": "Conheça a Nossa Equipa",
+    "ourTeam": "A Nossa Equipa",
+    "teamDescription": "A nossa equipa é composta por profissionais altamente qualificados e experientes, dedicados a proporcionar o melhor serviço e a transformar os seus sonhos em realidade."
+  },
+  "Podcast": {
+    "exclusiveContent": "Conteúdo Exclusivo",
+    "title": "Podcast Agência Douro",
+    "subtitle": "Conversas sobre o Mercado Imobiliário de Luxo em Portugal",
+    "description": "Um podcast dedicado a discutir tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal, com a participação de especialistas e profissionais do setor. O Podcast Agência Douro oferece insights práticos e conteúdos inspiradores para investidores, corretores e interessados no mercado imobiliário e nos negócios, sendo uma fonte confiável de informação sobre o setor português.",
+    "episodes": "Episódios",
+    "seasons": "Temporadas",
+    "guests": "Convidados",
+    "themesAndInsights": "Temas & Insights",
+    "whatWeCover": "O Que Abordamos",
+    "topics": {
+      "marketTrends": {
+        "title": "Tendências de Mercado",
+        "description": "Análises profundas sobre as tendências atuais do mercado imobiliário de luxo em Portugal e oportunidades de investimento."
+      },
+      "investmentTips": {
+        "title": "Dicas de Investimento",
+        "description": "Conselhos práticos sobre como investir em imóveis de luxo, desde a escolha da localização até estratégias de valorização."
+      },
+      "internationalVision": {
+        "title": "Visão Internacional",
+        "description": "Perspetivas sobre investidores estrangeiros em Portugal e comparações com outros mercados internacionais."
+      }
+    },
+    "logoAlt": "logo podcast",
+    "watchNow": "Assista Agora",
+    "featuredEpisodes": "Episódios em Destaque",
+    "episodesDescription": "Confira os nossos episódios mais assistidos e fique por dentro das conversas que estão a transformar o mercado imobiliário de luxo.",
+    "episode": "Episódio"
+  },
+  "Sidebar": {
+    "buy": "Comprar",
+    "businessTransfer": "Trespasse",
+    "developments": "Empreendimentos",
+    "propertyType": "Tipo de Imóvel",
+    "selectPropertyType": "Selecione o tipo de imóvel",
+    "bedroomsAndBathrooms": "Quartos e Casas de banho",
+    "bedrooms": "Quartos",
+    "bathrooms": "Casas de banho",
+    "priceAndArea": "Preço e Área útil",
+    "minPrice": "Preço mínimo",
+    "maxPrice": "Preço máximo",
+    "minUsefulArea": "Área útil mínima",
+    "maxUsefulArea": "Área útil máxima",
+    "minimum": "Mínimo",
+    "maximum": "Máximo",
+    "location": "Localização",
+    "district": "Distrito",
+    "selectDistrict": "Selecione o distrito",
+    "municipality": "Concelho",
+    "selectDistrictFirst": "Selecione primeiro um distrito",
+    "selectMunicipality": "Selecione o concelho",
+    "other": "Outro",
+    "propertyState": "Estado do imóvel",
+    "energyClass": "Classe energética",
+    "rent": "Arrendar",
+    "favorites": "Favoritos",
+    "clear": "Limpar",
+    "propertyStates": {
+      "new": "Novo",
+      "used": "Usado",
+      "renovated": "Renovado",
+      "underConstruction": "Em Construção"
+    }
+  },
+  "Imoveis": {
+    "filter": "Filtrar",
+    "of": "de",
+    "properties": "imóveis",
+    "sortBy": "Ordenar por:",
+    "loading": "A carregar imóveis",
+    "error": "Erro ao carregar imóveis",
+    "noResults": "Nenhum correspondência.",
+    "noResultsDescription": "Não encontramos nenhum imóvel com os padrões da sua pesquisa.",
+    "loadingSuspense": "A carregar...",
+    "sortOptions": {
+      "mostRecent": "Mais recentes",
+      "oldest": "Mais antigos",
+      "lowestPrice": "Menor preço",
+      "highestPrice": "Maior preço"
+    }
+  }
+}

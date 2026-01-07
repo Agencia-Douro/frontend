@@ -1,0 +1,249 @@
+{
+  "Hero": {
+    "title": "L'agence immobilière la plus exclusive du Portugal.",
+    "description": "Découvrez des propriétés exclusives au Portugal avec notre agence immobilière spécialisée.",
+    "buy": "Acheter",
+    "developments": "Développements",
+    "businessTransfer": "Cession de fonds",
+    "location": "Localisation",
+    "type": "Type",
+    "typology": "Typologie",
+    "select": "Sélectionner",
+    "search": "Rechercher"
+  },
+  "ZonasMaisDesejadas": {
+    "title": "Les zones les plus recherchées",
+    "description": "Découvrez les régions qui attirent ceux qui recherchent l'exclusivité, le confort et un style de vie incomparable.",
+    "imageAlt": "Image de {nome}",
+    "viewAll": "Voir tout"
+  },
+  "Testemunhos": {
+    "title": "Paroles avec clé en main",
+    "description": "Chaque clé porte une histoire, chaque foyer accueille un rêve, ce sont les voix de ceux qui ont trouvé leur lieu parfait.",
+    "satisfiedClients": "clients satisfaits",
+    "viewMore": "Voir plus",
+    "imageAlt": "image-témoignage",
+    "testimonial1": {
+      "text": "Vânia est merveilleuse, elle connaît très bien le marché où elle opère et assiste depuis la recherche de propriété jusqu'aux détails finaux. Super important d'avoir une personne de confiance toujours prête à aider. Nous recommandons à 100% !",
+      "name": "Lucimara Bordignon Borghetti"
+    },
+    "testimonial2": {
+      "text": "Agência Douro a fait toute la différence dans la vente de ma maison. La vente s'est déroulée très rapidement. Vânia Fernandes, propriétaire de l'Agence, super sympathique et compétente, était toujours prête à répondre à mes questions. Je recommande toujours.",
+      "name": "Maria Oliveira"
+    },
+    "testimonial3": {
+      "text": "Excellent service différencié de toutes les agences immobilières que j'ai connues à Porto. Éthique, engagement, connaître l'entreprise, pour moi ce fut un cadeau du ciel. Félicitations Agência Douro. Félicitations entrepreneure Vânia Fernandes !",
+      "name": "Walter Martins"
+    }
+  },
+  "FaleConnosco": {
+    "title": "Contactez-nous",
+    "sendingMessage": "Envoi du message...",
+    "messageSentSuccess": "Message envoyé avec succès !",
+    "messageSendError": "Erreur lors de l'envoi du message. Veuillez réessayer.",
+    "name": "Nom",
+    "namePlaceholder": "Tomas Ribeiro Silva",
+    "phoneNumber": "Numéro de téléphone portable",
+    "phonePlaceholder": "+351 919 766 323",
+    "email": "Email",
+    "emailPlaceholder": "contacto@agenciadouro.pt",
+    "message": "Message",
+    "messagePlaceholder": "Envoyez-nous un message !",
+    "marketingConsent": "J'autorise Agência Douro à conserver ces données à des fins de marketing et de contact.",
+    "send": "Envoyer",
+    "emailDescription": "Envoyez-nous votre question ou demande par email.",
+    "contact": "Contact",
+    "contactDescription": "Vous pouvez également nous contacter par téléphone.",
+    "socialMedia": "Réseaux sociaux",
+    "socialMediaDescription": "Nous sommes très actifs sur les réseaux, suivez-nous !",
+    "address": "Adresse",
+    "addressDescription": "Venez nous rendre visite, nous vous attendons ici"
+  },
+  "Footer": {
+    "home": "Accueil",
+    "properties": "Propriétés",
+    "aboutUs": "À propos de nous",
+    "contact": "Contact",
+    "newsletter": "Newsletter",
+    "podcast": "Podcast",
+    "buy": "Acheter",
+    "rent": "Louer",
+    "developments": "Développements",
+    "luxuryProperties": "Propriétés de luxe",
+    "copyright": "© Agência Douro. AMI 17 632",
+    "termsAndConditions": "Termes et conditions",
+    "complaintsBook": "Livre de réclamations en ligne"
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Restez informé des dernières actualités du marché immobilier",
+    "loading": "Chargement des newsletters...",
+    "error": "Erreur lors du chargement des newsletters.",
+    "noNewsletters": "Aucune newsletter disponible.",
+    "all": "Toutes",
+    "categories": {
+      "market": "Marché",
+      "tips": "Conseils",
+      "news": "Actualités"
+    },
+    "noNewslettersInCategory": "Aucune newsletter trouvée dans cette catégorie."
+  },
+  "NewsletterDetails": {
+    "loading": "Chargement de la newsletter...",
+    "notFound": "Newsletter introuvable",
+    "backToNewsletters": "← Retour aux newsletters",
+    "newsletter": "Newsletter",
+    "readingTime": "min de lecture",
+    "logoAlt": "Logo Agência Douro",
+    "relatedProperties": "Propriétés associées",
+    "categories": {
+      "market": "Marché",
+      "tips": "Conseils",
+      "news": "Actualités"
+    }
+  },
+  "SobreNos": {
+    "whoWeAre": "Qui sommes-nous",
+    "title": "À propos de nous",
+    "subtitle": "Spécialistes en immobilier de luxe au Portugal",
+    "description1": "Chez Agência Douro, notre mission est de transformer les rêves en réalité, toujours avec un engagement inébranlable envers la transparence et la responsabilité. Notre équipe est composée de professionnels hautement qualifiés, prêts à vous aider à réaliser le rêve de votre vie.",
+    "description2": "Opérant sur le marché national et international, Agência Douro est reconnue pour sa transparence, sa responsabilité et son engagement à offrir la tranquillité d'esprit dans chaque transaction. Que ce soit pour votre propre logement ou pour un investissement, nous offrons un soutien complet pour garantir que votre affaire soit sûre et efficace.",
+    "yearsExperience": "Années d'expérience",
+    "propertiesSold": "Propriétés vendues",
+    "satisfiedClients": "Clients satisfaits",
+    "ourIdentity": "Notre identité",
+    "ourCulture": "Notre culture",
+    "culture": {
+      "excellence": {
+        "title": "Excellence",
+        "description": "Nous croyons en l'excellence comme norme, la transparence comme base de confiance et l'intégrité comme principe non négociable."
+      },
+      "dedication": {
+        "title": "Dévouement",
+        "description": "Nous valorisons le service personnalisé et dévoué, reconnaissant que chaque client a des besoins uniques."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "L'innovation et l'adaptation aux besoins du marché sont des piliers de notre culture, nous permettant d'offrir toujours le meilleur service possible."
+      }
+    },
+    "whatWeOffer": "Ce que nous offrons",
+    "ourServices": "Nos services",
+    "requestInfo": "Demander des informations",
+    "services": {
+      "legalConsulting": {
+        "title": "Conseil juridique",
+        "description": "Nous garantissons que toutes les transactions immobilières sont effectuées de manière sûre et conforme à la législation en vigueur."
+      },
+      "mortgageConsulting": {
+        "title": "Conseil en crédit immobilier",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      },
+      "realEstatePromotion": {
+        "title": "Promotion immobilière",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      },
+      "projectManagement": {
+        "title": "Gestion de projets immobiliers",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      },
+      "realEstateInvestments": {
+        "title": "Investissements immobiliers",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      },
+      "goldenVisa": {
+        "title": "Visa Gold",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      },
+      "mortgagePartners": {
+        "title": "Partenaires de crédit immobilier",
+        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+      }
+    },
+    "meetOurTeam": "Rencontrez notre équipe",
+    "ourTeam": "Notre équipe",
+    "teamDescription": "Notre équipe est composée de professionnels hautement qualifiés et expérimentés, dédiés à fournir le meilleur service et à transformer vos rêves en réalité."
+  },
+  "Podcast": {
+    "exclusiveContent": "Contenu exclusif",
+    "title": "Podcast Agência Douro",
+    "subtitle": "Conversations sur le marché immobilier de luxe au Portugal",
+    "description": "Un podcast dédié à la discussion des tendances, défis et opportunités du marché immobilier de luxe au Portugal, avec la participation d'experts et de professionnels du secteur. Le Podcast Agência Douro offre des informations pratiques et du contenu inspirant pour les investisseurs, les courtiers et les personnes intéressées par l'immobilier et les affaires, étant une source fiable d'information sur le secteur portugais.",
+    "episodes": "Épisodes",
+    "seasons": "Saisons",
+    "guests": "Invités",
+    "themesAndInsights": "Thèmes et perspectives",
+    "whatWeCover": "Ce que nous abordons",
+    "topics": {
+      "marketTrends": {
+        "title": "Tendances du marché",
+        "description": "Analyses approfondies des tendances actuelles du marché immobilier de luxe au Portugal et opportunités d'investissement."
+      },
+      "investmentTips": {
+        "title": "Conseils d'investissement",
+        "description": "Conseils pratiques sur la façon d'investir dans des propriétés de luxe, du choix de l'emplacement aux stratégies de valorisation."
+      },
+      "internationalVision": {
+        "title": "Vision internationale",
+        "description": "Perspectives sur les investisseurs étrangers au Portugal et comparaisons avec d'autres marchés internationaux."
+      }
+    },
+    "logoAlt": "logo podcast",
+    "watchNow": "Regardez maintenant",
+    "featuredEpisodes": "Épisodes en vedette",
+    "episodesDescription": "Découvrez nos épisodes les plus regardés et restez informé des conversations qui transforment le marché immobilier de luxe.",
+    "episode": "Épisode"
+  },
+  "Sidebar": {
+    "buy": "Acheter",
+    "businessTransfer": "Cession de fonds",
+    "developments": "Développements",
+    "propertyType": "Type de propriété",
+    "selectPropertyType": "Sélectionnez le type de propriété",
+    "bedroomsAndBathrooms": "Chambres et Salles de bain",
+    "bedrooms": "Chambres",
+    "bathrooms": "Salles de bain",
+    "priceAndArea": "Prix et Surface utile",
+    "minPrice": "Prix minimum",
+    "maxPrice": "Prix maximum",
+    "minUsefulArea": "Surface utile minimum",
+    "maxUsefulArea": "Surface utile maximum",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "location": "Localisation",
+    "district": "District",
+    "selectDistrict": "Sélectionnez le district",
+    "municipality": "Municipalité",
+    "selectDistrictFirst": "Sélectionnez d'abord un district",
+    "selectMunicipality": "Sélectionnez la municipalité",
+    "other": "Autre",
+    "propertyState": "État de la propriété",
+    "energyClass": "Classe énergétique",
+    "rent": "Louer",
+    "favorites": "Favoris",
+    "clear": "Effacer",
+    "propertyStates": {
+      "new": "Neuf",
+      "used": "Usagé",
+      "renovated": "Rénové",
+      "underConstruction": "En construction"
+    }
+  },
+  "Imoveis": {
+    "filter": "Filtrer",
+    "of": "de",
+    "properties": "propriétés",
+    "sortBy": "Trier par :",
+    "loading": "Chargement des propriétés",
+    "error": "Erreur lors du chargement des propriétés",
+    "noResults": "Aucune correspondance.",
+    "noResultsDescription": "Nous n'avons trouvé aucune propriété correspondant à vos critères de recherche.",
+    "loadingSuspense": "Chargement...",
+    "sortOptions": {
+      "mostRecent": "Plus récent",
+      "oldest": "Plus ancien",
+      "lowestPrice": "Prix le plus bas",
+      "highestPrice": "Prix le plus élevé"
+    }
+  }
+}

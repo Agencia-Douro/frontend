@@ -7,20 +7,22 @@ import Footer from "@/components/Sections/Footer/Footer";
 import NewsletterCard from "@/components/NewsletterCard";
 import { Button } from "@/components/ui/button";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
-
-const CATEGORIES = [
-    { value: "mercado", label: "Mercado" },
-    { value: "dicas", label: "Dicas" },
-    { value: "noticias", label: "Notícias" },
-] as const;
+import { useTranslations } from "next-intl";
 
 export default function NewsletterPage() {
+    const t = useTranslations("Newsletter");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     
     const { data: newsletters, isLoading, error } = useQuery({
         queryKey: ["newsletters"],
         queryFn: () => newslettersApi.getAll(),
     });
+
+    const categories = [
+        { value: "mercado", label: t("categories.market") },
+        { value: "dicas", label: t("categories.tips") },
+        { value: "noticias", label: t("categories.news") },
+    ] as const;
 
     const filteredNewsletters = useMemo(() => {
         if (!newsletters) return [];
@@ -33,24 +35,24 @@ export default function NewsletterPage() {
             <section className="container">
                 <div className="py-6 md:py-10 lg:py-12 xl:py-16">
                     <div className="lg:space-y-6 space-y-4">
-                        <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">Newsletter</h2>
-                        <p className="text-black-muted md:body-18-regular body-16-regular w-full">Fique por dentro das últimas novidades do mercado imobiliário</p>
+                        <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">{t("title")}</h2>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full">{t("description")}</p>
                     </div>
                     {isLoading && (
                         <div className="text-center mt-8 sm:py-12">
-                            <p className="body-16-regular text-brown">A carregar newsletters...</p>
+                            <p className="body-16-regular text-brown">{t("loading")}</p>
                         </div>
                     )}
 
                     {error && (
                         <div className="text-center mt-8 sm:py-12">
-                            <p className="body-16-regular text-red">Erro ao carregar newsletters.</p>
+                            <p className="body-16-regular text-red">{t("error")}</p>
                         </div>
                     )}
 
                     {!isLoading && !error && newsletters && newsletters.length === 0 && (
                         <div className="text-center mt-8 sm:py-12">
-                            <p className="body-16-regular text-brown/50">Nenhuma newsletter disponível.</p>
+                            <p className="body-16-regular text-brown/50">{t("noNewsletters")}</p>
                         </div>
                     )}
 
@@ -61,9 +63,9 @@ export default function NewsletterPage() {
                                     variant={selectedCategory === null ? "gold" : "ghost"} 
                                     className="w-min"
                                     onClick={() => setSelectedCategory(null)}>
-                                    Todas
+                                    {t("all")}
                                 </Button>
-                                {CATEGORIES.map((category) => (
+                                {categories.map((category) => (
                                     <Button 
                                         key={category.value}
                                         variant={selectedCategory === category.value ? "gold" : "ghost"} 
@@ -81,7 +83,7 @@ export default function NewsletterPage() {
                                 ) : (
                                     <div className="col-span-full text-center py-8 lg:py-12">
                                         <span className="body-16-regular text-brown/50">
-                                            Nenhuma newsletter encontrada nesta categoria.
+                                            {t("noNewslettersInCategory")}
                                         </span>
                                     </div>
                                 )}

@@ -12,6 +12,7 @@ import { siteConfigApi } from "@/services/api";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import logoPodcast from "@/public/logoPodcast.jpg";
+import { useTranslations } from "next-intl";
 
 // Episódios em destaque
 const FEATURED_EPISODES = [
@@ -54,6 +55,7 @@ const FEATURED_EPISODES = [
 ];
 
 export default function PodcastPage() {
+    const t = useTranslations("Podcast");
     const { data: config } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
@@ -65,17 +67,17 @@ export default function PodcastPage() {
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 relative">
                 <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
                 <div className="lg:space-y-6 space-y-4">
-                    <div><span className="body-14-medium text-gold uppercase tracking-wider">Conteúdo Exclusivo</span></div>
-                    <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">Podcast Agência Douro</h1>
-                    <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">Conversas sobre o Mercado Imobiliário de Luxo em Portugal</h2>
+                    <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("exclusiveContent")}</span></div>
+                    <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
+                    <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{t("subtitle")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
-                        Um podcast dedicado a discutir tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal, com a participação de especialistas e profissionais do setor. O Podcast Agência Douro oferece insights práticos e conteúdos inspiradores para investidores, corretores e interessados no mercado imobiliário e nos negócios, sendo uma fonte confiável de informação sobre o setor português.
+                        {t("description")}
                     </p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <StatCard value={config?.episodiosPublicados?.toString() || ""} label="Episódios" className="hidden md:block" />
-                    <StatCard value={config?.temporadas?.toString() || ""} label="Temporadas" />
-                    <StatCard value={config?.especialistasConvidados?.toString() || ""} label="Convidados" />
+                    <StatCard value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} className="hidden md:block" />
+                    <StatCard value={config?.temporadas?.toString() || ""} label={t("seasons")} />
+                    <StatCard value={config?.especialistasConvidados?.toString() || ""} label={t("guests")} />
                 </div>
             </section>
             <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
@@ -87,21 +89,21 @@ export default function PodcastPage() {
             {/* Segunda Seção - O Que Abordamos */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">Temas & Insights</span>
-                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">O Que Abordamos</h2>
+                    <span className="button-14-medium text-gold">{t("themesAndInsights")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{t("whatWeCover")}</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     <CulturaCard
-                        title="Tendências de Mercado"
-                        description="Análises profundas sobre as tendências atuais do mercado imobiliário de luxo em Portugal e oportunidades de investimento."
+                        title={t("topics.marketTrends.title")}
+                        description={t("topics.marketTrends.description")}
                     />
                     {/* <CulturaCard
                         title="Histórias de Sucesso"
                         description="Convidados partilham as suas experiências, desafios e conquistas no setor imobiliário português."
                     /> */}
                     <CulturaCard
-                        title="Dicas de Investimento"
-                        description="Conselhos práticos sobre como investir em imóveis de luxo, desde a escolha da localização até estratégias de valorização."
+                        title={t("topics.investmentTips.title")}
+                        description={t("topics.investmentTips.description")}
                     />
                     {/* <CulturaCard
                         title="Legislação e Processos"
@@ -112,14 +114,14 @@ export default function PodcastPage() {
                         description="Discussões sobre arquitetura, design de interiores e o estilo de vida associado a imóveis de luxo."
                     /> */}
                     <CulturaCard
-                        title="Visão Internacional"
-                        description="Perspetivas sobre investidores estrangeiros em Portugal e comparações com outros mercados internacionais."
+                        title={t("topics.internationalVision.title")}
+                        description={t("topics.internationalVision.description")}
                     />
                 </div>
             </section>
 
             <div className="hidden lg:flex justify-center mt-20">
-                <Image src={logoPodcast} alt="logo podcast" width={200} height={90} className="hidden lg:block " />
+                <Image src={logoPodcast} alt={t("logoAlt")} width={200} height={90} className="hidden lg:block " />
             </div>
 
 
@@ -129,11 +131,11 @@ export default function PodcastPage() {
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
                 <div className="lg:space-y-6 space-y-4 mb-6 md:mb-8 lg:mb-10 xl:mb-12">
                     <div>
-                        <span className="button-14-medium text-gold">Assista Agora</span>
-                        <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">Episódios em Destaque</h2>
+                        <span className="button-14-medium text-gold">{t("watchNow")}</span>
+                        <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{t("featuredEpisodes")}</h2>
                     </div>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
-                        Confira os nossos episódios mais assistidos e fique por dentro das conversas que estão a transformar o mercado imobiliário de luxo.
+                        {t("episodesDescription")}
                     </p>
                 </div>
 
@@ -163,7 +165,7 @@ export default function PodcastPage() {
                                 </div>
                                 <div className="mt-3">
                                     <div className="flex items-center gap-2 mb-1">
-                                        <span className="text-xs text-gold font-medium">Episódio {index + 1}</span>
+                                        <span className="text-xs text-gold font-medium">{t("episode")} {index + 1}</span>
                                     </div>
                                     <h3 className="body-16-medium md:body-18-medium text-black group-hover:text-brown transition-colors">
                                         {episode.title}

@@ -10,6 +10,7 @@ import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import Folha from "../Folha";
 import { Playfair_Display } from "next/font/google";
 import ModelViewer from "../ModelViewer";
+import { useTranslations } from "next-intl";
 
 const playfairDisplay = Playfair_Display({
     weight: ["400", "700"],
@@ -19,6 +20,7 @@ const playfairDisplay = Playfair_Display({
 type TransactionType = "comprar" | "empreendimentos" | "trespasse";
 
 export default function Hero() {
+    const t = useTranslations("Hero")
     const router = useRouter();
     const [transactionType, setTransactionType] = useState<TransactionType>("comprar");
     const [localizacao, setLocalizacao] = useState<string>("");
@@ -77,15 +79,13 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                     className="w-full lg:w-auto flex justify-center lg:justify-start lg:order-2"
                 >
-                    <ModelViewer
-                        src="/model3.gltf"
-                        alt="Modelo 3D"
+                    {/* <ModelViewer
                         autoRotate
                         cameraControls
                         initialRotation={[0, 0, 0]}
                         style={{ width: '100%', maxWidth: '450px', height: '450px', touchAction: 'pan-y' }}
                         className="lg:w-[700px]! lg:h-[550px]! lg:max-w-none! mx-auto lg:mx-0"
-                    />
+                    /> */}
                 </motion.div>
 
                 {/* Conteúdo de texto - aparece segundo no mobile, à esquerda no desktop */}
@@ -101,7 +101,7 @@ export default function Hero() {
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     >
-                        <span className="whitespace-nowrap">A imobiliária mais</span> <span className="whitespace-nowrap">exclusiva de Portugal.</span>
+                        {t("title")}
                     </motion.h1>
                     <motion.p
                         className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block mx-auto lg:mx-0"
@@ -109,7 +109,7 @@ export default function Hero() {
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                     >
-                        Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.
+                        {t("description")}
                     </motion.p>
                 </motion.div>
             </div>
@@ -128,7 +128,7 @@ export default function Hero() {
                             className="px-4.5 md:w-min whitespace-nowrap"
                             onClick={() => setTransactionType("comprar")}
                         >
-                            Comprar
+                            {t("buy")}
                         </Button>
                         <Button
                             type="button"
@@ -136,7 +136,7 @@ export default function Hero() {
                             className="px-4.5 md:w-min whitespace-nowrap"
                             onClick={() => setTransactionType("empreendimentos")}
                         >
-                            Empreendimentos
+                            {t("developments")}
                         </Button>
                         <Button
                             type="button"
@@ -144,7 +144,7 @@ export default function Hero() {
                             className="px-4.5 md:w-min whitespace-nowrap"
                             onClick={() => setTransactionType("trespasse")}
                         >
-                            Trespasse
+                            {t("businessTransfer")}
                         </Button>
                     </div>
                     <Button type="submit" variant="gold" className="px-4.5 hidden md:block">
@@ -155,10 +155,10 @@ export default function Hero() {
                 </div>
                 <div className="p-4 flex flex-col md:flex-row gap-4 bg-white">
                     <div className="flex flex-col gap-1 w-full">
-                        <Label htmlFor="localizacao">Localização</Label>
+                        <Label htmlFor="localizacao">{t("location")}</Label>
                         <Select value={localizacao} onValueChange={setLocalizacao}>
                             <SelectTrigger id="localizacao" name="localizacao">
-                                <SelectValue placeholder="Selecione" />
+                                <SelectValue placeholder={t("select")} />
                             </SelectTrigger>
                             <SelectContent>
                                 {DISTRITOS.map((distrito) => (
@@ -170,10 +170,10 @@ export default function Hero() {
                         </Select>
                     </div>
                     <div className="flex flex-col gap-1 w-full">
-                        <Label htmlFor="tipo">Tipo</Label>
+                        <Label htmlFor="tipo">{t("type")}</Label>
                         <Select value={tipo} onValueChange={setTipo}>
                             <SelectTrigger id="tipo" name="tipo">
-                                <SelectValue placeholder="Selecione" />
+                                <SelectValue placeholder={t("select")} />
                             </SelectTrigger>
                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                 {TIPOS_IMOVEL.map((tipo) => (
@@ -185,10 +185,10 @@ export default function Hero() {
                         </Select>
                     </div>
                     <div className="flex flex-col gap-1 w-full">
-                        <Label htmlFor="tipologia">Tipologia</Label>
+                        <Label htmlFor="tipologia">{t("typology")}</Label>
                         <Select value={tipologia} onValueChange={setTipologia}>
                             <SelectTrigger id="tipologia" name="tipologia">
-                                <SelectValue placeholder="Selecione" />
+                                <SelectValue placeholder={t("select")} />
                             </SelectTrigger>
                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                 <SelectItem value="0">T0</SelectItem>
@@ -200,7 +200,7 @@ export default function Hero() {
                         </Select>
                     </div>
                 </div>
-                <Button type="submit" variant="gold" className="px-4.5 md:hidden block w-full">Pesquisar</Button>
+                <Button type="submit" variant="gold" className="px-4.5 md:hidden block w-full">{t("search")}</Button>
             </motion.form>
         </section>
     )

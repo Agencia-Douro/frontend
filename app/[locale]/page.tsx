@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-
   return (
     <>
       <Folha className="top-[330px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />

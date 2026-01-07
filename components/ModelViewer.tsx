@@ -29,8 +29,6 @@ function Model({ src, autoRotate, initialRotation = [0, 0, 0] }: ModelProps) {
 }
 
 interface ModelViewerProps {
-  src: string;
-  alt?: string;
   autoRotate?: boolean;
   cameraControls?: boolean;
   className?: string;
@@ -50,11 +48,9 @@ function LoadingFallback() {
 }
 
 // Preload the model
-useGLTF.preload("/model3.gltf");
+useGLTF.preload("./model3.gltf");
 
 export default function ModelViewer({
-  src,
-  alt = "Modelo 3D",
   autoRotate = true,
   cameraControls = true,
   className,
@@ -140,7 +136,7 @@ export default function ModelViewer({
               <Environment preset="sunset" />
             </Suspense>
 
-            <Model src={src} autoRotate={autoRotate} initialRotation={initialRotation} />
+            <Model src="./model3.gltf" autoRotate={autoRotate} initialRotation={initialRotation} />
 
             {cameraControls && (
               <OrbitControls

@@ -10,8 +10,10 @@ import { toast } from "sonner"
 import Link from "next/link"
 import { contactApi } from "@/services/api"
 import Folha from "@/components/Folha"
+import { useTranslations } from "next-intl"
 
 export const FaleConnosco = () => {
+    const t = useTranslations("FaleConnosco");
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
@@ -23,12 +25,12 @@ export const FaleConnosco = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        const toastId = toast.loading("Enviando mensagem...")
+        const toastId = toast.loading(t("sendingMessage"))
 
         try {
             await contactApi.send(formData)
 
-            toast.success("Mensagem enviada com sucesso!", { id: toastId })
+            toast.success(t("messageSentSuccess"), { id: toastId })
             setFormData({
                 nome: "",
                 telefone: "",
@@ -37,13 +39,13 @@ export const FaleConnosco = () => {
                 aceitaMarketing: false,
             })
         } catch (error: any) {
-            toast.error(error.message || "Erro ao enviar mensagem. Tente novamente.", { id: toastId })
+            toast.error(error.message || t("messageSendError"), { id: toastId })
         }
     }
 
     return (
         <section className="relative container py-12 md:py-10 lg:py-12 xl:py-16 scroll-mt-6 md:scroll-mt-10 lg:scroll-mt-12 xl:scroll-mt-16" id="contacto">
-            <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">Fale connosco</h2>
+            <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">{t("title")}</h2>
             <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                 {/* Mapa */}
                 <div className="relative h-64 md:h-93 bg-muted w-full">
@@ -53,20 +55,20 @@ export const FaleConnosco = () => {
                 <form onSubmit={handleSubmit} className="space-y-6 w-full">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                            <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                            <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="nome"
-                                placeholder="Tomas Ribeiro Silva"
+                                placeholder={t("namePlaceholder")}
                                 value={formData.nome}
                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                 required
                             />
                         </div>
                         <div className="space-y-1">
-                            <Label htmlFor="telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                            <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="telefone"
-                                placeholder="+351 919 766 323"
+                                placeholder={t("phonePlaceholder")}
                                 value={formData.telefone}
                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                 required
@@ -74,21 +76,21 @@ export const FaleConnosco = () => {
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <Label htmlFor="email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
+                        <Label htmlFor="email" className="body-14-medium text-black">{t("email")} <span className="text-red body-14-medium">*</span></Label>
                         <Input
                             id="email"
                             type="email"
-                            placeholder="contacto@agenciadouro.pt"
+                            placeholder={t("emailPlaceholder")}
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
                         />
                     </div>
                     <div className="space-y-1">
-                        <Label htmlFor="mensagem" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
+                        <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                         <Textarea
                             id="mensagem"
-                            placeholder="Envie-nos uma mensagem!"
+                            placeholder={t("messagePlaceholder")}
                             value={formData.mensagem}
                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                             required
@@ -103,29 +105,29 @@ export const FaleConnosco = () => {
                                 setFormData({ ...formData, aceitaMarketing: checked as boolean })
                             }
                         />
-                        <Label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto. <span className="text-red body-14-medium">*</span></Label>
+                        <Label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")} <span className="text-red body-14-medium">*</span></Label>
                     </div>
-                    <Button type="submit" variant="gold" className="w-full">Enviar</Button>
+                    <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                 </form>
             </div>
             {/* Informações de Contato */}
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 md:gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                 <div className="flex flex-col">
-                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">Email</h3>
-                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">Envie-nos a sua dúvida ou questão para o nosso email.</p>
+                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">{t("email")}</h3>
+                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("emailDescription")}</p>
                     <Link href="mailto:contacto@agenciadouro.pt" className="body-16-medium text-black underline underline-offset-4 decoration-1">contacto@agenciadouro.pt</Link>
                 </div>
                 <div className="flex flex-col">
-                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">Contacto</h3>
-                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">Pode também falar conosco através do telefone.</p>
+                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">{t("contact")}</h3>
+                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("contactDescription")}</p>
                     <div className="flex md:flex-col gap-x-4 gap-y-2">
                         <Link href="tel:+351919766323" className="body-16-medium text-black underline underline-offset-4 decoration-1">+351 919 766 323</Link>
                         <Link href="tel:+351919766324" className="body-16-medium text-black underline underline-offset-4 decoration-1">+351 919 766 324</Link>
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">Redes Sociais</h3>
-                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">Somos bastante ativos nas redes, siga-nos!</p>
+                    <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">{t("socialMedia")}</h3>
+                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("socialMediaDescription")}</p>
                     <div className="flex md:flex-col gap-x-4 gap-y-2">
                         <Link href="https://www.instagram.com/agenciadouro" target="_blank" rel="noopener noreferrer" className="body-16-medium text-black flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="text-gold">
@@ -142,8 +144,8 @@ export const FaleConnosco = () => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <h3 className="body-20-medium text-black mb-4 md:mb-6">Morada</h3>
-                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">Venha fazer-nos uma visita, ficamos por cá à sua espera</p>
+                    <h3 className="body-20-medium text-black mb-4 md:mb-6">{t("address")}</h3>
+                    <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("addressDescription")}</p>
                     <p className="body-16-medium text-black">
                         Rua de Alfredo Cunha 155 rés do chão loja 07, 4450-031 Porto
                     </p>

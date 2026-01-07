@@ -8,6 +8,7 @@ import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { useTranslations } from "next-intl"
 
 interface SidebarProps {
     basePath?: string
@@ -16,6 +17,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose }: SidebarProps) {
+    const t = useTranslations("Sidebar");
     const router = useRouter()
     const searchParams = useSearchParams()
     const isFirstRender = useRef(true)
@@ -194,7 +196,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Comprar
+                                    {t("buy")}
                                 </button>
                                 <button
                                     type="button"
@@ -204,7 +206,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Trespasse
+                                    {t("businessTransfer")}
                                 </button>
                             </div>
                             <button
@@ -215,7 +217,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     : "text-brown bg-muted"
                                     }`}
                             >
-                                Empreendimentos
+                                {t("developments")}
                             </button>
                         </div>
                         {/* 1. Tipo de Imóvel */}
@@ -225,7 +227,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setTipoImovelOpen(!tipoImovelOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Tipo de Imóvel</p>
+                                <p className="body-16-medium text-black">{t("propertyType")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -242,10 +244,10 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             </button>
                             {tipoImovelOpen && (
                                 <div className="space-y-3">
-                                    <Label htmlFor="tipo">Tipo de Imóvel</Label>
+                                    <Label htmlFor="tipo">{t("propertyType")}</Label>
                                     <Select key={`propertyType-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
                                         <SelectTrigger id="tipo" name="tipo">
-                                            <SelectValue placeholder="Selecione o tipo de imóvel" />
+                                            <SelectValue placeholder={t("selectPropertyType")} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {TIPOS_IMOVEL.map((tipo) => (
@@ -265,7 +267,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setQuartosCasasBanhoOpen(!quartosCasasBanhoOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Quartos e Casas de banho</p>
+                                <p className="body-16-medium text-black">{t("bedroomsAndBathrooms")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -283,7 +285,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {quartosCasasBanhoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label>Quartos</Label>
+                                        <Label>{t("bedrooms")}</Label>
                                         <div className="flex gap-2">
                                             {[0, 1, 2, 3, 4].map((num) => (
                                                 <div key={num} className="flex items-center gap-1.5">
@@ -303,7 +305,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label>Casas de banho</Label>
+                                        <Label>{t("bathrooms")}</Label>
                                         <div className="flex gap-2">
                                             {[1, 2, 3, 4, 5].map((num) => (
                                                 <div key={num} className="flex items-center gap-1.5">
@@ -332,7 +334,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setPrecosAreaOpen(!precosAreaOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Preço e Área útil</p>
+                                <p className="body-16-medium text-black">{t("priceAndArea")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -351,41 +353,41 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 <div className="space-y-3">
                                     <div className="grid grid-cols-2 gap-2">
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Preço mínimo</Label>
+                                            <Label className="text-xs text-black-muted">{t("minPrice")}</Label>
                                             <Input
                                                 key={`minPrice-${resetKey}`}
                                                 type="number"
-                                                placeholder="Mínimo"
+                                                placeholder={t("minimum")}
                                                 value={minPrice}
                                                 onChange={(e) => setMinPrice(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Preço máximo</Label>
+                                            <Label className="text-xs text-black-muted">{t("maxPrice")}</Label>
                                             <Input
                                                 key={`maxPrice-${resetKey}`}
                                                 type="number"
-                                                placeholder="Máximo"
+                                                placeholder={t("maximum")}
                                                 value={maxPrice}
                                                 onChange={(e) => setMaxPrice(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Área útil mínima</Label>
+                                            <Label className="text-xs text-black-muted">{t("minUsefulArea")}</Label>
                                             <Input
                                                 key={`minUsefulArea-${resetKey}`}
                                                 type="number"
-                                                placeholder="Mínimo"
+                                                placeholder={t("minimum")}
                                                 value={minUsefulArea}
                                                 onChange={(e) => setMinUsefulArea(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Área útil máxima</Label>
+                                            <Label className="text-xs text-black-muted">{t("maxUsefulArea")}</Label>
                                             <Input
                                                 key={`maxUsefulArea-${resetKey}`}
                                                 type="number"
-                                                placeholder="Máximo"
+                                                placeholder={t("maximum")}
                                                 value={maxUsefulArea}
                                                 onChange={(e) => setMaxUsefulArea(e.target.value)}
                                             />
@@ -401,7 +403,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setLocalizacaoOpen(!localizacaoOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Localização</p>
+                                <p className="body-16-medium text-black">{t("location")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -419,14 +421,14 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {localizacaoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="distrito">Distrito</Label>
+                                        <Label htmlFor="distrito">{t("district")}</Label>
                                         <Select
                                             key={`distrito-${resetKey}`}
                                             value={distrito || undefined}
                                             onValueChange={setDistrito}
                                         >
                                             <SelectTrigger id="distrito" name="distrito">
-                                                <SelectValue placeholder={"Selecione o distrito"} />
+                                                <SelectValue placeholder={t("selectDistrict")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                                 {DISTRITOS.map((d) => (
@@ -438,7 +440,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="concelho">Concelho</Label>
+                                        <Label htmlFor="concelho">{t("municipality")}</Label>
                                         <Select
                                             key={`concelho-${resetKey}`}
                                             value={concelho || undefined}
@@ -449,8 +451,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                 <SelectValue
                                                     placeholder={
                                                         !distrito
-                                                            ? "Selecione primeiro um distrito"
-                                                            : "Selecione o concelho"
+                                                            ? t("selectDistrictFirst")
+                                                            : t("selectMunicipality")
                                                     }
                                                 />
                                             </SelectTrigger>
@@ -475,7 +477,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setEstadoClasseOpen(!estadoClasseOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Outro</p>
+                                <p className="body-16-medium text-black">{t("other")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -493,21 +495,21 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {estadoClasseOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="estado">Estado do imóvel</Label>
+                                        <Label htmlFor="estado">{t("propertyState")}</Label>
                                         <Select key={`propertyState-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
                                             <SelectTrigger id="estado" name="estado">
-                                                <SelectValue placeholder="Novo" />
+                                                <SelectValue placeholder={t("propertyStates.new")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="novo">Novo</SelectItem>
-                                                <SelectItem value="usado">Usado</SelectItem>
-                                                <SelectItem value="renovado">Renovado</SelectItem>
-                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
+                                                <SelectItem value="novo">{t("propertyStates.new")}</SelectItem>
+                                                <SelectItem value="usado">{t("propertyStates.used")}</SelectItem>
+                                                <SelectItem value="renovado">{t("propertyStates.renovated")}</SelectItem>
+                                                <SelectItem value="em-construcao">{t("propertyStates.underConstruction")}</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="classe">Classe energética</Label>
+                                        <Label htmlFor="classe">{t("energyClass")}</Label>
                                         <Select key={`energyClass-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
                                             <SelectTrigger id="classe" name="classe">
                                                 <SelectValue placeholder="A+" />
@@ -533,7 +535,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onCheckedChange={setIsArrendar}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>Arrendar</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>{t("rent")}</p>
                         </div>
                         <div className="p-4 border-t border-[#EAE6DF] flex gap-2 items-center">
                             <Switch
@@ -541,14 +543,14 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onCheckedChange={setOnlyFavorites}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>{t("favorites")}</p>
                         </div>
                     </div>
                     <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">
                         <button
                             type="button"
                             onClick={handleReset}
-                            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer">Limpar</button>
+                            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer">{t("clear")}</button>
                     </div>
                 </div>
             </aside>
@@ -566,7 +568,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Comprar
+                                    {t("buy")}
                                 </button>
                                 <button
                                     type="button"
@@ -576,7 +578,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         : "text-brown bg-muted"
                                         }`}
                                 >
-                                    Trespasse
+                                    {t("businessTransfer")}
                                 </button>
                             </div>
                             <button
@@ -587,7 +589,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                     : "text-brown bg-muted"
                                     }`}
                             >
-                                Empreendimentos
+                                {t("developments")}
                             </button>
                         </div>
                         {/* 1. Tipo de Imóvel */}
@@ -597,7 +599,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setTipoImovelOpen(!tipoImovelOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Tipo de Imóvel</p>
+                                <p className="body-16-medium text-black">{t("propertyType")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -614,10 +616,10 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             </button>
                             {tipoImovelOpen && (
                                 <div className="space-y-3">
-                                    <Label htmlFor="tipo-mobile">Tipo de Imóvel</Label>
+                                    <Label htmlFor="tipo-mobile">{t("propertyType")}</Label>
                                     <Select key={`propertyType-mobile-${resetKey}`} value={propertyType || undefined} onValueChange={setPropertyType}>
                                         <SelectTrigger id="tipo-mobile" name="tipo-mobile">
-                                            <SelectValue placeholder="Selecione o tipo de imóvel" />
+                                            <SelectValue placeholder={t("selectPropertyType")} />
                                         </SelectTrigger>
                                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                             {TIPOS_IMOVEL.map((tipo) => (
@@ -637,7 +639,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setQuartosCasasBanhoOpen(!quartosCasasBanhoOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Quartos e Casas de banho</p>
+                                <p className="body-16-medium text-black">{t("bedroomsAndBathrooms")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -655,7 +657,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {quartosCasasBanhoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label>Quartos</Label>
+                                        <Label>{t("bedrooms")}</Label>
                                         <div className="flex gap-2">
                                             {[0, 1, 2, 3, 4].map((num) => (
                                                 <div key={num} className="flex items-center gap-1.5">
@@ -675,7 +677,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         </div>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label>Casas de banho</Label>
+                                        <Label>{t("bathrooms")}</Label>
                                         <div className="flex gap-2">
                                             {[1, 2, 3, 4, 5].map((num) => (
                                                 <div key={num} className="flex items-center gap-1.5">
@@ -704,7 +706,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setPrecosAreaOpen(!precosAreaOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Preço e Área útil</p>
+                                <p className="body-16-medium text-black">{t("priceAndArea")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -723,41 +725,41 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 <div className="space-y-3">
                                     <div className="grid grid-cols-2 gap-2">
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Preço mínimo</Label>
+                                            <Label className="text-xs text-black-muted">{t("minPrice")}</Label>
                                             <Input
                                                 key={`minPrice-mobile-${resetKey}`}
                                                 type="number"
-                                                placeholder="Mínimo"
+                                                placeholder={t("minimum")}
                                                 value={minPrice}
                                                 onChange={(e) => setMinPrice(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Preço máximo</Label>
+                                            <Label className="text-xs text-black-muted">{t("maxPrice")}</Label>
                                             <Input
                                                 key={`maxPrice-mobile-${resetKey}`}
                                                 type="number"
-                                                placeholder="Máximo"
+                                                placeholder={t("maximum")}
                                                 value={maxPrice}
                                                 onChange={(e) => setMaxPrice(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Área útil mínima</Label>
+                                            <Label className="text-xs text-black-muted">{t("minUsefulArea")}</Label>
                                             <Input
                                                 key={`minUsefulArea-mobile-${resetKey}`}
                                                 type="number"
-                                                placeholder="Mínimo"
+                                                placeholder={t("minimum")}
                                                 value={minUsefulArea}
                                                 onChange={(e) => setMinUsefulArea(e.target.value)}
                                             />
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <Label className="text-xs text-black-muted">Área útil máxima</Label>
+                                            <Label className="text-xs text-black-muted">{t("maxUsefulArea")}</Label>
                                             <Input
                                                 key={`maxUsefulArea-mobile-${resetKey}`}
                                                 type="number"
-                                                placeholder="Máximo"
+                                                placeholder={t("maximum")}
                                                 value={maxUsefulArea}
                                                 onChange={(e) => setMaxUsefulArea(e.target.value)}
                                             />
@@ -773,7 +775,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setLocalizacaoOpen(!localizacaoOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Localização</p>
+                                <p className="body-16-medium text-black">{t("location")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -791,14 +793,14 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {localizacaoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="distrito-mobile">Distrito</Label>
+                                        <Label htmlFor="distrito-mobile">{t("district")}</Label>
                                         <Select
                                             key={`distrito-mobile-${resetKey}`}
                                             value={distrito || undefined}
                                             onValueChange={setDistrito}
                                         >
                                             <SelectTrigger id="distrito-mobile" name="distrito-mobile">
-                                                <SelectValue placeholder={"Selecione o distrito"} />
+                                                <SelectValue placeholder={t("selectDistrict")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                                 {DISTRITOS.map((d) => (
@@ -810,7 +812,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="concelho-mobile">Concelho</Label>
+                                        <Label htmlFor="concelho-mobile">{t("municipality")}</Label>
                                         <Select
                                             key={`concelho-mobile-${resetKey}`}
                                             value={concelho || undefined}
@@ -821,8 +823,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                 <SelectValue
                                                     placeholder={
                                                         !distrito
-                                                            ? "Selecione primeiro um distrito"
-                                                            : "Selecione o concelho"
+                                                            ? t("selectDistrictFirst")
+                                                            : t("selectMunicipality")
                                                     }
                                                 />
                                             </SelectTrigger>
@@ -847,7 +849,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onClick={() => setEstadoClasseOpen(!estadoClasseOpen)}
                                 className="flex items-center justify-between w-full cursor-pointer"
                             >
-                                <p className="body-16-medium text-black">Outro</p>
+                                <p className="body-16-medium text-black">{t("other")}</p>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -865,21 +867,21 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {estadoClasseOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="estado-mobile">Estado do imóvel</Label>
+                                        <Label htmlFor="estado-mobile">{t("propertyState")}</Label>
                                         <Select key={`propertyState-mobile-${resetKey}`} value={propertyState || undefined} onValueChange={setPropertyState}>
                                             <SelectTrigger id="estado-mobile" name="estado-mobile">
-                                                <SelectValue placeholder="Novo" />
+                                                <SelectValue placeholder={t("propertyStates.new")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                <SelectItem value="novo">Novo</SelectItem>
-                                                <SelectItem value="usado">Usado</SelectItem>
-                                                <SelectItem value="renovado">Renovado</SelectItem>
-                                                <SelectItem value="em-construcao">Em Construção</SelectItem>
+                                                <SelectItem value="novo">{t("propertyStates.new")}</SelectItem>
+                                                <SelectItem value="usado">{t("propertyStates.used")}</SelectItem>
+                                                <SelectItem value="renovado">{t("propertyStates.renovated")}</SelectItem>
+                                                <SelectItem value="em-construcao">{t("propertyStates.underConstruction")}</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="classe-mobile">Classe energética</Label>
+                                        <Label htmlFor="classe-mobile">{t("energyClass")}</Label>
                                         <Select key={`energyClass-mobile-${resetKey}`} value={energyClass || undefined} onValueChange={setEnergyClass}>
                                             <SelectTrigger id="classe-mobile" name="classe-mobile">
                                                 <SelectValue placeholder="A+" />
@@ -906,7 +908,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onCheckedChange={setIsArrendar}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>Arrendar</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setIsArrendar(!isArrendar)}>{t("rent")}</p>
                         </div>
                         <div className="p-4 border-b border-[#EAE6DF] flex gap-2 items-center">
                             <Switch
@@ -914,14 +916,14 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                 onCheckedChange={setOnlyFavorites}
                                 className="cursor-pointer"
                             />
-                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>Favoritos</p>
+                            <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>{t("favorites")}</p>
                         </div>
                     </div>
                     <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">
                         <button
                             type="button"
                             onClick={handleReset}
-                            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer">Limpar</button>
+                            className="shadow-pretty w-full flex justify-center items-center gap-2 whitespace-nowrap transition-all duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive button-14-semibold bg-white text-black-muted px-3 py-2 cursor-pointer">{t("clear")}</button>
                     </div>
                 </div>
             </aside>

@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link"
 import Folha from "../../Folha"
 import FooterIcons from "./FooterIcons"
+import { useTranslations } from "next-intl"
 
 export default function Footer() {
+    const t = useTranslations("Footer");
     return (
         <>
             <div className="relative w-screen hidden lg:block">
@@ -31,32 +35,32 @@ export default function Footer() {
                         </svg>
                         <div className="lg:hidden flex gap-16 flex-wrap mt-12 md:mt-0">
                             <ul className="space-y-4">
-                                <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Ínicio</Link></li>
-                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Imóveis</Link></li>
-                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Sobre Nós</Link></li>
+                                <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("home")}</Link></li>
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("properties")}</Link></li>
+                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
-                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Comprar</Link></li>
-                                <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Arrendar</Link></li>
-                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Empreendimentos</Link></li>
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("buy")}</Link></li>
+                                <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("rent")}</Link></li>
+                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("developments")}</Link></li>
                             </ul>
                         </div>
                         <div className="hidden lg:flex gap-16 flex-wrap mt-12 md:mt-0">
                             <ul className="space-y-4">
-                                <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Ínicio</Link></li>
-                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Imóveis</Link></li>
-                                <li><Link href="#contacto" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Contacto</Link></li>
+                                <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("home")}</Link></li>
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("properties")}</Link></li>
+                                <li><Link href="#contacto" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("contact")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
-                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Sobre Nós</Link></li>
-                                <li><Link href="/newsletter" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Newsletter</Link></li>
-                                <li><Link href="/institucional/podcast" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Podcast</Link></li>
+                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
+                                <li><Link href="/newsletter" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("newsletter")}</Link></li>
+                                <li><Link href="/institucional/podcast" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("podcast")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
-                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Comprar</Link></li>
-                                <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Arrendar</Link></li>
-                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Empreendimentos</Link></li>
-                                <li><Link href="/imoveis-luxo?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">Imóveis de luxo</Link></li>
+                                <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("buy")}</Link></li>
+                                <li><Link href="/imoveis?transactionType=arrendar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("rent")}</Link></li>
+                                <li><Link href="/imoveis-luxo?transactionType=comprar&isEmpreendimento=true" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("developments")}</Link></li>
+                                <li><Link href="/imoveis-luxo?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("luxuryProperties")}</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -77,11 +81,11 @@ export default function Footer() {
                         </div>
                         <div className="h-px bg-brown/10 w-full"></div>
                         <div className="text-brown flex flex-col md:flex-row justify-between">
-                            <p>© Agência Douro. AMI 17 632</p>
+                            <p>{t("copyright")}</p>
                             <div className="button-14-medium flex md:flex-row flex-col md:gap-2 gap-3 md:mt-0 mt-4 text-brown hover:text-black-muted">
-                                <Link href="/termos-condicoes">Termos e condições</Link>
+                                <Link href="/termos-condicoes">{t("termsAndConditions")}</Link>
                                 <span className="hidden md:block">∙</span>
-                                <Link href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">Livro Reclamações Online</Link>
+                                <Link href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">{t("complaintsBook")}</Link>
                             </div>
                         </div>
                     </div>

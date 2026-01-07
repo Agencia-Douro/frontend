@@ -1,0 +1,249 @@
+{
+  "Hero": {
+    "title": "Portugal's most exclusive real estate agency.",
+    "description": "Discover exclusive properties in Portugal with our specialized real estate agency.",
+    "buy": "Buy",
+    "developments": "Developments",
+    "businessTransfer": "Business Transfer",
+    "location": "Location",
+    "type": "Type",
+    "typology": "Typology",
+    "select": "Select",
+    "search": "Search"
+  },
+  "ZonasMaisDesejadas": {
+    "title": "The most desired areas",
+    "description": "Discover the regions that attract those seeking exclusivity, comfort and an unparalleled lifestyle.",
+    "imageAlt": "Image of {nome}",
+    "viewAll": "View All"
+  },
+  "Testemunhos": {
+    "title": "Words with key in hand",
+    "description": "Each key carries a story, each home welcomes a dream, these are the voices of those who found their perfect place.",
+    "satisfiedClients": "satisfied clients",
+    "viewMore": "View more",
+    "imageAlt": "testimonial-image",
+    "testimonial1": {
+      "text": "Vânia is wonderful, she knows the market where she operates very well and assists from property search to final details. Super important to have a trustworthy person always willing to help. We recommend 100%!",
+      "name": "Lucimara Bordignon Borghetti"
+    },
+    "testimonial2": {
+      "text": "Agência Douro made all the difference in the sale of my home. The sale happened super fast. Vânia Fernandes, owner of the Agency, super friendly and competent, was always ready to answer my questions. I always recommend.",
+      "name": "Maria Oliveira"
+    },
+    "testimonial3": {
+      "text": "Great differentiated service from all the real estate agencies I knew in Porto. Ethics, commitment, getting to know the company, for me it was a gift from heaven. Congratulations Agência Douro. Congratulations entrepreneur Vânia Fernandes!",
+      "name": "Walter Martins"
+    }
+  },
+  "FaleConnosco": {
+    "title": "Contact us",
+    "sendingMessage": "Sending message...",
+    "messageSentSuccess": "Message sent successfully!",
+    "messageSendError": "Error sending message. Please try again.",
+    "name": "Name",
+    "namePlaceholder": "Tomas Ribeiro Silva",
+    "phoneNumber": "Mobile Number",
+    "phonePlaceholder": "+351 919 766 323",
+    "email": "Email",
+    "emailPlaceholder": "contacto@agenciadouro.pt",
+    "message": "Message",
+    "messagePlaceholder": "Send us a message!",
+    "marketingConsent": "I authorize Agência Douro to store this data for marketing and contact purposes.",
+    "send": "Send",
+    "emailDescription": "Send us your question or inquiry to our email.",
+    "contact": "Contact",
+    "contactDescription": "You can also contact us by phone.",
+    "socialMedia": "Social Media",
+    "socialMediaDescription": "We are very active on social media, follow us!",
+    "address": "Address",
+    "addressDescription": "Come visit us, we're here waiting for you"
+  },
+  "Footer": {
+    "home": "Home",
+    "properties": "Properties",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "newsletter": "Newsletter",
+    "podcast": "Podcast",
+    "buy": "Buy",
+    "rent": "Rent",
+    "developments": "Developments",
+    "luxuryProperties": "Luxury Properties",
+    "copyright": "© Agência Douro. AMI 17 632",
+    "termsAndConditions": "Terms and conditions",
+    "complaintsBook": "Online Complaints Book"
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Stay up to date with the latest real estate market news",
+    "loading": "Loading newsletters...",
+    "error": "Error loading newsletters.",
+    "noNewsletters": "No newsletters available.",
+    "all": "All",
+    "categories": {
+      "market": "Market",
+      "tips": "Tips",
+      "news": "News"
+    },
+    "noNewslettersInCategory": "No newsletters found in this category."
+  },
+  "NewsletterDetails": {
+    "loading": "Loading newsletter...",
+    "notFound": "Newsletter not found",
+    "backToNewsletters": "← Back to newsletters",
+    "newsletter": "Newsletter",
+    "readingTime": "min read",
+    "logoAlt": "Agência Douro Logo",
+    "relatedProperties": "Related Properties",
+    "categories": {
+      "market": "Market",
+      "tips": "Tips",
+      "news": "News"
+    }
+  },
+  "SobreNos": {
+    "whoWeAre": "Who We Are",
+    "title": "About Us",
+    "subtitle": "Luxury Real Estate Specialists in Portugal",
+    "description1": "At Agência Douro, our mission is to turn dreams into reality, always with an unwavering commitment to transparency and responsibility. Our team consists of highly qualified professionals, ready to help you realize the dream of your life.",
+    "description2": "Operating in the national and international market, Agência Douro is recognized for its transparency, responsibility and commitment to providing peace of mind in every transaction. Whether for own housing or investment, we offer complete support to ensure your business is safe and effective.",
+    "yearsExperience": "Years of Experience",
+    "propertiesSold": "Properties Sold",
+    "satisfiedClients": "Satisfied Clients",
+    "ourIdentity": "Our Identity",
+    "ourCulture": "Our Culture",
+    "culture": {
+      "excellence": {
+        "title": "Excellence",
+        "description": "We believe in excellence as a standard, transparency as the basis of trust and integrity as a non-negotiable principle."
+      },
+      "dedication": {
+        "title": "Dedication",
+        "description": "We value personalized and dedicated service, recognizing that each client has unique needs."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Innovation and adaptation to market needs are pillars of our culture, allowing us to always offer the best possible service."
+      }
+    },
+    "whatWeOffer": "What We Offer",
+    "ourServices": "Our Services",
+    "requestInfo": "Request information",
+    "services": {
+      "legalConsulting": {
+        "title": "Legal Consulting",
+        "description": "We ensure that all real estate transactions are carried out safely and in accordance with current legislation."
+      },
+      "mortgageConsulting": {
+        "title": "Mortgage Consulting",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      },
+      "realEstatePromotion": {
+        "title": "Real Estate Promotion",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      },
+      "projectManagement": {
+        "title": "Real Estate Project Management",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      },
+      "realEstateInvestments": {
+        "title": "Real Estate Investments",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      },
+      "goldenVisa": {
+        "title": "Golden Visa",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      },
+      "mortgagePartners": {
+        "title": "Mortgage Partners",
+        "description": "We help you find the best financing options, suited to your needs and financial profile."
+      }
+    },
+    "meetOurTeam": "Meet Our Team",
+    "ourTeam": "Our Team",
+    "teamDescription": "Our team consists of highly qualified and experienced professionals, dedicated to providing the best service and turning your dreams into reality."
+  },
+  "Podcast": {
+    "exclusiveContent": "Exclusive Content",
+    "title": "Agência Douro Podcast",
+    "subtitle": "Conversations about the Luxury Real Estate Market in Portugal",
+    "description": "A podcast dedicated to discussing trends, challenges and opportunities in Portugal's luxury real estate market, with the participation of experts and professionals in the sector. The Agência Douro Podcast offers practical insights and inspiring content for investors, brokers and those interested in real estate and business, being a reliable source of information about the Portuguese sector.",
+    "episodes": "Episodes",
+    "seasons": "Seasons",
+    "guests": "Guests",
+    "themesAndInsights": "Themes & Insights",
+    "whatWeCover": "What We Cover",
+    "topics": {
+      "marketTrends": {
+        "title": "Market Trends",
+        "description": "In-depth analysis of current trends in Portugal's luxury real estate market and investment opportunities."
+      },
+      "investmentTips": {
+        "title": "Investment Tips",
+        "description": "Practical advice on how to invest in luxury properties, from choosing the location to appreciation strategies."
+      },
+      "internationalVision": {
+        "title": "International Vision",
+        "description": "Perspectives on foreign investors in Portugal and comparisons with other international markets."
+      }
+    },
+    "logoAlt": "podcast logo",
+    "watchNow": "Watch Now",
+    "featuredEpisodes": "Featured Episodes",
+    "episodesDescription": "Check out our most watched episodes and stay up to date with the conversations that are transforming the luxury real estate market.",
+    "episode": "Episode"
+  },
+  "Sidebar": {
+    "buy": "Buy",
+    "businessTransfer": "Business Transfer",
+    "developments": "Developments",
+    "propertyType": "Property Type",
+    "selectPropertyType": "Select property type",
+    "bedroomsAndBathrooms": "Bedrooms and Bathrooms",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "priceAndArea": "Price and Useful Area",
+    "minPrice": "Minimum price",
+    "maxPrice": "Maximum price",
+    "minUsefulArea": "Minimum useful area",
+    "maxUsefulArea": "Maximum useful area",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "location": "Location",
+    "district": "District",
+    "selectDistrict": "Select district",
+    "municipality": "Municipality",
+    "selectDistrictFirst": "Select a district first",
+    "selectMunicipality": "Select municipality",
+    "other": "Other",
+    "propertyState": "Property state",
+    "energyClass": "Energy class",
+    "rent": "Rent",
+    "favorites": "Favorites",
+    "clear": "Clear",
+    "propertyStates": {
+      "new": "New",
+      "used": "Used",
+      "renovated": "Renovated",
+      "underConstruction": "Under Construction"
+    }
+  },
+  "Imoveis": {
+    "filter": "Filter",
+    "of": "of",
+    "properties": "properties",
+    "sortBy": "Sort by:",
+    "loading": "Loading properties",
+    "error": "Error loading properties",
+    "noResults": "No matches.",
+    "noResultsDescription": "We couldn't find any properties matching your search criteria.",
+    "loadingSuspense": "Loading...",
+    "sortOptions": {
+      "mostRecent": "Most recent",
+      "oldest": "Oldest",
+      "lowestPrice": "Lowest price",
+      "highestPrice": "Highest price"
+    }
+  }
+}
