@@ -15,7 +15,7 @@ import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
 import { generatePropertyPDF } from "@/utils/pdfGenerator"
-import ImagensImoveis from "@/components/Sections/ImagensImoveis"
+import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImoveis"
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
@@ -31,10 +31,12 @@ const MediaItem = ({
     src,
     alt,
     className,
+    onClick,
 }: {
     src: string;
     alt: string;
     className?: string;
+    onClick?: () => void;
 }) => {
     const isVideo = isVideoUrl(src);
     console.log('MediaItem:', { src, isVideo });
@@ -44,8 +46,9 @@ const MediaItem = ({
             <video
                 src={src}
                 controls
-                className={className}
+                className={`${className} ${onClick ? 'cursor-pointer' : ''}`}
                 preload="metadata"
+                onClick={onClick}
             />
         );
     }
@@ -56,8 +59,9 @@ const MediaItem = ({
             height={1000}
             src={src}
             alt={alt}
-            className={className}
+            className={`${className} ${onClick ? 'cursor-pointer' : ''}`}
             unoptimized={isVideoUrl(src)}
+            onClick={onClick}
         />
     );
 };
@@ -68,10 +72,9 @@ export default function ImovelDetails() {
     const [linkCopied, setLinkCopied] = useState(false)
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
-    const [showPanel, setShowPanel] = useState(false)
-    const [panelClosing, setPanelClosing] = useState(false)
-    const [panelOpening, setPanelOpening] = useState(false)
     const [showFilesModal, setShowFilesModal] = useState(false)
+    const [lightboxOpen, setLightboxOpen] = useState(false)
+    const [lightboxIndex, setLightboxIndex] = useState(0)
     const pdfRef = useRef(null)
     const router = useRouter()
 
@@ -83,32 +86,7 @@ export default function ImovelDetails() {
         aceitaMarketing: false,
     })
 
-    const handleOpenPanel = () => {
-        // Bloquear overflow imediatamente
-        document.body.style.overflow = 'hidden';
-        setShowPanel(true)
-        // Força o elemento a começar com translate-y-full e depois anima
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setPanelOpening(true)
-            })
-        })
-    }
 
-    const handleClosePanel = () => {
-        setPanelClosing(true)
-        setPanelOpening(false)
-    }
-
-    const handleTransitionEnd = () => {
-        if (panelClosing) {
-            setPanelClosing(false);
-            setShowPanel(false);
-            setPanelOpening(false);
-            // Restaurar overflow quando o painel fechar completamente
-            document.body.style.overflow = '';
-        }
-    }
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", id],
         queryFn: () => propertiesApi.getById(id),
@@ -243,12 +221,9 @@ export default function ImovelDetails() {
                     </div>
                     <ImagensImoveis
                         property={property}
-                        showPanel={showPanel}
-                        panelClosing={panelClosing}
-                        panelOpening={panelOpening}
-                        handleOpenPanel={handleOpenPanel}
-                        handleClosePanel={handleClosePanel}
-                        handleTransitionEnd={handleTransitionEnd}
+                        lightboxOpen={lightboxOpen}
+                        lightboxIndex={lightboxIndex}
+                        onLightboxClose={() => setLightboxOpen(false)}
                     />
                 </div>
                 {(() => {
@@ -264,51 +239,98 @@ export default function ImovelDetails() {
                         <>
                             {/* Grid de 4 mídias - visible only on md and up */}
                             <div className="hidden md:grid md:grid-cols-2 md:grid-rows-2 h-96 lg:grid-cols-12 w-full gap-4">
-                                <div className="bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden">
+                                <div className="bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden cursor-pointer" onClick={() => {
+                                    setLightboxIndex(0);
+                                    setLightboxOpen(true);
+                                }}>
                                     {property.image && (
                                         <MediaItem
                                             src={property.image}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
+                                            onClick={() => {
+                                                setLightboxIndex(0);
+                                                setLightboxOpen(true);
+                                            }}
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block">
+                                <div className="bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block cursor-pointer" onClick={() => {
+                                    if (allImages[0]) {
+                                        setLightboxIndex(getImageIndex(property, allImages[0].url));
+                                        setLightboxOpen(true);
+                                    }
+                                }}>
                                     {allImages[0] && (
                                         <MediaItem
                                             src={allImages[0].url}
                                             alt={`${property.title} - ${allImages[0].name}`}
                                             className="w-full h-full object-cover"
+                                            onClick={() => {
+                                                if (allImages[0]) {
+                                                    setLightboxIndex(getImageIndex(property, allImages[0].url));
+                                                    setLightboxOpen(true);
+                                                }
+                                            }}
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 lg:col-span-3 overflow-hidden">
+                                <div className="bg-brown/10 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
+                                    if (allImages[1]) {
+                                        setLightboxIndex(getImageIndex(property, allImages[1].url));
+                                        setLightboxOpen(true);
+                                    }
+                                }}>
                                     {allImages[1] && (
                                         <MediaItem
                                             src={allImages[1].url}
                                             alt={`${property.title} - ${allImages[1].name}`}
                                             className="w-full h-full object-cover"
+                                            onClick={() => {
+                                                if (allImages[1]) {
+                                                    setLightboxIndex(getImageIndex(property, allImages[1].url));
+                                                    setLightboxOpen(true);
+                                                }
+                                            }}
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden">
+                                <div className="bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
+                                    if (allImages[2]) {
+                                        setLightboxIndex(getImageIndex(property, allImages[2].url));
+                                        setLightboxOpen(true);
+                                    }
+                                }}>
                                     {allImages[2] && (
                                         <MediaItem
                                             src={allImages[2].url}
                                             alt={`${property.title} - ${allImages[2].name}`}
                                             className="w-full h-full object-cover"
+                                            onClick={() => {
+                                                if (allImages[2]) {
+                                                    setLightboxIndex(getImageIndex(property, allImages[2].url));
+                                                    setLightboxOpen(true);
+                                                }
+                                            }}
                                         />
                                     )}
                                 </div>
                             </div>
 
                             {/* Mídia principal - visible only on mobile */}
-                            <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden">
+                            <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden cursor-pointer" onClick={() => {
+                                setLightboxIndex(0);
+                                setLightboxOpen(true);
+                            }}>
                                 {property.image && (
                                     <MediaItem
                                         src={property.image}
                                         alt={property.title}
                                         className="w-full h-full object-cover"
+                                        onClick={() => {
+                                            setLightboxIndex(0);
+                                            setLightboxOpen(true);
+                                        }}
                                     />
                                 )}
                             </div>

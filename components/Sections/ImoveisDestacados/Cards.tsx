@@ -8,6 +8,7 @@ import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -21,12 +22,13 @@ interface CardsProps {
 }
 
 export default function Cards({ properties, className }: CardsProps) {
-    const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
+    const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+    const t = useTranslations("ImoveisDestacados");
 
     if (properties.length === 0) {
         return (
             <div className="mt-8 text-center">
-                <p className="text-medium text-black-muted">Nenhum imóvel destacado disponível no momento.</p>
+                <p className="text-medium text-black-muted">{t("noProperties")}</p>
             </div>
         )
     }
@@ -72,13 +74,13 @@ export default function Cards({ properties, className }: CardsProps) {
                                     ) : (
                                         <Image
                                             src={property.image}
-                                            alt={`Imóvel em ${property.concelho}`}
+                                            alt={`${t("propertyIn")} ${property.concelho}`}
                                             fill
                                             className="object-cover" />
                                     )
                                 )}
                                 <div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">
-                                    {property.isEmpreendimento ? "Empreendimento" : getPropertyTypeLabel(property.propertyType)}
+                                    {property.isEmpreendimento ? t("development") : getPropertyTypeLabel(property.propertyType)}
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 py-3 px-4">
@@ -94,7 +96,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                             <path d="M6 10.0667L5.06667 9.2L4.2 10.0667L3.73333 9.6L5.06667 8.26667L6.46667 9.6L6 10.0667Z" fill="currentColor" />
                                             <path d="M10.5333 16.3333L10.0667 15.8667L10.9333 15L10.0667 14.1333L10.5333 13.6667L11.8667 15L10.5333 16.3333Z" fill="currentColor" />
                                         </svg>
-                                        <p className="body-14-medium whitespace-nowrap">{getAreaDisplay(property)} área</p>
+                                        <p className="body-14-medium whitespace-nowrap">{getAreaDisplay(property)} {t("area")}</p>
                                     </div>
                                     <div className="flex gap-1.5 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown">
@@ -107,14 +109,14 @@ export default function Cards({ properties, className }: CardsProps) {
                                             <path d="M7 7.2H6.33333V7.86667H7V7.2Z" fill="currentColor" />
                                             <path d="M12.3333 4.53333V8.53333H16.3333V4.53333H17V3.86667H16.2667C16.1333 3.46667 15.7333 3.2 15.3333 3.2H12.6667C12.2 3.2 11.8667 3.46667 11.7333 3.86667H11V4.53333H12.3333ZM12.6667 3.86667H15.3333C15.5333 3.86667 15.6667 4 15.6667 4.2V7.86667H13V4.4C13 4.13333 12.8 3.93333 12.6 3.86667C12.6 3.86667 12.6 3.86667 12.6667 3.86667Z" fill="currentColor" />
                                         </svg>
-                                        <p className="body-14-medium whitespace-nowrap">{property.bathrooms} {property.bathrooms === 1 ? 'casa de banho' : 'casas de banho'}</p>
+                                        <p className="body-14-medium whitespace-nowrap">{property.bathrooms} {property.bathrooms === 1 ? t("bathroom") : t("bathrooms")}</p>
                                     </div>
                                     <div className="flex gap-1.5 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown">
                                             <path d="M17.3333 11.2335L17.0667 10.0462C17 9.71639 16.7333 9.45253 16.4667 9.32061L15.8 6.6821C15.7333 6.28632 15.4 6.02247 15 5.9565V5.23091C14.9333 4.76917 14.5333 4.30743 14 4.30743H11.3333C10.8 4.30743 10.3333 4.76917 10.3333 5.29688V5.9565H9.66667V5.29688C9.6 4.76917 9.2 4.30743 8.66667 4.30743H6C5.46667 4.30743 5.06667 4.76917 5 5.29688V5.9565C4.6 6.02247 4.33333 6.28632 4.2 6.6821L3.53333 9.32061C3.26667 9.45253 3 9.71639 2.93333 10.0462L2.66667 11.2335H2V17.5H5.6L5.93333 16.1807H14.0667L14.4 17.5H18V11.2335H17.3333ZM11.3333 4.96706H13.9333C14.1333 4.96706 14.2667 5.16495 14.3333 5.29688V6.61613C14.3333 6.74806 14.1333 6.94595 14 6.94595H11.4C11.2 6.94595 11.0667 6.74806 11 6.61613V5.36284C11 5.16495 11.2 4.96706 11.3333 4.96706ZM6 4.96706H8.6C8.8 4.96706 8.93333 5.16495 9 5.29688V6.61613C9 6.74806 8.8 6.94595 8.66667 6.94595H6.06667C5.86667 6.94595 5.66667 6.74806 5.66667 6.61613V5.36284C5.66667 5.16495 5.86667 4.96706 6 4.96706ZM4.86667 6.87998C4.86667 6.81402 4.93333 6.74806 5 6.6821C5.06667 7.14384 5.53333 7.60558 6 7.60558H8.66667C9.2 7.60558 9.66667 7.14384 9.66667 6.61613H10.3333C10.4 7.14384 10.8 7.60558 11.3333 7.60558H14C14.5333 7.60558 14.9333 7.14384 15 6.6821C15.0667 6.74806 15.1333 6.81402 15.1333 6.87998L15.7333 9.25465H4.26667L4.86667 6.87998ZM3.6 10.2441C3.66667 10.0462 3.8 9.91427 4 9.91427H16C16.2 9.91427 16.3333 10.0462 16.4 10.2441L16.6667 11.2335H3.33333L3.6 10.2441ZM17.3333 16.8404H14.9333L14.8 16.1807H16.4V15.5211H3.66667V16.1807H5.26667L5.13333 16.8404H2.66667V11.8932H17.3333V16.8404Z" fill="currentColor" />
                                             <path d="M3.66604 3.15963H16.3327V8.10684H16.9994V2.5H2.99938V8.10684H3.66604V3.15963Z" fill="currentColor" />
                                         </svg>
-                                        <p className="body-14-medium whitespace-nowrap">{property.bedrooms} {property.bedrooms === 1 ? 'quarto' : 'quartos'}</p>
+                                        <p className="body-14-medium whitespace-nowrap">{property.bedrooms} {property.bedrooms === 1 ? t("bedroom") : t("bedrooms")}</p>
                                     </div>
                                     <div className="flex gap-1.5 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown">
@@ -129,7 +131,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                             <path d="M14.6667 10H5.46667V10.6723H14.6667V10Z" fill="currentColor" />
                                             <path d="M18 18H2V7.2437L10 2L18 7.2437V18ZM2.66667 17.3277H17.3333V7.57983L10 2.7395L2.66667 7.57983V17.3277Z" fill="currentColor" />
                                         </svg>
-                                        <p className="body-14-medium whitespace-nowrap">{property.garageSpaces} {property.garageSpaces === 1 ? 'lugar garagem' : 'lugares garagem'}</p>
+                                        <p className="body-14-medium whitespace-nowrap">{property.garageSpaces} {property.garageSpaces === 1 ? t("garageSpace") : t("garageSpaces")}</p>
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +163,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                     ) : (
                                         <Image
                                             src={selectedProperty.image}
-                                            alt={`Imóvel em ${selectedProperty.concelho}`}
+                                            alt={`${t("propertyIn")} ${selectedProperty.concelho}`}
                                             fill
                                             className="object-cover rounded-md"
                                         />
@@ -172,7 +174,7 @@ export default function Cards({ properties, className }: CardsProps) {
                             <div className="flex justify-between items-center">
                                 <p className="body-16-medium">{formatPrice(selectedProperty.price)}</p>
                                 <div className="bg-brown text-white body-14-medium p-2">
-                                    {selectedProperty?.isEmpreendimento ? "Empreendimento" : getPropertyTypeLabel(selectedProperty?.propertyType)}
+                                    {selectedProperty?.isEmpreendimento ? t("development") : getPropertyTypeLabel(selectedProperty?.propertyType)}
                                 </div>
                             </div>
 
@@ -184,14 +186,14 @@ export default function Cards({ properties, className }: CardsProps) {
                                         <path d="M6 10.0667L5.06667 9.2L4.2 10.0667L3.73333 9.6L5.06667 8.26667L6.46667 9.6L6 10.0667Z" fill="currentColor" />
                                         <path d="M10.5333 16.3333L10.0667 15.8667L10.9333 15L10.0667 14.1333L10.5333 13.6667L11.8667 15L10.5333 16.3333Z" fill="currentColor" />
                                     </svg>
-                                    <p className="text-base">{getAreaDisplay(selectedProperty)} área</p>
+                                    <p className="text-base">{getAreaDisplay(selectedProperty)} {t("area")}</p>
                                 </div>
                                 <div className="flex gap-2 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="none" className="text-brown">
                                         <path d="M17.3333 11.2335L17.0667 10.0462C17 9.71639 16.7333 9.45253 16.4667 9.32061L15.8 6.6821C15.7333 6.28632 15.4 6.02247 15 5.9565V5.23091C14.9333 4.76917 14.5333 4.30743 14 4.30743H11.3333C10.8 4.30743 10.3333 4.76917 10.3333 5.29688V5.9565H9.66667V5.29688C9.6 4.76917 9.2 4.30743 8.66667 4.30743H6C5.46667 4.30743 5.06667 4.76917 5 5.29688V5.9565C4.6 6.02247 4.33333 6.28632 4.2 6.6821L3.53333 9.32061C3.26667 9.45253 3 9.71639 2.93333 10.0462L2.66667 11.2335H2V17.5H5.6L5.93333 16.1807H14.0667L14.4 17.5H18V11.2335H17.3333ZM11.3333 4.96706H13.9333C14.1333 4.96706 14.2667 5.16495 14.3333 5.29688V6.61613C14.3333 6.74806 14.1333 6.94595 14 6.94595H11.4C11.2 6.94595 11.0667 6.74806 11 6.61613V5.36284C11 5.16495 11.2 4.96706 11.3333 4.96706ZM6 4.96706H8.6C8.8 4.96706 8.93333 5.16495 9 5.29688V6.61613C9 6.74806 8.8 6.94595 8.66667 6.94595H6.06667C5.86667 6.94595 5.66667 6.74806 5.66667 6.61613V5.36284C5.66667 5.16495 5.86667 4.96706 6 4.96706ZM4.86667 6.87998C4.86667 6.81402 4.93333 6.74806 5 6.6821C5.06667 7.14384 5.53333 7.60558 6 7.60558H8.66667C9.2 7.60558 9.66667 7.14384 9.66667 6.61613H10.3333C10.4 7.14384 10.8 7.60558 11.3333 7.60558H14C14.5333 7.60558 14.9333 7.14384 15 6.6821C15.0667 6.74806 15.1333 6.81402 15.1333 6.87998L15.7333 9.25465H4.26667L4.86667 6.87998ZM3.6 10.2441C3.66667 10.0462 3.8 9.91427 4 9.91427H16C16.2 9.91427 16.3333 10.0462 16.4 10.2441L16.6667 11.2335H3.33333L3.6 10.2441ZM17.3333 16.8404H14.9333L14.8 16.1807H16.4V15.5211H3.66667V16.1807H5.26667L5.13333 16.8404H2.66667V11.8932H17.3333V16.8404Z" fill="currentColor" />
                                         <path d="M3.66604 3.15963H16.3327V8.10684H16.9994V2.5H2.99938V8.10684H3.66604V3.15963Z" fill="currentColor" />
                                     </svg>
-                                    <p className="text-base">{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? 'quarto' : 'quartos'}</p>
+                                    <p className="text-base">{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? t("bedroom") : t("bedrooms")}</p>
                                 </div>
                                 <div className="flex gap-2 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="none" className="text-brown">
@@ -204,7 +206,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                         <path d="M7 7.2H6.33333V7.86667H7V7.2Z" fill="currentColor" />
                                         <path d="M12.3333 4.53333V8.53333H16.3333V4.53333H17V3.86667H16.2667C16.1333 3.46667 15.7333 3.2 15.3333 3.2H12.6667C12.2 3.2 11.8667 3.46667 11.7333 3.86667H11V4.53333H12.3333ZM12.6667 3.86667H15.3333C15.5333 3.86667 15.6667 4 15.6667 4.2V7.86667H13V4.4C13 4.13333 12.8 3.93333 12.6 3.86667C12.6 3.86667 12.6 3.86667 12.6667 3.86667Z" fill="currentColor" />
                                     </svg>
-                                    <p className="text-base">{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? 'casa de banho' : 'casas de banho'}</p>
+                                    <p className="text-base">{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? t("bathroom") : t("bathrooms")}</p>
                                 </div>
                                 <div className="flex gap-2 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="none" className="text-brown">
@@ -219,7 +221,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                         <path d="M14.6667 10H5.46667V10.6723H14.6667V10Z" fill="currentColor" />
                                         <path d="M18 18H2V7.2437L10 2L18 7.2437V18ZM2.66667 17.3277H17.3333V7.57983L10 2.7395L2.66667 7.57983V17.3277Z" fill="currentColor" />
                                     </svg>
-                                    <p className="text-base">{selectedProperty.garageSpaces} {selectedProperty.garageSpaces === 1 ? 'lugar garagem' : 'lugares garagem'}</p>
+                                    <p className="text-base">{selectedProperty.garageSpaces} {selectedProperty.garageSpaces === 1 ? t("garageSpace") : t("garageSpaces")}</p>
                                 </div>
                             </div>
 
@@ -231,7 +233,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                         window.location.href = `/imoveis/${selectedProperty.id}`
                                     }}
                                 >
-                                    Ver página completa
+                                    {t("viewFullPage")}
                                 </Button>
                             </div>
                         </div>

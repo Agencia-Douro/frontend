@@ -8,11 +8,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
 import { Button } from "@/components/ui/button";
-import Logo from "@/public/Logo.svg"
+import Logo from "@/public/Logo.svg";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const t = useTranslations("Header");
 
     // Bloquear scroll quando menu mobile está aberto
     useEffect(() => {
@@ -46,15 +48,15 @@ export default function Header() {
     }
 
     return (
-        <header className="border-b border-[#EAE6DF] sticky top-0 w-full bg-muted z-50">
-            <div className="container">
+        <header className="border-b border-[#EAE6DF] sticky top-0 w-full max-w-full bg-muted z-50 left-0 right-0 overflow-x-hidden">
+            <div className="container w-full max-w-full">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
                             <Image
                                 className="xl:h-10 xl:w-22 h-8 w-[71px]"
                                 src={Logo}
-                                alt="Agência Douro Logótipo"
+                                alt={t("logoAlt")}
                                 width={88}
                                 height={40}
                             />
@@ -63,32 +65,26 @@ export default function Header() {
                     <nav className="hidden lg:flex items-center gap-6">
                         <NavLink href="/">Home</NavLink>
                         <NavLinkDropdown
-                            trigger="Imóveis"
+                            trigger={t("properties")}
                             triggerHref="/imoveis"
                             items={[
-                                { href: "/imoveis?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
-                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
+                                { href: "/imoveis?transactionType=comprar", label: t("buy") },
+                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
                         <NavLinkDropdown
-                            trigger="Imóveis de luxo"
+                            trigger={t("luxuryProperties")}
                             triggerHref="/imoveis-luxo"
                             items={[
-                                { href: "/imoveis-luxo?transactionType=comprar", label: "Comprar" },
-                                { href: "/imoveis?isEmpreendimento=true", label: "Empreendimentos" },
-                                { href: "/imoveis?transactionType=trespasse", label: "Trespasse" },
+                                { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
+                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
-                        <NavLinkDropdown
-                            trigger="Quem Somos"
-                            triggerHref="/institucional/sobre-nos"
-                            items={[
-                                { href: "/institucional/sobre-nos", label: "Sobre Nós" },
-                                { href: "/institucional/podcast", label: "Podcast" },
-                            ]}
-                        />
-                        <NavLink href="/newsletter">Newsletter</NavLink>
+                        <NavLink href="/sobre-nos">{t("aboutUs")}</NavLink>
+                        <NavLink href="/podcast">{t("podcast")}</NavLink>
+                        <NavLink href="/vender-imovel">{t("sellMyProperty")}</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
                         <Button
@@ -104,7 +100,7 @@ export default function Header() {
                                 }
                             }}
                         >
-                            Contacto
+                            {t("contact")}
                         </Button>
                         <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
@@ -166,9 +162,9 @@ export default function Header() {
                                         { href: "/", label: "Home" },
                                         { href: "/imoveis", label: "Imóveis" },
                                         { href: "/imoveis-luxo", label: "Imóveis de luxo" },
-                                        { href: "/institucional/sobre-nos", label: "Institucional" },
-                                        { href: "/institucional/podcast", label: "Podcast" },
-                                        { href: "/newsletter", label: "Newsletter" },
+                                        { href: "/sobre-nos", label: t("aboutUs") },
+                                        { href: "/podcast", label: t("podcast") },
+                                        { href: "/vender-imovel", label: t("sellMyProperty") },
                                     ].map((item) => (
                                         <motion.div
                                             key={item.href}

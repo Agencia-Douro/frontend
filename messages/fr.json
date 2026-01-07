@@ -257,51 +257,38 @@
       "highestPrice": "Prix le plus élevé"
     }
   },
-  "AvaliadorOnline": {
-    "button": {
-      "mobile": "ESTIMATEUR",
-      "desktop": {
-        "line1": "ESTIMATEUR",
-        "line2": "EN LIGNE"
-      }
-    },
-    "title": "Estimateur en ligne",
-    "personalData": {
-      "title": "Données personnelles",
-      "name": "Nom",
-      "phone": "Numéro de téléphone portable",
-      "email": "Email",
-      "namePlaceholder": "Tomas Ribeiro Silva",
-      "phonePlaceholder": "+351 919 766 323",
-      "emailPlaceholder": "contacto@agenciadouro.pt"
-    },
-    "propertyData": {
-      "title": "Données du bien immobilier",
-      "type": "Type de bien immobilier",
-      "purpose": "Finalité",
-      "typology": "Typologie",
-      "observations": "Observations supplémentaires",
-      "observationsPlaceholder": "Informations supplémentaires sur le bien immobilier...",
-      "selectType": "Sélectionnez le type",
-      "select": "Sélectionner",
-      "purposeOptions": {
-        "sale": "Vente",
-        "rent": "Location"
-      }
-    },
-    "marketingConsent": "J'autorise Agência Douro à conserver ces données",
-    "submitButton": "Demander une estimation",
-    "toast": {
-      "sending": "Envoi de l'estimation...",
-      "success": "Estimation envoyée avec succès !",
-      "error": "Erreur lors de l'envoi de l'estimation. Veuillez réessayer."
-    },
-    "emailMessage": {
-      "title": "=== DEMANDE D'ESTIMATION DE BIEN IMMOBILIER ===",
-      "type": "TYPE DE BIEN IMMOBILIER",
-      "purpose": "FINALITÉ",
-      "typology": "TYPOLOGIE",
-      "observations": "OBSERVATIONS"
-    }
+  "Header": {
+    "properties": "Propriétés",
+    "buy": "Acheter",
+    "developments": "Développements",
+    "businessTransfer": "Cession de fonds",
+    "luxuryProperties": "Propriétés de luxe",
+    "whoWeAre": "Qui sommes-nous",
+    "aboutUs": "À propos de nous",
+    "podcast": "Podcast",
+    "newsletter": "Newsletter",
+    "contact": "Contact",
+    "institutional": "Institutionnel",
+    "logoAlt": "Logo Agência Douro",
+    "sellMyProperty": "Vendre ma propriété"
+  },
+  "ImoveisDestacados": {
+    "title": "Propriétés en vedette",
+    "description": "Une sélection rigoureuse de propriétés qui représentent le plus haut standard de qualité, d'architecture et d'emplacement, conçue pour répondre aux besoins des clients les plus exigeants.",
+    "viewAll": "Voir tout",
+    "viewAllMobile": "Voir tout",
+    "loading": "Chargement des propriétés en vedette...",
+    "error": "Erreur lors du chargement des propriétés en vedette. Veuillez réessayer plus tard.",
+    "noProperties": "Aucune propriété en vedette disponible pour le moment.",
+    "area": "superficie",
+    "bathroom": "salle de bain",
+    "bathrooms": "salles de bain",
+    "bedroom": "chambre",
+    "bedrooms": "chambres",
+    "garageSpace": "place de garage",
+    "garageSpaces": "places de garage",
+    "development": "Développement",
+    "viewFullPage": "Voir la page complète",
+    "propertyIn": "Propriété à"
   }
 }

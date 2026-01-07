@@ -1,4 +1,5 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl"
+import { getMessages } from "next-intl/server"
 import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "../globals.css";
@@ -35,17 +36,23 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
     notFound()
   }
 
+  const messages = await getMessages();
+
   return (
-    <html lang="pt-BR" className={`${monaSans.variable} overflow-x-hidden`}>
-      <body className="antialiased bg-muted max-w-screen overflow-x-hidden flex flex-col relative">
-        <NextIntlClientProvider locale={locale} messages={(await import(`../../messages/${locale}.json`)).default}>
+    <html lang="pt-BR" className={monaSans.variable} style={{ overflowX: 'hidden' }}>
+      <body className="antialiased bg-muted overflow-x-hidden">
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
-            <SplashScreen />
-            <Header />
-            {children}
-            <Toaster />
-            <AvaliadorOnlineButton />
-            <SocialMediaButtonV2 />
+            <div className="flex flex-col relative min-h-screen w-full overflow-x-hidden">
+              <SplashScreen />
+              <Header />
+              <div className="w-full overflow-x-hidden">
+                {children}
+              </div>
+              <Toaster />
+              <AvaliadorOnlineButton />
+              <SocialMediaButtonV2 />
+            </div>
           </QueryProvider>
 
         </NextIntlClientProvider>

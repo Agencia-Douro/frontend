@@ -203,8 +203,14 @@ img, iframe {
     user-select: none;
 }
 
-body {
+html, body {
     overscroll-behavior-x: none;
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+body {
+    position: relative;
 }
 
 /* Chrome, Edge, Safari */

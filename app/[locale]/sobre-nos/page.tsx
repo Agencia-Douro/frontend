@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useMemo } from "react";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Footer from "@/components/Sections/Footer/Footer";
 import { ShoppingBag } from "lucide-react";
@@ -11,12 +12,16 @@ import { EquipaCard } from "@/components/Sections/SobreNos/EquipaCard";
 import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { siteConfigApi, teamMembersApi } from "@/services/api";
+import { siteConfigApi, teamMembersApi, newslettersApi } from "@/services/api";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import NewsletterCard from "@/components/NewsletterCard";
 
 export default function InstitucionalPage() {
     const t = useTranslations("SobreNos");
+    const tNewsletter = useTranslations("Newsletter");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    
     const { data: siteConfig } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
@@ -25,7 +30,24 @@ export default function InstitucionalPage() {
     const { data: teamMembers } = useQuery({
         queryKey: ["team-members"],
         queryFn: () => teamMembersApi.getAll(),
-    })
+    });
+
+    const { data: newsletters, isLoading: newslettersLoading, error: newslettersError } = useQuery({
+        queryKey: ["newsletters"],
+        queryFn: () => newslettersApi.getAll(),
+    });
+
+    const categories = [
+        { value: "mercado", label: tNewsletter("categories.market") },
+        { value: "dicas", label: tNewsletter("categories.tips") },
+        { value: "noticias", label: tNewsletter("categories.news") },
+    ] as const;
+
+    const filteredNewsletters = useMemo(() => {
+        if (!newsletters) return [];
+        if (!selectedCategory) return newsletters;
+        return newsletters.filter((newsletter) => newsletter.category === selectedCategory);
+    }, [newsletters, selectedCategory]);
 
     return (
         <>
@@ -138,6 +160,66 @@ export default function InstitucionalPage() {
                         />
                     ))}
                 </div>
+            </section>
+
+            {/* Seção Newsletter */}
+            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+                <div className="lg:space-y-6 space-y-4">
+                    <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">{tNewsletter("title")}</h2>
+                    <p className="text-black-muted md:body-18-regular body-16-regular w-full">{tNewsletter("description")}</p>
+                </div>
+                {newslettersLoading && (
+                    <div className="text-center mt-8 sm:py-12">
+                        <p className="body-16-regular text-brown">{tNewsletter("loading")}</p>
+                    </div>
+                )}
+
+                {newslettersError && (
+                    <div className="text-center mt-8 sm:py-12">
+                        <p className="body-16-regular text-red">{tNewsletter("error")}</p>
+                    </div>
+                )}
+
+                {!newslettersLoading && !newslettersError && newsletters && newsletters.length === 0 && (
+                    <div className="text-center mt-8 sm:py-12">
+                        <p className="body-16-regular text-brown/50">{tNewsletter("noNewsletters")}</p>
+                    </div>
+                )}
+
+                {!newslettersLoading && !newslettersError && newsletters && newsletters.length > 0 && (
+                    <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-12 gap-6">
+                        <div className="flex lg:flex-col gap-1 pr-6 border-r border-brown/10 lg:sticky lg:top-0 col-span-12 lg:col-span-3 xl:col-span-2">
+                            <Button 
+                                variant={selectedCategory === null ? "gold" : "ghost"} 
+                                className="w-min"
+                                onClick={() => setSelectedCategory(null)}>
+                                {tNewsletter("all")}
+                            </Button>
+                            {categories.map((category) => (
+                                <Button 
+                                    key={category.value}
+                                    variant={selectedCategory === category.value ? "gold" : "ghost"} 
+                                    className="w-min"
+                                    onClick={() => setSelectedCategory(category.value)}>
+                                    {category.label}
+                                </Button>
+                            ))}
+                        </div>
+                        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 col-span-12 lg:col-span-9 xl:col-span-10 lg:min-h-63">
+                            {filteredNewsletters.length > 0 ? (
+                                filteredNewsletters.map((newsletter) => (
+                                    <NewsletterCard key={newsletter.id} newsletter={newsletter} />
+                                ))
+                            ) : (
+                                <div className="col-span-full text-center py-8 lg:py-12">
+                                    <span className="body-16-regular text-brown/50">
+                                        {tNewsletter("noNewslettersInCategory")}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
             </section>
 
             <Testemunhos />
