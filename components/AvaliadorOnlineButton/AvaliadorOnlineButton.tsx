@@ -94,7 +94,7 @@ ${imovelData.observacoes ? `OBSERVAÇÕES:\n${imovelData.observacoes}` : ''}
             {/* Botão Flutuante */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="cursor-pointer fixed right-0 top-2/3 -translate-y-1/2 z-40 bg-gold will-change-transform text-white p-2 lg:px-5 lg:py-3.5 transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                className="cursor-pointer fixed right-0 top-2/3 -translate-y-1/2 z-40 bg-gold will-change-transform text-white p-2 lg:-p-3 transition-all duration-300 hover:scale-105 flex items-center gap-2"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white md:size-8">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>

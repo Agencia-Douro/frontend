@@ -80,7 +80,7 @@ export default function Hero() {
                     className="w-full lg:w-auto flex justify-center lg:justify-start lg:order-2"
                 >
                     {/* <ModelViewer
-                        autoRotate
+                        autoRotate={false}
                         cameraControls
                         initialRotation={[0, 0, 0]}
                         style={{ width: '100%', maxWidth: '450px', height: '450px', touchAction: 'pan-y' }}
