@@ -4,8 +4,10 @@ import Image from "next/image";
 import VaniaPodcast from "@/public/vania-podcast.png";
 import { siteConfigApi } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 export function Apresentadora() {
+    const t = useTranslations("Podcast.apresentadora");
     const { data: siteConfig } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
@@ -15,11 +17,11 @@ export function Apresentadora() {
         <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
                 <div className="space-y-6 md:space-y-8 text-center lg:text-left">
-                    <span className="body-14-medium text-brown uppercase tracking-wider">Apresentadora</span>
+                    <span className="body-14-medium text-brown uppercase tracking-wider">{t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">Vânia Fernandes</h2>
 
                     <div className="space-y-4">
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">Vânia Fernandes é uma profissional reconhecida do setor imobiliário no Norte de Portugal, com mais de 15 anos de experiência em imóveis residenciais e comerciais. Como apresentadora do Podcast Norte Imobiliário & Business, partilha conhecimentos, tendências e estratégias para compradores, vendedores e investidores no mercado imobiliário português.</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">{t("description")}</p>
                     </div>
 
                     {/* Estatísticas */}
@@ -29,7 +31,7 @@ export function Apresentadora() {
                                 {siteConfig?.anosExperiencia}+
                             </div>
                             <p className="body-16-medium text-brown">
-                                Anos de Experiência
+                                {t("stats.anosExperiencia")}
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
@@ -37,7 +39,7 @@ export function Apresentadora() {
                                 {siteConfig?.eurosEmTransacoes}M+
                             </div>
                             <p className="body-16-medium text-brown">
-                                Euros em Transações
+                                {t("stats.eurosTransacoes")}
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
@@ -45,7 +47,7 @@ export function Apresentadora() {
                                 {siteConfig?.clientesSatisfeitos}+
                             </div>
                             <p className="body-16-medium text-brown">
-                                Clientes Satisfeitos
+                                {t("stats.clientesSatisfeitos")}
                             </p>
                         </div>
                         <div className="flex flex-col gap-2">
@@ -53,7 +55,7 @@ export function Apresentadora() {
                                 {siteConfig?.episodiosPublicados}+
                             </div>
                             <p className="body-16-medium text-brown">
-                                Episódios Gravados
+                                {t("stats.episodiosGravados")}
                             </p>
                         </div>
                     </div>
@@ -63,7 +65,7 @@ export function Apresentadora() {
                 <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 aspect-4/5 lg:aspect-3/4 xl:aspect-4/5 overflow-hidden bg-muted">
                     <Image
                         src={VaniaPodcast}
-                        alt="Vânia Fernandes - Consultora Imobiliária & Host"
+                        alt={t("imageAlt")}
                         fill
                         className="object-cover"
                         priority
