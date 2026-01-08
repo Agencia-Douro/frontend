@@ -95,6 +95,7 @@ export default function Header() {
                         <NavLink href="/sobre-nos">{t("aboutUs")}</NavLink>
                         <NavLink href="/podcast">{t("podcast")}</NavLink>
                         <NavLink href="/vender-imovel">{t("sellMyProperty")}</NavLink>
+                        <NavLink href="/avaliador-online">{t("avaliar")}</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end">
                         <Button

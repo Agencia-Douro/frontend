@@ -49,7 +49,6 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
               {children}
             </main>
             <Toaster />
-            <AvaliadorOnlineButton />
             <SocialMediaButtonV2 />
           </QueryProvider>
 
