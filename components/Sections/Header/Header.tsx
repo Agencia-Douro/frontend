@@ -78,6 +78,7 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: t("buy") },
                                 { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=arrendar", label: t("rent") },
                                 { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
@@ -87,6 +88,7 @@ export default function Header() {
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
                                 { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                { href: "/imoveis?transactionType=arrendar", label: t("rent") },
                                 { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
