@@ -19,6 +19,7 @@ import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImov
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
+import ModelViewer from "@/components/ModelViewer"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -590,7 +591,7 @@ export default function ImovelDetails() {
                         <iframe
                             className="mt-6 h-75 border-0 hidden lg:block"
                             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.address}`
+                                `${property.freguesia}, Portugal`
                             )}`}
                             width="100%"
                             allowFullScreen
@@ -737,6 +738,18 @@ export default function ImovelDetails() {
                     </div>
                 </div>
             </section>
+
+            {/* Logo 3D Section */}
+            <section className="container py-8 md:py-10 lg:py-12 flex justify-center items-center">
+                <ModelViewer
+                    autoRotate={false}
+                    cameraControls
+                    initialRotation={[0, 0, 0]}
+                    style={{ width: '100%', maxWidth: '350px', height: '350px', touchAction: 'pan-y' }}
+                    className="lg:w-[500px]! lg:h-[400px]! lg:max-w-none! mx-auto lg:mx-0"
+                />
+            </section>
+
             <ImoveisRelacionados
                 currentPropertyId={property.id}
                 currentPrice={property.price}
