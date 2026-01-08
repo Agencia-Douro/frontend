@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
@@ -43,13 +43,21 @@ export default function Header() {
     }, [mobileMenuOpen]);
 
     // Não renderizar o Header se a rota contiver /admin
-    if (pathname?.includes("/admin")) {
+    // usePathname do next-intl retorna pathname sem locale
+    if (pathname?.includes("admin")) {
         return null;
     }
 
+    // Determinar se estamos nas páginas de imóveis ou imóveis de luxo
+    // usePathname do next-intl retorna pathname sem locale (ex: "/imoveis")
+    const isImoveisPage = pathname === "/imoveis";
+    const isImoveisLuxoPage = pathname === "/imoveis-luxo";
+    const useSticky = isImoveisPage || isImoveisLuxoPage;
+    const positionClass = useSticky ? "" : "fixed";
+
     return (
-        <header className="border-b border-[#EAE6DF] sticky top-0 w-full bg-muted z-50">
-            <div className="container w-full max-w-full">
+        <header className={`border-b border-[#EAE6DF] ${positionClass} top-0 left-0 right-0 w-full max-w-full bg-muted z-50`}>
+            <div className="container">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
