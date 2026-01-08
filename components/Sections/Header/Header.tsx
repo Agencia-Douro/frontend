@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
@@ -43,13 +43,21 @@ export default function Header() {
     }, [mobileMenuOpen]);
 
     // Não renderizar o Header se a rota contiver /admin
-    if (pathname?.includes("/admin")) {
+    // usePathname do next-intl retorna pathname sem locale
+    if (pathname?.includes("admin")) {
         return null;
     }
 
+    // Determinar se estamos nas páginas de imóveis ou imóveis de luxo
+    // usePathname do next-intl retorna pathname sem locale (ex: "/imoveis")
+    const isImoveisPage = pathname === "/imoveis";
+    const isImoveisLuxoPage = pathname === "/imoveis-luxo";
+    const useSticky = isImoveisPage || isImoveisLuxoPage;
+    const positionClass = useSticky ? "" : "fixed";
+
     return (
-        <header className="border-b border-[#EAE6DF] sticky top-0 w-full bg-muted z-50">
-            <div className="container w-full max-w-full">
+        <header className={`border-b border-[#EAE6DF] ${positionClass} top-0 left-0 right-0 w-full max-w-full bg-muted z-50`}>
+            <div className="container">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
@@ -62,7 +70,7 @@ export default function Header() {
                             />
                         </Link>
                     </div>
-                    <nav className="hidden lg:flex items-center gap-6">
+                    <nav className="hidden xl:flex items-center gap-6">
                         <NavLink href="/">{t("home")}</NavLink>
                         <NavLinkDropdown
                             trigger={t("properties")}
@@ -102,7 +110,7 @@ export default function Header() {
                         >
                             {t("contact")}
                         </Button>
-                        <button className="block p-1 lg:hidden cursor-pointer z-[60] relative" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                        <button className="block p-1 xl:hidden cursor-pointer z-[60] relative" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
                                     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
@@ -125,7 +133,7 @@ export default function Header() {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-[999] top-16"
+                                className="xl:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-[999] top-16"
                                 onClick={() => setMobileMenuOpen(false)}
                             />
                             {/* Menu */}
@@ -137,7 +145,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto"
+                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto"
                             >
                                 <motion.div
                                     initial="closed"
