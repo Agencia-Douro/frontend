@@ -39,20 +39,18 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
   const messages = await getMessages();
 
   return (
-    <html lang="pt-BR" className={monaSans.variable} style={{ overflowX: 'hidden' }}>
-      <body className="antialiased bg-muted overflow-x-hidden">
+    <html lang="pt-BR" className={monaSans.variable}>
+      <body className="antialiased bg-muted">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
-            <div className="flex flex-col relative min-h-screen w-full overflow-x-hidden">
-              <SplashScreen />
-              <Header />
-              <div className="w-full overflow-x-hidden">
-                {children}
-              </div>
-              <Toaster />
-              <AvaliadorOnlineButton />
-              <SocialMediaButtonV2 />
-            </div>
+            <SplashScreen />
+            <Header />
+            <main className="w-full overflow-x-hidden">
+              {children}
+            </main>
+            <Toaster />
+            <AvaliadorOnlineButton />
+            <SocialMediaButtonV2 />
           </QueryProvider>
 
         </NextIntlClientProvider>

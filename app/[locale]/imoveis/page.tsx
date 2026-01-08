@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
 import Card from "@/components/Sections/Imoveis/Card";
@@ -12,6 +12,13 @@ import useFavorites from "@/hooks/useFavorites";
 import { useTranslations } from "next-intl";
 
 function ImoveisContent() {
+    // Desabilitar scroll no body quando estiver nesta página
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
     const t = useTranslations("Imoveis");
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -100,7 +107,7 @@ function ImoveisContent() {
     };
 
     return (
-            <section className="h-[calc(100vh-73px)] overflow-hidden">
+            <section className="h-[calc(100vh-64px)] xl:h-[calc(100vh-72px)] overflow-hidden">
                 <div className="container flex flex-col lg:flex-row lg:divide-x divide-[#EAE6DF] h-full overflow-hidden">
                     <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                     <div className="border-r border-[#EAE6DF] bg-deaf w-full flex flex-col overflow-hidden min-h-0">
