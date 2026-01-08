@@ -417,3 +417,12 @@ body {
         transform: scale(1);
     }
 }
+
+/* Yet Another React Lightbox Customization */
+.yarl__container {
+    background-color: #FBF9F6 !important;
+}
+
+.yarl__slide {
+    background-color: #FBF9F6 !important;
+}

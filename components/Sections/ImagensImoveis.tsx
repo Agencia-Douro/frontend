@@ -117,7 +117,7 @@ export const getImageIndex = (property: Property, targetImageUrl: string): numbe
   if (property.image === targetImageUrl) {
     return 0;
   }
-  
+
   // Procurar nas seções
   let index = 1; // Começar em 1 porque 0 é a imagem principal
   if (property.imageSections) {
@@ -130,6 +130,6 @@ export const getImageIndex = (property: Property, targetImageUrl: string): numbe
       }
     }
   }
-  
+
   return 0; // Fallback
 };

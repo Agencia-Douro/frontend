@@ -397,7 +397,7 @@ export default function ImovelDetails() {
                         <iframe
                             className="mt-6 h-75 border-0 lg:hidden block"
                             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.concelho}, ${property.distrito}, Portugal`
+                                `${property.freguesia}, Portugal`
                             )}`}
                             width="100%"
                             allowFullScreen

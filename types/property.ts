@@ -55,6 +55,7 @@ export interface Property {
   deliveryDate: string | null;
   distrito: string;
   concelho: string;
+  freguesia: string | null;
   address: string | null;
   image: string;
   imageSections?: PropertyImageSection[];

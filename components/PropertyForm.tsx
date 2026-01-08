@@ -79,6 +79,7 @@ export default function PropertyForm({
       deliveryDate: "",
       distrito: "",
       concelho: "",
+      freguesia: "",
       address: "",
       paymentConditions: "",
       status: "active",
@@ -835,6 +836,15 @@ export default function PropertyForm({
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Freguesia</Label>
+                <Input
+                  placeholder="Ex: São Nicolau"
+                  value={formData.freguesia || ""}
+                  onChange={(e) => updateField("freguesia", e.target.value)}
+                />
               </div>
 
               <div className="space-y-2">
