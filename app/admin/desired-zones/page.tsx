@@ -271,7 +271,7 @@ export default function DesiredZonesPage() {
                   <Pencil className="h-4 w-4" />
                 </Button>
                 <Button
-                  variant="destructive"
+                  variant="brown"
                   size="icon"
                   onClick={() => handleDelete(zone.id)}
                   disabled={deleteMutation.isPending}
