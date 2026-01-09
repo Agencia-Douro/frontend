@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
+import LanguageSwitcher from "@/components/Sections/Header/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import Logo from "@/public/Logo.svg";
 import { useTranslations } from "next-intl";
@@ -97,7 +98,8 @@ export default function Header() {
                         <NavLink href="/vender-imovel">{t("sellMyProperty")}</NavLink>
                         <NavLink href="/avaliador-online">{t("avaliar")}</NavLink>
                     </nav>
-                    <div className="w-full flex gap-2 justify-end">
+                    <div className="w-full flex gap-2 justify-end items-center">
+                        <LanguageSwitcher />
                         <Button
                             variant="gold"
                             onClick={(e) => {
@@ -150,6 +152,9 @@ export default function Header() {
                                 }}
                                 className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto"
                             >
+                                <div className="mb-4">
+                                    <LanguageSwitcher />
+                                </div>
                                 <motion.div
                                     initial="closed"
                                     animate="open"
