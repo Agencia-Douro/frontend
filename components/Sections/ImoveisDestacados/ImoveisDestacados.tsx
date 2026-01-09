@@ -16,7 +16,7 @@ export default function ImoveisDestacados() {
 
     return (
         <section className="relative">
-            <div className="container pt-12 md:pt-10 lg:pt-12 xl:pt-[120px] z-20">
+            <div className="container pt-8 md:pt-10 lg:pt-8 xl:pt-20 z-20">
                 <div className="md:text-center flex flex-col md:items-center lg:gap-6 gap-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
                     <p className="body-16-regular lg:body-18-regular text-black-muted md:w-[722px] hidden md:block">{t("description")}</p>
