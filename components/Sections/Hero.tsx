@@ -31,7 +31,7 @@ export default function Hero() {
     const [localizacao, setLocalizacao] = useState<string>("");
     const [tipo, setTipo] = useState<string>("");
     const [tipologia, setTipologia] = useState<string>("");
-    const [shouldAnimate, setShouldAnimate] = useState(false);
+    const [shouldAnimate, setShouldAnimate] = useState(true);
 
     // Estados para pesquisa com autocomplete
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -39,16 +39,6 @@ export default function Hero() {
     const [showResults, setShowResults] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const searchRef = useRef<HTMLDivElement>(null);
-
-    // Iniciar animações após a splash screen desaparecer
-    // Splash screen: 2s mínimo + 400ms fade out = 2.4s total
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShouldAnimate(true);
-        }, 2400);
-
-        return () => clearTimeout(timer);
-    }, []);
 
     // Debounce para pesquisa
     useEffect(() => {
@@ -135,7 +125,7 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, delay: 0.05, ease: "easeOut" }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     className="w-full lg:w-auto flex justify-center lg:justify-start lg:order-2"
                 >
                     <ModelViewer
@@ -152,13 +142,13 @@ export default function Hero() {
                     className="flex flex-col md:max-w-[616px] w-full text-center lg:text-left lg:order-1"
                     initial={{ opacity: 0, y: 20 }}
                     animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                     <motion.h1
                         className={`text-balance text-[2rem] leading-tight font-medium md:heading-tres-medium lg:heading-dois-medium xl:heading-um-medium ${playfairDisplay.className}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 0.2, delay: 0.05, ease: "easeOut" }}
+                        transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
                     >
                         {t("title")}
                     </motion.h1>
@@ -166,7 +156,7 @@ export default function Hero() {
                         className="xl:mt-8 lg:mt-6 mt-4 body-18-regular text-black-muted max-w-[540px] text-balance hidden md:block mx-auto lg:mx-0"
                         initial={{ opacity: 0, y: 20 }}
                         animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
+                        transition={{ duration: 0.3, delay: 0.15, ease: "easeOut" }}
                     >
                         {t("description")}
                     </motion.p>
@@ -177,7 +167,7 @@ export default function Hero() {
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.2, delay: 0.15, ease: "easeOut" }}
+                transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
             >
                 <div className="flex justify-between items-center w-full">
                     <div className="flex flex-row w-full gap-0 overflow-x-auto">

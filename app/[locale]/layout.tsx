@@ -1,19 +1,25 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl"
 import { getMessages } from "next-intl/server"
 import type { Metadata } from "next";
-import { Mona_Sans } from "next/font/google";
+import { Prata, Inter } from "next/font/google";
 import "../globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import Header from "@/components/Sections/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
-import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 
-const monaSans = Mona_Sans({
-  variable: "--font-mona-sans",
+const prata = Prata({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-prata",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -39,11 +45,10 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
   const messages = await getMessages();
 
   return (
-    <html lang="pt-BR" className={monaSans.variable}>
+    <html lang="pt-BR" className={`${prata.variable} ${inter.variable}`}>
       <body className="antialiased bg-muted">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
-            <SplashScreen />
             <Header />
             <main className="w-full overflow-x-hidden">
               {children}

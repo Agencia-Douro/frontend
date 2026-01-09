@@ -22,7 +22,8 @@
 }
 
 @theme {
-	--font-sans: var(--font-mona-sans), sans-serif;
+	--font-sans: var(--font-inter), sans-serif;
+	--font-heading: var(--font-prata), serif;
 	--color-*: initial;
     --text-*: initial;
 
@@ -152,48 +153,56 @@
 }
 
 @utility heading-um-regular {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-um);
     line-height: var(--text-heading-um--line-height);
     font-weight: var(--font-regular);
 }
 
 @utility heading-um-medium {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-um);
     line-height: var(--text-heading-um--line-height);
     font-weight: var(--font-medium);
 }
 
 @utility heading-dois-regular {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-dois);
     line-height: var(--text-heading-dois--line-height);
     font-weight: var(--font-regular);
 }
 
 @utility heading-dois-medium {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-dois);
     line-height: var(--text-heading-dois--line-height);
     font-weight: var(--font-medium);
 }
 
 @utility heading-tres-regular {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-tres);
     line-height: var(--text-heading-tres--line-height);
     font-weight: var(--font-regular);
 }
 
 @utility heading-tres-medium {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-tres);
     line-height: var(--text-heading-tres--line-height);
     font-weight: var(--font-medium);
 }
 
 @utility heading-quatro-regular {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-quatro);
     line-height: var(--text-heading-quatro--line-height);
     font-weight: var(--font-regular);
 }
 
 @utility heading-quatro-medium {
+    font-family: var(--font-heading);
     font-size: var(--text-heading-quatro);
     line-height: var(--text-heading-quatro--line-height);
     font-weight: var(--font-medium);
@@ -402,17 +411,6 @@ html, body {
     
 }
 
-/* Splash Screen Animations */
-@keyframes fadeInScale {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 
 /* Yet Another React Lightbox Customization */
 .yarl__container {
