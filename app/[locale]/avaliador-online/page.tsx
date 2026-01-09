@@ -2,14 +2,6 @@
 
 import { useState } from "react"
 import { usePathname } from "next/navigation"
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
@@ -26,11 +18,12 @@ import { toast } from "sonner"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { contactApi } from "@/services/api"
 import { useTranslations } from "next-intl"
+import Footer from "@/components/Sections/Footer/Footer"
+import Folha from "@/components/Folha"
 
 export default function AvaliadorOnlinePage() {
-  const t = useTranslations("AvaliadorOnline")
+    const t = useTranslations("AvaliadorOnline")
     const pathname = usePathname()
-    const [isOpen, setIsOpen] = useState(false)
 
     // Não mostrar o botão nas páginas de admin
     if (pathname?.startsWith('/admin')) {
@@ -85,7 +78,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                 tipologia: "",
                 observacoes: "",
             })
-            setIsOpen(false)
         } catch (error: any) {
             toast.error(error.message || t("toast.error"), { id: toastId })
         }
@@ -93,13 +85,27 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
 
     return (
         <>
-                    <form onSubmit={handleSubmit} className="space-y-4 mt-4 bg-deaf">
-                        {/* Dados Pessoais */}
-                        <div className="space-y-4">
-                            <h3 className="body-16-medium text-black">{t("personalData.title")}</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <section className="relative">
+                <div className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-8 md:pb-12 lg:pb-16">
+                    <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-8 md:mb-10 lg:mb-12">
+                            <span className="body-14-medium text-gold uppercase tracking-wider">{t("button.desktop.line1")}</span>
+                            <h1 className="heading-tres-regular md:heading-dois-regular text-balance text-black mt-4 mb-6">
+                                {t("title")}
+                            </h1>
+                            <p className="body-18-regular text-black-muted max-w-2xl mx-auto">
+                                {t("subtitle")}
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Dados Pessoais */}
+                            <div className="p-6 md:p-8 rounded-lg border border-brown/10 bg-white/50 backdrop-blur-sm space-y-4">
+                                <h3 className="heading-quatro-medium text-brown mb-4">{t("personalData.title")}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-nome" className="body-14-medium text-black">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-nome" className="body-14-medium text-brown">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-nome"
                                         placeholder={t("personalData.namePlaceholder")}
@@ -109,7 +115,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-telefone" className="body-14-medium text-black">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-telefone" className="body-14-medium text-brown">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-telefone"
                                         placeholder={t("personalData.phonePlaceholder")}
@@ -121,7 +127,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="modal-email" className="body-14-medium text-black">{t("personalData.email")} <span className="text-red body-14-medium">*</span></Label>
+                                <Label htmlFor="modal-email" className="body-14-medium text-brown">{t("personalData.email")} <span className="text-red body-14-medium">*</span></Label>
                                 <Input
                                     id="modal-email"
                                     type="email"
@@ -134,11 +140,11 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                         </div>
 
                         {/* Dados do Imóvel */}
-                        <div className="space-y-4 pt-4">
-                            <h3 className="body-16-medium text-black">{t("propertyData.title")}</h3>
+                        <div className="p-6 md:p-8 rounded-lg border border-brown/10 bg-white/50 backdrop-blur-sm space-y-4">
+                            <h3 className="heading-quatro-medium text-brown mb-4">{t("propertyData.title")}</h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipo" className="body-14-medium text-black">{t("propertyData.type")} <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-tipo" className="body-14-medium text-brown">{t("propertyData.type")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipoImovel}
                                         onValueChange={(value) => setImovelData({ ...imovelData, tipoImovel: value })}>
@@ -156,7 +162,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-black">{t("propertyData.purpose")} <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-finalidade" className="body-14-medium text-brown">{t("propertyData.purpose")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.finalidade}
                                         onValueChange={(value) => setImovelData({ ...imovelData, finalidade: value })}
@@ -172,7 +178,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-black">{t("propertyData.typology")} <span className="text-red body-14-medium">*</span></Label>
+                                    <Label htmlFor="modal-tipologia" className="body-14-medium text-brown">{t("propertyData.typology")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
                                         value={imovelData.tipologia}
                                         onValueChange={(value) => setImovelData({ ...imovelData, tipologia: value })}
@@ -194,7 +200,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="modal-observacoes" className="body-14-medium text-black">
+                                <Label htmlFor="modal-observacoes" className="body-14-medium text-brown">
                                     {t("propertyData.observations")}
                                 </Label>
                                 <Textarea
@@ -207,7 +213,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 pt-4">
+                        <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm p-6 rounded-lg border border-brown/10">
                             <Checkbox
                                 id="modal-marketing"
                                 checked={formData.aceitaMarketing}
@@ -215,12 +221,15 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                     setFormData({ ...formData, aceitaMarketing: checked as boolean })
                                 }
                             />
-                            <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")}</label>
+                            <label htmlFor="modal-marketing" className="body-14-medium text-brown/70 cursor-pointer">{t("marketingConsent")}</label>
                         </div>
-                        <DialogFooter>
-                            <Button type="submit" variant="gold" className="w-full">{t("submitButton")}</Button>
-                        </DialogFooter>
+
+                        <Button type="submit" variant="gold" className="w-full">{t("submitButton")}</Button>
                     </form>
-                    </>
+                </div>
+            </div>
+        </section>
+        <Footer />
+        </>
     )
 } 

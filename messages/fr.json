@@ -269,6 +269,7 @@
       }
     },
     "title": "Évaluateur en ligne",
+    "subtitle": "Remplissez le formulaire ci-dessous pour recevoir une évaluation de votre bien",
     "personalData": {
       "title": "Données personnelles",
       "name": "Nom",
