@@ -4,7 +4,6 @@ import Link from "next/link"
 import Folha from "../../Folha"
 import FooterIcons from "./FooterIcons"
 import { useTranslations } from "next-intl"
-import LanguageSwitcher from "../../LanguageSwitcher"
 
 export default function Footer() {
     const t = useTranslations("Footer");
