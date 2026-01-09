@@ -15,7 +15,18 @@ import { useTranslations } from "next-intl";
 export default function Header() {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const t = useTranslations("Header");
+
+    // Detectar scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Bloquear scroll quando menu mobile está aberto
     useEffect(() => {
@@ -53,17 +64,24 @@ export default function Header() {
     // usePathname do next-intl retorna pathname sem locale (ex: "/imoveis")
     const isImoveisPage = pathname === "/imoveis";
     const isImoveisLuxoPage = pathname === "/imoveis-luxo";
+    const isHomePage = pathname === "/";
     const useSticky = isImoveisPage || isImoveisLuxoPage;
     const positionClass = useSticky ? "" : "fixed";
 
+    // Header transparente na home quando não deu scroll
+    const isTransparent = isHomePage && !isScrolled && !mobileMenuOpen;
+    const headerBg = isTransparent ? "bg-transparent" : "bg-muted";
+    const borderColor = isTransparent ? "border-white/20" : "border-[#EAE6DF]";
+    const textColor = isTransparent ? "text-white" : "text-brown";
+
     return (
-        <header className={`border-b border-[#EAE6DF] ${positionClass} top-0 left-0 right-0 w-full max-w-full bg-muted z-50`}>
+        <header className={`border-b ${borderColor} ${positionClass} top-0 left-0 right-0 w-full max-w-full ${headerBg} z-50 transition-all duration-300`}>
             <div className="container">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
                             <Image
-                                className="xl:h-10 xl:w-22 h-8 w-[71px]"
+                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
                                 src={Logo}
                                 alt={t("logoAlt")}
                                 width={88}
@@ -72,10 +90,11 @@ export default function Header() {
                         </Link>
                     </div>
                     <nav className="hidden xl:flex items-center gap-6">
-                        <NavLink href="/">{t("home")}</NavLink>
+                        <NavLink href="/" isTransparent={isTransparent}>{t("home")}</NavLink>
                         <NavLinkDropdown
                             trigger={t("properties")}
                             triggerHref="/imoveis"
+                            isTransparent={isTransparent}
                             items={[
                                 { href: "/imoveis?transactionType=comprar", label: t("buy") },
                                 { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
@@ -86,6 +105,7 @@ export default function Header() {
                         <NavLinkDropdown
                             trigger={t("luxuryProperties")}
                             triggerHref="/imoveis-luxo"
+                            isTransparent={isTransparent}
                             items={[
                                 { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
                                 { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
@@ -93,10 +113,10 @@ export default function Header() {
                                 { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
                             ]}
                         />
-                        <NavLink href="/sobre-nos">{t("aboutUs")}</NavLink>
-                        <NavLink href="/podcast">{t("podcast")}</NavLink>
-                        <NavLink href="/vender-imovel">{t("sellMyProperty")}</NavLink>
-                        <NavLink href="/avaliador-online">{t("avaliar")}</NavLink>
+                        <NavLink href="/sobre-nos" isTransparent={isTransparent}>{t("aboutUs")}</NavLink>
+                        <NavLink href="/podcast" isTransparent={isTransparent}>{t("podcast")}</NavLink>
+                        <NavLink href="/vender-imovel" isTransparent={isTransparent}>{t("sellMyProperty")}</NavLink>
+                        <NavLink href="/avaliador-online" isTransparent={isTransparent}>{t("avaliar")}</NavLink>
                     </nav>
                     <div className="w-full flex gap-2 justify-end items-center">
                         <LanguageSwitcher />
@@ -115,13 +135,13 @@ export default function Header() {
                         >
                             {t("contact")}
                         </Button>
-                        <button className="block p-1 xl:hidden cursor-pointer z-[60] relative" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                        <button className={`block p-1 xl:hidden cursor-pointer z-[60] relative transition-colors duration-300 ${textColor}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
                                 </svg>
                             ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor" />
                                 </svg>
                             )}

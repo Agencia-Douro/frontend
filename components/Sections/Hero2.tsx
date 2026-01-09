@@ -146,25 +146,6 @@ export function Hero2() {
           </motion.div>
         ))}
 
-        {/* Botões de navegação */}
-        <button
-          onClick={() => setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all"
-          aria-label="Imagem anterior"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <button
-          onClick={() => setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all"
-          aria-label="Próxima imagem"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
 
         {/* Indicadores do carousel */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
@@ -172,7 +153,7 @@ export function Hero2() {
             <button
               key={index}
               onClick={() => setCurrentImageIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${index === currentImageIndex ? "bg-white w-8" : "bg-white/50"
+              className={`w-2 h-1 transition-all ${index === currentImageIndex ? "bg-white w-8" : "bg-white/50 w-8"
                 }`}
               aria-label={`Ir para imagem ${index + 1}`}
             />
@@ -198,7 +179,7 @@ export function Hero2() {
 
               {/* Formulário de Pesquisa */}
               <motion.form
-                className="w-full bg-deaf rounded-lg shadow-2xl overflow-hidden"
+                className="w-full rounded-lg shadow-2xl overflow-hidden"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -209,7 +190,7 @@ export function Hero2() {
                     <Button
                       type="button"
                       variant={transactionType === "comprar" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap"
+                      className="px-4.5 md:w-min whitespace-nowrap text-white"
                       onClick={() => setTransactionType("comprar")}
                     >
                       {t("buy")}
@@ -217,7 +198,7 @@ export function Hero2() {
                     <Button
                       type="button"
                       variant={transactionType === "empreendimentos" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap"
+                      className="px-4.5 md:w-min whitespace-nowrap text-white"
                       onClick={() => setTransactionType("empreendimentos")}
                     >
                       {t("developments")}
@@ -225,19 +206,14 @@ export function Hero2() {
                     <Button
                       type="button"
                       variant={transactionType === "trespasse" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap"
+                      className="px-4.5 md:w-min whitespace-nowrap text-white"
                       onClick={() => setTransactionType("trespasse")}
                     >
                       {t("businessTransfer")}
                     </Button>
                   </div>
-                  <Button type="submit" variant="gold" className="px-4.5 hidden md:block">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="size-5">
-                      <path d="M14.1666 14.1667L17.5 17.5M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Button>
                 </div>
-                <div className="p-6 md:p-8 flex flex-col gap-4">
+                <div className="p-6 md:p-8 flex flex-col gap-4 bg-deaf">
                   {/* Campo de pesquisa com autocomplete */}
                   <div className="relative w-full" ref={searchRef}>
                     <div className="flex flex-col gap-1">
