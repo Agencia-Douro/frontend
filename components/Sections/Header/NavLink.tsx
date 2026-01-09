@@ -6,15 +6,16 @@ interface NavLinkProps {
   href: string;
   children: ReactNode;
   hasArrow?: boolean;
+  isTransparent?: boolean;
 }
 
-export default function NavLink({ href, children, hasArrow }: NavLinkProps) {
+export default function NavLink({ href, children, hasArrow, isTransparent }: NavLinkProps) {
   return (
     <Link
       href={href} className="group flex items-center gap-1 button-14-medium">
         <span className={cn(
-        "text-black-muted hover:text-black text-center",
-        "transition-colors whitespace-nowrap relative",
+        isTransparent ? "text-white/90 hover:text-white" : "text-black-muted hover:text-black",
+        "text-center transition-colors whitespace-nowrap relative",
         "after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:bg-gold after:rounded after:scale-x-0",
         "after:origin-left after:transition-transform after:duration-300 after:ease-out",
         "hover:after:scale-x-100"

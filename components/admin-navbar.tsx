@@ -69,6 +69,14 @@ export function AdminNavbar() {
               Newsletters
             </Link>
             <Link
+              href="/admin/desired-zones"
+              className={`body-16-medium transition-colors ${
+                pathname?.includes("/admin/desired-zones") ? "text-gold" : "text-brown hover:text-gold"
+              }`}
+            >
+              Zonas
+            </Link>
+            <Link
               href="/admin/site-config"
               className={`body-16-medium transition-colors ${
                 pathname?.includes("/admin/site-config") ? "text-gold" : "text-brown hover:text-gold"
@@ -122,6 +130,13 @@ export function AdminNavbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Newsletters
+          </Link>
+          <Link
+            href="/admin/desired-zones"
+            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Zonas
           </Link>
           <Link
             href="/admin/site-config"

@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
+import { Button } from "./ui/button"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { useTranslations } from "next-intl"
 
@@ -103,14 +104,8 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         )
     }
 
-    // Auto-apply filters when any field changes
-    useEffect(() => {
-        // Skip the first render to avoid adding to history on initial page load
-        if (isFirstRender.current) {
-            isFirstRender.current = false
-            return
-        }
-
+    // Apply filters when search button is clicked
+    const handleSearch = () => {
         const params = new URLSearchParams()
 
         // Handle selection: empreendimentos = comprar + isEmpreendimento=true
@@ -135,25 +130,13 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         if (bedrooms.length > 0) params.set("bedrooms", bedrooms.join(","))
         if (bathrooms.length > 0) params.set("bathrooms", bathrooms.join(","))
 
-        router.replace(`${basePath}?${params.toString()}`)
-    }, [
-        selection,
-        isArrendar,
-        onlyFavorites,
-        propertyType,
-        propertyState,
-        energyClass,
-        distrito,
-        concelho,
-        minPrice,
-        maxPrice,
-        minUsefulArea,
-        maxUsefulArea,
-        bedrooms,
-        bathrooms,
-        router,
-        basePath,
-    ])
+        router.push(`${basePath}?${params.toString()}`)
+
+        // Close mobile sidebar after search
+        if (onClose) {
+            onClose()
+        }
+    }
 
     const handleReset = () => {
         setSelection("comprar")
@@ -546,7 +529,10 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>{t("favorites")}</p>
                         </div>
                     </div>
-                    <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">
+                    <div className="flex flex-col gap-2.5 p-4 border-t border-[#EAE6DF]">
+                        <Button variant="gold" className="w-full" onClick={handleSearch}>
+                            {t("search")}
+                        </Button>
                         <button
                             type="button"
                             onClick={handleReset}
@@ -919,7 +905,10 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             <p className="text-black-muted body-14-medium cursor-pointer" onClick={() => setOnlyFavorites(!onlyFavorites)}>{t("favorites")}</p>
                         </div>
                     </div>
-                    <div className="flex gap-2.5 p-4 border-t border-[#EAE6DF]">
+                    <div className="flex flex-col gap-2.5 p-4 border-t border-[#EAE6DF]">
+                        <Button variant="gold" className="w-full" onClick={handleSearch}>
+                            {t("search")}
+                        </Button>
                         <button
                             type="button"
                             onClick={handleReset}

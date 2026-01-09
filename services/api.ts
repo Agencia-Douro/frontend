@@ -109,8 +109,8 @@ export const propertiesApi = {
 
     // Campos obrigatórios
     if (data.reference) formData.append("reference", data.reference);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
+    formData.append("title_pt", data.title);
+    formData.append("description_pt", data.description);
     formData.append("transactionType", data.transactionType);
     formData.append("propertyType", data.propertyType);
     formData.append("isEmpreendimento", data.isEmpreendimento.toString());
@@ -151,7 +151,9 @@ export const propertiesApi = {
 
     // Campos opcionais - Outros
     if (data.paymentConditions)
-      formData.append("paymentConditions", data.paymentConditions);
+      formData.append("paymentConditions_pt", data.paymentConditions);
+    if (data.features)
+      formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
@@ -230,6 +232,8 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions_pt", data.paymentConditions);
+    if (data.features)
+      formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
@@ -918,6 +922,142 @@ export const teamMembersApi = {
       const errorMessage =
         errorData.message ||
         `Erro ao deletar membro da equipa (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+export interface DesiredZone {
+  id: string;
+  name: string;
+  image: string;
+  displayOrder: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const desiredZonesApi = {
+  getAll: async (): Promise<DesiredZone[]> => {
+    const response = await fetch(`${API_BASE_URL}/desired-zones`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar zonas desejadas");
+    }
+
+    return response.json();
+  },
+
+  getActive: async (): Promise<DesiredZone[]> => {
+    const response = await fetch(`${API_BASE_URL}/desired-zones/active`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar zonas desejadas ativas");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<DesiredZone> => {
+    const response = await fetch(`${API_BASE_URL}/desired-zones/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar zona desejada");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    name: string;
+    image?: File;
+    displayOrder?: number;
+    isActive?: boolean;
+  }): Promise<DesiredZone> => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+
+    if (data.image) {
+      formData.append("image", data.image);
+    }
+
+    if (data.displayOrder !== undefined) {
+      formData.append("displayOrder", data.displayOrder.toString());
+    }
+
+    if (data.isActive !== undefined) {
+      formData.append("isActive", data.isActive.toString());
+    }
+
+    const response = await fetch(`${API_BASE_URL}/desired-zones`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao criar zona desejada (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      name?: string;
+      image?: File;
+      displayOrder?: number;
+      isActive?: boolean;
+    }
+  ): Promise<DesiredZone> => {
+    const formData = new FormData();
+
+    if (data.name) {
+      formData.append("name", data.name);
+    }
+
+    if (data.image) {
+      formData.append("image", data.image);
+    }
+
+    if (data.displayOrder !== undefined) {
+      formData.append("displayOrder", data.displayOrder.toString());
+    }
+
+    if (data.isActive !== undefined) {
+      formData.append("isActive", data.isActive.toString());
+    }
+
+    const response = await fetch(`${API_BASE_URL}/desired-zones/${id}`, {
+      method: "PATCH",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar zona desejada (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/desired-zones/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao deletar zona desejada (${response.status})`;
       throw new Error(errorMessage);
     }
   },

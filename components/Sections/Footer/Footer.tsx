@@ -4,7 +4,6 @@ import Link from "next/link"
 import Folha from "../../Folha"
 import FooterIcons from "./FooterIcons"
 import { useTranslations } from "next-intl"
-import LanguageSwitcher from "../../LanguageSwitcher"
 
 export default function Footer() {
     const t = useTranslations("Footer");
@@ -67,7 +66,6 @@ export default function Footer() {
                     </div>
                     <div className="flex flex-col gap-4">
                         <div className="flex justify-end itens-center md:items-end gap-4">
-                            <LanguageSwitcher />
                             <FooterIcons />
                         </div>
                         <div className="h-px bg-brown/10 w-full"></div>

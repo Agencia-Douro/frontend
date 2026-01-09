@@ -50,6 +50,10 @@ const nextConfig: NextConfig = {
         source: "/:locale(pt|en|fr)/:path*.glb",
         destination: "/:path*.glb",
       },
+      {
+        source: "/:locale(pt|en|fr)/hero/:image*",
+        destination: "/hero/:image*",
+      },
     ];
   },
 };

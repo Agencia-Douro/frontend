@@ -19,6 +19,7 @@ import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImov
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
+import ModelViewer from "@/components/ModelViewer"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -73,6 +74,7 @@ export default function ImovelDetails() {
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
     const [showFilesModal, setShowFilesModal] = useState(false)
+    const [showFeaturesModal, setShowFeaturesModal] = useState(false)
     const [lightboxOpen, setLightboxOpen] = useState(false)
     const [lightboxIndex, setLightboxIndex] = useState(0)
     const pdfRef = useRef(null)
@@ -397,7 +399,7 @@ export default function ImovelDetails() {
                         <iframe
                             className="mt-6 h-75 border-0 lg:hidden block"
                             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.concelho}, ${property.distrito}, Portugal`
+                                `${property.freguesia}, Portugal`
                             )}`}
                             width="100%"
                             allowFullScreen
@@ -405,142 +407,144 @@ export default function ImovelDetails() {
                             referrerPolicy="no-referrer-when-downgrade"
                         />
 
-                        {/* Corretor Responsável */}
-                        {property.teamMember && (
-                            <div className="mt-4 w-full p-4 bg-deaf/50 rounded-lg border border-brown/10">
-                                <p className="body-14-medium text-brown/70 mb-2">Corretor Responsável</p>
-                                <div className="flex items-center justify-between gap-4">
-                                    <div>
-                                        <p className="body-16-medium text-brown">{property.teamMember.name}</p>
-                                        <p className="body-14-regular text-brown/60">{property.teamMember.email}</p>
+                        {/* Mobile Only - Corretor Responsável, Botões e Form */}
+                        <div className="lg:hidden">
+                            {/* Corretor Responsável */}
+                            {property.teamMember && (
+                                <div className="mt-4 w-full p-4 bg-deaf/50 rounded-lg border border-brown/10">
+                                    <p className="body-14-medium text-brown/70 mb-2">Corretor Responsável</p>
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div>
+                                            <p className="body-16-medium text-brown">{property.teamMember.name}</p>
+                                            <p className="body-14-regular text-brown/60">{property.teamMember.email}</p>
+                                        </div>
+                                        <a
+                                            href={`https://wa.me/351${property.teamMember.phone}?text=${encodeURIComponent(
+                                                `Olá ${property.teamMember.name}! Tenho interesse no imóvel:\n\n` +
+                                                `${property.title}\n` +
+                                                `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
+                                                `Referência: ${property.reference}\n` +
+                                                `Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
+                                            )}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="shrink-0"
+                                        >
+                                            <Button className="bg-[#25D366] hover:bg-[#20BA5A] text-white" size="default">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
+                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                                                </svg>
+                                                Contactar
+                                            </Button>
+                                        </a>
                                     </div>
-                                    <a
-                                        href={`https://wa.me/351${property.teamMember.phone}?text=${encodeURIComponent(
-                                            `Olá ${property.teamMember.name}! Tenho interesse no imóvel:\n\n` +
-                                            `${property.title}\n` +
-                                            `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
-                                            `Referência: ${property.reference}\n` +
-                                            `Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
-                                        )}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="shrink-0"
+                                </div>
+                            )}
+
+                            <div className="mt-4 w-full">
+                                <div className="flex flex-row gap-4 w-full">
+                                    <Button
+                                        variant={fav ? "gold" : "gold"}
+                                        className="grow body-16-medium"
+                                        onClick={() => {
+                                            const currentlyFav = isFavorite(id)
+                                            toggleFavorite(id)
+                                            toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
+                                        }}
                                     >
-                                        <Button className="bg-[#25D366] hover:bg-[#20BA5A] text-white" size="default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
-                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                                        {fav ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" fill="currentColor" />
                                             </svg>
-                                            Contactar
-                                        </Button>
-                                    </a>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                            </svg>
+                                        )}
+                                        FAVORITO
+                                    </Button>
+                                    <Button variant="gold" className="grow body-16-medium" onClick={handleCopyLink}>
+                                        {linkCopied ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                            </svg>
+                                        )}
+                                        {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
+                                    </Button>
+                                    <Button variant="gold" className="grow body-16-medium" onClick={handleDownloadPDF}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        Guardar PDF
+                                    </Button>
                                 </div>
-                            </div>
-                        )}
+                                <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                            <Input
+                                                id="nome"
+                                                placeholder="Tomas Ribeiro Silva"
+                                                value={formData.nome}
+                                                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                                            <Input
+                                                id="telefone"
+                                                placeholder="+351 919 766 323"
+                                                value={formData.telefone}
+                                                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
 
-                        <div className="mt-4 w-full">
-                            <div className="flex flex-row gap-4 w-full">
-                                <Button
-                                    variant={fav ? "gold" : "gold"}
-                                    className="grow body-16-medium"
-                                    onClick={() => {
-                                        const currentlyFav = isFavorite(id)
-                                        toggleFavorite(id)
-                                        toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
-                                    }}
-                                >
-                                    {fav ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" fill="currentColor" />
-                                        </svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                                        </svg>
-                                    )}
-                                    FAVORITO
-                                </Button>
-                                <Button variant="gold" className="grow body-16-medium" onClick={handleCopyLink}>
-                                    {linkCopied ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                                        </svg>
-                                    )}
-                                    {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
-                                </Button>
-                                <Button variant="gold" className="grow body-16-medium" onClick={handleDownloadPDF}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    Guardar PDF
-                                </Button>
-                            </div>
-                            <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                        <Label htmlFor="email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
                                         <Input
-                                            id="nome"
-                                            placeholder="Tomas Ribeiro Silva"
-                                            value={formData.nome}
-                                            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                            id="email"
+                                            type="email"
+                                            placeholder="contacto@agenciadouro.pt"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
                                         />
                                     </div>
+
                                     <div className="space-y-2">
-                                        <Label htmlFor="telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
-                                        <Input
-                                            id="telefone"
-                                            placeholder="+351 919 766 323"
-                                            value={formData.telefone}
-                                            onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                                        <Label htmlFor="mensagem" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
+                                        <Textarea
+                                            id="mensagem"
+                                            placeholder="Envie-nos uma mensagem!"
+                                            value={formData.mensagem}
+                                            onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
+                                            className="min-h-[100px]"
                                         />
                                     </div>
-                                </div>
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        placeholder="contacto@agenciadouro.pt"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        required
-                                    />
-                                </div>
+                                    <div className="flex items-center gap-2">
+                                        <Checkbox
+                                            id="marketing"
+                                            checked={formData.aceitaMarketing}
+                                            onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
+                                        />
+                                        <label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
+                                    </div>
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="mensagem" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
-                                    <Textarea
-                                        id="mensagem"
-                                        placeholder="Envie-nos uma mensagem!"
-                                        value={formData.mensagem}
-                                        onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
-                                        required
-                                        className="min-h-[100px]"
-                                    />
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <Checkbox
-                                        id="marketing"
-                                        checked={formData.aceitaMarketing}
-                                        onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
-                                    />
-                                    <label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
-                                </div>
-
-                                <Button type="submit" variant="gold" className="w-full">Enviar</Button>
-                            </form>
-
+                                    <Button type="submit" variant="gold" className="w-full">Enviar</Button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 lg:sticky lg:top-4 pt-4 md:pt-5 lg:pt-6 h-min">
+                    <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 pt-4 md:pt-5 lg:pt-6">
                         {property.totalArea && property.totalArea > 0 && (
                             <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
                         )}
@@ -573,6 +577,18 @@ export default function ImovelDetails() {
                         {property.energyClass && (
                             <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
                         )}
+                        {property.features && (
+                            <div className="flex items-center justify-between py-4 border-b border-brown/10">
+                                <p className="body-16-medium text-brown">Características</p>
+                                <Button
+                                    variant="gold"
+                                    size="default"
+                                    onClick={() => setShowFeaturesModal(true)}
+                                >
+                                    Ver
+                                </Button>
+                            </div>
+                        )}
                         {property.files && property.files.filter(f => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">Ficheiros</p>
@@ -588,16 +604,165 @@ export default function ImovelDetails() {
                         <iframe
                             className="mt-6 h-75 border-0 hidden lg:block"
                             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.address}`
+                                `${property.freguesia}, Portugal`
                             )}`}
                             width="100%"
                             allowFullScreen
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                         />
+
+                        {/* Desktop Only - Corretor Responsável, Botões e Form */}
+                        <div className="hidden lg:block">
+                            {/* Corretor Responsável */}
+                            {property.teamMember && (
+                                <div className="mt-4 w-full p-4 bg-deaf/50 rounded-lg border border-brown/10">
+                                    <p className="body-14-medium text-brown/70 mb-2">Corretor Responsável</p>
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div>
+                                            <p className="body-16-medium text-brown">{property.teamMember.name}</p>
+                                            <p className="body-14-regular text-brown/60">{property.teamMember.email}</p>
+                                        </div>
+                                        <a
+                                            href={`https://wa.me/351${property.teamMember.phone}?text=${encodeURIComponent(
+                                                `Olá ${property.teamMember.name}! Tenho interesse no imóvel:\n\n` +
+                                                `${property.title}\n` +
+                                                `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
+                                                `Referência: ${property.reference}\n` +
+                                                `Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
+                                            )}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="shrink-0"
+                                        >
+                                            <Button className="bg-[#25D366] hover:bg-[#20BA5A] text-white" size="default">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
+                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                                                </svg>
+                                                Contactar
+                                            </Button>
+                                        </a>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="mt-4 w-full">
+                                <div className="flex flex-col gap-4 w-full">
+                                    <Button
+                                        variant={fav ? "gold" : "gold"}
+                                        className="w-full body-16-medium"
+                                        onClick={() => {
+                                            const currentlyFav = isFavorite(id)
+                                            toggleFavorite(id)
+                                            toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
+                                        }}
+                                    >
+                                        {fav ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" fill="currentColor" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                            </svg>
+                                        )}
+                                        FAVORITO
+                                    </Button>
+                                    <Button variant="gold" className="w-full body-16-medium" onClick={handleCopyLink}>
+                                        {linkCopied ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                            </svg>
+                                        )}
+                                        {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
+                                    </Button>
+                                    <Button variant="gold" className="w-full body-16-medium" onClick={handleDownloadPDF}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        Guardar PDF
+                                    </Button>
+                                </div>
+                                <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
+                                    <div className="space-y-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="nome-desktop" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                            <Input
+                                                id="nome-desktop"
+                                                placeholder="Tomas Ribeiro Silva"
+                                                value={formData.nome}
+                                                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="telefone-desktop" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                                            <Input
+                                                id="telefone-desktop"
+                                                placeholder="+351 919 766 323"
+                                                value={formData.telefone}
+                                                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="email-desktop" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
+                                        <Input
+                                            id="email-desktop"
+                                            type="email"
+                                            placeholder="contacto@agenciadouro.pt"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="mensagem-desktop" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
+                                        <Textarea
+                                            id="mensagem-desktop"
+                                            placeholder="Envie-nos uma mensagem!"
+                                            value={formData.mensagem}
+                                            onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
+                                            required
+                                            className="min-h-[100px]"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                        <Checkbox
+                                            id="marketing-desktop"
+                                            checked={formData.aceitaMarketing}
+                                            onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
+                                        />
+                                        <label htmlFor="marketing-desktop" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
+                                    </div>
+
+                                    <Button type="submit" variant="gold" className="w-full">Enviar</Button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            {/* Logo 3D Section */}
+            <section className="container py-8 md:py-10 lg:py-12 flex justify-center items-center">
+                <ModelViewer
+                    autoRotate={false}
+                    cameraControls
+                    initialRotation={[0, 0, 0]}
+                    style={{ width: '100%', maxWidth: '350px', height: '350px', touchAction: 'pan-y' }}
+                    className="lg:w-[500px]! lg:h-[400px]! lg:max-w-none! mx-auto lg:mx-0"
+                />
+            </section>
+
             <ImoveisRelacionados
                 currentPropertyId={property.id}
                 currentPrice={property.price}
@@ -608,6 +773,19 @@ export default function ImovelDetails() {
             <div className="fixed -left-[9999px] top-0 pointer-events-none" ref={pdfRef}>
                 <PropertyPDFTemplate property={property} />
             </div>
+
+            {/* Modal de Características */}
+            <Dialog open={showFeaturesModal} onOpenChange={setShowFeaturesModal}>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="text-brown body-18-medium">Características do Imóvel</DialogTitle>
+                        <DialogDescription>
+                            Características e comodidades especiais deste imóvel
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.features || "" }} />
+                </DialogContent>
+            </Dialog>
 
             {/* Modal de Ficheiros */}
             <Dialog open={showFilesModal} onOpenChange={setShowFilesModal}>

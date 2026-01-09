@@ -20,7 +20,7 @@
     "viewAll": "View All"
   },
   "Testemunhos": {
-    "title": "Testimonials from our clients",
+    "title": "What our customers say",
     "description": "Each key carries a story, each home welcomes a dream, these are the voices of those who found their perfect place.",
     "satisfiedClients": "satisfied clients",
     "viewMore": "View more",
@@ -234,6 +234,7 @@
     "energyClass": "Energy class",
     "rent": "Rent",
     "favorites": "Favorites",
+    "search": "Search",
     "clear": "Clear",
     "propertyStates": {
       "new": "New",
@@ -268,6 +269,7 @@
       }
     },
     "title": "Online Valuer",
+    "subtitle": "Fill out the form below to receive a  evaluation of your property",
     "personalData": {
       "title": "Personal Data",
       "name": "Name",
@@ -310,6 +312,8 @@
     "home": "Home",
     "properties": "Properties",
     "buy": "Buy",
+    "rent": "Rent",
+    "avaliar": "Valuer Online",
     "developments": "Developments",
     "businessTransfer": "Business Transfer",
     "luxuryProperties": "Luxury Properties",

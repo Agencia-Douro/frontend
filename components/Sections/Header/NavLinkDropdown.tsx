@@ -18,9 +18,10 @@ interface NavLinkDropdownProps {
     href: string;
     label: string;
   }>;
+  isTransparent?: boolean;
 }
 
-export default function NavLinkDropdown({ trigger, triggerHref, items }: NavLinkDropdownProps) {
+export default function NavLinkDropdown({ trigger, triggerHref, items, isTransparent }: NavLinkDropdownProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-0">
@@ -36,11 +37,11 @@ export default function NavLinkDropdown({ trigger, triggerHref, items }: NavLink
             )}
           >
             {triggerHref ? (
-              <NavLink href={triggerHref}>{trigger}</NavLink>
+              <NavLink href={triggerHref} isTransparent={isTransparent}>{trigger}</NavLink>
             ) : (
               <span className={cn(
-                "text-black-muted hover:text-black text-center",
-                "transition-colors whitespace-nowrap relative",
+                isTransparent ? "text-white/90 hover:text-white" : "text-black-muted hover:text-black",
+                "text-center transition-colors whitespace-nowrap relative",
                 "after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:bg-gold after:rounded after:scale-x-0",
                 "after:origin-left after:transition-transform after:duration-300 after:ease-out",
                 "hover:after:scale-x-100"

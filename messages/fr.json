@@ -20,7 +20,7 @@
     "viewAll": "Voir tout"
   },
   "Testemunhos": {
-    "title": "Témoignages de nos clients",
+    "title": "Ce que disent nos clients",
     "description": "Chaque clé porte une histoire, chaque foyer accueille un rêve, ce sont les voix de ceux qui ont trouvé leur lieu parfait.",
     "satisfiedClients": "clients satisfaits",
     "viewMore": "Voir plus",
@@ -234,6 +234,7 @@
     "energyClass": "Classe énergétique",
     "rent": "Louer",
     "favorites": "Favoris",
+    "search": "Rechercher",
     "clear": "Effacer",
     "propertyStates": {
       "new": "Neuf",
@@ -268,6 +269,7 @@
       }
     },
     "title": "Évaluateur en ligne",
+    "subtitle": "Remplissez le formulaire ci-dessous pour recevoir une évaluation de votre bien",
     "personalData": {
       "title": "Données personnelles",
       "name": "Nom",
@@ -310,6 +312,8 @@
     "home": "Accueil",
     "properties": "Propriétés",
     "buy": "Acheter",
+    "rent": "Louer",
+    "avaliar": "Évaluateur en ligne",
     "developments": "Développements",
     "businessTransfer": "Cession de fonds",
     "luxuryProperties": "Propriétés de luxe",

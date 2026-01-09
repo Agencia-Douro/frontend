@@ -55,12 +55,14 @@ export interface Property {
   deliveryDate: string | null;
   distrito: string;
   concelho: string;
+  freguesia: string | null;
   address: string | null;
   image: string;
   imageSections?: PropertyImageSection[];
   relatedProperties?: Property[];
   files?: PropertyFile[];
   paymentConditions: string | null;
+  features: string | null;
   status: "active" | "inactive" | "sold" | "rented" | "reserved";
   teamMemberId: string | null;
   teamMember?: TeamMember;

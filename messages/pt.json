@@ -20,7 +20,7 @@
     "viewAll": "Ver Todos"
   },
   "Testemunhos": {
-    "title": "Depoimentos dos nossos clientes",
+    "title": "O que dizem os nossos clientes",
     "description": "Cada chave carrega uma história, cada lar acolhe um sonho, estas são as vozes de quem encontrou o seu lugar perfeito.",
     "satisfiedClients": "clientes satisfeitos",
     "viewMore": "Ver mais",
@@ -234,6 +234,7 @@
     "energyClass": "Classe energética",
     "rent": "Arrendar",
     "favorites": "Favoritos",
+    "search": "Pesquisar",
     "clear": "Limpar",
     "propertyStates": {
       "new": "Novo",
@@ -268,6 +269,7 @@
       }
     },
     "title": "Avaliador Online",
+    "subtitle": "Preencha o formulário abaixo para receber uma avaliação do seu imóvel",
     "personalData": {
       "title": "Dados Pessoais",
       "name": "Nome",
@@ -310,6 +312,8 @@
     "home": "Início",
     "properties": "Imóveis",
     "buy": "Comprar",
+    "rent": "Arrendar",
+    "avaliar": "Avaliador Online",
     "developments": "Empreendimentos",
     "businessTransfer": "Trespasse",
     "luxuryProperties": "Imóveis de luxo",
