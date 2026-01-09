@@ -313,6 +313,49 @@ export const DISTRITO_MUNICIPIOS: { [key: string]: string[] } = {
   ],
 };
 
+export const MUNICIPIO_FREGUESIAS: { [key: string]: string[] } = {
+  // Aveiro
+  "Águeda": ["Águeda", "Belazaima do Chão", "Borralha", "Fermentelos", "Macinhata do Vouga", "Recardães", "Trofa", "Valongo do Vouga"],
+  "Albergaria-a-Velha": ["Albergaria-a-Velha", "Alquerubim", "Angeja", "Branca", "Ribeira de Fráguas", "São João de Loure"],
+  "Anadia": ["Anadia", "Arcos", "Avelãs de Caminho", "Avelãs de Cima", "Moita", "Mogofores", "Paredes do Bairro", "São Lourenço do Bairro", "Tamengos", "Vilarinho do Bairro"],
+  "Arouca": ["Arouca", "Burgo", "Canelas", "Chave", "Covelo de Paivó", "Escariz", "Fermedo", "Mansores", "Moldes", "Santa Eulália", "São Miguel do Mato", "Tropeço", "Urrô", "Várzea"],
+  "Aveiro": ["Aradas", "Cacia", "Eirol", "Esgueira", "Glória", "Nariz", "Oliveirinha", "Requeixo", "Santa Joana", "São Bernardo", "São Jacinto", "Vera Cruz"],
+  "Castelo de Paiva": ["Bairros", "Fornos", "Pedorido", "Raiva", "Real", "Sobrado", "Vila Chã"],
+  "Espinho": ["Anta", "Espinho", "Guetim", "Paramos", "Silvalde"],
+  "Estarreja": ["Avanca", "Beduído", "Canelas", "Fermelã", "Pardilhó", "Salreu", "Veiros"],
+  "Ílhavo": ["Gafanha da Encarnação", "Gafanha da Nazaré", "Gafanha do Carmo", "Ílhavo"],
+  "Mealhada": ["Barcouço", "Casal Comba", "Luso", "Mealhada", "Pampilhosa", "Vacariça", "Ventosa do Bairro"],
+  "Murtosa": ["Bunheiro", "Monte", "Murtosa", "Torreira"],
+  "Oliveira de Azeméis": ["Carregosa", "Cesar", "Fajões", "Loureiro", "Macinhata da Seixa", "Macieira de Sarnes", "Madail", "Nogueira do Cravo", "Oliveira de Azeméis", "Ossela", "Palmaz", "Pindelo", "Santiago de Riba-Ul", "São Martinho da Gândara", "São Roque", "Ul", "Vila de Cucujães"],
+  "Oliveira do Bairro": ["Bustos", "Mamarrosa", "Oiã", "Oliveira do Bairro", "Palhaça"],
+  "Ovar": ["Arada", "Cortegaça", "Esmoriz", "Maceda", "Ovar", "São João", "São Vicente de Pereira Jusã", "Válega"],
+  "Santa Maria da Feira": ["Argoncilhe", "Arrifana", "Caldas de São Jorge", "Canedo", "Escapães", "Fiães", "Lobão", "Lourosa", "Milheirós de Poiares", "Mozelos", "Nogueira da Regedoura", "Paços de Brandão", "Pigeiros", "Rio Meão", "Romariz", "Sanfins", "Santa Maria da Feira", "Santa Maria de Lamas", "São Paio de Oleiros", "Sanguedo", "São João de Ver", "Vila Maior"],
+  "São João da Madeira": ["São João da Madeira"],
+  "Sever do Vouga": ["Cedrim", "Couto de Esteves", "Paradela", "Pessegueiro do Vouga", "Rocas do Vouga", "Sever do Vouga", "Silva Escura", "Talhadas"],
+  "Vagos": ["Calvão", "Fonte de Angeão", "Gafanha da Boa Hora", "Ouca", "Ponte de Vagos", "Santo André de Vagos", "Santo António de Vagos", "Soza", "Vagos"],
+  "Vale de Cambra": ["Arões", "Cepelos", "Codal", "Junqueira", "Macieira de Cambra", "Roge", "São Pedro de Castelões", "Vila Chã"],
+
+  // Porto
+  "Porto": ["Aldoar", "Bonfim", "Campanhã", "Cedofeita", "Foz do Douro", "Lordelo do Ouro", "Massarelos", "Miragaia", "Nevogilde", "Paranhos", "Ramalde", "Santo Ildefonso", "São Nicolau", "Sé", "Vitória"],
+  "Vila Nova de Gaia": ["Arcozelo", "Avintes", "Canelas", "Canidelo", "Gulpilhares", "Grijó", "Madalena", "Mafamude", "Oliveira do Douro", "Pedroso", "Sandim", "Santa Marinha", "São Félix da Marinha", "São Pedro da Afurada", "Serzedo", "Valadares", "Vilar de Andorinho", "Vilar do Paraíso"],
+  "Matosinhos": ["Custóias", "Guifões", "Lavra", "Leça da Palmeira", "Leça do Balio", "Matosinhos", "Perafita", "Santa Cruz do Bispo", "São Mamede de Infesta", "Senhora da Hora"],
+  "Gondomar": ["Baguim do Monte", "Covelo", "Fânzeres", "Foz do Sousa", "Gondomar", "Lomba", "Melres", "Rio Tinto", "São Cosme", "São Pedro da Cova", "Valbom"],
+  "Maia": ["Águas Santas", "Barca", "Cidade da Maia", "Folgosa", "Gemunde", "Gueifães", "Milheirós", "Moreira", "Nogueira", "Pedrouços", "Santa Maria de Avioso", "São Pedro de Avioso", "Silva Escura", "Vermoim", "Vila Nova da Telha"],
+  "Valongo": ["Alfena", "Campo", "Ermesinde", "Sobrado", "Valongo"],
+  "Paredes": ["Aguiar de Sousa", "Astromil", "Baltar", "Beire", "Besteiros", "Bitarães", "Castelões de Cepeda", "Cristelo", "Duas Igrejas", "Gandra", "Gondalães", "Lordelo", "Louredo", "Madalena", "Parada de Todeia", "Paredes", "Rebordosa", "Recarei", "Sobreira", "Sobrosa", "Vandoma", "Vilela"],
+  "Penafiel": ["Abragão", "Boelhe", "Bustelo", "Cabeça Santa", "Canelas", "Castelões", "Croca", "Duas Igrejas", "Eja", "Fonte Arcada", "Galegos", "Guilhufe", "Irivo", "Lagares", "Luzim", "Milhundos", "Novelas", "Oldrões", "Paço de Sousa", "Perozelo", "Pinheiro", "Portela", "Rans", "Recezinhos", "Rio Mau", "São Martinho de Recezinhos", "Sebolido", "Valpedre", "Vila Cova"],
+  "Amarante": ["Aboadela", "Ansiães", "Amarante", "Ataíde", "Bustelo", "Canadelo", "Cepelos", "Figueiró", "Freixo de Baixo", "Freixo de Cima", "Fridão", "Gatão", "Gondar", "Gouveia", "Jazente", "Lufrei", "Madalena", "Padronelo", "Carneiro", "Real", "Rebordelo", "Salvador do Monte", "São Gonçalo", "Telões", "Travanca", "Vila Caiz", "Vila Chã do Marão", "Vila Garcia"],
+  "Felgueiras": ["Airães", "Borba de Godim", "Caramos", "Friande", "Idães", "Jugueiros", "Lagares", "Lixa", "Margaride", "Milhundos", "Moure", "Pedreira", "Pinheiro", "Pombeiro de Ribavizela", "Refontoura", "Regilde", "Revinhade", "Santão", "São Jorge de Vizela", "São Simão de Vizela", "Sendim", "Sernande", "Torrados", "Unhão", "Varziela", "Várzea"],
+  "Lousada": ["Aveleda", "Boim", "Caíde de Rei", "Casais", "Cernadelo", "Covas", "Cristelos", "Figueiras", "Lodares", "Lousada", "Lustosa", "Macieira", "Meinedo", "Nevogilde", "Nespereira", "Ordem", "Pias", "Santa Margarida", "Sousela", "Torno", "Vilar do Torno"],
+  "Paços de Ferreira": ["Carvalhosa", "Eiriz", "Figueiró", "Frazão", "Lamoso", "Meixomil", "Modelos", "Paços de Ferreira", "Penamaior", "Raimonda", "Sanfins de Ferreira", "Seroa"],
+  "Santo Tirso": ["Agrela", "Areias", "Burgães", "Campo", "Carreira", "Guimarei", "Lamelas", "Lama", "Monte Córdova", "Negrelos", "Refojos de Riba de Ave", "Reguenga", "Roriz", "Santão", "Santo Tirso", "São Mamede de Negrelos", "São Martinho do Campo", "São Miguel do Couto", "São Tomé de Negrelos", "Sequeira", "Vila das Aves", "Vilarinho"],
+  "Trofa": ["Alvarelhos", "Bougado", "Coronado", "Covelas", "Guidões", "Muro", "Santiago de Bougado", "São Martinho de Bougado", "São Mamede de Coronado", "São Romão de Coronado"],
+  "Vila do Conde": ["Árvore", "Aveleda", "Azurara", "Bagunte", "Fajozes", "Ferreiró", "Fornelo", "Gião", "Guilhabreu", "Junqueira", "Labruge", "Macieira", "Malta", "Mindelo", "Modivas", "Mosteiró", "Outeiro Maior", "Parada", "Retorta", "Rio Mau", "Tougues", "Touguinha", "Touguinhó", "Vairão", "Vila Chã", "Vila do Conde", "Vilar", "Vilar de Pinheiro"],
+  "Póvoa de Varzim": ["Aguçadoura", "Amorim", "Argivai", "Balasar", "Beiriz", "Estela", "Laúndos", "Navais", "Póvoa de Varzim", "Rates", "Terroso"],
+
+  // Adicione mais municípios conforme necessário
+};
+
 export const TIPOS_IMOVEL = [
   { value: "moradia", label: "Moradia" },
   { value: "apartamento", label: "Apartamento" },

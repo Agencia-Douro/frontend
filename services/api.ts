@@ -109,8 +109,8 @@ export const propertiesApi = {
 
     // Campos obrigatórios
     if (data.reference) formData.append("reference", data.reference);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
+    formData.append("title_pt", data.title);
+    formData.append("description_pt", data.description);
     formData.append("transactionType", data.transactionType);
     formData.append("propertyType", data.propertyType);
     formData.append("isEmpreendimento", data.isEmpreendimento.toString());
@@ -151,7 +151,7 @@ export const propertiesApi = {
 
     // Campos opcionais - Outros
     if (data.paymentConditions)
-      formData.append("paymentConditions", data.paymentConditions);
+      formData.append("paymentConditions_pt", data.paymentConditions);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);

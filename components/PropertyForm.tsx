@@ -12,7 +12,7 @@ import { X, Plus, Trash2 } from "lucide-react"
 import { Property, PropertyImageSection } from "@/types/property"
 import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
 import { toast } from "sonner"
-import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { DISTRITOS, DISTRITO_MUNICIPIOS, MUNICIPIO_FREGUESIAS, TIPOS_IMOVEL } from "@/app/shared/distritos"
 import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
@@ -116,6 +116,9 @@ export default function PropertyForm({
   // Get municipios based on selected distrito
   const municipios = formData.distrito ? DISTRITO_MUNICIPIOS[formData.distrito] || [] : []
 
+  // Get freguesias based on selected concelho
+  const freguesias = formData.concelho ? MUNICIPIO_FREGUESIAS[formData.concelho] || [] : []
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
@@ -154,6 +157,16 @@ export default function PropertyForm({
       }
     }
   }, [formData.distrito, formData.concelho])
+
+  // Reset freguesia when concelho changes
+  useEffect(() => {
+    if (formData.concelho && formData.freguesia) {
+      const validFreguesias = MUNICIPIO_FREGUESIAS[formData.concelho] || []
+      if (!validFreguesias.includes(formData.freguesia)) {
+        updateField("freguesia", "")
+      }
+    }
+  }, [formData.concelho, formData.freguesia])
 
   const loadImageSections = async (propertyId: string) => {
     try {
@@ -840,11 +853,30 @@ export default function PropertyForm({
 
               <div className="space-y-2">
                 <Label>Freguesia</Label>
-                <Input
-                  placeholder="Ex: São Nicolau"
-                  value={formData.freguesia || ""}
-                  onChange={(e) => updateField("freguesia", e.target.value)}
-                />
+                <Select
+                  value={formData.freguesia || undefined}
+                  onValueChange={(value) => updateField("freguesia", value)}
+                  disabled={!formData.concelho}
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={
+                        !formData.concelho
+                          ? "Selecione primeiro um concelho"
+                          : "Selecione a freguesia"
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                    {freguesias.length > 0 ? (
+                      freguesias.map((f) => (
+                        <SelectItem key={f} value={f}>
+                          {f}
+                        </SelectItem>
+                      ))
+                    ) : null}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
