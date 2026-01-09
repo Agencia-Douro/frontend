@@ -107,6 +107,14 @@ export default function ImagensImoveis({
       slides={allMedia}
       index={photoIndex}
       plugins={[Video]}
+      styles={{
+        container: {
+          backgroundColor: "rgba(0, 0, 0, 0.95)"
+        },
+        slide: {
+          padding: "80px 20px"
+        }
+      }}
     />
   );
 }
