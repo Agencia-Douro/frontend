@@ -13,7 +13,7 @@ import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { siteConfigApi, teamMembersApi, newslettersApi } from "@/services/api";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import NewsletterCard from "@/components/NewsletterCard";
 
@@ -21,7 +21,7 @@ export default function InstitucionalPage() {
     const t = useTranslations("SobreNos");
     const tNewsletter = useTranslations("Newsletter");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    
+
     const { data: siteConfig } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
@@ -189,16 +189,16 @@ export default function InstitucionalPage() {
                 {!newslettersLoading && !newslettersError && newsletters && newsletters.length > 0 && (
                     <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-12 grid grid-cols-12 gap-6">
                         <div className="flex lg:flex-col gap-1 pr-6 border-r border-brown/10 lg:sticky lg:top-0 col-span-12 lg:col-span-3 xl:col-span-2">
-                            <Button 
-                                variant={selectedCategory === null ? "gold" : "ghost"} 
+                            <Button
+                                variant={selectedCategory === null ? "gold" : "ghost"}
                                 className="w-min"
                                 onClick={() => setSelectedCategory(null)}>
                                 {tNewsletter("all")}
                             </Button>
                             {categories.map((category) => (
-                                <Button 
+                                <Button
                                     key={category.value}
-                                    variant={selectedCategory === category.value ? "gold" : "ghost"} 
+                                    variant={selectedCategory === category.value ? "gold" : "ghost"}
                                     className="w-min"
                                     onClick={() => setSelectedCategory(category.value)}>
                                     {category.label}
