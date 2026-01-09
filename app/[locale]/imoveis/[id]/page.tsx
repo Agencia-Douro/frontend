@@ -74,6 +74,7 @@ export default function ImovelDetails() {
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
     const [showFilesModal, setShowFilesModal] = useState(false)
+    const [showFeaturesModal, setShowFeaturesModal] = useState(false)
     const [lightboxOpen, setLightboxOpen] = useState(false)
     const [lightboxIndex, setLightboxIndex] = useState(0)
     const pdfRef = useRef(null)
@@ -576,6 +577,18 @@ export default function ImovelDetails() {
                         {property.energyClass && (
                             <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
                         )}
+                        {property.features && (
+                            <div className="flex items-center justify-between py-4 border-b border-brown/10">
+                                <p className="body-16-medium text-brown">Características</p>
+                                <Button
+                                    variant="gold"
+                                    size="default"
+                                    onClick={() => setShowFeaturesModal(true)}
+                                >
+                                    Ver
+                                </Button>
+                            </div>
+                        )}
                         {property.files && property.files.filter(f => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">Ficheiros</p>
@@ -760,6 +773,19 @@ export default function ImovelDetails() {
             <div className="fixed -left-[9999px] top-0 pointer-events-none" ref={pdfRef}>
                 <PropertyPDFTemplate property={property} />
             </div>
+
+            {/* Modal de Características */}
+            <Dialog open={showFeaturesModal} onOpenChange={setShowFeaturesModal}>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="text-brown body-18-medium">Características do Imóvel</DialogTitle>
+                        <DialogDescription>
+                            Características e comodidades especiais deste imóvel
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.features || "" }} />
+                </DialogContent>
+            </Dialog>
 
             {/* Modal de Ficheiros */}
             <Dialog open={showFilesModal} onOpenChange={setShowFilesModal}>

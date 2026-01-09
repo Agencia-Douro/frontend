@@ -62,6 +62,7 @@ export interface Property {
   relatedProperties?: Property[];
   files?: PropertyFile[];
   paymentConditions: string | null;
+  features: string | null;
   status: "active" | "inactive" | "sold" | "rented" | "reserved";
   teamMemberId: string | null;
   teamMember?: TeamMember;

@@ -61,6 +61,7 @@ export default function PropertyForm({
       reference: "",
       title: "",
       description: "",
+      features: "",
       transactionType: "comprar",
       propertyType: "",
       isEmpreendimento: false,
@@ -522,6 +523,15 @@ export default function PropertyForm({
                   placeholder="Descrição detalhada da propriedade..."
                   value={formData.description}
                   onChange={(value) => updateField("description", value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Características</Label>
+                <RichTextEditor
+                  placeholder="Características especiais da propriedade (piscina, jardim, vista, etc)..."
+                  value={formData.features || ""}
+                  onChange={(value) => updateField("features", value)}
                 />
               </div>
 

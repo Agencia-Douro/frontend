@@ -152,6 +152,8 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions_pt", data.paymentConditions);
+    if (data.features)
+      formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
@@ -230,6 +232,8 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions_pt", data.paymentConditions);
+    if (data.features)
+      formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
