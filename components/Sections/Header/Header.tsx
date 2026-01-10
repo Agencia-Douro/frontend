@@ -21,7 +21,7 @@ export default function Header() {
     // Detectar scroll
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            setIsScrolled(window.scrollY > 1);
         };
 
         window.addEventListener('scroll', handleScroll);
