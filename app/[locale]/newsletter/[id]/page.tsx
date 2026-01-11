@@ -68,8 +68,8 @@ export default function NewsletterDetailsPage() {
     return (
         <>
             <Folha className="top-[2000px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
-            <Folha className="top-[1900px] left-[0px] rotate-30 opacity-30 hidden lg:block text-brown" />
-            <section className="bg-muted container pt-6 md:pt-8 lg:pt-12 xl:pt-16 relative">
+            <Folha className="top-[1900px] left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
+            <section className="bg-muted container pt-24 relative">
                 <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
                     <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">{t("newsletter")}</Link>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
@@ -83,7 +83,7 @@ export default function NewsletterDetailsPage() {
                 </div>
 
                 {/* Header and Content Section */}
-                <div className="mt-6 lg:mt-8">
+                <div className="mt-6">
                     {/* Cover Image - Floated Left */}
                     {newsletter.coverImage && (
                         <div className="float-none lg:float-left w-full lg:w-1/3 mb-6 lg:mb-0 lg:mr-6">
@@ -135,7 +135,7 @@ export default function NewsletterDetailsPage() {
                         height={96}
                     />
                     <h2 className="heading-tres-regular text mb-5 sm:mb-10">{t("relatedProperties")}</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
                         {newsletter.properties.map((property) => (
                             <Link
                                 key={property.id}

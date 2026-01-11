@@ -9,11 +9,11 @@ export default function Footer() {
     const t = useTranslations("Footer");
     return (
         <>
-            <div className="relative w-screen hidden lg:block">
+            <div className="relative w-screen hidden lg:block -mx-[calc((100vw-100%)/2)]">
                 <svg className="w-full h-auto" viewBox="0 0 1440 128" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                     <path d="M1440 127.851H0V61.1843C0 61.1843 179.15 130.661 291.86 126.851C423.461 122.403 489.881 56.1062 623.5 54.7866C789.18 53.1504 871.583 127.032 1037.5 126.851C1199.11 126.675 1440 0 1440 0V127.851Z" fill="#EDE3D7" />
                 </svg>
-                <svg className="absolute top-0 left-0 w-full h-auto" viewBox="0 0 1440 131" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <svg className="absolute top-0 left-0 w-full h-auto" viewBox="-3 0 1445 133" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                     <path d="M1441 1.76953C1441 1.76953 1199.78 128.442 1037.94 128.618C871.794 128.799 789.276 54.9191 623.366 56.5553C489.562 57.8749 423.049 124.17 291.265 128.618C178.399 132.428 -1 62.9528 -1 62.9528" stroke="#DCB053" strokeWidth="2" />
                 </svg>
             </div>

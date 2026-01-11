@@ -20,6 +20,7 @@ import { contactApi } from "@/services/api"
 import { useTranslations } from "next-intl"
 import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
+import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos"
 
 export default function AvaliadorOnlinePage() {
     const t = useTranslations("AvaliadorOnline")
@@ -86,63 +87,65 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
     return (
         <>
             <section className="relative">
-                <div className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-8 md:pb-12 lg:pb-16">
+                <div className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-8 md:mb-10 lg:mb-12">
                             <span className="body-14-medium text-gold uppercase tracking-wider">{t("button.desktop.line1")}</span>
-                            <h1 className="heading-tres-regular md:heading-dois-regular text-balance text-black mt-4 mb-6">
+                            <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4 mb-6">
                                 {t("title")}
                             </h1>
-                            <p className="body-18-regular text-black-muted max-w-2xl mx-auto">
+                            <p className="body-16-regular md:body-18-regular text-black-muted max-w-2xl mx-auto">
                                 {t("subtitle")}
                             </p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Dados Pessoais */}
-                            <div className="p-6 md:p-8 rounded-lg border border-brown/10 bg-white/50 backdrop-blur-sm space-y-4">
-                                <h3 className="heading-quatro-medium text-brown mb-4">{t("personalData.title")}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="modal-nome" className="body-14-medium text-brown">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
+                            {/* Container das duas boxes principais com divider */}
+                            <div className="border border-brown/10 bg-white/50 backdrop-blur-sm divide-y divide-brown/10">
+                                {/* Dados Pessoais */}
+                                <div className="p-6 md:p-8 space-y-4">
+                                    <h3 className="body-20-medium md:heading-quatro-medium text-brown mb-4">{t("personalData.title")}</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                        <Label htmlFor="modal-nome" className="body-14-medium text-brown">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
+                                        <Input
+                                            id="modal-nome"
+                                            placeholder={t("personalData.namePlaceholder")}
+                                            value={formData.nome}
+                                            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                            required
+                                        />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="modal-telefone" className="body-14-medium text-brown">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
+                                            <Input
+                                                id="modal-telefone"
+                                                placeholder={t("personalData.phonePlaceholder")}
+                                                value={formData.telefone}
+                                                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                    <Label htmlFor="modal-email" className="body-14-medium text-brown">{t("personalData.email")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
-                                        id="modal-nome"
-                                        placeholder={t("personalData.namePlaceholder")}
-                                        value={formData.nome}
-                                        onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                        id="modal-email"
+                                        type="email"
+                                        placeholder={t("personalData.emailPlaceholder")}
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         required
                                     />
+                                    </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="modal-telefone" className="body-14-medium text-brown">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
-                                    <Input
-                                        id="modal-telefone"
-                                        placeholder={t("personalData.phonePlaceholder")}
-                                        value={formData.telefone}
-                                        onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                                        required
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="space-y-2">
-                                <Label htmlFor="modal-email" className="body-14-medium text-brown">{t("personalData.email")} <span className="text-red body-14-medium">*</span></Label>
-                                <Input
-                                    id="modal-email"
-                                    type="email"
-                                    placeholder={t("personalData.emailPlaceholder")}
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        {/* Dados do Imóvel */}
-                        <div className="p-6 md:p-8 rounded-lg border border-brown/10 bg-white/50 backdrop-blur-sm space-y-4">
-                            <h3 className="heading-quatro-medium text-brown mb-4">{t("propertyData.title")}</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {/* Dados do Imóvel */}
+                                <div className="p-6 md:p-8 space-y-4">
+                                    <h3 className="body-20-medium md:heading-quatro-medium text-brown mb-4">{t("propertyData.title")}</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="modal-tipo" className="body-14-medium text-brown">{t("propertyData.type")} <span className="text-red body-14-medium">*</span></Label>
                                     <Select
@@ -196,39 +199,44 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                             <SelectItem value="T6+">T6+</SelectItem>
                                         </SelectContent>
                                     </Select>
+                                    </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="modal-observacoes" className="body-14-medium text-brown">
+                                            {t("propertyData.observations")}
+                                        </Label>
+                                        <Textarea
+                                            id="modal-observacoes"
+                                            placeholder={t("propertyData.observationsPlaceholder")}
+                                            value={imovelData.observacoes}
+                                            onChange={(e) => setImovelData({ ...imovelData, observacoes: e.target.value })}
+                                            className="min-h-[100px]"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Checkbox de Marketing */}
+                                <div className="flex items-center gap-2 p-6 md:p-8">
+                                    <Checkbox
+                                        id="modal-marketing"
+                                        checked={formData.aceitaMarketing}
+                                        onCheckedChange={(checked) =>
+                                            setFormData({ ...formData, aceitaMarketing: checked as boolean })
+                                        }
+                                    />
+                                    <label htmlFor="modal-marketing" className="body-14-medium text-brown/70 cursor-pointer">{t("marketingConsent")}</label>
                                 </div>
                             </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="modal-observacoes" className="body-14-medium text-brown">
-                                    {t("propertyData.observations")}
-                                </Label>
-                                <Textarea
-                                    id="modal-observacoes"
-                                    placeholder={t("propertyData.observationsPlaceholder")}
-                                    value={imovelData.observacoes}
-                                    onChange={(e) => setImovelData({ ...imovelData, observacoes: e.target.value })}
-                                    className="min-h-[100px]"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm p-6 rounded-lg border border-brown/10">
-                            <Checkbox
-                                id="modal-marketing"
-                                checked={formData.aceitaMarketing}
-                                onCheckedChange={(checked) =>
-                                    setFormData({ ...formData, aceitaMarketing: checked as boolean })
-                                }
-                            />
-                            <label htmlFor="modal-marketing" className="body-14-medium text-brown/70 cursor-pointer">{t("marketingConsent")}</label>
-                        </div>
 
                         <Button type="submit" variant="gold" className="w-full">{t("submitButton")}</Button>
                     </form>
                 </div>
             </div>
         </section>
+
+        <Testemunhos />
+
         <Footer />
         </>
     )

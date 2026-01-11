@@ -9,7 +9,7 @@ import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
 import LanguageSwitcher from "@/components/Sections/Header/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/Logo.png";
 import { useTranslations } from "next-intl";
 
 export default function Header() {
@@ -68,11 +68,12 @@ export default function Header() {
     const useSticky = isImoveisPage || isImoveisLuxoPage;
     const positionClass = useSticky ? "" : "fixed";
 
-    // Header transparente na home quando não deu scroll
+    // Header transparente na home quando não deu scroll (apenas em desktop)
     const isTransparent = isHomePage && !isScrolled && !mobileMenuOpen;
-    const headerBg = isTransparent ? "bg-transparent" : "bg-muted";
-    const borderColor = isTransparent ? "border-white/20" : "border-[#EAE6DF]";
-    const textColor = isTransparent ? "text-white" : "text-brown";
+    // Em mobile, sempre ter background preenchido
+    const headerBg = isTransparent ? "bg-muted xl:bg-transparent" : "bg-muted";
+    const borderColor = isTransparent ? "border-[#EAE6DF] xl:border-white/20" : "border-[#EAE6DF]";
+    const textColor = isTransparent ? "text-brown xl:text-white" : "text-brown";
 
     return (
         <header className={`border-b ${borderColor} ${positionClass} top-0 left-0 right-0 w-full max-w-full ${headerBg} z-50 transition-all duration-300`}>
@@ -81,7 +82,7 @@ export default function Header() {
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
                             <Image
-                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
+                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? 'xl:brightness-0 xl:invert' : ''}`}
                                 src={Logo}
                                 alt={t("logoAlt")}
                                 width={88}
@@ -170,11 +171,8 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end py-16 pr-8 gap-4 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto"
+                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end justify-between py-8 pr-6 gap-3 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
                             >
-                                <div className="mb-4">
-                                    <LanguageSwitcher />
-                                </div>
                                 <motion.div
                                     initial="closed"
                                     animate="open"
@@ -192,7 +190,7 @@ export default function Header() {
                                             },
                                         },
                                     }}
-                                    className="flex flex-col items-end gap-10"
+                                    className="flex flex-col items-end gap-4 w-full justify-between h-full"
                                 >
                                     {[
                                         { href: "/", label: t("home") },
@@ -201,6 +199,7 @@ export default function Header() {
                                         { href: "/sobre-nos", label: t("aboutUs") },
                                         { href: "/podcast", label: t("podcast") },
                                         { href: "/vender-imovel", label: t("sellMyProperty") },
+                                        { href: "/avaliador-online", label: t("avaliar") },
                                     ].map((item) => (
                                         <motion.div
                                             key={item.href}
@@ -220,10 +219,11 @@ export default function Header() {
                                                 duration: 0.7,
                                                 ease: [0.25, 0.1, 0.25, 1],
                                             }}
+                                            className="w-full"
                                         >
                                             <Link
                                                 href={item.href}
-                                                className="heading-quatro-medium text-brown hover:text-gold transition-colors px-2 block relative group"
+                                                className="heading-quatro-medium font-heading text-brown hover:text-gold transition-colors px-2 block relative group text-right"
                                                 onClick={() => setMobileMenuOpen(false)}
                                             >
                                                 <span className="relative z-10">{item.label}</span>

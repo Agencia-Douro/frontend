@@ -126,7 +126,7 @@ export function Hero() {
   return (
     <section className="relative">
       {/* Hero com Carousel de Imagens */}
-      <div className="relative w-full h-[68vh] md:h-[78vh] lg:h-[90vh] overflow-hidden">
+      <div className="relative w-full h-[75vh] md:h-[78vh] lg:h-[90vh] overflow-hidden">
         {heroImages.map((image, index) => (
           <motion.div
             key={index}
@@ -165,7 +165,7 @@ export function Hero() {
             }
           `
         }} />
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
           {heroImages.map((_, index) => (
             <button
               key={index}
@@ -193,13 +193,12 @@ export function Hero() {
 
         {/* Conteúdo sobre a imagem */}
         <div className="absolute inset-0 flex items-center">
-          <div className="container">
+          <div className="container px-4">
             <div className="max-w-6xl mx-auto">
               {/* Título alinhado à esquerda */}
               <motion.h1
-                className="text-deaf leading-tight 
-             md:heading-dois-medium lg:heading-dois-medium 
-             drop-shadow-lg mb-6 md:mb-8 lg:mb-10 text-center"
+                className="text-deaf leading-tight heading-tres-regular md:heading-dois-medium lg:heading-dois-medium 
+             drop-shadow-lg mt-32 md:mt-0 lg:mt-0 mb-4 md:mb-8 lg:mb-10 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -210,18 +209,18 @@ export function Hero() {
 
               {/* Formulário de Pesquisa */}
               <motion.form
-                className="w-full rounded-lg shadow-2xl overflow-hidden"
+                className="w-full overflow-hidden"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
               >
-                <div className="flex justify-between items-center w-full border-b border-brown/10">
+                <div className="hidden md:flex justify-between items-center w-full border-b border-brown/10">
                   <div className="flex flex-row w-full gap-0 overflow-x-auto">
                     <Button
                       type="button"
                       variant={transactionType === "comprar" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap text-white"
+                      className="px-3 md:px-4.5 md:w-min whitespace-nowrap text-white body-14-medium"
                       onClick={() => setTransactionType("comprar")}
                     >
                       {t("buy")}
@@ -229,7 +228,7 @@ export function Hero() {
                     <Button
                       type="button"
                       variant={transactionType === "empreendimentos" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap text-white"
+                      className="px-3 md:px-4.5 md:w-min whitespace-nowrap text-white body-14-medium"
                       onClick={() => setTransactionType("empreendimentos")}
                     >
                       {t("developments")}
@@ -237,15 +236,15 @@ export function Hero() {
                     <Button
                       type="button"
                       variant={transactionType === "trespasse" ? "gold" : "ghost"}
-                      className="px-4.5 md:w-min whitespace-nowrap text-white"
+                      className="px-3 md:px-4.5 md:w-min whitespace-nowrap text-white body-14-medium"
                       onClick={() => setTransactionType("trespasse")}
                     >
                       {t("businessTransfer")}
                     </Button>
                   </div>
                 </div>
-                <div className="p-6 md:p-8 bg-deaf">
-                  <div className="flex flex-col md:flex-row gap-4 items-end">
+                <div className="p-4 md:p-6 lg:p-8 bg-deaf">
+                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-end">
                     {/* Campo de pesquisa com autocomplete */}
                     <div className="relative w-full" ref={searchRef}>
                       <div className="flex flex-col gap-1">
@@ -323,7 +322,7 @@ export function Hero() {
                     </div>
 
                     {/* Filtros */}
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="hidden md:flex flex-col gap-1 w-full">
                       <Label htmlFor="localizacao">{t("location")}</Label>
                       <Select value={localizacao} onValueChange={setLocalizacao}>
                         <SelectTrigger id="localizacao" name="localizacao">
@@ -338,7 +337,7 @@ export function Hero() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="hidden md:flex flex-col gap-1 w-full">
                       <Label htmlFor="tipo">{t("type")}</Label>
                       <Select value={tipo} onValueChange={setTipo}>
                         <SelectTrigger id="tipo" name="tipo">
@@ -353,7 +352,7 @@ export function Hero() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="hidden md:flex flex-col gap-1 w-full">
                       <Label htmlFor="tipologia">{t("typology")}</Label>
                       <Select value={tipologia} onValueChange={setTipologia}>
                         <SelectTrigger id="tipologia" name="tipologia">

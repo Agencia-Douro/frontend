@@ -195,10 +195,9 @@ export default function ImovelDetails() {
         }
     }
 
-
     return (
         <>
-            <section className="container">
+            <section className="container pt-16">
                 <div className="flex justify-between items-center py-4 gap-4 flex-wrap">
                     <div className="flex items-center gap-3">
                         <button
