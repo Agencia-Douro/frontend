@@ -295,39 +295,6 @@ export default function VenderImovelPage() {
                 </div>
             </section>
 
-            {/* Why Choose Us Section */}
-            <section className=" pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-6 md:pb-10 lg:pb-12 xl:pb-16">
-                <div className="bg-brown p-8 md:p-12 lg:p-16 text-white relative overflow-hidden">
-                    <Folha className="absolute top-4 right-4 text-gold/20 rotate-45" />
-                    <div className="relative z-10 max-w-3xl">
-                        <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular mb-6 md:mb-8">
-                            {t("whyChooseUs.title")}
-                        </h2>
-                        <div className="space-y-4 md:space-y-6">
-                            <div className="flex items-start gap-4">
-                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason1")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason2")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason3")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason4")}</p>
-                            </div>
-                        </div>
-                        <Button variant="outline" className="mt-8 md:mt-10 border-white text-white hover:bg-white hover:text-brown">
-                            {t("whyChooseUs.cta")}
-                        </Button>
-                    </div>
-                </div>
-            </section>
-
             <Footer />
         </>
     )

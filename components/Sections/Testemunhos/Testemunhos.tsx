@@ -10,7 +10,7 @@ import { useRef, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi } from "@/services/api";
 import Image from "next/image";
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/Logo.png";
 import { useTranslations } from "next-intl";
 
 export default function Testemunhos() {
@@ -153,7 +153,7 @@ export default function Testemunhos() {
             </div>
 
             {/* Rating e Logo */}
-            <div className="mt-4 md:mt-5 lg:mt-6 flex flex-col md:flex-row gap-4 items-center justify-center lg:justify-start">
+            <div className="mt-4 md:mt-5 lg:mt-6 flex flex-col md:flex-row gap-4 items-center justify-center lg:justify-between">
                 <div className="flex flex-col items-center lg:items-start gap-2">
                     <p className="body-18-medium text-black-muted whitespace-nowrap">
                         {siteConfig?.clientesSatisfeitos || 800}+ {t("satisfiedClients")}
@@ -200,7 +200,7 @@ export default function Testemunhos() {
                         <Link target="_blank" href="https://www.google.com/search?sa=X&sca_esv=75a4ac89eb4f2f79&rlz=1C5CHFA_enPT1081PT1081&sxsrf=AE3TifOiFTjsCAp8JGBMe6lHNXSapsBScQ:1764862760518&q=Ag%C3%AAncia+Douro+-+Media%C3%A7%C3%A3o+Imobili%C3%A1ria+AMI+17+632+Cr%C3%ADticas&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDWwNDMwN7MwMjK2tDCytDQxstjAyPiK0dYx_fCqvOTMRAWX_NKifAVdBd_UlMzEw8sPL85X8MzNT8rMyTy8sAgo7-jrqWBormBmbKTgXHR4bUlmcmLxIlbK9AMAVO_6DZsAAAA&rldimm=15096076822398299428&tbm=lcl&hl=pt-PT&ved=2ahUKEwj16KuPoqSRAxUM0gIHHX31C5QQ9fQKegQINBAF&biw=1439&bih=691&dpr=2#lkt=LocalPoiReviews">{t("viewMore")}</Link>
                     </Button>
                 </div>
-                <Image src={Logo} alt="logo" width={178} height={81} className="hidden lg:block" />
+                <Image src={Logo} alt="logo" width={178} height={81} className="hidden lg:block w-96" />
             </div>
 
             {/* Botões de navegação */}

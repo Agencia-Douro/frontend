@@ -126,7 +126,7 @@ export function Hero() {
   return (
     <section className="relative">
       {/* Hero com Carousel de Imagens */}
-      <div className="relative w-full h-[75vh] md:h-[78vh] lg:h-[90vh] overflow-hidden">
+      <div className="relative w-full h-[65vh] md:h-[72vh] lg:h-[85vh] overflow-hidden">
         {heroImages.map((image, index) => (
           <motion.div
             key={index}
