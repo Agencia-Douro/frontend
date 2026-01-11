@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { propertiesApi } from "@/services/api";
 import { Property } from "@/types/property";
 import Card from "../Imoveis/Card";
@@ -12,6 +13,8 @@ interface ImoveisRelacionadosProps {
 }
 
 export default function ImoveisRelacionados({ currentPropertyId, currentPrice, property }: ImoveisRelacionadosProps) {
+    const params = useParams();
+    const locale = params.locale as string;
     // Verificar se existem relacionamentos manuais
     const hasManualRelated = property?.relatedProperties && property.relatedProperties.length > 0;
 
@@ -22,12 +25,13 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
 
     // Buscar propriedades por faixa de preço apenas se não houver relacionamentos manuais
     const { data, isLoading } = useQuery({
-        queryKey: ["related-properties-by-price", currentPropertyId, minPrice, maxPrice],
+        queryKey: ["related-properties-by-price", currentPropertyId, minPrice, maxPrice, locale],
         queryFn: () => propertiesApi.getAll({
             minPrice,
             maxPrice,
             status: "active",
-            limit: 3
+            limit: 3,
+            lang: locale
         }),
         enabled: !hasManualRelated, // Só faz a query se não houver relacionamentos manuais
     });
@@ -69,7 +73,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
                 {displayProperties.map((property) => (
                     <Card
                         key={property.id}
-                        href={`/imoveis/${property.id}`}
+                        href={`/${locale}/imoveis/${property.id}`}
                         titulo={property.title}
                         localizacao={`${property.concelho}, ${property.distrito}`}
                         preco={property.price.toString()}

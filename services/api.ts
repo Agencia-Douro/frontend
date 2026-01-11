@@ -269,8 +269,17 @@ export const propertiesApi = {
     }
   },
 
-  getFeatured: async (): Promise<Property[]> => {
-    const response = await fetch(`${API_BASE_URL}/properties/featured/list`);
+  getFeatured: async (lang?: string): Promise<Property[]> => {
+    const params = new URLSearchParams();
+    if (lang) {
+      params.append("lang", lang);
+    }
+
+    const queryString = params.toString();
+    const url = `${API_BASE_URL}/properties/featured/list${
+      queryString ? `?${queryString}` : ""
+    }`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Erro ao buscar propriedades destacadas");

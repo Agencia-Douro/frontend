@@ -20,6 +20,7 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
 import ModelViewer from "@/components/ModelViewer"
+import { useTranslations } from "next-intl"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -70,6 +71,8 @@ const MediaItem = ({
 export default function ImovelDetails() {
     const params = useParams()
     const id = params.id as string
+    const locale = params.locale as string
+    const t = useTranslations("PropertyDetails")
     const [linkCopied, setLinkCopied] = useState(false)
     const { isFavorite, toggleFavorite } = useFavorites()
     const fav = isFavorite(id)
@@ -90,8 +93,8 @@ export default function ImovelDetails() {
 
 
     const { data: property, isLoading, error } = useQuery({
-        queryKey: ["property", id],
-        queryFn: () => propertiesApi.getById(id),
+        queryKey: ["property", id, locale],
+        queryFn: () => propertiesApi.getById(id, locale),
         enabled: !!id,
     })
 
@@ -99,7 +102,7 @@ export default function ImovelDetails() {
         return (
             <>
                 <section className="bg-deaf grid place-content-center h-[calc(100vh-64px)] lg:h-[calc(100vh-72px)]">
-                    <p className="text-center text-black-muted">A carregar...</p>
+                    <p className="text-center text-black-muted">{t("loading")}</p>
                 </section>
             </>
         )
@@ -109,16 +112,16 @@ export default function ImovelDetails() {
         return (
             <>
                 <section className="bg-deaf grid place-content-center h-[calc(100vh-64px)] lg:h-[calc(100vh-72px)]">
-                    <p className="text-center text-black-muted">Imóvel não encontrado</p>
+                    <p className="text-center text-black-muted">{t("propertyNotFound")}</p>
                 </section>
             </>
         )
     }
 
     const transactionTypeMap: Record<string, string> = {
-        comprar: "Compra",
-        arrendar: "Arrendamento",
-        trespasse: "Trespasse",
+        comprar: t("transactionTypes.comprar"),
+        arrendar: t("transactionTypes.arrendar"),
+        trespasse: t("transactionTypes.trespasse"),
     }
 
     const handleCopyLink = async () => {
@@ -126,25 +129,25 @@ export default function ImovelDetails() {
             const url = window.location.href
             await navigator.clipboard.writeText(url)
             setLinkCopied(true)
-            toast.success("Link copiado para a área de transferência!")
+            toast.success(t("linkCopied"))
 
             setTimeout(() => {
                 setLinkCopied(false)
             }, 2000)
         } catch {
-            toast.error("Erro ao copiar link")
+            toast.error(t("errorCopyingLink"))
         }
     }
 
     const handleDownloadPDF = async () => {
         try {
-            toast.loading("A gerar brochura em PDF...")
+            toast.loading(t("generatingPDF"))
             await generatePropertyPDF(property, pdfRef)
             toast.dismiss()
-            toast.success("Brochura gerada com sucesso!")
+            toast.success(t("pdfGenerated"))
         } catch (error) {
             toast.dismiss()
-            toast.error("Erro ao gerar PDF")
+            toast.error(t("errorGeneratingPDF"))
             console.error(error)
         }
     }
@@ -152,7 +155,7 @@ export default function ImovelDetails() {
     const handleSubmitContact = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        const toastId = toast.loading("Enviando mensagem...")
+        const toastId = toast.loading(t("sendingMessage"))
 
         try {
             // Adicionar informações do imóvel à mensagem
@@ -163,7 +166,7 @@ export default function ImovelDetails() {
                 mensagem: formData.mensagem + propertyInfo,
             })
 
-            toast.success("Mensagem enviada com sucesso!", { id: toastId })
+            toast.success(t("messageSent"), { id: toastId })
             setFormData({
                 nome: "",
                 telefone: "",
@@ -172,7 +175,7 @@ export default function ImovelDetails() {
                 aceitaMarketing: false,
             })
         } catch (error: any) {
-            toast.error(error.message || "Erro ao enviar mensagem. Tente novamente.", { id: toastId })
+            toast.error(error.message || t("errorSendingMessage"), { id: toastId })
         }
     }
 
@@ -188,9 +191,9 @@ export default function ImovelDetails() {
             link.click()
             document.body.removeChild(link)
             window.URL.revokeObjectURL(url)
-            toast.success("Download iniciado!")
+            toast.success(t("downloadStarted"))
         } catch (error) {
-            toast.error("Erro ao fazer download do arquivo")
+            toast.error(t("errorDownloadingFile"))
             console.error(error)
         }
     }
@@ -205,7 +208,7 @@ export default function ImovelDetails() {
                             className="cursor-pointer hidden md:flex items-center gap-2 px-1.5 py-1 body-16-medium text-brown hover:text-gold transition-colors whitespace-nowrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
-                            </svg>Voltar
+                            </svg>{t("back")}
                         </button>
                         <div className="hidden md:block w-px h-3 bg-brown/20"></div>
                         <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
@@ -346,7 +349,7 @@ export default function ImovelDetails() {
                         <div className="block h-3 w-px bg-brown/30"></div>
                         <p><span className="text-brown/50">#</span>{property.reference}</p>
                     </div>
-                    <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
+                    <p className="body-16-medium text-brown">{t("businessType")} <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                 </div>
                 <h2 className="pt-4 md:pt-5 lg:pt-6 heading-quatro-medium lg:heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
 
@@ -365,7 +368,7 @@ export default function ImovelDetails() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                     </svg>
-                    Falar connosco via WhatsApp
+                    {t("contactViaWhatsApp")}
                 </a>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -378,19 +381,19 @@ export default function ImovelDetails() {
                             {property.isEmpreendimento && (
                                 <div className="mt-4 p-4 bg-brown/5 border border-brown/20 rounded-md">
                                     <p className="body-14-regular text-brown/80 italic">
-                                        *O presente anúncio tem caráter informativo (fotos ilustrativas) e não dispensa a visita ao imóvel nem a consulta dos respetivos documentos. Nós disponibilizamos, mapa de acabamentos, plantas baixas do imóvel, não hesite em solicitar.
+                                        {t("developmentNote")}
                                     </p>
                                 </div>
                             )}
                             {property.deliveryDate && (
                                 <div className="mt-4 px-4 border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
+                                    <h6 className="body-16-medium text-brown mb-2">{t("expectedDelivery")}</h6>
                                     <p className="body-16-regular text-brown">{property.deliveryDate}</p>
                                 </div>
                             )}
                             {property.paymentConditions && (
                                 <div className="mt-4 px-4 border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">Condições de Pagamento:</h6>
+                                    <h6 className="body-16-medium text-brown mb-2">{t("paymentConditions")}</h6>
                                     <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
                                 </div>
                             )}
@@ -411,7 +414,7 @@ export default function ImovelDetails() {
                             {/* Corretor Responsável */}
                             {property.teamMember && (
                                 <div className="mt-4 w-full p-4 bg-deaf/50 rounded-lg border border-brown/10">
-                                    <p className="body-14-medium text-brown/70 mb-2">Corretor Responsável</p>
+                                    <p className="body-14-medium text-brown/70 mb-2">{t("responsibleBroker")}</p>
                                     <div className="flex items-center justify-between gap-4">
                                         <div>
                                             <p className="body-16-medium text-brown">{property.teamMember.name}</p>
@@ -433,7 +436,7 @@ export default function ImovelDetails() {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
                                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                                                 </svg>
-                                                Contactar
+                                                {t("contact")}
                                             </Button>
                                         </a>
                                     </div>
@@ -448,7 +451,7 @@ export default function ImovelDetails() {
                                         onClick={() => {
                                             const currentlyFav = isFavorite(id)
                                             toggleFavorite(id)
-                                            toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
+                                            toast.success(currentlyFav ? t("removedFromFavorites") : t("addedToFavorites"))
                                         }}
                                     >
                                         {fav ? (
@@ -460,7 +463,7 @@ export default function ImovelDetails() {
                                                 <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                             </svg>
                                         )}
-                                        FAVORITO
+                                        {t("favorite")}
                                     </Button>
                                     <Button variant="gold" className="grow body-16-medium" onClick={handleCopyLink}>
                                         {linkCopied ? (
@@ -472,32 +475,32 @@ export default function ImovelDetails() {
                                                 <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                             </svg>
                                         )}
-                                        {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
+                                        {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
                                     </Button>
                                     <Button variant="gold" className="grow body-16-medium" onClick={handleDownloadPDF}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
-                                        Guardar PDF
+                                        {t("savePDF")}
                                     </Button>
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="nome" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                            <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome"
-                                                placeholder="Tomas Ribeiro Silva"
+                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="telefone" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                                            <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="telefone"
-                                                placeholder="+351 919 766 323"
+                                                placeholder={t("phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -506,11 +509,11 @@ export default function ImovelDetails() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="email" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
+                                        <Label htmlFor="email" className="body-14-medium text-black">{t("email")} <span className="text-red body-14-medium">*</span></Label>
                                         <Input
                                             id="email"
                                             type="email"
-                                            placeholder="contacto@agenciadouro.pt"
+                                            placeholder={t("emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -518,10 +521,10 @@ export default function ImovelDetails() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="mensagem" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
+                                        <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                                         <Textarea
                                             id="mensagem"
-                                            placeholder="Envie-nos uma mensagem!"
+                                            placeholder={t("messagePlaceholder")}
                                             value={formData.mensagem}
                                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
@@ -535,68 +538,68 @@ export default function ImovelDetails() {
                                             checked={formData.aceitaMarketing}
                                             onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
                                         />
-                                        <label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
+                                        <label htmlFor="marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")}</label>
                                     </div>
 
-                                    <Button type="submit" variant="gold" className="w-full">Enviar</Button>
+                                    <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 pt-4 md:pt-5 lg:pt-6">
                         {property.totalArea && property.totalArea > 0 && (
-                            <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
+                            <Caracteristica titulo={t("totalArea")} valor={`${property.totalArea}m²`} />
                         )}
                         {property.builtArea && property.builtArea > 0 && (
-                            <Caracteristica titulo="Área Construída" valor={`${property.builtArea}m²`} />
+                            <Caracteristica titulo={t("builtArea")} valor={`${property.builtArea}m²`} />
                         )}
                         {property.usefulArea && property.usefulArea > 0 && (
-                            <Caracteristica titulo="Área Útil" valor={`${property.usefulArea}m²`} />
+                            <Caracteristica titulo={t("usefulArea")} valor={`${property.usefulArea}m²`} />
                         )}
                         {property.bathrooms > 0 && (
-                            <Caracteristica titulo="Casas de Banho" valor={property.bathrooms.toString()} />
+                            <Caracteristica titulo={t("bathrooms")} valor={property.bathrooms.toString()} />
                         )}
                         {property.bedrooms > 0 && (
-                            <Caracteristica titulo="Quartos" valor={property.bedrooms.toString()} />
+                            <Caracteristica titulo={t("bedrooms")} valor={property.bedrooms.toString()} />
                         )}
-                        {property.hasOffice && <Caracteristica titulo="Escritório" valor="Sim" />}
-                        {property.hasLaundry && <Caracteristica titulo="Lavandaria" valor="Sim" />}
+                        {property.hasOffice && <Caracteristica titulo={t("office")} valor={t("yes")} />}
+                        {property.hasLaundry && <Caracteristica titulo={t("laundry")} valor={t("yes")} />}
                         {property.garageSpaces > 0 && (
                             <Caracteristica
-                                titulo="Garagem"
-                                valor={`${property.garageSpaces} ${property.garageSpaces === 1 ? 'Lugar' : 'Lugares'}`}
+                                titulo={t("garage")}
+                                valor={`${property.garageSpaces} ${property.garageSpaces === 1 ? t("space") : t("spaces")}`}
                             />
                         )}
                         {property.constructionYear && property.constructionYear > 0 && (
-                            <Caracteristica titulo="Ano de construção" valor={property.constructionYear.toString()} />
+                            <Caracteristica titulo={t("constructionYear")} valor={property.constructionYear.toString()} />
                         )}
                         {property.propertyState && (
-                            <Caracteristica titulo="Estado" valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
+                            <Caracteristica titulo={t("state")} valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
                         )}
                         {property.energyClass && (
-                            <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
+                            <Caracteristica titulo={t("energyClass")} valor={property.energyClass.toUpperCase()} />
                         )}
                         {property.features && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
-                                <p className="body-16-medium text-brown">Características</p>
+                                <p className="body-16-medium text-brown">{t("features")}</p>
                                 <Button
                                     variant="gold"
                                     size="default"
                                     onClick={() => setShowFeaturesModal(true)}
                                 >
-                                    Ver
+                                    {t("view")}
                                 </Button>
                             </div>
                         )}
                         {property.files && property.files.filter(f => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
-                                <p className="body-16-medium text-brown">Ficheiros</p>
+                                <p className="body-16-medium text-brown">{t("files")}</p>
                                 <Button
                                     variant="gold"
                                     size="default"
                                     onClick={() => setShowFilesModal(true)}
                                 >
-                                    Ver
+                                    {t("view")}
                                 </Button>
                             </div>
                         )}
@@ -616,7 +619,7 @@ export default function ImovelDetails() {
                             {/* Corretor Responsável */}
                             {property.teamMember && (
                                 <div className="mt-4 w-full p-4 bg-deaf/50 rounded-lg border border-brown/10">
-                                    <p className="body-14-medium text-brown/70 mb-2">Corretor Responsável</p>
+                                    <p className="body-14-medium text-brown/70 mb-2">{t("responsibleBroker")}</p>
                                     <div className="flex items-center justify-between gap-4">
                                         <div>
                                             <p className="body-16-medium text-brown">{property.teamMember.name}</p>
@@ -638,7 +641,7 @@ export default function ImovelDetails() {
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
                                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                                                 </svg>
-                                                Contactar
+                                                {t("contact")}
                                             </Button>
                                         </a>
                                     </div>
@@ -653,7 +656,7 @@ export default function ImovelDetails() {
                                         onClick={() => {
                                             const currentlyFav = isFavorite(id)
                                             toggleFavorite(id)
-                                            toast.success(currentlyFav ? "Removido dos favoritos" : "Adicionado aos favoritos")
+                                            toast.success(currentlyFav ? t("removedFromFavorites") : t("addedToFavorites"))
                                         }}
                                     >
                                         {fav ? (
@@ -665,7 +668,7 @@ export default function ImovelDetails() {
                                                 <path d="M8.0001 14.447C8.0001 14.447 1.6001 10.4608 1.6001 6.60381C1.6001 4.69789 2.94746 3.15283 4.8001 3.15283C5.7601 3.15283 6.7201 3.48501 8.0001 4.81373C9.2801 3.48501 10.2401 3.15283 11.2001 3.15283C13.0527 3.15283 14.4001 4.69789 14.4001 6.60381C14.4001 10.4608 8.0001 14.447 8.0001 14.447Z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                             </svg>
                                         )}
-                                        FAVORITO
+                                        {t("favorite")}
                                     </Button>
                                     <Button variant="gold" className="w-full body-16-medium" onClick={handleCopyLink}>
                                         {linkCopied ? (
@@ -677,13 +680,13 @@ export default function ImovelDetails() {
                                                 <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
                                             </svg>
                                         )}
-                                        {linkCopied ? "Link Copiado!" : "Link do Imóvel"}
+                                        {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
                                     </Button>
                                     <Button variant="gold" className="w-full body-16-medium" onClick={handleDownloadPDF}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
-                                        Guardar PDF
+                                        {t("savePDF")}
                                     </Button>
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
@@ -743,7 +746,7 @@ export default function ImovelDetails() {
                                         <label htmlFor="marketing-desktop" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
                                     </div>
 
-                                    <Button type="submit" variant="gold" className="w-full">Enviar</Button>
+                                    <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                                 </form>
                             </div>
                         </div>
@@ -777,7 +780,7 @@ export default function ImovelDetails() {
             <Dialog open={showFeaturesModal} onOpenChange={setShowFeaturesModal}>
                 <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-brown body-18-medium">Características do Imóvel</DialogTitle>
+                        <DialogTitle className="text-brown body-18-medium">{t("propertyFeatures")}</DialogTitle>
                         <DialogDescription>
                             Características e comodidades especiais deste imóvel
                         </DialogDescription>
@@ -790,7 +793,7 @@ export default function ImovelDetails() {
             <Dialog open={showFilesModal} onOpenChange={setShowFilesModal}>
                 <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-brown body-18-medium">Ficheiros do Imóvel</DialogTitle>
+                        <DialogTitle className="text-brown body-18-medium">{t("propertyFiles")}</DialogTitle>
                         <DialogDescription>
                             Documentos, plantas e outros ficheiros relacionados a este imóvel
                         </DialogDescription>
@@ -828,7 +831,7 @@ export default function ImovelDetails() {
                                         <polyline points="7 10 12 15 17 10"></polyline>
                                         <line x1="12" y1="15" x2="12" y2="3"></line>
                                     </svg>
-                                    Download
+                                    {t("download")}
                                 </Button>
                             </div>
                         ))}

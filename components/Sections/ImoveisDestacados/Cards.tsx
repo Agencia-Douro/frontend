@@ -19,9 +19,10 @@ const isVideoUrl = (url: string): boolean => {
 interface CardsProps {
     properties: Property[]
     className?: string
+    locale: string
 }
 
-export default function Cards({ properties, className }: CardsProps) {
+export default function Cards({ properties, className, locale }: CardsProps) {
     const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
     const [startIndex, setStartIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -335,7 +336,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                     variant="brown"
                                     className="flex-1"
                                     onClick={() => {
-                                        window.location.href = `/imoveis/${selectedProperty.id}`
+                                        window.location.href = `/${locale}/imoveis/${selectedProperty.id}`
                                     }}
                                 >
                                     {t("viewFullPage")}
