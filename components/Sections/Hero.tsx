@@ -45,7 +45,7 @@ export function Hero() {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
       setAnimationKey((prev) => prev + 1); // Força reinício da animação
-    }, 6000); // Muda a cada 6 segundos
+    }, 4000); // Muda a cada 4 segundos
 
     return () => clearInterval(interval);
   }, []);
@@ -161,7 +161,7 @@ export function Hero() {
               }
             }
             .hero-progress-bar {
-              animation: progressFill 6s linear forwards;
+              animation: progressFill 4s linear forwards;
             }
           `
         }} />
@@ -177,14 +177,14 @@ export function Hero() {
               aria-label={`Ir para imagem ${index + 1}`}
             >
               <div className="relative w-full h-[3px]">
+                {/* Background base para todos os indicadores */}
+                <div className={`absolute inset-0 ${index === currentImageIndex ? 'bg-white/40' : 'bg-white/30'}`} />
+                {/* Barra de progresso apenas para o indicador ativo */}
                 {index === currentImageIndex && (
                   <div
                     key={animationKey}
                     className="absolute top-0 left-0 h-full bg-white hero-progress-bar"
                   />
-                )}
-                {index !== currentImageIndex && (
-                  <div className="absolute inset-0 bg-white/30" />
                 )}
               </div>
             </button>
