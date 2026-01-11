@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, useParams } from "next/navigation";
 import Card from "@/components/Sections/Imoveis/Card";
 import Sidebar from "@/components/sidebar";
 import { propertiesApi, PropertyFilters } from "@/services/api";
@@ -22,6 +22,8 @@ function ImoveisContent() {
     const t = useTranslations("Imoveis");
     const searchParams = useSearchParams();
     const router = useRouter();
+    const params = useParams();
+    const locale = params.locale as string;
     const { favorites } = useFavorites();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -42,12 +44,13 @@ function ImoveisContent() {
         page: searchParams.get("page") ? Number(searchParams.get("page")) : 1,
         limit: 12,
         sortBy: searchParams.get("sortBy") || "-createdAt",
+        lang: locale,
     }
 
     const onlyFavorites = searchParams.get("onlyFavorites") === "true";
 
     const { data, isLoading, error } = useQuery({
-        queryKey: ["properties-public", filters],
+        queryKey: ["properties-public", locale, filters],
         queryFn: () => propertiesApi.getAll(filters),
     });
 
@@ -71,7 +74,7 @@ function ImoveisContent() {
     const handlePageChange = (newPage: number) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", newPage.toString());
-        router.push(`/imoveis-luxo?${params.toString()}`);
+        router.push(`/${locale}/imoveis-luxo?${params.toString()}`);
     };
 
     const handleSortChange = (value: string) => {
@@ -87,7 +90,7 @@ function ImoveisContent() {
 
         params.set("sortBy", sortMap[value] || "-createdAt");
         params.delete("page"); // Reset para página 1 ao mudar ordenação
-        router.push(`/imoveis-luxo?${params.toString()}`);
+        router.push(`/${locale}/imoveis-luxo?${params.toString()}`);
     };
 
     const getSortLabel = (sortBy: string) => {
@@ -161,7 +164,7 @@ function ImoveisContent() {
                                             <Card
                                                 key={property.id}
                                                 image={property.image}
-                                                href={`/imoveis/${property.id}`}
+                                                href={`/${locale}/imoveis/${property.id}`}
                                                 titulo={property.title}
                                                 localizacao={`${property.concelho}, ${property.distrito}`}
                                                 preco={property.price}
