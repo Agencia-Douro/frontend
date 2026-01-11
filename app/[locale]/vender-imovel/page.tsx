@@ -46,8 +46,9 @@ export default function VenderImovelPage() {
                 tipoImovel: "",
                 mensagem: "",
             })
-        } catch (error: any) {
-            toast.error(error.message || t("requestSendError"), { id: toastId })
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : t("requestSendError")
+            toast.error(errorMessage, { id: toastId })
         }
     }
 
@@ -55,7 +56,7 @@ export default function VenderImovelPage() {
         <>
             {/* Hero Section - Free Property Evaluation */}
             <section className="relative">
-                <div className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-8 md:pb-12 lg:pb-16">
+                <div className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 pb-6 md:pb-10 lg:pb-12 xl:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl">
                         <span className="body-14-medium text-gold uppercase tracking-wider">{t("hero.badge")}</span>
@@ -68,9 +69,9 @@ export default function VenderImovelPage() {
                     </div>
 
                     {/* Evaluation Form */}
-                    <div className="mt-8 md:mt-12 bg-white p-6 md:p-8 lg:p-10 rounded-lg shadow-lg max-w-3xl">
-                        <h2 className="heading-quatro-medium text-black mb-6">{t("form.title")}</h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="mt-10 md:mt-14 lg:mt-16 bg-white p-6 md:p-8 lg:p-10 border border-brown/10 max-w-3xl">
+                        <h2 className="heading-quatro-medium text-black mb-6 md:mb-8">{t("form.title")}</h2>
+                        <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <Label htmlFor="nome" className="body-14-medium text-black">
@@ -168,25 +169,25 @@ export default function VenderImovelPage() {
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <Globe className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.reach.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.reach.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10 text-center">
+                        <Globe className="w-12 h-12 mx-auto mb-4 md:mb-6 text-gold" />
+                        <div className="heading-tres-medium text-brown mb-2">{t("stats.reach.label")}</div>
+                        <p className="body-14-regular text-black-muted">{t("stats.reach.description")}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <Users className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.clients.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.clients.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10 text-center">
+                        <Users className="w-12 h-12 mx-auto mb-4 md:mb-6 text-gold" />
+                        <div className="heading-tres-medium text-brown mb-2">{t("stats.clients.label")}</div>
+                        <p className="body-14-regular text-black-muted">{t("stats.clients.description")}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <MapPin className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.locations.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.locations.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10 text-center">
+                        <MapPin className="w-12 h-12 mx-auto mb-4 md:mb-6 text-gold" />
+                        <div className="heading-tres-medium text-brown mb-2">{t("stats.locations.label")}</div>
+                        <p className="body-14-regular text-black-muted">{t("stats.locations.description")}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <TrendingUp className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.experience.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.experience.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10 text-center">
+                        <TrendingUp className="w-12 h-12 mx-auto mb-4 md:mb-6 text-gold" />
+                        <div className="heading-tres-medium text-brown mb-2">{t("stats.experience.label")}</div>
+                        <p className="body-14-regular text-black-muted">{t("stats.experience.description")}</p>
                     </div>
                 </div>
             </section>
@@ -202,29 +203,29 @@ export default function VenderImovelPage() {
                         {t("marketing.description")}
                     </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Building2 className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.website.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.website.description")}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                    <div className="bg-white p-6 md:p-8 border border-brown/10">
+                        <Building2 className="w-10 h-10 mb-4 md:mb-6 text-gold" />
+                        <h3 className="body-20-medium text-black mb-2 md:mb-3">{t("marketing.channels.website.title")}</h3>
+                        <p className="body-14-regular text-black-muted mb-4 md:mb-6">{t("marketing.channels.website.description")}</p>
                         <div className="heading-quatro-medium text-brown">{t("marketing.channels.website.stat")}</div>
                     </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Mail className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.newsletter.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.newsletter.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10">
+                        <Mail className="w-10 h-10 mb-4 md:mb-6 text-gold" />
+                        <h3 className="body-20-medium text-black mb-2 md:mb-3">{t("marketing.channels.newsletter.title")}</h3>
+                        <p className="body-14-regular text-black-muted mb-4 md:mb-6">{t("marketing.channels.newsletter.description")}</p>
                         <div className="heading-quatro-medium text-brown">{t("marketing.channels.newsletter.stat")}</div>
                     </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Store className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.agencies.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.agencies.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10">
+                        <Store className="w-10 h-10 mb-4 md:mb-6 text-gold" />
+                        <h3 className="body-20-medium text-black mb-2 md:mb-3">{t("marketing.channels.agencies.title")}</h3>
+                        <p className="body-14-regular text-black-muted mb-4 md:mb-6">{t("marketing.channels.agencies.description")}</p>
                         <div className="heading-quatro-medium text-brown">{t("marketing.channels.agencies.stat")}</div>
                     </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Newspaper className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.media.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.media.description")}</p>
+                    <div className="bg-white p-6 md:p-8 border border-brown/10">
+                        <Newspaper className="w-10 h-10 mb-4 md:mb-6 text-gold" />
+                        <h3 className="body-20-medium text-black mb-2 md:mb-3">{t("marketing.channels.media.title")}</h3>
+                        <p className="body-14-regular text-black-muted mb-4 md:mb-6">{t("marketing.channels.media.description")}</p>
                         <div className="heading-quatro-medium text-brown">{t("marketing.channels.media.stat")}</div>
                     </div>
                 </div>
@@ -232,31 +233,31 @@ export default function VenderImovelPage() {
 
             {/* Why Choose Us Section */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-6 md:pb-10 lg:pb-12 xl:pb-16">
-                <div className="bg-linear-to-br from-brown to-brown/90 p-8 md:p-12 lg:p-16 rounded-2xl text-white relative overflow-hidden">
+                <div className="bg-brown p-8 md:p-12 lg:p-16 text-white relative overflow-hidden">
                     <Folha className="absolute top-4 right-4 text-gold/20 rotate-45" />
                     <div className="relative z-10 max-w-3xl">
-                        <h2 className="heading-tres-regular md:heading-dois-regular mb-6">
+                        <h2 className="heading-tres-regular md:heading-dois-regular mb-6 md:mb-8">
                             {t("whyChooseUs.title")}
                         </h2>
-                        <div className="space-y-4">
+                        <div className="space-y-4 md:space-y-6">
                             <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
+                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
                                 <p className="body-18-regular">{t("whyChooseUs.reason1")}</p>
                             </div>
                             <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
+                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
                                 <p className="body-18-regular">{t("whyChooseUs.reason2")}</p>
                             </div>
                             <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
+                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
                                 <p className="body-18-regular">{t("whyChooseUs.reason3")}</p>
                             </div>
                             <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
+                                <Folha className="!w-[10px] !h-[10px] text-gold mt-2 shrink-0 !relative" />
                                 <p className="body-18-regular">{t("whyChooseUs.reason4")}</p>
                             </div>
                         </div>
-                        <Button variant="outline" className="mt-8 border-white text-white hover:bg-white hover:text-brown">
+                        <Button variant="outline" className="mt-8 md:mt-10 border-white text-white hover:bg-white hover:text-brown">
                             {t("whyChooseUs.cta")}
                         </Button>
                     </div>

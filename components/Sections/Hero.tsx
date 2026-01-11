@@ -165,7 +165,7 @@ export function Hero() {
             }
           `
         }} />
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
           {heroImages.map((_, index) => (
             <button
               key={index}
@@ -173,18 +173,20 @@ export function Hero() {
                 setCurrentImageIndex(index);
                 setAnimationKey((prev) => prev + 1);
               }}
-              className="relative w-8 h-[3px] bg-white/40 cursor-pointer transition-all group"
+              className="relative w-8 py-2 cursor-pointer transition-all group flex items-center justify-center"
               aria-label={`Ir para imagem ${index + 1}`}
             >
-              {index === currentImageIndex && (
-                <div
-                  key={animationKey}
-                  className="absolute top-0 left-0 h-full bg-white hero-progress-bar"
-                />
-              )}
-              {index !== currentImageIndex && (
-                <div className="absolute inset-0 bg-white/40" />
-              )}
+              <div className="relative w-full h-[3px]">
+                {index === currentImageIndex && (
+                  <div
+                    key={animationKey}
+                    className="absolute top-0 left-0 h-full bg-white hero-progress-bar"
+                  />
+                )}
+                {index !== currentImageIndex && (
+                  <div className="absolute inset-0 bg-white/30" />
+                )}
+              </div>
             </button>
           ))}
         </div>

@@ -42,7 +42,7 @@ export default function ImoveisDestacados() {
                     <Link href="/imoveis">{t("viewAllMobile")}</Link>
                 </Button>
             </div>
-            <div className="w-screen left-0 bg-[#EDE3D7] lg:h-[386px] absolute top-148 -z-10"></div>
+            <div className="w-screen left-0 bg-[#EDE3D7] lg:h-[200px] xl:h-[386px] absolute top-128 -z-10"></div>
         </section>
     )
 }
