@@ -434,7 +434,7 @@
     "propertyNotFound": "Imóvel não encontrado",
     "businessType": "Tipo de negócio:",
     "transactionTypes": {
-      "comprar": "Compra",
+      "comprar": "A venda",
       "arrendar": "Arrendamento",
       "trespasse": "Trespasse"
     },

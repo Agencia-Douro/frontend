@@ -434,7 +434,7 @@
     "propertyNotFound": "Property not found",
     "businessType": "Business type:",
     "transactionTypes": {
-      "comprar": "Purchase",
+      "comprar": "Sell",
       "arrendar": "Rent",
       "trespasse": "Business Transfer"
     },
