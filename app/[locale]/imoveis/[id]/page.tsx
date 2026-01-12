@@ -19,8 +19,8 @@ import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImov
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
-import ModelViewer from "@/components/ModelViewer"
 import { useTranslations } from "next-intl"
+import Logo from "@/public/Logo.png"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -386,16 +386,6 @@ export default function ImovelDetails() {
                                 </div>
                             )}
                         </div>
-                        <iframe
-                            className="mt-6 h-75 border-0 lg:hidden block"
-                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.freguesia}, Portugal`
-                            )}`}
-                            width="100%"
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
 
                         {/* Mobile Only - Corretor Responsável, Botões e Form */}
                         <div className="lg:hidden">
@@ -531,6 +521,16 @@ export default function ImovelDetails() {
 
                                     <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                                 </form>
+                                <iframe
+                                    className="mt-6 h-75 border-0"
+                                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
+                                        `${property.freguesia}, Portugal`
+                                    )}`}
+                                    width="100%"
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
                             </div>
                         </div>
                     </div>
@@ -603,16 +603,6 @@ export default function ImovelDetails() {
                                 <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
                             </div>
                         )}
-                        <iframe
-                            className="mt-6 h-75 border-0 hidden lg:block"
-                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                `${property.freguesia}, Portugal`
-                            )}`}
-                            width="100%"
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
 
                         {/* Desktop Only - Corretor Responsável, Botões e Form */}
                         <div className="hidden lg:block">
@@ -748,20 +738,30 @@ export default function ImovelDetails() {
 
                                     <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                                 </form>
+                                <iframe
+                                    className="mt-6 h-75 border-0"
+                                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
+                                        `${property.freguesia}, Portugal`
+                                    )}`}
+                                    width="100%"
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Logo 3D Section */}
+            {/* Logo Section */}
             <section className="container py-8 md:py-10 lg:py-12 flex justify-center items-center">
-                <ModelViewer
-                    autoRotate={false}
-                    cameraControls
-                    initialRotation={[0, 0, 0]}
-                    style={{ width: '100%', maxWidth: '350px', height: '350px', touchAction: 'pan-y' }}
-                    className="lg:w-[500px]! lg:h-[400px]! lg:max-w-none! mx-auto lg:mx-0"
+                <Image
+                    src={Logo}
+                    alt="Agência do Douro"
+                    width={350}
+                    height={350}
+                    className="w-full max-w-[350px] h-auto lg:max-w-[500px]"
                 />
             </section>
 
