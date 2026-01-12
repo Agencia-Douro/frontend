@@ -46,8 +46,9 @@ export default function VenderImovelPage() {
                 tipoImovel: "",
                 mensagem: "",
             })
-        } catch (error: any) {
-            toast.error(error.message || t("requestSendError"), { id: toastId })
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : t("requestSendError")
+            toast.error(errorMessage, { id: toastId })
         }
     }
 
@@ -55,22 +56,22 @@ export default function VenderImovelPage() {
         <>
             {/* Hero Section - Free Property Evaluation */}
             <section className="relative">
-                <div className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-8 md:pb-12 lg:pb-16">
+                <div className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl">
                         <span className="body-14-medium text-gold uppercase tracking-wider">{t("hero.badge")}</span>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4">
                             {t("hero.title")}
                         </h1>
-                        <p className="body-18-regular text-black-muted mt-4 md:mt-6 max-w-2xl">
+                        <p className="body-16-regular md:body-18-regular text-black-muted mt-4 md:mt-6 max-w-2xl">
                             {t("hero.description")}
                         </p>
                     </div>
 
                     {/* Evaluation Form */}
-                    <div className="mt-8 md:mt-12 bg-white p-6 md:p-8 lg:p-10 rounded-lg shadow-lg max-w-3xl">
-                        <h2 className="heading-quatro-medium text-black mb-6">{t("form.title")}</h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="mt-10 md:mt-14 lg:mt-16 bg-white p-6 md:p-8 lg:p-10 border border-brown/10 max-w-3xl">
+                        <h2 className="body-20-medium md:heading-quatro-medium text-black mb-6 md:mb-8">{t("form.title")}</h2>
+                        <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <Label htmlFor="nome" className="body-14-medium text-black">
@@ -157,108 +158,139 @@ export default function VenderImovelPage() {
             </section>
 
             {/* Statistics Section - Our Reach */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
-                <div className="text-center mb-8 md:mb-12">
-                    <span className="body-14-medium text-gold uppercase tracking-wider">{t("stats.badge")}</span>
-                    <h2 className="heading-tres-regular md:heading-dois-regular text-black mt-2">
+            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
+                <div>
+                    <span className="button-14-medium text-gold">{t("stats.badge")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
                         {t("stats.title")}
                     </h2>
-                    <p className="body-18-regular text-black-muted mt-4 max-w-2xl mx-auto">
-                        {t("stats.description")}
-                    </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <Globe className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.reach.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.reach.description")}</p>
+                <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
+                    {t("stats.description")}
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Globe className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("stats.reach.label")}</div>
+                            </div>
+                            <p>{t("stats.reach.description")}</p>
+                        </div>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <Users className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.clients.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.clients.description")}</p>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Users className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("stats.clients.label")}</div>
+                            </div>
+                            <p>{t("stats.clients.description")}</p>
+                        </div>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <MapPin className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.locations.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.locations.description")}</p>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <MapPin className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("stats.locations.label")}</div>
+                            </div>
+                            <p>{t("stats.locations.description")}</p>
+                        </div>
                     </div>
-                    <div className="bg-white p-6 rounded-lg border border-brown/10 text-center">
-                        <TrendingUp className="w-12 h-12 mx-auto mb-4 text-gold" />
-                        <div className="heading-tres-medium text-brown">{t("stats.experience.label")}</div>
-                        <p className="body-14-regular text-black-muted mt-2">{t("stats.experience.description")}</p>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <TrendingUp className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("stats.experience.label")}</div>
+                            </div>
+                            <p>{t("stats.experience.description")}</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Marketing Channels Section */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
-                <div className="text-center mb-8 md:mb-12">
-                    <span className="body-14-medium text-gold uppercase tracking-wider">{t("marketing.badge")}</span>
-                    <h2 className="heading-tres-regular md:heading-dois-regular text-black mt-2">
+            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
+                <div>
+                    <span className="button-14-medium text-gold">{t("marketing.badge")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
                         {t("marketing.title")}
                     </h2>
-                    <p className="body-18-regular text-black-muted mt-4 max-w-2xl mx-auto">
-                        {t("marketing.description")}
-                    </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Building2 className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.website.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.website.description")}</p>
-                        <div className="heading-quatro-medium text-brown">{t("marketing.channels.website.stat")}</div>
-                    </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Mail className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.newsletter.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.newsletter.description")}</p>
-                        <div className="heading-quatro-medium text-brown">{t("marketing.channels.newsletter.stat")}</div>
-                    </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Store className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.agencies.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.agencies.description")}</p>
-                        <div className="heading-quatro-medium text-brown">{t("marketing.channels.agencies.stat")}</div>
-                    </div>
-                    <div className="bg-white p-6 md:p-8 rounded-lg border border-brown/10">
-                        <Newspaper className="w-10 h-10 mb-4 text-gold" />
-                        <h3 className="body-20-medium text-black mb-2">{t("marketing.channels.media.title")}</h3>
-                        <p className="body-14-regular text-black-muted mb-3">{t("marketing.channels.media.description")}</p>
-                        <div className="heading-quatro-medium text-brown">{t("marketing.channels.media.stat")}</div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Why Choose Us Section */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 pb-6 md:pb-10 lg:pb-12 xl:pb-16">
-                <div className="bg-linear-to-br from-brown to-brown/90 p-8 md:p-12 lg:p-16 rounded-2xl text-white relative overflow-hidden">
-                    <Folha className="absolute top-4 right-4 text-gold/20 rotate-45" />
-                    <div className="relative z-10 max-w-3xl">
-                        <h2 className="heading-tres-regular md:heading-dois-regular mb-6">
-                            {t("whyChooseUs.title")}
-                        </h2>
-                        <div className="space-y-4">
-                            <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason1")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason2")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason3")}</p>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <div className="w-2 h-2 bg-gold rounded-full mt-2 shrink-0" />
-                                <p className="body-18-regular">{t("whyChooseUs.reason4")}</p>
-                            </div>
+                <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
+                    {t("marketing.description")}
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
                         </div>
-                        <Button variant="outline" className="mt-8 border-white text-white hover:bg-white hover:text-brown">
-                            {t("whyChooseUs.cta")}
-                        </Button>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Building2 className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("marketing.channels.website.title")}</div>
+                            </div>
+                            <p>{t("marketing.channels.website.description")}</p>
+                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.website.stat")}</div>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Mail className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("marketing.channels.newsletter.title")}</div>
+                            </div>
+                            <p>{t("marketing.channels.newsletter.description")}</p>
+                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.newsletter.stat")}</div>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Store className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("marketing.channels.agencies.title")}</div>
+                            </div>
+                            <p>{t("marketing.channels.agencies.description")}</p>
+                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.agencies.stat")}</div>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <div className="flex items-center gap-3">
+                                <Newspaper className="w-6 h-6 text-gold shrink-0" />
+                                <div className="body-16-regular text-black">{t("marketing.channels.media.title")}</div>
+                            </div>
+                            <p>{t("marketing.channels.media.description")}</p>
+                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.media.stat")}</div>
+                        </div>
                     </div>
                 </div>
             </section>

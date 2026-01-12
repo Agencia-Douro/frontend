@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useTranslations } from "next-intl"
 
 // Helper function to check if URL is a video
@@ -24,6 +24,9 @@ interface CardsProps {
 
 export default function Cards({ properties, className, locale }: CardsProps) {
     const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+    const [startIndex, setStartIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const t = useTranslations("ImoveisDestacados");
 
     if (properties.length === 0) {
@@ -53,14 +56,87 @@ export default function Cards({ properties, className, locale }: CardsProps) {
         return tipo ? tipo.label : propertyType
     }
 
+    // Determinar se deve usar layout de scroll horizontal (>3 imóveis)
+    const hasMoreThanThree = properties.length > 3
+    const maxStartIndex = hasMoreThanThree ? properties.length - 3 : 0
+    const isAtStart = startIndex === 0
+    const isAtEnd = startIndex >= maxStartIndex
+
+    // Funções de navegação do slider
+    const goToPrevious = () => {
+        if (startIndex > 0 && !isAnimating) {
+            setIsAnimating(true);
+            setStartIndex(startIndex - 1);
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 500); // Duração da animação (duration-500)
+        }
+    };
+
+    const goToNext = () => {
+        if (startIndex < maxStartIndex && !isAnimating) {
+            setIsAnimating(true);
+            setStartIndex(startIndex + 1);
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 500); // Duração da animação (duration-500)
+        }
+    };
+
+    // Calcular o translateX baseado no índice atual
+    // Cada card tem largura de calc((100% - 2rem) / 3) e gap de 1rem (16px)
+    // Para mover 1 card: precisamos mover (cardWidth + gap)
+    // cardWidth = calc((100% - 2rem) / 3)
+    // movimento = calc((100% - 2rem) / 3 + 1rem)
+    const translateX = hasMoreThanThree 
+        ? `calc(-${startIndex} * ((100% - 2rem) / 3 + 1rem))` 
+        : '0%'
+
     return (
         <>
-            <div className={`mt-8 flex items-center gap-4 overflow-x-auto remove-scrollbar`}>
-                {properties.map((property, index) => (
+            <div className="mt-8 relative">
+                {/* Container wrapper com overflow hidden quando >3 */}
+                <div
+                    className={cn(
+                        hasMoreThanThree && [
+                            "overflow-hidden",
+                            "w-full"
+                        ]
+                    )}
+                >
+                    {/* Container dos cards com animação */}
                     <div
-                        key={property.id}
-                        className={cn(`w-full bg-white`, index === 0 ? 'lg:mb-16' : index === 1 ? 'lg:mt-16' : 'lg:mb-16', className)}
+                        ref={scrollContainerRef}
+                        className={cn(
+                            "flex items-center gap-4",
+                            hasMoreThanThree && [
+                                "flex-nowrap",
+                                "transition-transform",
+                                "duration-500",
+                                "ease-in-out"
+                            ]
+                        )}
+                        style={hasMoreThanThree ? {
+                            transform: `translateX(${translateX})`,
+                        } : undefined}
                     >
+                        {properties.map((property, index) => {
+                            return (
+                                <div
+                                    key={property.id}
+                                    className={cn(
+                                        "bg-white",
+                                        // Largura: full quando ≤3, 1/3 quando >3 (com gap)
+                                        hasMoreThanThree ? "flex-shrink-0 w-full md:w-[calc((100%-2rem)/3)]" : "w-full",
+                                        // Margens condicionais apenas quando ≤3
+                                        !hasMoreThanThree && [
+                                            index === 0 && 'lg:mb-16',
+                                            index === 1 && 'lg:mt-16',
+                                            index === 2 && 'lg:mb-16'
+                                        ],
+                                        className
+                                    )}
+                                >
                         <article onClick={() => setSelectedProperty(property)}>
                             <div className="card-image-overlay h-64 xl:h-93 relative">
                                 {property.image && (
@@ -136,9 +212,38 @@ export default function Cards({ properties, className, locale }: CardsProps) {
                                     </div>
                                 </div>
                             </div>
-                        </article>
+                            </article>
+                        </div>
+                    );
+                    })}
                     </div>
-                ))}
+                </div>
+
+                {/* Botões de navegação - apenas quando >3 */}
+                {hasMoreThanThree && (
+                    <div className="flex gap-2 items-center justify-end mt-4">
+                        <Button
+                            variant="icon-brown"
+                            size="icon"
+                            onClick={goToPrevious}
+                            disabled={isAtStart}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-gold group-hover:text-white">
+                                <path d="M6.52692 9.16658L10.9969 4.69657L9.81842 3.51807L3.33659 9.99992L9.81842 16.4817L10.9969 15.3032L6.52692 10.8332H16.6699V9.16658H6.52692Z" fill="currentColor" />
+                            </svg>
+                        </Button>
+                        <Button
+                            variant="icon-brown"
+                            size="icon"
+                            onClick={goToNext}
+                            disabled={isAtEnd}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-gold group-hover:text-white">
+                                <path d="M13.4731 9.16658L9.00308 4.69657L10.1816 3.51807L16.6634 9.99992L10.1816 16.4817L9.00308 15.3032L13.4731 10.8332H3.33008V9.16658H13.4731Z" fill="currentColor" />
+                            </svg>
+                        </Button>
+                    </div>
+                )}
             </div>
 
             <Dialog open={!!selectedProperty} onOpenChange={() => setSelectedProperty(null)}>

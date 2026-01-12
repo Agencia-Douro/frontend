@@ -52,7 +52,7 @@ export default function InstitucionalPage() {
     return (
         <>
             {/* Primeira Seção - Apresentação */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 relative">
+            <section className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 relative">
                 <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
                 <div className="lg:space-y-6 space-y-4">
                     <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>

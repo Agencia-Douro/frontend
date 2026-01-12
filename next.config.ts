@@ -54,6 +54,10 @@ const nextConfig: NextConfig = {
         source: "/:locale(pt|en|fr)/hero/:image*",
         destination: "/hero/:image*",
       },
+      {
+        source: "/:locale(pt|en|fr)/flags/:image*",
+        destination: "/flags/:image*",
+      },
     ];
   },
 };

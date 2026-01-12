@@ -64,7 +64,7 @@ export default function PodcastPage() {
     return (
         <>
             {/* Primeira Seção - Apresentação do Podcast */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 relative">
+            <section className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 relative">
                 <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
                 <div className="lg:space-y-6 space-y-4">
                     <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("exclusiveContent")}</span></div>
@@ -75,7 +75,9 @@ export default function PodcastPage() {
                     </p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <StatCard value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} className="hidden md:block" />
+                    <div className="hidden md:block">
+                        <StatCard value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} />
+                    </div>
                     <StatCard value={config?.temporadas?.toString() || ""} label={t("seasons")} />
                     <StatCard value={config?.especialistasConvidados?.toString() || ""} label={t("guests")} />
                 </div>
