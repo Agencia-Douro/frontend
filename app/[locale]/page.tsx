@@ -6,6 +6,8 @@ import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import ZonasMaisDesejadas from "@/components/Sections/ZonasMaisDesejadas/ZonasMaisDesejadas";
 import Folha from "@/components/Folha";
 import { Hero } from "@/components/Sections/Hero";
+import Image from "next/image";
+import Logo from "@/public/Logo.png";
 
 export const metadata: Metadata = {
   title: "Agência Douro - Imóveis de Luxo em Portugal",
@@ -29,6 +31,18 @@ export default function Home() {
       <Folha className="top-[2200px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
       <Hero />
       <ImoveisDestacados />
+
+      {/* Logo Section */}
+      <section className="container py-8 md:py-10 lg:py-12 xl:py-16 flex justify-center items-center">
+        <Image
+          src={Logo}
+          alt="Agência do Douro"
+          width={350}
+          height={350}
+          className="w-full max-w-[350px] h-auto lg:max-w-[500px]"
+        />
+      </section>
+
       <ZonasMaisDesejadas />
       <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-8 lg:mt-12 xl:mt-16"></div>
       <Testemunhos />
