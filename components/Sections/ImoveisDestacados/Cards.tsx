@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
 
 // Helper function to check if URL is a video
@@ -26,8 +26,36 @@ export default function Cards({ properties, className, locale }: CardsProps) {
     const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
     const [startIndex, setStartIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const t = useTranslations("ImoveisDestacados");
+
+    // Determinar se deve usar layout de scroll horizontal (>3 imóveis)
+    const hasMoreThanThree = properties.length > 3;
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Ajustar startIndex quando mudar de mobile para desktop ou vice-versa
+    useEffect(() => {
+        const currentMaxIndex = hasMoreThanThree
+            ? isMobile
+                ? properties.length - 1
+                : properties.length - 3
+            : 0;
+
+        if (startIndex > currentMaxIndex) {
+            setStartIndex(currentMaxIndex);
+        }
+    }, [isMobile, properties.length, hasMoreThanThree, startIndex]);
 
     if (properties.length === 0) {
         return (
@@ -56,9 +84,12 @@ export default function Cards({ properties, className, locale }: CardsProps) {
         return tipo ? tipo.label : propertyType
     }
 
-    // Determinar se deve usar layout de scroll horizontal (>3 imóveis)
-    const hasMoreThanThree = properties.length > 3
-    const maxStartIndex = hasMoreThanThree ? properties.length - 3 : 0
+    // No mobile mostra 1 card por vez, no desktop mostra 3
+    const maxStartIndex = hasMoreThanThree
+        ? isMobile
+            ? properties.length - 1
+            : properties.length - 3
+        : 0
     const isAtStart = startIndex === 0
     const isAtEnd = startIndex >= maxStartIndex
 
@@ -84,12 +115,12 @@ export default function Cards({ properties, className, locale }: CardsProps) {
     };
 
     // Calcular o translateX baseado no índice atual
-    // Cada card tem largura de calc((100% - 2rem) / 3) e gap de 1rem (16px)
-    // Para mover 1 card: precisamos mover (cardWidth + gap)
-    // cardWidth = calc((100% - 2rem) / 3)
-    // movimento = calc((100% - 2rem) / 3 + 1rem)
-    const translateX = hasMoreThanThree 
-        ? `calc(-${startIndex} * ((100% - 2rem) / 3 + 1rem))` 
+    // Mobile: cada card tem 100% de largura + gap de 1rem
+    // Desktop: cada card tem calc((100% - 2rem) / 3) de largura + gap de 1rem
+    const translateX = hasMoreThanThree
+        ? isMobile
+            ? `calc(-${startIndex} * (100% + 1rem))`
+            : `calc(-${startIndex} * ((100% - 2rem) / 3 + 1rem))`
         : '0%'
 
     return (
@@ -127,7 +158,7 @@ export default function Cards({ properties, className, locale }: CardsProps) {
                                     className={cn(
                                         "bg-white",
                                         // Largura: full quando ≤3, 1/3 quando >3 (com gap)
-                                        hasMoreThanThree ? "flex-shrink-0 w-full md:w-[calc((100%-2rem)/3)]" : "w-full",
+                                        hasMoreThanThree ? "shrink-0 w-full md:w-[calc((100%-2rem)/3)]" : "w-full",
                                         // Margens condicionais apenas quando ≤3
                                         !hasMoreThanThree && [
                                             index === 0 && 'lg:mb-16',
