@@ -6,6 +6,8 @@ import Link from "next/link";
 import Cards from "./Cards";
 import { useFeaturedProperties } from "@/hooks/useFeaturedProperties";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import Logo from "@/public/Logo.png";
 
 export default function ImoveisDestacados() {
     const params = useParams();
@@ -19,6 +21,28 @@ export default function ImoveisDestacados() {
 
     return (
         <section className="relative">
+            {/* Logo Esquerda */}
+            <div className="hidden xl:block absolute left-8 top-1/2 -translate-y-1/2 z-10">
+                <Image
+                    src={Logo}
+                    alt="Agência do Douro"
+                    width={200}
+                    height={200}
+                    className="w-[200px] h-auto opacity-30"
+                />
+            </div>
+
+            {/* Logo Direita */}
+            <div className="hidden xl:block absolute right-8 top-1/2 -translate-y-1/2 z-10">
+                <Image
+                    src={Logo}
+                    alt="Agência do Douro"
+                    width={200}
+                    height={200}
+                    className="w-[200px] h-auto opacity-30"
+                />
+            </div>
+
             <div className="container pt-8 md:pt-10 lg:pt-8 xl:pt-20 z-20">
                 <div className="md:text-center flex flex-col md:items-center lg:gap-6 gap-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
