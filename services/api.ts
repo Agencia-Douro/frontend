@@ -855,6 +855,7 @@ export interface TeamMember {
   name: string;
   phone: string;
   email: string;
+  photo?: string;
 }
 
 export const teamMembersApi = {
@@ -878,13 +879,22 @@ export const teamMembersApi = {
     return response.json();
   },
 
-  create: async (data: Omit<TeamMember, "id">): Promise<TeamMember> => {
+  create: async (
+    data: Omit<TeamMember, "id">,
+    photoFile?: File
+  ): Promise<TeamMember> => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("phone", data.phone);
+    formData.append("email", data.email);
+
+    if (photoFile) {
+      formData.append("photo", photoFile);
+    }
+
     const response = await fetch(`${API_BASE_URL}/team-members`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -900,14 +910,22 @@ export const teamMembersApi = {
 
   update: async (
     id: string,
-    data: Partial<TeamMember>
+    data: Partial<TeamMember>,
+    photoFile?: File
   ): Promise<TeamMember> => {
+    const formData = new FormData();
+
+    if (data.name) formData.append("name", data.name);
+    if (data.phone) formData.append("phone", data.phone);
+    if (data.email) formData.append("email", data.email);
+
+    if (photoFile) {
+      formData.append("photo", photoFile);
+    }
+
     const response = await fetch(`${API_BASE_URL}/team-members/${id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     });
 
     if (!response.ok) {

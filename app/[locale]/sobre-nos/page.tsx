@@ -157,6 +157,7 @@ export default function InstitucionalPage() {
                             name={member.name}
                             email={member.email}
                             phone={member.phone}
+                            photo={member.photo}
                         />
                     ))}
                 </div>

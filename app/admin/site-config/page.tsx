@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
+import Image from "next/image"
 
 export default function SiteConfigPage() {
   const queryClient = useQueryClient()
@@ -29,6 +30,8 @@ export default function SiteConfigPage() {
     email: "",
   })
 
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
   const [showMemberForm, setShowMemberForm] = useState(false)
 
@@ -69,7 +72,8 @@ export default function SiteConfigPage() {
   })
 
   const createMemberMutation = useMutation({
-    mutationFn: (data: Omit<TeamMember, "id">) => teamMembersApi.create(data),
+    mutationFn: ({ data, photoFile }: { data: Omit<TeamMember, "id">; photoFile?: File }) =>
+      teamMembersApi.create(data, photoFile),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["team-members"] })
       toast.success("Membro adicionado com sucesso!")
@@ -81,8 +85,8 @@ export default function SiteConfigPage() {
   })
 
   const updateMemberMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<TeamMember> }) =>
-      teamMembersApi.update(id, data),
+    mutationFn: ({ id, data, photoFile }: { id: string; data: Partial<TeamMember>; photoFile?: File }) =>
+      teamMembersApi.update(id, data, photoFile),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["team-members"] })
       toast.success("Membro atualizado com sucesso!")
@@ -127,9 +131,13 @@ export default function SiteConfigPage() {
       updateMemberMutation.mutate({
         id: editingMember.id,
         data: memberFormData,
+        photoFile: photoFile || undefined,
       })
     } else {
-      createMemberMutation.mutate(memberFormData)
+      createMemberMutation.mutate({
+        data: memberFormData,
+        photoFile: photoFile || undefined,
+      })
     }
   }
 
@@ -140,6 +148,8 @@ export default function SiteConfigPage() {
       phone: member.phone,
       email: member.email,
     })
+    setPhotoPreview(member.photo || null)
+    setPhotoFile(null)
     setShowMemberForm(true)
   }
 
@@ -155,8 +165,22 @@ export default function SiteConfigPage() {
       phone: "",
       email: "",
     })
+    setPhotoFile(null)
+    setPhotoPreview(null)
     setEditingMember(null)
     setShowMemberForm(false)
+  }
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPhotoFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   if (isLoading) {
@@ -417,6 +441,28 @@ export default function SiteConfigPage() {
                   />
                 </div>
               </div>
+
+              <div className="mt-4 space-y-2">
+                <Label htmlFor="member-photo">Foto</Label>
+                <Input
+                  id="member-photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                />
+                {photoPreview && (
+                  <div className="mt-2">
+                    <Image
+                      src={photoPreview}
+                      alt="Preview"
+                      width={120}
+                      height={120}
+                      className="rounded-lg object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="flex gap-2 mt-4 justify-end">
                 <Button
                   type="button"
@@ -451,18 +497,29 @@ export default function SiteConfigPage() {
                   key={member.id}
                   className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-sm text-gray-500">Nome</p>
-                      <p className="font-medium">{member.name}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Telefone</p>
-                      <p className="font-medium">{member.phone}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Email</p>
-                      <p className="font-medium">{member.email}</p>
+                  <div className="flex items-center gap-4 flex-1">
+                    {member.photo && (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={80}
+                        height={80}
+                        className="rounded-lg object-cover"
+                      />
+                    )}
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-500">Nome</p>
+                        <p className="font-medium">{member.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Telefone</p>
+                        <p className="font-medium">{member.phone}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Email</p>
+                        <p className="font-medium">{member.email}</p>
+                      </div>
                     </div>
                   </div>
                   <div className="flex gap-2 ml-4">
