@@ -386,18 +386,6 @@ export default function ImovelDetails() {
                                     </p>
                                 </div>
                             )}
-                            {property.deliveryDate && (
-                                <div className="mt-4 px-4 border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">{t("expectedDelivery")}</h6>
-                                    <p className="body-16-regular text-brown">{property.deliveryDate}</p>
-                                </div>
-                            )}
-                            {property.paymentConditions && (
-                                <div className="mt-4 px-4 border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">{t("paymentConditions")}</h6>
-                                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
-                                </div>
-                            )}
                         </div>
                         <iframe
                             className="mt-6 h-75 border-0 lg:hidden block"
@@ -602,6 +590,18 @@ export default function ImovelDetails() {
                                 >
                                     {t("view")}
                                 </Button>
+                            </div>
+                        )}
+                        {property.deliveryDate && (
+                            <div className="mt-4 px-4 border-l-3 border-brown">
+                                <h6 className="body-16-medium text-brown mb-2">{t("expectedDelivery")}</h6>
+                                <p className="body-16-regular text-brown">{property.deliveryDate}</p>
+                            </div>
+                        )}
+                        {property.paymentConditions && (
+                            <div className="mt-4 px-4 border-l-3 border-brown">
+                                <h6 className="body-16-medium text-brown mb-2">{t("paymentConditions")}</h6>
+                                <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
                             </div>
                         )}
                         <iframe
