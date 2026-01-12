@@ -16,6 +16,8 @@ import { siteConfigApi, teamMembersApi, newslettersApi } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import NewsletterCard from "@/components/NewsletterCard";
+import Image from "next/image";
+import Logo from "@/public/Logo.png";
 
 export default function InstitucionalPage() {
     const t = useTranslations("SobreNos");
@@ -53,13 +55,23 @@ export default function InstitucionalPage() {
         <>
             {/* Primeira Seção - Apresentação */}
             <section className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 relative">
-                <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
-                <div className="lg:space-y-6 space-y-4">
-                    <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>
-                    <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
-                    <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{t("subtitle")}</h2>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{t("description1")}</p>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{t("description2")}</p>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div className="lg:col-span-7 lg:space-y-6 space-y-4">
+                        <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>
+                        <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
+                        <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{t("subtitle")}</h2>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full leading-relaxed">{t("description1")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full leading-relaxed">{t("description2")}</p>
+                    </div>
+                    <div className="lg:col-span-5 hidden lg:flex justify-center items-center">
+                        <Image
+                            src={Logo}
+                            alt="Agência do Douro"
+                            width={400}
+                            height={400}
+                            className="w-full max-w-[400px] h-auto"
+                        />
+                    </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12 gap-6 md:gap-8">
                     <StatCard value={siteConfig?.anosExperiencia.toString() || ""} label={t("yearsExperience")} />
