@@ -438,6 +438,18 @@
       "arrendar": "Arrendamento",
       "trespasse": "Trespasse"
     },
+    "propertyTypes": {
+      "apartamento": "Apartamento",
+      "moradia": "Moradia",
+      "terreno": "Terreno",
+      "escritório": "Escritório",
+      "loja": "Loja",
+      "armazém": "Armazém",
+      "prédio": "Prédio",
+      "quinta": "Quinta",
+      "garagem": "Garagem",
+      "cave": "Cave"
+    },
     "linkCopied": "Link copiado para a área de transferência!",
     "errorCopyingLink": "Erro ao copiar link",
     "generatingPDF": "A gerar brochura em PDF...",

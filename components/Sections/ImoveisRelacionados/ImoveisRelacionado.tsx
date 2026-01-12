@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { propertiesApi } from "@/services/api";
 import { Property } from "@/types/property";
 import Card from "../Imoveis/Card";
@@ -15,6 +16,7 @@ interface ImoveisRelacionadosProps {
 export default function ImoveisRelacionados({ currentPropertyId, currentPrice, property }: ImoveisRelacionadosProps) {
     const params = useParams();
     const locale = params.locale as string;
+    const t = useTranslations("PropertyDetails");
     // Verificar se existem relacionamentos manuais
     const hasManualRelated = property?.relatedProperties && property.relatedProperties.length > 0;
 
@@ -53,7 +55,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
         return (
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-heading-tres text-brown">Imóveis Relacionados</h2>
+                    <h2 className="text-heading-tres text-brown">{t("relatedProperties")}</h2>
                 </div>
                 <div className="pt-6">
                     <p className="text-brown/50 body-16-regular">A carregar imóveis relacionados...</p>
@@ -68,7 +70,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
 
     return (
         <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 mb-10">
-            <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">Imóveis Relacionados</h2>
+            <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("relatedProperties")}</h2>
             <div className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayProperties.map((property) => (
                     <Card

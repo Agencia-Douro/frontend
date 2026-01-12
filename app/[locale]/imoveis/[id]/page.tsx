@@ -124,6 +124,19 @@ export default function ImovelDetails() {
         trespasse: t("transactionTypes.trespasse"),
     }
 
+    const propertyTypeMap: Record<string, string> = {
+        apartamento: t("propertyTypes.apartamento"),
+        moradia: t("propertyTypes.moradia"),
+        terreno: t("propertyTypes.terreno"),
+        escritório: t("propertyTypes.escritório"),
+        loja: t("propertyTypes.loja"),
+        armazém: t("propertyTypes.armazém"),
+        prédio: t("propertyTypes.prédio"),
+        quinta: t("propertyTypes.quinta"),
+        garagem: t("propertyTypes.garagem"),
+        cave: t("propertyTypes.cave"),
+    }
+
     const handleCopyLink = async () => {
         try {
             const url = window.location.href
@@ -212,11 +225,11 @@ export default function ImovelDetails() {
                         </button>
                         <div className="hidden md:block w-px h-3 bg-brown/20"></div>
                         <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
-                            <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.transactionType}</p>
+                            <p className="body-16-medium text-brown capitalize whitespace-nowrap">{transactionTypeMap[property.transactionType] || property.transactionType}</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                             </svg>
-                            <p className="body-16-medium text-brown capitalize whitespace-nowrap">{property.propertyType}</p>
+                            <p className="body-16-medium text-brown capitalize whitespace-nowrap">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                             </svg>
@@ -345,7 +358,7 @@ export default function ImovelDetails() {
                     <div className="flex items-center gap-4 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto">
                         <span>{property.concelho}, {property.distrito}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
-                        <span className="capitalize">{property.propertyType}</span>
+                        <span className="capitalize">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
                         <p><span className="text-brown/50">#</span>{property.reference}</p>
                     </div>
@@ -683,20 +696,20 @@ export default function ImovelDetails() {
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
                                     <div className="space-y-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="nome-desktop" className="body-14-medium text-black">Nome <span className="text-red body-14-medium">*</span></Label>
+                                            <Label htmlFor="nome-desktop" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome-desktop"
-                                                placeholder="Tomas Ribeiro Silva"
+                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="telefone-desktop" className="body-14-medium text-black">Número de Telemóvel <span className="text-red body-14-medium">*</span></Label>
+                                            <Label htmlFor="telefone-desktop" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="telefone-desktop"
-                                                placeholder="+351 919 766 323"
+                                                placeholder={t("phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -705,11 +718,11 @@ export default function ImovelDetails() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="email-desktop" className="body-14-medium text-black">Email <span className="text-red body-14-medium">*</span></Label>
+                                        <Label htmlFor="email-desktop" className="body-14-medium text-black">{t("email")} <span className="text-red body-14-medium">*</span></Label>
                                         <Input
                                             id="email-desktop"
                                             type="email"
-                                            placeholder="contacto@agenciadouro.pt"
+                                            placeholder={t("emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -717,10 +730,10 @@ export default function ImovelDetails() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="mensagem-desktop" className="body-14-medium text-black">Mensagem <span className="text-red body-14-medium">*</span></Label>
+                                        <Label htmlFor="mensagem-desktop" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                                         <Textarea
                                             id="mensagem-desktop"
-                                            placeholder="Envie-nos uma mensagem!"
+                                            placeholder={t("messagePlaceholder")}
                                             value={formData.mensagem}
                                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
@@ -734,7 +747,7 @@ export default function ImovelDetails() {
                                             checked={formData.aceitaMarketing}
                                             onCheckedChange={(checked) => setFormData({ ...formData, aceitaMarketing: checked as boolean })}
                                         />
-                                        <label htmlFor="marketing-desktop" className="body-14-medium text-black-muted cursor-pointer">Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.</label>
+                                        <label htmlFor="marketing-desktop" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")}</label>
                                     </div>
 
                                     <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>

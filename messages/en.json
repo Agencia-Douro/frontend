@@ -438,6 +438,18 @@
       "arrendar": "Rent",
       "trespasse": "Business Transfer"
     },
+    "propertyTypes": {
+      "apartamento": "Apartment",
+      "moradia": "House",
+      "terreno": "Land",
+      "escritório": "Office",
+      "loja": "Shop",
+      "armazém": "Warehouse",
+      "prédio": "Building",
+      "quinta": "Farm",
+      "garagem": "Garage",
+      "cave": "Cellar"
+    },
     "linkCopied": "Link copied to clipboard!",
     "errorCopyingLink": "Error copying link",
     "generatingPDF": "Generating PDF brochure...",
