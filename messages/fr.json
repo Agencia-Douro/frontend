@@ -10,7 +10,7 @@
     "typology": "Typologie",
     "select": "Sélectionner",
     "search": "Rechercher",
-    "searchPlaceholder": "Rechercher par titre, localisation, référence...",
+    "searchPlaceholder": "Louer t3 à Porto",
     "noResults": "Aucun résultat trouvé"
   },
   "ZonasMaisDesejadas": {
@@ -168,9 +168,9 @@
   },
   "Podcast": {
     "exclusiveContent": "Contenu exclusif",
-    "title": "Podcast Agência Douro",
+    "title": "Podcast Norte Imobiliário e Business",
     "subtitle": "Conversations sur le marché immobilier de luxe au Portugal",
-    "description": "Un podcast dédié à la discussion des tendances, défis et opportunités du marché immobilier de luxe au Portugal, avec la participation d'experts et de professionnels du secteur. Le Podcast Agência Douro offre des informations pratiques et du contenu inspirant pour les investisseurs, les courtiers et les personnes intéressées par l'immobilier et les affaires, étant une source fiable d'information sur le secteur portugais.",
+    "description": "Un podcast dédié à la discussion des tendances, défis et opportunités du marché immobilier de luxe au Portugal, avec la participation d'experts et de professionnels du secteur. Le Podcast Norte Imobiliário e Business offre des informations pratiques et du contenu inspirant pour les investisseurs, les courtiers et les personnes intéressées par l'immobilier et les affaires, étant une source fiable d'information sur le secteur portugais.",
     "episodes": "Épisodes",
     "seasons": "Saisons",
     "guests": "Invités",

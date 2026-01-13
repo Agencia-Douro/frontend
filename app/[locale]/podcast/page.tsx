@@ -75,13 +75,12 @@ export default function PodcastPage() {
             {/* Primeira Seção - Apresentação do Podcast */}
             <section className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 relative">
                 <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
+                <Image src={logoPodcast} alt={t("logoAlt")} width={200} height={90} className="absolute lg:top-42 xl:top-48 right-0 size-26 lg:size-48" />
                 <div className="lg:space-y-6 space-y-4">
-                    <div><span className="body-14-medium text-brown uppercase tracking-wider">{t("exclusiveContent")}</span></div>
+                    <div className="body-14-medium text-gold uppercase tracking-wider">{t("exclusiveContent")}</div>
                     <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
                     <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{t("subtitle")}</h2>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
-                        {t("description")}
-                    </p>
+                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{t("description")}</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     <div className="hidden md:block">
@@ -128,11 +127,6 @@ export default function PodcastPage() {
                     </div>
                 )}
             </section>
-
-            <div className="hidden lg:flex justify-center mt-20">
-                <Image src={logoPodcast} alt={t("logoAlt")} width={200} height={90} className="hidden lg:block " />
-            </div>
-
 
             <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
 

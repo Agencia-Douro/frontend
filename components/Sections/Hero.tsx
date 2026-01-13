@@ -126,7 +126,7 @@ export function Hero() {
   return (
     <section className="relative">
       {/* Hero com Carousel de Imagens */}
-      <div className="relative w-full h-[65vh] md:h-[72vh] lg:h-[85vh] overflow-hidden">
+      <div className="relative w-full h-dvh overflow-hidden">
         {heroImages.map((image, index) => (
           <motion.div
             key={index}
@@ -192,13 +192,13 @@ export function Hero() {
         </div>
 
         {/* Conteúdo sobre a imagem */}
-        <div className="absolute inset-0 flex items-center">
-          <div className="container px-4">
-            <div className="max-w-6xl mx-auto">
+        <div className="absolute inset-0 flex items-center justify-center py-16 md:py-20 lg:py-24">
+          <div className="container px-4 w-full">
+            <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
               {/* Título alinhado à esquerda */}
               <motion.h1
-                className="text-deaf leading-tight heading-tres-regular md:heading-dois-medium lg:heading-dois-medium 
-             drop-shadow-lg mt-32 md:mt-0 lg:mt-0 mb-4 md:mb-8 lg:mb-10 text-center"
+                className="text-deaf leading-tight heading-quatro-medium md:heading-tres-regular lg:heading-dois-medium 
+             drop-shadow-lg mb-6 md:mb-8 lg:mb-10 text-center text-balance md:px-8 max-w-full px-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -215,7 +215,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
               >
-                <div className="hidden md:flex justify-between items-center w-full border-b border-brown/10">
+                <div className="flex justify-between items-center w-full border-b border-brown/10">
                   <div className="flex flex-row w-full gap-0 overflow-x-auto">
                     <Button
                       type="button"
@@ -243,15 +243,16 @@ export function Hero() {
                     </Button>
                   </div>
                 </div>
-                <div className="p-4 md:p-6 lg:p-8 bg-deaf">
-                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-end">
-                    {/* Campo de pesquisa com autocomplete */}
+                <div className="p-6 md:p-6 lg:p-8 bg-deaf">
+                  {/* Layout Mobile */}
+                  <div className="flex flex-col gap-4 lg:hidden">
+                    {/* Campo de pesquisa */}
                     <div className="relative w-full" ref={searchRef}>
                       <div className="flex flex-col gap-1">
-                        <Label htmlFor="search">{t("search")}</Label>
+                        <Label htmlFor="search-mobile">{t("search")}</Label>
                         <div className="relative">
                           <input
-                            id="search"
+                            id="search-mobile"
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -321,11 +322,11 @@ export function Hero() {
                       )}
                     </div>
 
-                    {/* Filtros */}
-                    <div className="hidden md:flex flex-col gap-1 w-full">
-                      <Label htmlFor="localizacao">{t("location")}</Label>
+                    {/* Localização */}
+                    <div className="flex flex-col gap-1 w-full">
+                      <Label htmlFor="localizacao-mobile">{t("location")}</Label>
                       <Select value={localizacao} onValueChange={setLocalizacao}>
-                        <SelectTrigger id="localizacao" name="localizacao">
+                        <SelectTrigger id="localizacao-mobile" name="localizacao">
                           <SelectValue placeholder={t("select")} />
                         </SelectTrigger>
                         <SelectContent>
@@ -337,10 +338,142 @@ export function Hero() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="hidden md:flex flex-col gap-1 w-full">
-                      <Label htmlFor="tipo">{t("type")}</Label>
+
+                    {/* Tipo e Tipologia - Horizontal */}
+                    <div className="flex flex-row gap-3 w-full">
+                      <div className="flex flex-col gap-1 flex-1">
+                        <Label htmlFor="tipo-mobile">{t("type")}</Label>
+                        <Select value={tipo} onValueChange={setTipo}>
+                          <SelectTrigger id="tipo-mobile" name="tipo">
+                            <SelectValue placeholder={t("select")} />
+                          </SelectTrigger>
+                          <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                            {TIPOS_IMOVEL.map((tipo) => (
+                              <SelectItem key={tipo.value} value={tipo.value}>
+                                {tipo.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex flex-col gap-1 flex-1">
+                        <Label htmlFor="tipologia-mobile">{t("typology")}</Label>
+                        <Select value={tipologia} onValueChange={setTipologia}>
+                          <SelectTrigger id="tipologia-mobile" name="tipologia">
+                            <SelectValue placeholder={t("select")} />
+                          </SelectTrigger>
+                          <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                            <SelectItem value="0">T0</SelectItem>
+                            <SelectItem value="1">T1</SelectItem>
+                            <SelectItem value="2">T2</SelectItem>
+                            <SelectItem value="3">T3</SelectItem>
+                            <SelectItem value="4">T4</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Layout Desktop */}
+                  <div className="hidden lg:flex lg:flex-row gap-3 items-end">
+                    {/* Campo de pesquisa */}
+                    <div className="relative flex-1" ref={searchRef}>
+                      <div className="flex flex-col gap-1">
+                        <Label htmlFor="search-desktop">{t("search")}</Label>
+                        <div className="relative">
+                          <input
+                            id="search-desktop"
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onFocus={() => {
+                              if (searchResults.length > 0) setShowResults(true);
+                            }}
+                            placeholder={t("searchPlaceholder")}
+                            className="w-full body-14-medium py-2 px-0 text-black-muted border-b border-b-gold placeholder:text-black-muted focus:outline-none focus:border-b-brown"
+                          />
+                          {isSearching && (
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2">
+                              <div className="w-4 h-4 border-2 border-brown border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Resultados do autocomplete */}
+                      {showResults && searchResults.length > 0 && (
+                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg max-h-96 overflow-y-auto">
+                          {searchResults.map((property) => (
+                            <button
+                              key={property.id}
+                              onClick={() => handlePropertyClick(property.id)}
+                              className="w-full p-3 hover:bg-muted transition-colors text-left border-b last:border-b-0 flex gap-3"
+                            >
+                              {property.image && (
+                                <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
+                                  <Image
+                                    src={property.image}
+                                    alt={property.title}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <h4 className="body-14-medium truncate">{property.title}</h4>
+                                <p className="text-xs text-grey truncate">
+                                  {property.concelho}, {property.distrito}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="body-14-medium text-brown">
+                                    €{property.price.toLocaleString()}
+                                  </span>
+                                  {property.bedrooms > 0 && (
+                                    <span className="text-xs text-grey">
+                                      T{property.bedrooms}
+                                    </span>
+                                  )}
+                                  {property.usefulArea && (
+                                    <span className="text-xs text-grey">
+                                      {property.usefulArea}m²
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      {showResults && searchQuery.trim().length >= 2 && searchResults.length === 0 && !isSearching && (
+                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg p-4 text-center text-grey body-14-regular">
+                          {t("noResults")}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Localização */}
+                    <div className="flex flex-col gap-1 flex-1">
+                      <Label htmlFor="localizacao-desktop">{t("location")}</Label>
+                      <Select value={localizacao} onValueChange={setLocalizacao}>
+                        <SelectTrigger id="localizacao-desktop" name="localizacao">
+                          <SelectValue placeholder={t("select")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {DISTRITOS.map((distrito) => (
+                            <SelectItem key={distrito} value={distrito}>
+                              {distrito}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Tipo */}
+                    <div className="flex flex-col gap-1 flex-1">
+                      <Label htmlFor="tipo-desktop">{t("type")}</Label>
                       <Select value={tipo} onValueChange={setTipo}>
-                        <SelectTrigger id="tipo" name="tipo">
+                        <SelectTrigger id="tipo-desktop" name="tipo">
                           <SelectValue placeholder={t("select")} />
                         </SelectTrigger>
                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
@@ -352,10 +485,12 @@ export function Hero() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="hidden md:flex flex-col gap-1 w-full">
-                      <Label htmlFor="tipologia">{t("typology")}</Label>
+
+                    {/* Tipologia */}
+                    <div className="flex flex-col gap-1 flex-1">
+                      <Label htmlFor="tipologia-desktop">{t("typology")}</Label>
                       <Select value={tipologia} onValueChange={setTipologia}>
-                        <SelectTrigger id="tipologia" name="tipologia">
+                        <SelectTrigger id="tipologia-desktop" name="tipologia">
                           <SelectValue placeholder={t("select")} />
                         </SelectTrigger>
                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
@@ -367,8 +502,6 @@ export function Hero() {
                         </SelectContent>
                       </Select>
                     </div>
-
-
                   </div>
                 </div>
                 {/* Botão Pesquisar */}

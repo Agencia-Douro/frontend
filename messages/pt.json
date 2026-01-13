@@ -10,7 +10,7 @@
     "typology": "Tipologia",
     "select": "Selecione",
     "search": "Pesquisar",
-    "searchPlaceholder": "Pesquisar por título, localização, referência...",
+    "searchPlaceholder": "Alugar t3 no porto",
     "noResults": "Nenhum resultado encontrado"
   },
   "ZonasMaisDesejadas": {
@@ -168,9 +168,9 @@
   },
   "Podcast": {
     "exclusiveContent": "Conteúdo Exclusivo",
-    "title": "Podcast Agência Douro",
+    "title": "Podcast Norte Imobiliário e Business",
     "subtitle": "Conversas sobre o Mercado Imobiliário de Luxo em Portugal",
-    "description": "Um podcast dedicado a discutir tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal, com a participação de especialistas e profissionais do setor. O Podcast Agência Douro oferece insights práticos e conteúdos inspiradores para investidores, corretores e interessados no mercado imobiliário e nos negócios, sendo uma fonte confiável de informação sobre o setor português.",
+    "description": "Um podcast dedicado a discutir tendências, desafios e oportunidades do mercado imobiliário de luxo em Portugal, com a participação de especialistas e profissionais do setor. O Podcast Norte Imobiliário e Business oferece insights práticos e conteúdos inspiradores para investidores, corretores e interessados no mercado imobiliário e nos negócios, sendo uma fonte confiável de informação sobre o setor português.",
     "episodes": "Episódios",
     "seasons": "Temporadas",
     "guests": "Convidados",

@@ -10,7 +10,7 @@
     "typology": "Typology",
     "select": "Select",
     "search": "Search",
-    "searchPlaceholder": "Search by title, location, reference...",
+    "searchPlaceholder": "Rent t3 in Porto",
     "noResults": "No results found"
   },
   "ZonasMaisDesejadas": {
@@ -168,9 +168,9 @@
   },
   "Podcast": {
     "exclusiveContent": "Exclusive Content",
-    "title": "Agência Douro Podcast",
+    "title": "Podcast Norte Imobiliário e Business",
     "subtitle": "Conversations about the Luxury Real Estate Market in Portugal",
-    "description": "A podcast dedicated to discussing trends, challenges and opportunities in Portugal's luxury real estate market, with the participation of experts and professionals in the sector. The Agência Douro Podcast offers practical insights and inspiring content for investors, brokers and those interested in real estate and business, being a reliable source of information about the Portuguese sector.",
+    "description": "A podcast dedicated to discussing trends, challenges and opportunities in Portugal's luxury real estate market, with the participation of experts and professionals in the sector. The Podcast Norte Imobiliário e Business offers practical insights and inspiring content for investors, brokers and those interested in real estate and business, being a reliable source of information about the Portuguese sector.",
     "episodes": "Episodes",
     "seasons": "Seasons",
     "guests": "Guests",

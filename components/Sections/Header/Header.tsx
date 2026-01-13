@@ -171,7 +171,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-end justify-between py-8 pr-6 gap-3 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden"
+                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto pb-24"
                             >
                                 <motion.div
                                     initial="closed"
@@ -190,7 +190,7 @@ export default function Header() {
                                             },
                                         },
                                     }}
-                                    className="flex flex-col items-end gap-4 w-full justify-between h-full"
+                                    className="flex flex-col items-start gap-4 w-full justify-between h-full"
                                 >
                                     {[
                                         { href: "/", label: t("home") },
@@ -211,7 +211,7 @@ export default function Header() {
                                                 },
                                                 closed: {
                                                     opacity: 0,
-                                                    x: 40,
+                                                    x: -40,
                                                     filter: "blur(10px)",
                                                 },
                                             }}
@@ -223,7 +223,7 @@ export default function Header() {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className="heading-quatro-medium font-heading text-brown hover:text-gold transition-colors px-2 block relative group text-right"
+                                                className="heading-cinco-regular font-heading text-brown hover:text-gold transition-colors px-2 block relative group text-left"
                                                 onClick={() => setMobileMenuOpen(false)}
                                             >
                                                 <span className="relative z-10">{item.label}</span>

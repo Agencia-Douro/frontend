@@ -84,6 +84,9 @@
 
     --text-heading-quatro: 2rem;
     --text-heading-quatro--line-height: 2.5rem;
+
+    --text-heading-cinco: 1.5rem;
+    --text-heading-cinco--line-height: 2rem;
     
 }
 
@@ -205,6 +208,20 @@
     font-family: var(--font-heading);
     font-size: var(--text-heading-quatro);
     line-height: var(--text-heading-quatro--line-height);
+    font-weight: var(--font-medium);
+}
+
+@utility heading-cinco-regular {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-cinco);
+    line-height: var(--text-heading-cinco--line-height);
+    font-weight: var(--font-regular);
+}
+
+@utility heading-cinco-medium {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-cinco);
+    line-height: var(--text-heading-cinco--line-height);
     font-weight: var(--font-medium);
 }
 
