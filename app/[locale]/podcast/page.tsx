@@ -76,7 +76,7 @@ export default function PodcastPage() {
             <section className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 relative">
                 <Folha className="lg:top-42 xl:top-48 right-0 text-brown rotate-338" />
                 <div className="lg:space-y-6 space-y-4">
-                    <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("exclusiveContent")}</span></div>
+                    <div><span className="body-14-medium text-brown uppercase tracking-wider">{t("exclusiveContent")}</span></div>
                     <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
                     <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{t("subtitle")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">
@@ -100,7 +100,7 @@ export default function PodcastPage() {
             {/* Segunda Seção - O Que Abordamos */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">{t("themesAndInsights")}</span>
+                    <span className="button-14-medium text-brown">{t("themesAndInsights")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{t("whatWeCover")}</h2>
                 </div>
                 {topicsLoading ? (
@@ -140,7 +140,7 @@ export default function PodcastPage() {
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
                 <div className="lg:space-y-6 space-y-4 mb-6 md:mb-8 lg:mb-10 xl:mb-12">
                     <div>
-                        <span className="button-14-medium text-gold">{t("watchNow")}</span>
+                        <span className="button-14-medium text-brown">{t("watchNow")}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{t("featuredEpisodes")}</h2>
                     </div>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
@@ -174,7 +174,7 @@ export default function PodcastPage() {
                                 </div>
                                 <div className="mt-3">
                                     <div className="flex items-center gap-2 mb-1">
-                                        <span className="text-xs text-gold font-medium">{t("episode")} {index + 1}</span>
+                                        <span className="text-xs text-brown font-medium">{t("episode")} {index + 1}</span>
                                     </div>
                                     <h3 className="body-16-medium md:body-18-medium text-black group-hover:text-brown transition-colors">
                                         {episode.title}
