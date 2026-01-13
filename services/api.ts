@@ -122,6 +122,7 @@ export const propertiesApi = {
     formData.append("hasLaundry", data.hasLaundry.toString());
     formData.append("distrito", data.distrito);
     formData.append("concelho", data.concelho);
+    if (data.freguesia) formData.append("freguesia", data.freguesia);
     formData.append("status", data.status);
 
     // Campos opcionais - State e Energy
@@ -202,6 +203,7 @@ export const propertiesApi = {
     formData.append("hasLaundry", data.hasLaundry.toString());
     formData.append("distrito", data.distrito);
     formData.append("concelho", data.concelho);
+    if (data.freguesia) formData.append("freguesia", data.freguesia);
     formData.append("status", data.status);
 
     // Campos opcionais - State e Energy
