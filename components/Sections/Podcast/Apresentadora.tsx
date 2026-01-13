@@ -64,11 +64,12 @@ export function Apresentadora() {
                 {/* Lado Direito - Imagem */}
                 <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 aspect-4/5 lg:aspect-3/4 xl:aspect-4/5 overflow-hidden bg-muted">
                     <Image
-                        src={VaniaPodcast}
+                        src={siteConfig?.apresentadoraImage || VaniaPodcast}
                         alt={t("imageAlt")}
                         fill
                         className="object-cover"
                         priority
+                        unoptimized={!!siteConfig?.apresentadoraImage}
                     />
                 </div>
             </div>

@@ -15,7 +15,8 @@
       "WebFetch(domain:www.youtube.com)",
       "Bash(curl:*)",
       "WebFetch(domain:www.sothebysrealtypt.com)",
-      "Bash(head:*)"
+      "Bash(head:*)",
+      "Bash(git diff:*)"
     ],
     "deny": [],
     "ask": []

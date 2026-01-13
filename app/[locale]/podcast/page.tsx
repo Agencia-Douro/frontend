@@ -8,7 +8,8 @@ import { StatCard } from "@/components/Sections/SobreNos/StatCard";
 import { CulturaCard } from "@/components/Sections/SobreNos/CulturaCard";
 import Folha from "@/components/Folha";
 import { useQuery } from "@tanstack/react-query";
-import { siteConfigApi } from "@/services/api";
+import { siteConfigApi, podcastTopicsApi } from "@/services/api";
+import { useParams } from "next/navigation";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import logoPodcast from "@/public/logoPodcast.jpg";
@@ -56,9 +57,17 @@ const FEATURED_EPISODES = [
 
 export default function PodcastPage() {
     const t = useTranslations("Podcast");
+    const params = useParams();
+    const locale = params.locale as string;
+
     const { data: config } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
+    })
+
+    const { data: topics, isLoading: topicsLoading } = useQuery({
+        queryKey: ["podcast-topics"],
+        queryFn: () => podcastTopicsApi.getAll(),
     })
 
     return (
@@ -94,32 +103,30 @@ export default function PodcastPage() {
                     <span className="button-14-medium text-gold">{t("themesAndInsights")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{t("whatWeCover")}</h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <CulturaCard
-                        title={t("topics.marketTrends.title")}
-                        description={t("topics.marketTrends.description")}
-                    />
-                    {/* <CulturaCard
-                        title="Histórias de Sucesso"
-                        description="Convidados partilham as suas experiências, desafios e conquistas no setor imobiliário português."
-                    /> */}
-                    <CulturaCard
-                        title={t("topics.investmentTips.title")}
-                        description={t("topics.investmentTips.description")}
-                    />
-                    {/* <CulturaCard
-                        title="Legislação e Processos"
-                        description="Informações claras sobre aspectos legais, fiscais e burocráticos relacionados à compra e venda de imóveis."
-                    /> */}
-                    {/* <CulturaCard
-                        title="Lifestyle & Design"
-                        description="Discussões sobre arquitetura, design de interiores e o estilo de vida associado a imóveis de luxo."
-                    /> */}
-                    <CulturaCard
-                        title={t("topics.internationalVision.title")}
-                        description={t("topics.internationalVision.description")}
-                    />
-                </div>
+                {topicsLoading ? (
+                    <div className="text-center py-10">
+                        <p className="text-gray-500">A carregar tópicos...</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                        {topics?.map((topic) => {
+                            const title = locale === 'en' ? (topic.title_en || topic.title_pt) :
+                                         locale === 'fr' ? (topic.title_fr || topic.title_pt) :
+                                         topic.title_pt;
+                            const description = locale === 'en' ? (topic.description_en || topic.description_pt) :
+                                               locale === 'fr' ? (topic.description_fr || topic.description_pt) :
+                                               topic.description_pt;
+
+                            return (
+                                <CulturaCard
+                                    key={topic.id}
+                                    title={title}
+                                    description={description}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
             </section>
 
             <div className="hidden lg:flex justify-center mt-20">

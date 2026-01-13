@@ -815,6 +815,7 @@ export interface SiteConfig {
   temporadas?: number;
   especialistasConvidados?: number;
   eurosEmTransacoes?: number;
+  apresentadoraImage?: string;
 }
 
 export const siteConfigApi = {
@@ -828,14 +829,39 @@ export const siteConfigApi = {
     return response.json();
   },
 
-  update: async (data: SiteConfig): Promise<SiteConfig> => {
-    console.log(data);
+  update: async (
+    data: SiteConfig,
+    apresentadoraImageFile?: File
+  ): Promise<SiteConfig> => {
+    const formData = new FormData();
+
+    // Adicionar todos os campos numéricos
+    formData.append("clientesSatisfeitos", data.clientesSatisfeitos.toString());
+    formData.append("rating", data.rating.toString());
+    formData.append("anosExperiencia", data.anosExperiencia.toString());
+    formData.append("imoveisVendidos", data.imoveisVendidos.toString());
+
+    if (data.episodiosPublicados !== undefined) {
+      formData.append("episodiosPublicados", data.episodiosPublicados.toString());
+    }
+    if (data.temporadas !== undefined) {
+      formData.append("temporadas", data.temporadas.toString());
+    }
+    if (data.especialistasConvidados !== undefined) {
+      formData.append("especialistasConvidados", data.especialistasConvidados.toString());
+    }
+    if (data.eurosEmTransacoes !== undefined) {
+      formData.append("eurosEmTransacoes", data.eurosEmTransacoes.toString());
+    }
+
+    // Adicionar imagem se fornecida
+    if (apresentadoraImageFile) {
+      formData.append("apresentadoraImage", apresentadoraImageFile);
+    }
+
     const response = await fetch(`${API_BASE_URL}/site-config`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -1085,6 +1111,106 @@ export const desiredZonesApi = {
       const errorMessage =
         errorData.message ||
         `Erro ao deletar zona desejada (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+export interface PodcastTopic {
+  id: string;
+  title_pt: string;
+  title_en?: string;
+  title_fr?: string;
+  description_pt: string;
+  description_en?: string;
+  description_fr?: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const podcastTopicsApi = {
+  getAll: async (): Promise<PodcastTopic[]> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-topics`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar tópicos do podcast");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<PodcastTopic> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-topics/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar tópico do podcast");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    title_pt: string;
+    description_pt: string;
+    order?: number;
+  }): Promise<PodcastTopic> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-topics`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao criar tópico do podcast (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      title_pt?: string;
+      description_pt?: string;
+      order?: number;
+    }
+  ): Promise<PodcastTopic> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-topics/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar tópico do podcast (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-topics/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao deletar tópico do podcast (${response.status})`;
       throw new Error(errorMessage);
     }
   },

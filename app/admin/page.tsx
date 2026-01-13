@@ -37,6 +37,16 @@ export default function AdminPage() {
                             </CardHeader>
                         </Card>
                     </Link>
+                    <Link href="/admin/podcast-topics" className="h-full">
+                        <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                            <CardHeader>
+                                <CardTitle className="body-16-medium">Tópicos do Podcast</CardTitle>
+                                <CardDescription>
+                                    Gerencie os tópicos e a apresentadora do podcast
+                                </CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
                 </div>
             </div>
         </div>
