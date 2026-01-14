@@ -4,19 +4,21 @@ import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { propertiesApi, PropertyFilters } from "@/services/api"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import ImovelCard from "@/components/Sections/Imoveis/Card"
-import { Plus, Search, SlidersHorizontal, X } from "lucide-react"
+import { Plus, Search, SlidersHorizontal, X, FileEdit, Trash2, Clock, Image as ImageIcon } from "lucide-react"
 import {
   Collapsible,
   CollapsibleContent,
 } from "@/components/ui/collapsible"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { usePropertyDrafts, getTimeAgo } from "@/hooks/usePropertyDraft"
+import { toast } from "sonner"
 
 export default function PropertiesPage() {
   const router = useRouter()
@@ -27,6 +29,9 @@ export default function PropertiesPage() {
     limit: 9,
     sortBy: "-createdAt",
   })
+
+  // Hook de rascunhos
+  const { drafts, deleteDraft, deleteAllDrafts } = usePropertyDrafts()
 
   // Debounce search input
   useEffect(() => {
@@ -110,6 +115,103 @@ export default function PropertiesPage() {
           Nova Propriedade
         </Button>
       </div>
+
+      {/* Seção de Rascunhos */}
+      {drafts.length > 0 && (
+        <Card className="mb-6 border-amber-200 bg-amber-50/50">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FileEdit className="h-5 w-5 text-amber-600" />
+                <CardTitle className="text-lg">Rascunhos ({drafts.length})</CardTitle>
+              </div>
+              {drafts.length > 1 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    if (confirm("Tem certeza que deseja limpar todos os rascunhos?")) {
+                      deleteAllDrafts()
+                      toast.success("Todos os rascunhos foram removidos")
+                    }
+                  }}
+                  className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"
+                >
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  Limpar todos
+                </Button>
+              )}
+            </div>
+            <CardDescription>
+              Continue de onde parou ou limpe os rascunhos que não precisa mais
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {drafts.map((draft) => (
+                <div
+                  key={draft.id}
+                  className="flex items-center justify-between p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-300 transition-colors"
+                >
+                  <div className="flex-1 min-w-0 mr-3">
+                    <p className="font-medium text-sm truncate">
+                      {draft.title || "Sem título"}
+                    </p>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                      {draft.propertyType && (
+                        <span className="capitalize">{draft.propertyType}</span>
+                      )}
+                      {draft.concelho && draft.distrito && (
+                        <span>• {draft.concelho}, {draft.distrito}</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-amber-600 mt-1">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        <span>{getTimeAgo(new Date(draft.savedAt))}</span>
+                      </div>
+                      {(draft.hasMainImage || Object.keys(draft.sectionImageCounts || {}).length > 0) && (
+                        <div className="flex items-center gap-1 text-green-600">
+                          <ImageIcon className="h-3 w-3" />
+                          <span>
+                            {draft.hasMainImage ? "1" : "0"}
+                            {Object.values(draft.sectionImageCounts || {}).reduce((a, b) => a + b, 0) > 0 &&
+                              `+${Object.values(draft.sectionImageCounts || {}).reduce((a, b) => a + b, 0)}`
+                            } mídia(s)
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => router.push(`/admin/properties/create?draft=${draft.id}`)}
+                      className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"
+                    >
+                      Continuar
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => {
+                        if (confirm("Remover este rascunho?")) {
+                          deleteDraft(draft.id)
+                          toast.success("Rascunho removido")
+                        }
+                      }}
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Barra de Busca e Filtros */}
       <div className="mb-6 space-y-4">

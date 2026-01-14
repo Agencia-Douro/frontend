@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
@@ -14,6 +15,8 @@ interface RichTextEditorProps {
 }
 
 export function RichTextEditor({ value, onChange, placeholder, className }: RichTextEditorProps) {
+  const isUpdatingRef = useRef(false)
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -28,7 +31,9 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
     content: value,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
+      if (!isUpdatingRef.current) {
+        onChange(editor.getHTML())
+      }
     },
     editorProps: {
       attributes: {
@@ -44,6 +49,15 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
       },
     },
   })
+
+  // Atualiza o conteúdo do editor quando o value muda externamente
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      isUpdatingRef.current = true
+      editor.commands.setContent(value, false)
+      isUpdatingRef.current = false
+    }
+  }, [editor, value])
 
   if (!editor) {
     return null

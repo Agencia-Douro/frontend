@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { propertiesApi, propertyFilesApi, propertyRelationshipsApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
@@ -8,10 +8,15 @@ import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import PropertyForm from "@/components/PropertyForm"
 import { Property } from "@/types/property"
+import { Suspense } from "react"
 
-export default function CreatePropertyPage() {
+function CreatePropertyContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const queryClient = useQueryClient()
+
+  // Pega o ID do rascunho da URL se existir
+  const draftId = searchParams.get("draft")
 
   const createMutation = useMutation({
     mutationFn: ({ data, images }: { data: any; images: File[] }) =>
@@ -115,6 +120,7 @@ export default function CreatePropertyPage() {
       </div>
 
       <PropertyForm
+        draftId={draftId}
         onSubmit={handleSubmit}
         isLoading={createMutation.isPending}
         submitButtonText="Criar Propriedade"
@@ -122,5 +128,13 @@ export default function CreatePropertyPage() {
         onCancel={() => router.push("/admin/properties")}
       />
     </div>
+  )
+}
+
+export default function CreatePropertyPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto p-6">Carregando...</div>}>
+      <CreatePropertyContent />
+    </Suspense>
   )
 }

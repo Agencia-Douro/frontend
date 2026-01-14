@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { X, Plus, Trash2 } from "lucide-react"
+import { X, Plus, Trash2, Save } from "lucide-react"
 import { Property, PropertyImageSection } from "@/types/property"
 import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
 import { toast } from "sonner"
@@ -18,9 +18,11 @@ import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { FileManagement } from "@/components/FileManagement"
 import { PropertyRelationships } from "@/components/PropertyRelationships"
+import { usePropertyDraft } from "@/hooks/usePropertyDraft"
 
 interface PropertyFormProps {
   initialData?: Property | null
+  draftId?: string | null
   onSubmit: (
     data: any,
     images: File[],
@@ -47,6 +49,7 @@ const isVideoUrl = (url: string): boolean => {
 
 export default function PropertyForm({
   initialData,
+  draftId,
   onSubmit,
   isLoading = false,
   submitButtonText = "Salvar",
@@ -113,6 +116,109 @@ export default function PropertyForm({
   // Estados para team members
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [isLoadingTeamMembers, setIsLoadingTeamMembers] = useState(false)
+
+  // Hook de rascunho (apenas no modo de criação)
+  const {
+    currentDraftId,
+    loadDraft,
+    loadDraftFiles,
+    saveDraft,
+    deleteDraft: clearDraft,
+  } = usePropertyDraft(draftId)
+
+  const [draftLoaded, setDraftLoaded] = useState(false)
+
+  // Carregar rascunho se tiver draftId
+  useEffect(() => {
+    if (draftId && !isEditMode && !draftLoaded) {
+      const draft = loadDraft(draftId)
+      if (draft && draft.formData) {
+        console.log("Restaurando rascunho:", draft.formData) // Debug
+
+        // Restaura todos os dados do formulário de uma vez
+        setFormData(prev => ({
+          ...prev,
+          ...draft.formData
+        }))
+        setPendingRelated(draft.pendingRelated || [])
+
+        // Carrega arquivos do IndexedDB
+        loadDraftFiles(draftId).then((draftFiles) => {
+          // Restaura imagem principal
+          if (draftFiles.mainImage) {
+            setSelectedImage(draftFiles.mainImage)
+          }
+
+          // Restaura seções com suas imagens
+          const restoredSections = draft.newSections?.map((s: any, idx: number) => ({
+            sectionName: s.sectionName,
+            displayOrder: s.displayOrder,
+            images: draftFiles.sectionImages.get(idx) || []
+          })) || []
+
+          setNewSections(restoredSections)
+        })
+      }
+      setDraftLoaded(true)
+    }
+  }, [draftId, isEditMode, draftLoaded, loadDraft, loadDraftFiles])
+
+  // Auto-save do rascunho quando formData muda (apenas no modo de criação)
+  useEffect(() => {
+    if (!isEditMode && formData.title) {
+      // Só salva se tiver pelo menos um título
+      saveDraft(formData, newSections, pendingRelated, currentDraftId, selectedImage)
+    }
+  }, [formData, newSections, pendingRelated, isEditMode, saveDraft, currentDraftId, selectedImage])
+
+  // Salvar rascunho imediatamente ao sair da página (beforeunload)
+  useEffect(() => {
+    if (isEditMode) return
+
+    const handleBeforeUnload = () => {
+      if (formData.title) {
+        // Salva imediatamente no localStorage (síncrono)
+        try {
+          const saved = localStorage.getItem("property-drafts")
+          let drafts = saved ? JSON.parse(saved) : []
+          const id = currentDraftId || Date.now().toString(36) + Math.random().toString(36).slice(2)
+
+          const draft = {
+            id,
+            formData,
+            newSections: newSections.map((s) => ({
+              sectionName: s.sectionName,
+              displayOrder: s.displayOrder,
+              imageCount: s.images?.length || 0,
+            })),
+            pendingRelated,
+            savedAt: new Date().toISOString(),
+            title: formData.title || "Sem título",
+            propertyType: formData.propertyType || "",
+            distrito: formData.distrito || "",
+            concelho: formData.concelho || "",
+            price: formData.price || "0",
+            hasMainImage: !!selectedImage,
+            sectionImageCounts: {},
+          }
+
+          const existingIndex = drafts.findIndex((d: any) => d.id === id)
+          if (existingIndex >= 0) {
+            drafts[existingIndex] = draft
+          } else {
+            drafts.push(draft)
+          }
+
+          localStorage.setItem("property-drafts", JSON.stringify(drafts))
+        } catch (e) {
+          console.error("Erro ao salvar rascunho antes de sair:", e)
+        }
+      }
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
+  }, [isEditMode, formData, newSections, pendingRelated, currentDraftId, selectedImage])
 
   // Get municipios based on selected distrito
   const municipios = formData.distrito ? DISTRITO_MUNICIPIOS[formData.distrito] || [] : []
@@ -393,6 +499,11 @@ export default function PropertyForm({
           onSuccess()
         }
       }
+
+      // Limpar rascunho após sucesso (apenas no modo de criação)
+      if (!isEditMode) {
+        clearDraft()
+      }
     } catch (error) {
       console.error("Erro ao salvar propriedade:", error)
     }
@@ -408,6 +519,67 @@ export default function PropertyForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Indicador de Rascunho (apenas no modo de criação) */}
+      {!isEditMode && currentDraftId && (
+        <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
+          <div className="flex items-center gap-2">
+            <Save className="h-4 w-4 text-amber-600" />
+            <span className="text-sm text-amber-800">
+              Rascunho salvo automaticamente
+            </span>
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="default"
+            onClick={() => {
+              if (confirm("Tem certeza que deseja limpar o rascunho? Esta ação não pode ser desfeita.")) {
+                clearDraft(currentDraftId)
+                // Reset form to initial state
+                setFormData({
+                  reference: "",
+                  title: "",
+                  description: "",
+                  features: "",
+                  transactionType: "comprar",
+                  propertyType: "",
+                  isEmpreendimento: false,
+                  propertyState: "",
+                  energyClass: "",
+                  price: "0",
+                  totalArea: null,
+                  builtArea: null,
+                  usefulArea: null,
+                  bedrooms: 0,
+                  bathrooms: 0,
+                  hasOffice: false,
+                  hasLaundry: false,
+                  garageSpaces: 0,
+                  constructionYear: null,
+                  deliveryDate: "",
+                  distrito: "",
+                  concelho: "",
+                  freguesia: "",
+                  address: "",
+                  paymentConditions: "",
+                  status: "active",
+                  image: "",
+                  teamMemberId: null,
+                })
+                setNewSections([])
+                setPendingRelated([])
+                setSelectedImage(null)
+                toast.success("Rascunho limpo!")
+              }
+            }}
+            className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"
+          >
+            <Trash2 className="h-4 w-4 mr-1" />
+            Limpar rascunho
+          </Button>
+        </div>
+      )}
+
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3 mb-6">
           <TabsTrigger
@@ -724,6 +896,7 @@ export default function PropertyForm({
                     type="number"
                     min="0"
                     placeholder="3"
+                    value={formData.bedrooms || ""}
                     onChange={(e) => updateField("bedrooms", parseInt(e.target.value) || 0)}
                   />
                 </div>
@@ -734,6 +907,7 @@ export default function PropertyForm({
                     type="number"
                     min="0"
                     placeholder="2"
+                    value={formData.bathrooms || ""}
                     onChange={(e) => updateField("bathrooms", parseInt(e.target.value) || 0)}
                   />
                 </div>
@@ -744,6 +918,7 @@ export default function PropertyForm({
                     type="number"
                     min="0"
                     placeholder="1"
+                    value={formData.garageSpaces || ""}
                     onChange={(e) => updateField("garageSpaces", parseInt(e.target.value) || 0)}
                   />
                 </div>
