@@ -131,7 +131,7 @@ export default function InstitucionalPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        {cultureItems.map((item) => (
+                        {cultureItems.map((item: any) => (
                             <CulturaCard
                                 key={item.id}
                                 title={item.title}
@@ -159,7 +159,7 @@ export default function InstitucionalPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        {serviceItems.map((item) => (
+                        {serviceItems.map((item: any) => (
                             <ServicoCard
                                 key={item.id}
                                 icon={ShoppingBag}

@@ -80,6 +80,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
                         localizacao={`${property.concelho}, ${property.distrito}`}
                         preco={property.price.toString()}
                         image={property.image}
+                        status={property.status}
                     />
                 ))}
             </div>

@@ -421,6 +421,7 @@ export default function PropertiesPage() {
             localizacao={property.concelho + ", " + property.distrito}
             preco={property.price}
             titulo={property.title}
+            status={property.status}
             key={property.id}
           />
         ))}

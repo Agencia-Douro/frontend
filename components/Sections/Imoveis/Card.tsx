@@ -14,22 +14,30 @@ interface CardProps {
     localizacao: string
     preco: string
     image: string
+    status?: string
 }
 
-export default function Card({ href, titulo, localizacao, preco, image }: CardProps) {
+export default function Card({ href, titulo, localizacao, preco, image, status }: CardProps) {
     return (
         <Link href={href} className="w-full">
-            {isVideoUrl(image) ? (
-                <video
-                    src={image}
-                    className="h-40 w-full object-cover"
-                    muted
-                    loop
-                    playsInline
-                />
-            ) : (
-                <Image src={image} alt="Imóvel" width={294} height={160} className="h-40 w-full object-cover" />
-            )}
+            <div className="relative">
+                {isVideoUrl(image) ? (
+                    <video
+                        src={image}
+                        className="h-40 w-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                    />
+                ) : (
+                    <Image src={image} alt="Imóvel" width={294} height={160} className="h-40 w-full object-cover" />
+                )}
+                {status === "reserved" && (
+                    <div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">
+                        Reservado
+                    </div>
+                )}
+            </div>
             <div className="mt-2">
                 <p className="body-16-medium text-black">{titulo}</p>
                 <p className="body-14-medium text-grey mt-1">{localizacao}</p>
