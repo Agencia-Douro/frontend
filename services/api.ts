@@ -14,6 +14,10 @@ import {
   UpdateCultureItemDto,
   CreateServiceItemDto,
   UpdateServiceItemDto,
+  Depoimento,
+  DepoimentoLocalized,
+  CreateDepoimentoDto,
+  UpdateDepoimentoDto,
 } from "@/types/about-us";
 
 const API_BASE_URL = "https://novo.agenciadouro.pt/api";
@@ -1012,16 +1016,19 @@ export interface DesiredZone {
   updatedAt: string;
 }
 
-export interface Depoimento {
-  id: string;
-  clientName: string;
-  text: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export const depoimentosApi = {
-  getAll: async (): Promise<Depoimento[]> => {
+  getAll: async (locale?: string): Promise<DepoimentoLocalized[]> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/depoimentos${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar depoimentos");
+    }
+
+    return response.json();
+  },
+
+  getAllRaw: async (): Promise<Depoimento[]> => {
     const response = await fetch(`${API_BASE_URL}/depoimentos`);
 
     if (!response.ok) {
@@ -1030,16 +1037,13 @@ export const depoimentosApi = {
 
     return response.json();
   },
-  create: async (data: {
-    clientName: string;
-    text: string;
-  }): Promise<Depoimento> => {
+  create: async (data: CreateDepoimentoDto): Promise<Depoimento> => {
     const response = await fetch(`${API_BASE_URL}/depoimentos`, {
       method: "POST",
-      body: JSON.stringify({
-        clientName: data.clientName,
-        text: data.text,
-      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -1053,17 +1057,14 @@ export const depoimentosApi = {
   },
   update: async (
     id: string,
-    data: {
-      clientName?: string;
-      text?: string;
-    }
+    data: UpdateDepoimentoDto
   ): Promise<Depoimento> => {
     const response = await fetch(`${API_BASE_URL}/depoimentos/${id}`, {
       method: "PATCH",
-      body: JSON.stringify({
-        clientName: data.clientName,
-        text: data.text,
-      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {

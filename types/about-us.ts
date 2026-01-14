@@ -71,3 +71,33 @@ export interface UpdateServiceItemDto {
   description_pt?: string;
   order?: number;
 }
+
+// Depoimento interfaces
+export interface Depoimento {
+  id: string;
+  clientName: string;
+  text_pt: string;
+  text_en?: string;
+  text_fr?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Response when fetching with locale (translated)
+export interface DepoimentoLocalized {
+  id: string;
+  clientName: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateDepoimentoDto {
+  clientName: string;
+  text_pt: string;
+}
+
+export interface UpdateDepoimentoDto {
+  clientName?: string;
+  text_pt?: string;
+}

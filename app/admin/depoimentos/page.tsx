@@ -2,17 +2,15 @@
 
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { desiredZonesApi, DesiredZone, depoimentosApi, Depoimento } from "@/services/api"
+import { depoimentosApi } from "@/services/api"
+import { Depoimento, CreateDepoimentoDto, UpdateDepoimentoDto } from "@/types/about-us"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
-import Image from "next/image"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DISTRITOS } from "@/app/shared/distritos"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function DepoimentosPage() {
   const queryClient = useQueryClient()
@@ -20,33 +18,35 @@ export default function DepoimentosPage() {
   const [editingDepoimento, setEditingDepoimento] = useState<Depoimento | null>(null)
   const [formData, setFormData] = useState({
     clientName: "",
-    text: ""
+    text_pt: ""
   })
 
   const { data: depoimentos, isLoading } = useQuery({
-    queryKey: ["depoimentos"],
-    queryFn: () => depoimentosApi.getAll(),
+    queryKey: ["depoimentos-admin"],
+    queryFn: () => depoimentosApi.getAllRaw(),
   })
 
   const createMutation = useMutation({
-    mutationFn: (data: { clientName: string; text: string; }) =>
+    mutationFn: (data: CreateDepoimentoDto) =>
       depoimentosApi.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["depoimentos"] })
       toast.success("Depoimento criado com sucesso!")
+      toast.info("Traduções automáticas em andamento...")
       resetForm()
     },
     onError: (error: any) => {
-      toast.error(error?.message || "Erro ao criar zona")
+      toast.error(error?.message || "Erro ao criar depoimento")
     },
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) =>
+    mutationFn: ({ id, data }: { id: string; data: UpdateDepoimentoDto }) =>
       depoimentosApi.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["depoimentos"] })
       toast.success("Depoimento atualizado com sucesso!")
+      toast.info("Traduções automáticas em andamento...")
       resetForm()
     },
     onError: (error: any) => {
@@ -73,11 +73,15 @@ export default function DepoimentosPage() {
       return
     }
 
-    const data: any = {
-      clientName: formData.clientName,
-      text: formData.text,
+    if (!formData.text_pt) {
+      toast.error("O texto é obrigatório")
+      return
     }
 
+    const data = {
+      clientName: formData.clientName,
+      text_pt: formData.text_pt,
+    }
 
     if (editingDepoimento) {
       updateMutation.mutate({ id: editingDepoimento.id, data })
@@ -86,11 +90,11 @@ export default function DepoimentosPage() {
     }
   }
 
-  const handleEdit = (zone: Depoimento) => {
-    setEditingDepoimento(zone)
+  const handleEdit = (depoimento: Depoimento) => {
+    setEditingDepoimento(depoimento)
     setFormData({
-      clientName: zone.clientName,
-      text: zone.text,
+      clientName: depoimento.clientName,
+      text_pt: depoimento.text_pt,
     })
     setShowForm(true)
   }
@@ -106,7 +110,7 @@ export default function DepoimentosPage() {
     setEditingDepoimento(null)
     setFormData({
       clientName: "",
-      text: ""
+      text_pt: ""
     })
   }
 
@@ -151,16 +155,19 @@ export default function DepoimentosPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="image">Texto</Label>
-                <Input
-                  id="text"
-                  type="text"
-                  value={formData.text}
+                <Label htmlFor="text_pt">Texto (Português) *</Label>
+                <Textarea
+                  id="text_pt"
+                  rows={4}
+                  value={formData.text_pt}
                   onChange={(e) =>
-                    setFormData({ ...formData, text: e.target.value })
+                    setFormData({ ...formData, text_pt: e.target.value })
                   }
+                  placeholder="Escreva o depoimento em português..."
                 />
-
+                <p className="text-xs text-muted-foreground">
+                  O texto será traduzido automaticamente para inglês e francês.
+                </p>
               </div>
 
               <div className="flex gap-2">
@@ -180,13 +187,11 @@ export default function DepoimentosPage() {
         {depoimentos?.map((d) => (
           <Card key={d.id}>
             <CardContent className="flex items-center justify-between p-4">
-              <div className="flex items-center gap-4">
-                <div>
-                  <h3 className="font-semibold text-lg">{d.clientName}</h3>
-                </div>
-                <p>{d.text}</p>
+              <div className="flex-1 min-w-0 mr-4">
+                <h3 className="font-semibold text-lg">{d.clientName}</h3>
+                <p className="text-muted-foreground mt-1 line-clamp-2">{d.text_pt}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-shrink-0">
                 <Button variant="outline" size="icon" onClick={() => handleEdit(d)}>
                   <Pencil className="h-4 w-4" />
                 </Button>

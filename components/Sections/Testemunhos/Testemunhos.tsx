@@ -2,19 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import Testemunho from "./Testemunho";
-import testemunho1 from "@/public/testemunhos/1.png"
-import testemunho2 from "@/public/testemunhos/2.png"
-import testemunho3 from "@/public/testemunhos/3.png"
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { siteConfigApi } from "@/services/api";
+import { siteConfigApi, depoimentosApi } from "@/services/api";
 import Image from "next/image";
 import Logo from "@/public/Logo.png";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function Testemunhos() {
     const t = useTranslations("Testemunhos");
+    const locale = useLocale();
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [isAtStart, setIsAtStart] = useState(true);
     const [isAtEnd, setIsAtEnd] = useState(false);
@@ -24,11 +22,10 @@ export default function Testemunhos() {
         queryFn: () => siteConfigApi.get(),
     });
 
-    const testemunhos = [
-        { text: t("testimonial1.text"), image: testemunho1, name: t("testimonial1.name") },
-        { text: t("testimonial2.text"), image: testemunho2, name: t("testimonial2.name") },
-        { text: t("testimonial3.text"), image: testemunho3, name: t("testimonial3.name") }
-    ];
+    const { data: depoimentos } = useQuery({
+        queryKey: ["depoimentos", locale],
+        queryFn: () => depoimentosApi.getAll(locale),
+    });
 
     const checkScrollPosition = () => {
         if (!scrollContainerRef.current) return;
@@ -142,14 +139,17 @@ export default function Testemunhos() {
                 ref={scrollContainerRef}
                 className="remove-scrollbar mt-4 md:mt-5 lg:mt-10 xl:mt-12 flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [&>div]:snap-start"
             >
-                {testemunhos.map((testemunho, index) => (
-                    <Testemunho
-                        key={index}
-                        text={testemunho.text}
-                        image={testemunho.image}
-                        name={testemunho.name}
-                    />
-                ))}
+                {depoimentos && depoimentos.length > 0 ? (
+                    depoimentos.map((depoimento) => (
+                        <Testemunho
+                            key={depoimento.id}
+                            text={depoimento.text}
+                            name={depoimento.clientName}
+                        />
+                    ))
+                ) : (
+                    <p className="text-black-muted body-16-regular">{t("noTestimonials")}</p>
+                )}
             </div>
 
             {/* Rating e Logo */}
