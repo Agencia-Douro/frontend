@@ -13,7 +13,7 @@ import { Property } from "@/types/property";
 import Image from "next/image";
 
 
-type TransactionType = "comprar" | "empreendimentos" | "trespasse";
+type TransactionType = "comprar" | "arrendar" | "empreendimentos" | "trespasse";
 
 const heroImages = [
   "/hero/hero1.jpg",
@@ -105,6 +105,8 @@ export function Hero() {
     // Mapear transactionType para o formato correto da API
     if (transactionType === "comprar") {
       params.set("transactionType", "comprar");
+    } else if (transactionType === "arrendar") {
+      params.set("transactionType", "arrendar");
     } else if (transactionType === "empreendimentos") {
       params.set("isEmpreendimento", "true");
     } else if (transactionType === "trespasse") {
@@ -224,6 +226,14 @@ export function Hero() {
                       onClick={() => setTransactionType("comprar")}
                     >
                       {t("buy")}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={transactionType === "arrendar" ? "gold" : "ghost"}
+                      className="px-3 md:px-4.5 md:w-min whitespace-nowrap text-white body-14-medium"
+                      onClick={() => setTransactionType("arrendar")}
+                    >
+                      {t("rent")}
                     </Button>
                     <Button
                       type="button"
