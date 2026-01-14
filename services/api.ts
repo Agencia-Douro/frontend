@@ -52,13 +52,19 @@ export interface PropertyFilters {
 }
 
 export const propertiesApi = {
-  search: async (query: string, limit: number = 5, lang: string = 'pt'): Promise<Property[]> => {
+  search: async (
+    query: string,
+    limit: number = 5,
+    lang: string = "pt"
+  ): Promise<Property[]> => {
     const params = new URLSearchParams();
-    params.append('q', query);
-    params.append('limit', limit.toString());
-    params.append('lang', lang);
+    params.append("q", query);
+    params.append("limit", limit.toString());
+    params.append("lang", lang);
 
-    const response = await fetch(`${API_BASE_URL}/properties/search?${params.toString()}`);
+    const response = await fetch(
+      `${API_BASE_URL}/properties/search?${params.toString()}`
+    );
 
     if (!response.ok) {
       throw new Error("Erro ao buscar propriedades");
@@ -163,8 +169,7 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions_pt", data.paymentConditions);
-    if (data.features)
-      formData.append("features", data.features);
+    if (data.features) formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
@@ -244,8 +249,7 @@ export const propertiesApi = {
     // Campos opcionais - Outros
     if (data.paymentConditions)
       formData.append("paymentConditions_pt", data.paymentConditions);
-    if (data.features)
-      formData.append("features", data.features);
+    if (data.features) formData.append("features", data.features);
 
     // Campos opcionais - Team Member
     if (data.teamMemberId) formData.append("teamMemberId", data.teamMemberId);
@@ -854,13 +858,19 @@ export const siteConfigApi = {
     formData.append("imoveisVendidos", data.imoveisVendidos.toString());
 
     if (data.episodiosPublicados !== undefined) {
-      formData.append("episodiosPublicados", data.episodiosPublicados.toString());
+      formData.append(
+        "episodiosPublicados",
+        data.episodiosPublicados.toString()
+      );
     }
     if (data.temporadas !== undefined) {
       formData.append("temporadas", data.temporadas.toString());
     }
     if (data.especialistasConvidados !== undefined) {
-      formData.append("especialistasConvidados", data.especialistasConvidados.toString());
+      formData.append(
+        "especialistasConvidados",
+        data.especialistasConvidados.toString()
+      );
     }
     if (data.eurosEmTransacoes !== undefined) {
       formData.append("eurosEmTransacoes", data.eurosEmTransacoes.toString());
@@ -1002,6 +1012,85 @@ export interface DesiredZone {
   updatedAt: string;
 }
 
+export interface Depoimento {
+  id: string;
+  clientName: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const depoimentosApi = {
+  getAll: async (): Promise<Depoimento[]> => {
+    const response = await fetch(`${API_BASE_URL}/depoimentos`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar depoimentos");
+    }
+
+    return response.json();
+  },
+  create: async (data: {
+    clientName: string;
+    text: string;
+  }): Promise<Depoimento> => {
+    const response = await fetch(`${API_BASE_URL}/depoimentos`, {
+      method: "POST",
+      body: JSON.stringify({
+        clientName: data.clientName,
+        text: data.text,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar depoimento (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+  update: async (
+    id: string,
+    data: {
+      clientName?: string;
+      text?: string;
+    }
+  ): Promise<Depoimento> => {
+    const response = await fetch(`${API_BASE_URL}/depoimentos/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        clientName: data.clientName,
+        text: data.text,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao atualizar depoimento (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/depoimentos/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar depoimento (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
 export const desiredZonesApi = {
   getAll: async (): Promise<DesiredZone[]> => {
     const response = await fetch(`${API_BASE_URL}/desired-zones`);
@@ -1062,8 +1151,7 @@ export const desiredZonesApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message ||
-        `Erro ao criar zona desejada (${response.status})`;
+        errorData.message || `Erro ao criar zona desejada (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -1231,7 +1319,7 @@ export const podcastTopicsApi = {
 // About Us Content API
 export const aboutUsContentApi = {
   get: async (locale?: string): Promise<AboutUsContent> => {
-    const params = locale ? `?lang=${locale}` : '';
+    const params = locale ? `?lang=${locale}` : "";
     const response = await fetch(`${API_BASE_URL}/about-us-content${params}`);
 
     if (!response.ok) {
@@ -1262,7 +1350,7 @@ export const aboutUsContentApi = {
 // Culture Items API
 export const cultureItemsApi = {
   getAll: async (locale?: string): Promise<CultureItem[]> => {
-    const params = locale ? `?lang=${locale}` : '';
+    const params = locale ? `?lang=${locale}` : "";
     const response = await fetch(`${API_BASE_URL}/culture-items${params}`);
 
     if (!response.ok) {
@@ -1292,14 +1380,18 @@ export const cultureItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao criar item de cultura (${response.status})`;
+        errorData.message ||
+        `Erro ao criar item de cultura (${response.status})`;
       throw new Error(errorMessage);
     }
 
     return response.json();
   },
 
-  update: async (id: string, data: UpdateCultureItemDto): Promise<CultureItem> => {
+  update: async (
+    id: string,
+    data: UpdateCultureItemDto
+  ): Promise<CultureItem> => {
     const response = await fetch(`${API_BASE_URL}/culture-items/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -1309,7 +1401,8 @@ export const cultureItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao atualizar item de cultura (${response.status})`;
+        errorData.message ||
+        `Erro ao atualizar item de cultura (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -1324,7 +1417,8 @@ export const cultureItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao deletar item de cultura (${response.status})`;
+        errorData.message ||
+        `Erro ao deletar item de cultura (${response.status})`;
       throw new Error(errorMessage);
     }
   },
@@ -1333,7 +1427,7 @@ export const cultureItemsApi = {
 // Service Items API
 export const serviceItemsApi = {
   getAll: async (locale?: string): Promise<ServiceItem[]> => {
-    const params = locale ? `?lang=${locale}` : '';
+    const params = locale ? `?lang=${locale}` : "";
     const response = await fetch(`${API_BASE_URL}/service-items${params}`);
 
     if (!response.ok) {
@@ -1363,14 +1457,18 @@ export const serviceItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao criar item de serviço (${response.status})`;
+        errorData.message ||
+        `Erro ao criar item de serviço (${response.status})`;
       throw new Error(errorMessage);
     }
 
     return response.json();
   },
 
-  update: async (id: string, data: UpdateServiceItemDto): Promise<ServiceItem> => {
+  update: async (
+    id: string,
+    data: UpdateServiceItemDto
+  ): Promise<ServiceItem> => {
     const response = await fetch(`${API_BASE_URL}/service-items/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -1380,7 +1478,8 @@ export const serviceItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao atualizar item de serviço (${response.status})`;
+        errorData.message ||
+        `Erro ao atualizar item de serviço (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -1395,7 +1494,8 @@ export const serviceItemsApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao deletar item de serviço (${response.status})`;
+        errorData.message ||
+        `Erro ao deletar item de serviço (${response.status})`;
       throw new Error(errorMessage);
     }
   },

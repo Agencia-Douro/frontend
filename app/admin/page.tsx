@@ -50,6 +50,16 @@ export default function AdminPage() {
                                 </CardHeader>
                             </Card>
                         </Link>
+                        <Link href="/admin/depoimentos" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Depoimentos</CardTitle>
+                                    <CardDescription>
+                                        Gerencie os depoimentos dos clientes
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
                     </div>
                 </div>
 
