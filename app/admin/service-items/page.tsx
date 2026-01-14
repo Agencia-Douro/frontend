@@ -81,8 +81,8 @@ export default function ServiceItemsPage() {
   const handleEdit = (item: ServiceItem) => {
     setEditingItem(item)
     setFormData({
-      title_pt: item.title || "",
-      description_pt: item.description || "",
+      title_pt: item.title_pt || "",
+      description_pt: item.description_pt || "",
       order: item.order || 0,
     })
     setShowForm(true)
@@ -229,12 +229,12 @@ export default function ServiceItemsPage() {
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-lg font-semibold">{item.title}</h3>
+                      <h3 className="text-lg font-semibold">{item.title_pt}</h3>
                       <span className="text-sm text-gray-400">
                         (Ordem: {item.order})
                       </span>
                     </div>
-                    <p className="text-gray-600">{item.description}</p>
+                    <p className="text-gray-600">{item.description_pt}</p>
                   </div>
                   <div className="flex gap-2 ml-4">
                     <Button

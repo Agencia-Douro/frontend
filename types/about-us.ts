@@ -17,8 +17,8 @@ export interface AboutUsContent {
 
 export interface CultureItem {
   id: string;
-  title: string;
-  description: string;
+  title_pt: string;
+  description_pt: string;
   order: number;
   createdAt: string;
   updatedAt: string;
@@ -26,8 +26,8 @@ export interface CultureItem {
 
 export interface ServiceItem {
   id: string;
-  title: string;
-  description: string;
+  title_pt: string;
+  description_pt: string;
   order: number;
   createdAt: string;
   updatedAt: string;

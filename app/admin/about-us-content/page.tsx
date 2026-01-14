@@ -36,17 +36,17 @@ export default function AboutUsContentPage() {
   useEffect(() => {
     if (content) {
       setFormData({
-        pageTitle_pt: content.pageTitle || "",
-        pageSubtitle_pt: content.pageSubtitle || "",
-        description1_pt: content.description1 || "",
-        description2_pt: content.description2 || "",
-        cultureLabel_pt: content.cultureLabel || "",
-        cultureTitle_pt: content.cultureTitle || "",
-        servicesLabel_pt: content.servicesLabel || "",
-        servicesTitle_pt: content.servicesTitle || "",
-        teamLabel_pt: content.teamLabel || "",
-        teamTitle_pt: content.teamTitle || "",
-        teamDescription_pt: content.teamDescription || "",
+        pageTitle_pt: (content as any).pageTitle_pt || "",
+        pageSubtitle_pt: (content as any).pageSubtitle_pt || "",
+        description1_pt: (content as any).description1_pt || "",
+        description2_pt: (content as any).description2_pt || "",
+        cultureLabel_pt: (content as any).cultureLabel_pt || "",
+        cultureTitle_pt: (content as any).cultureTitle_pt || "",
+        servicesLabel_pt: (content as any).servicesLabel_pt || "",
+        servicesTitle_pt: (content as any).servicesTitle_pt || "",
+        teamLabel_pt: (content as any).teamLabel_pt || "",
+        teamTitle_pt: (content as any).teamTitle_pt || "",
+        teamDescription_pt: (content as any).teamDescription_pt || "",
       })
     }
   }, [content])
