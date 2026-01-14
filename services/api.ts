@@ -5,6 +5,16 @@ import {
   PropertyFile,
 } from "@/types/property";
 import { Newsletter } from "@/types/newsletter";
+import {
+  AboutUsContent,
+  CultureItem,
+  ServiceItem,
+  UpdateAboutUsContentDto,
+  CreateCultureItemDto,
+  UpdateCultureItemDto,
+  CreateServiceItemDto,
+  UpdateServiceItemDto,
+} from "@/types/about-us";
 
 const API_BASE_URL = "https://novo.agenciadouro.pt/api";
 //const API_BASE_URL = "http://localhost:3008";
@@ -1213,6 +1223,179 @@ export const podcastTopicsApi = {
       const errorMessage =
         errorData.message ||
         `Erro ao deletar tópico do podcast (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+// About Us Content API
+export const aboutUsContentApi = {
+  get: async (locale?: string): Promise<AboutUsContent> => {
+    const params = locale ? `?lang=${locale}` : '';
+    const response = await fetch(`${API_BASE_URL}/about-us-content${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar conteúdo sobre nós");
+    }
+
+    return response.json();
+  },
+
+  update: async (data: UpdateAboutUsContentDto): Promise<AboutUsContent> => {
+    const response = await fetch(`${API_BASE_URL}/about-us-content`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar conteúdo (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};
+
+// Culture Items API
+export const cultureItemsApi = {
+  getAll: async (locale?: string): Promise<CultureItem[]> => {
+    const params = locale ? `?lang=${locale}` : '';
+    const response = await fetch(`${API_BASE_URL}/culture-items${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar itens de cultura");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<CultureItem> => {
+    const response = await fetch(`${API_BASE_URL}/culture-items/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar item de cultura");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: CreateCultureItemDto): Promise<CultureItem> => {
+    const response = await fetch(`${API_BASE_URL}/culture-items`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar item de cultura (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (id: string, data: UpdateCultureItemDto): Promise<CultureItem> => {
+    const response = await fetch(`${API_BASE_URL}/culture-items/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar item de cultura (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/culture-items/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar item de cultura (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+// Service Items API
+export const serviceItemsApi = {
+  getAll: async (locale?: string): Promise<ServiceItem[]> => {
+    const params = locale ? `?lang=${locale}` : '';
+    const response = await fetch(`${API_BASE_URL}/service-items${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar itens de serviço");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<ServiceItem> => {
+    const response = await fetch(`${API_BASE_URL}/service-items/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar item de serviço");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: CreateServiceItemDto): Promise<ServiceItem> => {
+    const response = await fetch(`${API_BASE_URL}/service-items`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar item de serviço (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (id: string, data: UpdateServiceItemDto): Promise<ServiceItem> => {
+    const response = await fetch(`${API_BASE_URL}/service-items/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar item de serviço (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/service-items/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar item de serviço (${response.status})`;
       throw new Error(errorMessage);
     }
   },
