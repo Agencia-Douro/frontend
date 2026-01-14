@@ -45,7 +45,7 @@ export function Hero() {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
       setAnimationKey((prev) => prev + 1); // Força reinício da animação
-    }, 8000); // Muda a cada 4 segundos
+    }, 8000); // Muda a cada 8 segundos
 
     return () => clearInterval(interval);
   }, []);
@@ -163,7 +163,7 @@ export function Hero() {
               }
             }
             .hero-progress-bar {
-              animation: progressFill 4s linear forwards;
+              animation: progressFill 8s linear forwards;
             }
           `
         }} />
