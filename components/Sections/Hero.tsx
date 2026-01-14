@@ -45,7 +45,7 @@ export function Hero() {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
       setAnimationKey((prev) => prev + 1); // Força reinício da animação
-    }, 4000); // Muda a cada 4 segundos
+    }, 8000); // Muda a cada 4 segundos
 
     return () => clearInterval(interval);
   }, []);
