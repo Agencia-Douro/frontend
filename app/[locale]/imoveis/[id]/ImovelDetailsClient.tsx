@@ -768,17 +768,6 @@ export default function ImovelDetailsClient() {
                 </div>
             </section>
 
-            {/* Logo Section */}
-            <section className="container py-8 md:py-10 lg:py-12 flex justify-center items-center">
-                <Image
-                    src={Logo}
-                    alt="Agência do Douro"
-                    width={350}
-                    height={350}
-                    className="w-full max-w-[350px] h-auto lg:max-w-[500px]"
-                />
-            </section>
-
             <ImoveisRelacionados
                 currentPropertyId={property.id}
                 currentPrice={property.price}

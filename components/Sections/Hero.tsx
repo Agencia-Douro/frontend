@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select-line";
+import { Checkbox } from "../ui/checkbox";
 import { DISTRITOS, TIPOS_IMOVEL } from "@/app/shared/distritos";
 import { useTranslations } from "next-intl";
 import { propertiesApi } from "@/services/api";
@@ -29,7 +30,7 @@ export function Hero() {
   const [transactionType, setTransactionType] = useState<TransactionType>("comprar");
   const [localizacao, setLocalizacao] = useState<string>("");
   const [tipo, setTipo] = useState<string>("");
-  const [tipologia, setTipologia] = useState<string>("");
+  const [tipologias, setTipologias] = useState<number[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
 
@@ -92,6 +93,12 @@ export function Hero() {
     setSearchQuery("");
   };
 
+  const toggleTipologia = (value: number) => {
+    setTipologias((prev) =>
+      prev.includes(value) ? prev.filter((t) => t !== value) : [...prev, value]
+    );
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -119,8 +126,8 @@ export function Hero() {
     // Tipo = propertyType
     if (tipo) params.set("propertyType", tipo);
 
-    // Tipologia = bedrooms
-    if (tipologia) params.set("bedrooms", tipologia);
+    // Tipologia = bedrooms (múltipla seleção)
+    if (tipologias.length > 0) params.set("bedrooms", tipologias.join(","));
 
     router.push(`/${locale}/imoveis?${params.toString()}`);
   };
@@ -368,16 +375,33 @@ export function Hero() {
                       </div>
                       <div className="flex flex-col gap-1 flex-1">
                         <Label htmlFor="tipologia-mobile">{t("typology")}</Label>
-                        <Select value={tipologia} onValueChange={setTipologia}>
+                        <Select>
                           <SelectTrigger id="tipologia-mobile" name="tipologia">
-                            <SelectValue placeholder={t("select")} />
+                            <SelectValue placeholder={tipologias.length > 0 ? tipologias.sort((a, b) => a - b).map(t => `T${t}`).join(", ") : t("select")} />
                           </SelectTrigger>
                           <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                            <SelectItem value="0">T0</SelectItem>
-                            <SelectItem value="1">T1</SelectItem>
-                            <SelectItem value="2">T2</SelectItem>
-                            <SelectItem value="3">T3</SelectItem>
-                            <SelectItem value="4">T4</SelectItem>
+                            {[0, 1, 2, 3, 4].map((num) => (
+                              <div
+                                key={num}
+                                className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-muted"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  toggleTipologia(num);
+                                }}
+                              >
+                                <Checkbox
+                                  id={`tipologia-mobile-${num}`}
+                                  checked={tipologias.includes(num)}
+                                  onCheckedChange={() => toggleTipologia(num)}
+                                />
+                                <label
+                                  htmlFor={`tipologia-mobile-${num}`}
+                                  className="text-sm font-medium cursor-pointer flex-1"
+                                >
+                                  T{num}
+                                </label>
+                              </div>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
@@ -499,16 +523,33 @@ export function Hero() {
                     {/* Tipologia */}
                     <div className="flex flex-col gap-1 flex-1">
                       <Label htmlFor="tipologia-desktop">{t("typology")}</Label>
-                      <Select value={tipologia} onValueChange={setTipologia}>
+                      <Select>
                         <SelectTrigger id="tipologia-desktop" name="tipologia">
-                          <SelectValue placeholder={t("select")} />
+                          <SelectValue placeholder={tipologias.length > 0 ? tipologias.sort((a, b) => a - b).map(t => `T${t}`).join(", ") : t("select")} />
                         </SelectTrigger>
                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                          <SelectItem value="0">T0</SelectItem>
-                          <SelectItem value="1">T1</SelectItem>
-                          <SelectItem value="2">T2</SelectItem>
-                          <SelectItem value="3">T3</SelectItem>
-                          <SelectItem value="4">T4</SelectItem>
+                          {[0, 1, 2, 3, 4].map((num) => (
+                            <div
+                              key={num}
+                              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-muted"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleTipologia(num);
+                              }}
+                            >
+                              <Checkbox
+                                id={`tipologia-desktop-${num}`}
+                                checked={tipologias.includes(num)}
+                                onCheckedChange={() => toggleTipologia(num)}
+                              />
+                              <label
+                                htmlFor={`tipologia-desktop-${num}`}
+                                className="text-sm font-medium cursor-pointer flex-1"
+                              >
+                                T{num}
+                              </label>
+                            </div>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
