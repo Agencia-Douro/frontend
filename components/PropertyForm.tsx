@@ -65,6 +65,7 @@ export default function PropertyForm({
       title: "",
       description: "",
       features: "",
+      whyChoose: "",
       transactionType: "comprar",
       propertyType: "",
       isEmpreendimento: false,
@@ -541,6 +542,7 @@ export default function PropertyForm({
                   title: "",
                   description: "",
                   features: "",
+                  whyChoose: "",
                   transactionType: "comprar",
                   propertyType: "",
                   isEmpreendimento: false,
@@ -704,6 +706,15 @@ export default function PropertyForm({
                   placeholder="Características especiais da propriedade (piscina, jardim, vista, etc)..."
                   value={formData.features || ""}
                   onChange={(value) => updateField("features", value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Porque escolher esse imóvel?</Label>
+                <RichTextEditor
+                  placeholder="Destaque os motivos para escolher este imóvel..."
+                  value={formData.whyChoose || ""}
+                  onChange={(value) => updateField("whyChoose", value)}
                 />
               </div>
 

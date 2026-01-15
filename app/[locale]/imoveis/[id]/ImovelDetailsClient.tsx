@@ -594,16 +594,18 @@ export default function ImovelDetailsClient() {
                                 </Button>
                             </div>
                         )}
-                        <div className="flex items-center justify-between py-4 border-b border-brown/10">
-                            <p className="body-16-medium text-brown">{t("whyChooseThisPropertyLabel")}</p>
-                            <Button
-                                variant="gold"
-                                size="default"
-                                onClick={() => setShowWhyModal(true)}
-                            >
-                                {t("view")}
-                            </Button>
-                        </div>
+                        {property.whyChoose && (
+                            <div className="flex items-center justify-between py-4 border-b border-brown/10">
+                                <p className="body-16-medium text-brown">{t("whyChooseThisPropertyLabel")}</p>
+                                <Button
+                                    variant="gold"
+                                    size="default"
+                                    onClick={() => setShowWhyModal(true)}
+                                >
+                                    {t("view")}
+                                </Button>
+                            </div>
+                        )}
                         {property.files && property.files.filter(f => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">{t("files")}</p>
@@ -860,10 +862,8 @@ export default function ImovelDetailsClient() {
                         <DialogTitle className="text-brown body-18-medium">
                             {t("whyChooseThisPropertyTitle")}
                         </DialogTitle>
-                        <DialogDescription>
-                            {t("whyChooseThisPropertyDescription")}
-                        </DialogDescription>
                     </DialogHeader>
+                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.whyChoose || "" }} />
                 </DialogContent>
             </Dialog>
 
