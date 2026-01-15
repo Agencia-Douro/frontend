@@ -101,3 +101,69 @@ export interface UpdateDepoimentoDto {
   clientName?: string;
   text_pt?: string;
 }
+
+// Podcast Content interfaces
+export interface PodcastContentEpisode {
+  id: string;
+  url: string;
+  title: string;
+  videoId: string | null;
+}
+
+export interface PodcastContent {
+  id: string;
+  headerLabel: string;
+  pageTitle: string;
+  pageSubtitle: string;
+  pageDescription: string;
+  topicsLabel: string;
+  topicsTitle: string;
+  episodesLabel: string;
+  episodesTitle: string;
+  episodesDescription: string;
+  episode1Title: string;
+  episode2Title: string;
+  episode3Title: string;
+  episode4Title: string;
+  episode5Title: string;
+  episode6Title: string;
+  episode1Url: string;
+  episode2Url: string;
+  episode3Url: string;
+  episode4Url: string;
+  episode5Url: string;
+  episode6Url: string;
+  hostLabel: string;
+  hostName: string;
+  hostDescription: string;
+  episodes: PodcastContentEpisode[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpdatePodcastContentDto {
+  headerLabel_pt?: string;
+  pageTitle_pt?: string;
+  pageSubtitle_pt?: string;
+  pageDescription_pt?: string;
+  topicsLabel_pt?: string;
+  topicsTitle_pt?: string;
+  episodesLabel_pt?: string;
+  episodesTitle_pt?: string;
+  episodesDescription_pt?: string;
+  episode1Url?: string;
+  episode1Title_pt?: string;
+  episode2Url?: string;
+  episode2Title_pt?: string;
+  episode3Url?: string;
+  episode3Title_pt?: string;
+  episode4Url?: string;
+  episode4Title_pt?: string;
+  episode5Url?: string;
+  episode5Title_pt?: string;
+  episode6Url?: string;
+  episode6Title_pt?: string;
+  hostLabel_pt?: string;
+  hostName?: string;
+  hostDescription_pt?: string;
+}

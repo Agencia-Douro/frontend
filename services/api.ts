@@ -18,6 +18,8 @@ import {
   DepoimentoLocalized,
   CreateDepoimentoDto,
   UpdateDepoimentoDto,
+  PodcastContent,
+  UpdatePodcastContentDto,
 } from "@/types/about-us";
 
 const API_BASE_URL = "https://novo.agenciadouro.pt/api";
@@ -1501,5 +1503,36 @@ export const serviceItemsApi = {
         `Erro ao deletar item de serviço (${response.status})`;
       throw new Error(errorMessage);
     }
+  },
+};
+
+// Podcast Content API
+export const podcastContentApi = {
+  get: async (locale?: string): Promise<PodcastContent> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/podcast-content${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar conteúdo do podcast");
+    }
+
+    return response.json();
+  },
+
+  update: async (data: UpdatePodcastContentDto): Promise<PodcastContent> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-content`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar conteúdo do podcast (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
   },
 };

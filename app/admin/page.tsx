@@ -40,16 +40,6 @@ export default function AdminPage() {
                                 </CardHeader>
                             </Card>
                         </Link>
-                        <Link href="/admin/podcast-topics" className="h-full">
-                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
-                                <CardHeader>
-                                    <CardTitle className="body-16-medium">Tópicos do Podcast</CardTitle>
-                                    <CardDescription>
-                                        Gerencie os tópicos e a apresentadora do podcast
-                                    </CardDescription>
-                                </CardHeader>
-                            </Card>
-                        </Link>
                         <Link href="/admin/depoimentos" className="h-full">
                             <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
                                 <CardHeader>
@@ -64,7 +54,7 @@ export default function AdminPage() {
                 </div>
 
                 {/* Seção Sobre Nós */}
-                <div>
+                <div className="mb-8">
                     <h2 className="mb-4 body-16-medium text-brown">Sobre Nós</h2>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         <Link href="/admin/about-us-content" className="h-full">
@@ -93,6 +83,33 @@ export default function AdminPage() {
                                     <CardTitle className="body-16-medium">Serviços Oferecidos</CardTitle>
                                     <CardDescription>
                                         Gerencie os serviços oferecidos pela empresa
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Seção Podcast */}
+                <div>
+                    <h2 className="mb-4 body-16-medium text-brown">Podcast</h2>
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        <Link href="/admin/podcast-content" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Conteúdo da Página</CardTitle>
+                                    <CardDescription>
+                                        Edite os textos, episódios e informações da apresentadora
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/admin/podcast-topics" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Tópicos do Podcast</CardTitle>
+                                    <CardDescription>
+                                        Gerencie os tópicos abordados no podcast
                                     </CardDescription>
                                 </CardHeader>
                             </Card>
