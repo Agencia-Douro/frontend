@@ -505,6 +505,9 @@
     "relatedProperties": "Related Properties",
     "addedToFavorites": "Added to favorites",
     "removedFromFavorites": "Removed from favorites",
-    "developmentNote": "*This listing is for informational purposes (illustrative photos) and does not replace a property visit or consultation of respective documents. We provide finishing maps and floor plans of the property, feel free to request."
+    "developmentNote": "*This listing is for informational purposes (illustrative photos) and does not replace a property visit or consultation of respective documents. We provide finishing maps and floor plans of the property, feel free to request.",
+    "whyChooseThisPropertyLabel": "Why choose this property?",
+    "whyChooseThisPropertyTitle": "Why choose this property?",
+    "whyChooseThisPropertyDescription": "Soon we will add here the reasons to choose this property."
   }
 }

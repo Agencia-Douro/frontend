@@ -78,6 +78,7 @@ export default function ImovelDetailsClient() {
     const fav = isFavorite(id)
     const [showFilesModal, setShowFilesModal] = useState(false)
     const [showFeaturesModal, setShowFeaturesModal] = useState(false)
+    const [showWhyModal, setShowWhyModal] = useState(false)
     const [lightboxOpen, setLightboxOpen] = useState(false)
     const [lightboxIndex, setLightboxIndex] = useState(0)
     const pdfRef = useRef(null)
@@ -593,6 +594,16 @@ export default function ImovelDetailsClient() {
                                 </Button>
                             </div>
                         )}
+                        <div className="flex items-center justify-between py-4 border-b border-brown/10">
+                            <p className="body-16-medium text-brown">{t("whyChooseThisPropertyLabel")}</p>
+                            <Button
+                                variant="gold"
+                                size="default"
+                                onClick={() => setShowWhyModal(true)}
+                            >
+                                {t("view")}
+                            </Button>
+                        </div>
                         {property.files && property.files.filter(f => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">{t("files")}</p>
@@ -839,6 +850,20 @@ export default function ImovelDetailsClient() {
                             </div>
                         ))}
                     </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* Modal - Porque escolher este imóvel */}
+            <Dialog open={showWhyModal} onOpenChange={setShowWhyModal}>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="text-brown body-18-medium">
+                            {t("whyChooseThisPropertyTitle")}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {t("whyChooseThisPropertyDescription")}
+                        </DialogDescription>
+                    </DialogHeader>
                 </DialogContent>
             </Dialog>
 
