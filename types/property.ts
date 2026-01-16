@@ -53,9 +53,12 @@ export interface Property {
   garageSpaces: number;
   constructionYear: number | null;
   deliveryDate: string | null;
-  distrito: string;
-  concelho: string;
+  country: string;
+  distrito: string | null;
+  concelho: string | null;
   freguesia: string | null;
+  region: string;
+  city: string;
   address: string | null;
   image: string;
   imageSections?: PropertyImageSection[];

@@ -9,6 +9,7 @@ import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
 import { Button } from "./ui/button"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { COUNTRIES } from "@/app/shared/countries"
 import { useTranslations } from "next-intl"
 
 interface SidebarProps {
@@ -37,8 +38,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     const [propertyType, setPropertyType] = useState(searchParams.get("propertyType") || "")
     const [propertyState, setPropertyState] = useState(searchParams.get("propertyState") || "")
     const [energyClass, setEnergyClass] = useState(searchParams.get("energyClass") || "")
+    const [country, setCountry] = useState(searchParams.get("country") || "PT")
     const [distrito, setDistrito] = useState(searchParams.get("distrito") || "")
     const [concelho, setConcelho] = useState(searchParams.get("concelho") || "")
+    const [region, setRegion] = useState(searchParams.get("region") || "")
+    const [city, setCity] = useState(searchParams.get("city") || "")
 
     const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "")
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "")
@@ -121,8 +125,14 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         if (propertyType) params.set("propertyType", propertyType)
         if (propertyState) params.set("propertyState", propertyState)
         if (energyClass) params.set("energyClass", energyClass)
-        if (distrito) params.set("distrito", distrito)
-        if (concelho) params.set("concelho", concelho)
+        if (country) params.set("country", country)
+        if (country === "PT") {
+            if (distrito) params.set("distrito", distrito)
+            if (concelho) params.set("concelho", concelho)
+        } else {
+            if (region) params.set("region", region)
+            if (city) params.set("city", city)
+        }
         if (minPrice) params.set("minPrice", minPrice)
         if (maxPrice) params.set("maxPrice", maxPrice)
         if (minUsefulArea) params.set("minUsefulArea", minUsefulArea)
@@ -145,8 +155,11 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         setPropertyType("")
         setPropertyState("")
         setEnergyClass("")
+        setCountry("PT")
         setDistrito("")
         setConcelho("")
+        setRegion("")
+        setCity("")
         setMinPrice("")
         setMaxPrice("")
         setMinUsefulArea("")
@@ -404,52 +417,106 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {localizacaoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="distrito">{t("district")}</Label>
+                                        <Label htmlFor="country">{t("country")}</Label>
                                         <Select
-                                            key={`distrito-${resetKey}`}
-                                            value={distrito || undefined}
-                                            onValueChange={setDistrito}
+                                            key={`country-${resetKey}`}
+                                            value={country}
+                                            onValueChange={(value) => {
+                                                setCountry(value)
+                                                setDistrito("")
+                                                setConcelho("")
+                                                setRegion("")
+                                                setCity("")
+                                            }}
                                         >
-                                            <SelectTrigger id="distrito" name="distrito">
-                                                <SelectValue placeholder={t("selectDistrict")} />
+                                            <SelectTrigger id="country" name="country">
+                                                <SelectValue placeholder={t("selectCountry")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {DISTRITOS.map((d) => (
-                                                    <SelectItem key={d} value={d}>
-                                                        {d}
+                                                {COUNTRIES.map((c) => (
+                                                    <SelectItem key={c.code} value={c.code}>
+                                                        {c.flag} {c.name}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="space-y-3">
-                                        <Label htmlFor="concelho">{t("municipality")}</Label>
-                                        <Select
-                                            key={`concelho-${resetKey}`}
-                                            value={concelho || undefined}
-                                            onValueChange={setConcelho}
-                                            disabled={!distrito}
-                                        >
-                                            <SelectTrigger id="concelho" name="concelho">
-                                                <SelectValue
-                                                    placeholder={
-                                                        !distrito
-                                                            ? t("selectDistrictFirst")
-                                                            : t("selectMunicipality")
-                                                    }
+                                    {country === "PT" ? (
+                                        <>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="distrito">{t("district")}</Label>
+                                                <Select
+                                                    key={`distrito-${resetKey}`}
+                                                    value={distrito || undefined}
+                                                    onValueChange={setDistrito}
+                                                >
+                                                    <SelectTrigger id="distrito" name="distrito">
+                                                        <SelectValue placeholder={t("selectDistrict")} />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                        {DISTRITOS.map((d) => (
+                                                            <SelectItem key={d} value={d}>
+                                                                {d}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="concelho">{t("municipality")}</Label>
+                                                <Select
+                                                    key={`concelho-${resetKey}`}
+                                                    value={concelho || undefined}
+                                                    onValueChange={setConcelho}
+                                                    disabled={!distrito}
+                                                >
+                                                    <SelectTrigger id="concelho" name="concelho">
+                                                        <SelectValue
+                                                            placeholder={
+                                                                !distrito
+                                                                    ? t("selectDistrictFirst")
+                                                                    : t("selectMunicipality")
+                                                            }
+                                                        />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                        {municipios.length > 0 ? (
+                                                            municipios.map((m) => (
+                                                                <SelectItem key={m} value={m}>
+                                                                    {m}
+                                                                </SelectItem>
+                                                            ))
+                                                        ) : null}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="region">{t("region")}</Label>
+                                                <Input
+                                                    key={`region-${resetKey}`}
+                                                    id="region"
+                                                    type="text"
+                                                    placeholder={t("enterRegion")}
+                                                    value={region}
+                                                    onChange={(e) => setRegion(e.target.value)}
                                                 />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {municipios.length > 0 ? (
-                                                    municipios.map((m) => (
-                                                        <SelectItem key={m} value={m}>
-                                                            {m}
-                                                        </SelectItem>
-                                                    ))
-                                                ) : null}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="city">{t("city")}</Label>
+                                                <Input
+                                                    key={`city-${resetKey}`}
+                                                    id="city"
+                                                    type="text"
+                                                    placeholder={t("enterCity")}
+                                                    value={city}
+                                                    onChange={(e) => setCity(e.target.value)}
+                                                />
+                                            </div>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </div>
@@ -779,52 +846,106 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                             {localizacaoOpen && (
                                 <>
                                     <div className="space-y-3">
-                                        <Label htmlFor="distrito-mobile">{t("district")}</Label>
+                                        <Label htmlFor="country-mobile">{t("country")}</Label>
                                         <Select
-                                            key={`distrito-mobile-${resetKey}`}
-                                            value={distrito || undefined}
-                                            onValueChange={setDistrito}
+                                            key={`country-mobile-${resetKey}`}
+                                            value={country}
+                                            onValueChange={(value) => {
+                                                setCountry(value)
+                                                setDistrito("")
+                                                setConcelho("")
+                                                setRegion("")
+                                                setCity("")
+                                            }}
                                         >
-                                            <SelectTrigger id="distrito-mobile" name="distrito-mobile">
-                                                <SelectValue placeholder={t("selectDistrict")} />
+                                            <SelectTrigger id="country-mobile" name="country-mobile">
+                                                <SelectValue placeholder={t("selectCountry")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {DISTRITOS.map((d) => (
-                                                    <SelectItem key={d} value={d}>
-                                                        {d}
+                                                {COUNTRIES.map((c) => (
+                                                    <SelectItem key={c.code} value={c.code}>
+                                                        {c.flag} {c.name}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="space-y-3">
-                                        <Label htmlFor="concelho-mobile">{t("municipality")}</Label>
-                                        <Select
-                                            key={`concelho-mobile-${resetKey}`}
-                                            value={concelho || undefined}
-                                            onValueChange={setConcelho}
-                                            disabled={!distrito}
-                                        >
-                                            <SelectTrigger id="concelho-mobile" name="concelho-mobile">
-                                                <SelectValue
-                                                    placeholder={
-                                                        !distrito
-                                                            ? t("selectDistrictFirst")
-                                                            : t("selectMunicipality")
-                                                    }
+                                    {country === "PT" ? (
+                                        <>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="distrito-mobile">{t("district")}</Label>
+                                                <Select
+                                                    key={`distrito-mobile-${resetKey}`}
+                                                    value={distrito || undefined}
+                                                    onValueChange={setDistrito}
+                                                >
+                                                    <SelectTrigger id="distrito-mobile" name="distrito-mobile">
+                                                        <SelectValue placeholder={t("selectDistrict")} />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                        {DISTRITOS.map((d) => (
+                                                            <SelectItem key={d} value={d}>
+                                                                {d}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="concelho-mobile">{t("municipality")}</Label>
+                                                <Select
+                                                    key={`concelho-mobile-${resetKey}`}
+                                                    value={concelho || undefined}
+                                                    onValueChange={setConcelho}
+                                                    disabled={!distrito}
+                                                >
+                                                    <SelectTrigger id="concelho-mobile" name="concelho-mobile">
+                                                        <SelectValue
+                                                            placeholder={
+                                                                !distrito
+                                                                    ? t("selectDistrictFirst")
+                                                                    : t("selectMunicipality")
+                                                            }
+                                                        />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                                                        {municipios.length > 0 ? (
+                                                            municipios.map((m) => (
+                                                                <SelectItem key={m} value={m}>
+                                                                    {m}
+                                                                </SelectItem>
+                                                            ))
+                                                        ) : null}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="region-mobile">{t("region")}</Label>
+                                                <Input
+                                                    key={`region-mobile-${resetKey}`}
+                                                    id="region-mobile"
+                                                    type="text"
+                                                    placeholder={t("enterRegion")}
+                                                    value={region}
+                                                    onChange={(e) => setRegion(e.target.value)}
                                                 />
-                                            </SelectTrigger>
-                                            <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {municipios.length > 0 ? (
-                                                    municipios.map((m) => (
-                                                        <SelectItem key={m} value={m}>
-                                                            {m}
-                                                        </SelectItem>
-                                                    ))
-                                                ) : null}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <Label htmlFor="city-mobile">{t("city")}</Label>
+                                                <Input
+                                                    key={`city-mobile-${resetKey}`}
+                                                    id="city-mobile"
+                                                    type="text"
+                                                    placeholder={t("enterCity")}
+                                                    value={city}
+                                                    onChange={(e) => setCity(e.target.value)}
+                                                />
+                                            </div>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </div>

@@ -13,6 +13,7 @@ import { Property, PropertyImageSection } from "@/types/property"
 import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
 import { toast } from "sonner"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, MUNICIPIO_FREGUESIAS, TIPOS_IMOVEL } from "@/app/shared/distritos"
+import { COUNTRIES } from "@/app/shared/countries"
 import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
@@ -82,9 +83,12 @@ export default function PropertyForm({
       garageSpaces: 0,
       constructionYear: null as number | null,
       deliveryDate: "",
+      country: "PT",
       distrito: "",
       concelho: "",
       freguesia: "",
+      region: "",
+      city: "",
       address: "",
       paymentConditions: "",
       status: "active",
@@ -559,9 +563,12 @@ export default function PropertyForm({
                   garageSpaces: 0,
                   constructionYear: null,
                   deliveryDate: "",
+                  country: "PT",
                   distrito: "",
                   concelho: "",
                   freguesia: "",
+                  region: "",
+                  city: "",
                   address: "",
                   paymentConditions: "",
                   status: "active",
@@ -998,82 +1005,139 @@ export default function PropertyForm({
               <CardTitle>Localização</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Distrito <span className="text-red">*</span></Label>
-                  <Select
-                    value={formData.distrito || undefined}
-                    onValueChange={(value) => updateField("distrito", value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o distrito" />
-                    </SelectTrigger>
-                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                      {DISTRITOS.map((d) => (
-                        <SelectItem key={d} value={d}>
-                          {d}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Concelho <span className="text-red">*</span></Label>
-                  <Select
-                    value={formData.concelho || undefined}
-                    onValueChange={(value) => updateField("concelho", value)}
-                    disabled={!formData.distrito}
-                  >
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder={
-                          !formData.distrito
-                            ? "Selecione primeiro um distrito"
-                            : "Selecione o concelho"
-                        }
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                      {municipios.length > 0 ? (
-                        municipios.map((m) => (
-                          <SelectItem key={m} value={m}>
-                            {m}
-                          </SelectItem>
-                        ))
-                      ) : null}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
+              {/* Seleção de País */}
               <div className="space-y-2">
-                <Label>Freguesia</Label>
+                <Label>País <span className="text-red">*</span></Label>
                 <Select
-                  value={formData.freguesia || undefined}
-                  onValueChange={(value) => updateField("freguesia", value)}
-                  disabled={!formData.concelho}
+                  value={formData.country || "PT"}
+                  onValueChange={(value) => {
+                    // Atualizar país e limpar campos de localização em uma única operação
+                    setFormData(prev => ({
+                      ...prev,
+                      country: value,
+                      distrito: "",
+                      concelho: "",
+                      freguesia: "",
+                      region: "",
+                      city: "",
+                    }))
+                  }}
                 >
                   <SelectTrigger>
-                    <SelectValue
-                      placeholder={
-                        !formData.concelho
-                          ? "Selecione primeiro um concelho"
-                          : "Selecione a freguesia"
-                      }
-                    />
+                    <SelectValue placeholder="Selecione o país" />
                   </SelectTrigger>
-                  <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                    {freguesias.length > 0 ? (
-                      freguesias.map((f) => (
-                        <SelectItem key={f} value={f}>
-                          {f}
-                        </SelectItem>
-                      ))
-                    ) : null}
+                  <SelectContent>
+                    {COUNTRIES.map((c) => (
+                      <SelectItem key={c.code} value={c.code}>
+                        {c.flag} {c.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
+
+              {/* Campos específicos para Portugal */}
+              {formData.country === "PT" ? (
+                <>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label>Distrito <span className="text-red">*</span></Label>
+                      <Select
+                        value={formData.distrito || undefined}
+                        onValueChange={(value) => updateField("distrito", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione o distrito" />
+                        </SelectTrigger>
+                        <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                          {DISTRITOS.map((d) => (
+                            <SelectItem key={d} value={d}>
+                              {d}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Concelho <span className="text-red">*</span></Label>
+                      <Select
+                        value={formData.concelho || undefined}
+                        onValueChange={(value) => updateField("concelho", value)}
+                        disabled={!formData.distrito}
+                      >
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={
+                              !formData.distrito
+                                ? "Selecione primeiro um distrito"
+                                : "Selecione o concelho"
+                            }
+                          />
+                        </SelectTrigger>
+                        <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                          {municipios.length > 0 ? (
+                            municipios.map((m) => (
+                              <SelectItem key={m} value={m}>
+                                {m}
+                              </SelectItem>
+                            ))
+                          ) : null}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Freguesia</Label>
+                    <Select
+                      value={formData.freguesia || undefined}
+                      onValueChange={(value) => updateField("freguesia", value)}
+                      disabled={!formData.concelho}
+                    >
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={
+                            !formData.concelho
+                              ? "Selecione primeiro um concelho"
+                              : "Selecione a freguesia"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
+                        {freguesias.length > 0 ? (
+                          freguesias.map((f) => (
+                            <SelectItem key={f} value={f}>
+                              {f}
+                            </SelectItem>
+                          ))
+                        ) : null}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </>
+              ) : (
+                /* Campos genéricos para outros países */
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label>Região <span className="text-red">*</span></Label>
+                    <Input
+                      placeholder="Ex: Comunidade de Madrid, Île-de-France..."
+                      value={formData.region || ""}
+                      onChange={(e) => updateField("region", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Cidade <span className="text-red">*</span></Label>
+                    <Input
+                      placeholder="Ex: Madrid, Paris, Barcelona..."
+                      value={formData.city || ""}
+                      onChange={(e) => updateField("city", e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2">
                 <Label>Morada Completa</Label>

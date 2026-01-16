@@ -36,8 +36,11 @@ export interface PropertyFilters {
   propertyState?: string;
   energyClass?: string;
   status?: string;
+  country?: string;
   distrito?: string;
   concelho?: string;
+  region?: string;
+  city?: string;
   minTotalArea?: number;
   maxTotalArea?: number;
   minBuiltArea?: number;
