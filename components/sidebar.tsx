@@ -541,7 +541,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         fill="currentColor"
                                     />
                                 </svg>
-                            </button>
+                            </button> 
                             {estadoClasseOpen && (
                                 <>
                                     <div className="space-y-3">
