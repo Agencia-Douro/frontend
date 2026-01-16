@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { desiredZonesApi } from "@/services/api";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 type Country = "portugal" | "dubai" | "reino-unido";
 
@@ -17,16 +17,54 @@ const countryCodeMap: Record<Country, string> = {
     "reino-unido": "GB",
 };
 
+const countryLabels: Record<Country, string> = {
+    "portugal": "Portugal",
+    "dubai": "Dubai",
+    "reino-unido": "Reino Unido",
+};
+
 export default function ZonasMaisDesejadas() {
     const t = useTranslations("ZonasMaisDesejadas");
     const [selectedCountry, setSelectedCountry] = useState<Country>("portugal");
 
-    const countryCode = countryCodeMap[selectedCountry];
-
-    const { data: zonas, isLoading } = useQuery({
-        queryKey: ["desired-zones-active", countryCode],
-        queryFn: () => desiredZonesApi.getActive(countryCode),
+    // Buscar todas as zonas ativas (sem filtro de país) para saber quais países têm zonas
+    const { data: allZonas, isLoading } = useQuery({
+        queryKey: ["desired-zones-active-all"],
+        queryFn: () => desiredZonesApi.getActive(),
     });
+
+    // Calcular quais países têm zonas disponíveis
+    const availableCountries = useMemo(() => {
+        if (!allZonas) return ["portugal"] as Country[];
+        
+        const countries: Country[] = [];
+        const hasPortugal = allZonas.some(z => z.country === "PT" || !z.country);
+        const hasDubai = allZonas.some(z => z.country === "AE");
+        const hasUK = allZonas.some(z => z.country === "GB");
+        
+        if (hasPortugal) countries.push("portugal");
+        if (hasDubai) countries.push("dubai");
+        if (hasUK) countries.push("reino-unido");
+        
+        return countries.length > 0 ? countries : ["portugal"] as Country[];
+    }, [allZonas]);
+
+    // Filtrar zonas pelo país selecionado
+    const zonas = useMemo(() => {
+        if (!allZonas) return [];
+        const countryCode = countryCodeMap[selectedCountry];
+        return allZonas.filter(z => z.country === countryCode || (countryCode === "PT" && !z.country));
+    }, [allZonas, selectedCountry]);
+
+    // Se o país selecionado não tiver zonas, selecionar o primeiro disponível
+    useEffect(() => {
+        if (!availableCountries.includes(selectedCountry) && availableCountries.length > 0) {
+            setSelectedCountry(availableCountries[0]);
+        }
+    }, [availableCountries, selectedCountry]);
+
+    // Verificar se deve mostrar as tabs (mais de um país com zonas)
+    const showTabs = availableCountries.length > 1;
 
     if (isLoading) {
         return (
@@ -34,36 +72,6 @@ export default function ZonasMaisDesejadas() {
                 <div className="text-center flex flex-col items-center lg:gap-6 gap-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
                     <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance hidden md:block">{t("description")}</p>
-                </div>
-                
-                {/* Tabs de países */}
-                <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
-                    <div className="flex flex-row gap-0 overflow-x-auto">
-                        <Button
-                            type="button"
-                            variant={selectedCountry === "portugal" ? "gold" : "ghost"}
-                            className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                            onClick={() => setSelectedCountry("portugal")}
-                        >
-                            Portugal
-                        </Button>
-                        <Button
-                            type="button"
-                            variant={selectedCountry === "dubai" ? "gold" : "ghost"}
-                            className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                            onClick={() => setSelectedCountry("dubai")}
-                        >
-                            Dubai
-                        </Button>
-                        <Button
-                            type="button"
-                            variant={selectedCountry === "reino-unido" ? "gold" : "ghost"}
-                            className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                            onClick={() => setSelectedCountry("reino-unido")}
-                        >
-                            Reino Unido
-                        </Button>
-                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
@@ -82,35 +90,24 @@ export default function ZonasMaisDesejadas() {
                 <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance hidden md:block">{t("description")}</p>
             </div>
             
-            {/* Tabs de países */}
-            <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
-                <div className="flex flex-row gap-0 overflow-x-auto">
-                    <Button
-                        type="button"
-                        variant={selectedCountry === "portugal" ? "gold" : "ghost"}
-                        className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                        onClick={() => setSelectedCountry("portugal")}
-                    >
-                        Portugal
-                    </Button>
-                    <Button
-                        type="button"
-                        variant={selectedCountry === "dubai" ? "gold" : "ghost"}
-                        className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                        onClick={() => setSelectedCountry("dubai")}
-                    >
-                        Dubai
-                    </Button>
-                    <Button
-                        type="button"
-                        variant={selectedCountry === "reino-unido" ? "gold" : "ghost"}
-                        className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                        onClick={() => setSelectedCountry("reino-unido")}
-                    >
-                        Reino Unido
-                    </Button>
+            {/* Tabs de países - só mostrar se houver mais de um país com zonas */}
+            {showTabs && (
+                <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
+                    <div className="flex flex-row gap-0 overflow-x-auto">
+                        {availableCountries.map((country) => (
+                            <Button
+                                key={country}
+                                type="button"
+                                variant={selectedCountry === country ? "gold" : "ghost"}
+                                className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
+                                onClick={() => setSelectedCountry(country)}
+                            >
+                                {countryLabels[country]}
+                            </Button>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
             {zonas && zonas.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
