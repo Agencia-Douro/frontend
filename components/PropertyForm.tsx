@@ -1029,7 +1029,7 @@ export default function PropertyForm({
                   <SelectContent>
                     {COUNTRIES.map((c) => (
                       <SelectItem key={c.code} value={c.code}>
-                        {c.flag} {c.name}
+                        {c.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
