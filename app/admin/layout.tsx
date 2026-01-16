@@ -23,7 +23,7 @@ export default function AdminLayout({
 
   return (
     <html lang="pt-BR" className={`${monaSans.variable} overflow-x-hidden`}>
-      <body className="antialiased bg-muted max-w-screen overflow-x-hidden flex flex-col relative">
+      <body className="antialiased max-w-screen overflow-x-hidden flex flex-col relative">
         <QueryProvider>
           <AuthProvider>
             <div className="antialiased bg-[#fafafa] min-h-screen">

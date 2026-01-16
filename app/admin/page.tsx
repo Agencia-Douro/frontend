@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 
 export default function AdminPage() {
     return (
-        <div className="bg-[#fafafa] min-h-screen py-6 md:py-8">
+        <div className="min-h-screen py-6 md:py-8">
             <div className="container">
                 <h1 className="mb-6 body-16-medium">Painel Administrativo</h1>
 

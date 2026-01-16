@@ -26,7 +26,7 @@ export function AdminNavbar() {
   }, [mobileMenuOpen])
 
   return (
-    <header className="border-b border-[#EAE6DF]">
+    <header className="border-b border-[#EAE6DF] bg-white">
       <div className="container">
         <div className="flex items-center xl:h-18 h-16 gap-6">
           {/* Logo */}
