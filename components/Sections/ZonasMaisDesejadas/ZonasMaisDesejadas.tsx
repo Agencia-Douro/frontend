@@ -37,7 +37,7 @@ export default function ZonasMaisDesejadas() {
                 </div>
                 
                 {/* Tabs de países */}
-                <div className="flex justify-center items-center w-full border-b border-brown/20 mt-6 md:mt-8 lg:mt-10">
+                <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
                     <div className="flex flex-row gap-0 overflow-x-auto">
                         <Button
                             type="button"
@@ -83,7 +83,7 @@ export default function ZonasMaisDesejadas() {
             </div>
             
             {/* Tabs de países */}
-            <div className="flex justify-center items-center w-full border-b border-brown/20 mt-6 md:mt-8 lg:mt-10">
+            <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
                 <div className="flex flex-row gap-0 overflow-x-auto">
                     <Button
                         type="button"
