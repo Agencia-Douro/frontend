@@ -55,20 +55,18 @@ export const FaleConnosco = () => {
                 <form onSubmit={handleSubmit} className="space-y-6 w-full">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                            <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
+                        <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="nome"
-                                placeholder={t("namePlaceholder")}
                                 value={formData.nome}
                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                 required
                             />
                         </div>
                         <div className="space-y-1">
-                            <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
+                        <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="telefone"
-                                placeholder={t("phonePlaceholder")}
                                 value={formData.telefone}
                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                 required
@@ -80,7 +78,6 @@ export const FaleConnosco = () => {
                         <Input
                             id="email"
                             type="email"
-                            placeholder={t("emailPlaceholder")}
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
@@ -90,7 +87,6 @@ export const FaleConnosco = () => {
                         <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                         <Textarea
                             id="mensagem"
-                            placeholder={t("messagePlaceholder")}
                             value={formData.mensagem}
                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                             required

@@ -47,7 +47,7 @@ export default function ImoveisDestacados() {
                 <div className="md:text-center flex flex-col md:items-center lg:gap-6 gap-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
                     <p className="body-16-regular lg:body-18-regular text-black-muted md:w-[722px] hidden md:block">{t("description")}</p>
-                    <Button variant="gold" className="mt-4 md:mt-5 hidden md:block">
+                    <Button variant="outline" className="mt-4 md:mt-5 hidden md:block">
                         <Link href={`/${locale}/imoveis`}>{t("viewAll")}</Link>
                     </Button>
                 </div>
