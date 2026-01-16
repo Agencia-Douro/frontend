@@ -149,8 +149,17 @@ export default function InstitucionalPage() {
                         <span className="button-14-medium text-gold">{aboutUsContent?.servicesLabel || "O Que Oferecemos"}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || "Os Nossos Serviços"}</h2>
                     </div>
-                    <Button variant="gold" asChild>
-                        <Link href="#contacto">Solicitar Informações</Link>
+                    <Button
+                        variant="gold"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            const contactoSection = document.getElementById("contacto");
+                            if (contactoSection) {
+                                contactoSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }
+                        }}
+                    >
+                        Solicitar Informações
                     </Button>
                 </div>
                 {servicesLoading ? (

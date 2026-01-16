@@ -9,12 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        brown: "button-14-semibold bg-brown hover:bg-brown-muted text-white",
+        brown: "button-14-semibold bg-brown hover:bg-brown-muted text-white border border-brown",
         red: "button-14-semibold bg-red hover:bg-red/90 text-white",
-        gold: "button-14-semibold bg-gold hover:bg-gold-muted text-white",
+        gold: "button-14-semibold bg-gold hover:bg-gold-muted hover:border-gold-muted text-white border border-gold",
         ghost: "button-14-medium text-black-muted",
         "icon-brown": "border border-gold hover:bg-gold disabled:opacity-30 disabled:cursor-not-allowed",
-        outline: "button-14-semibold border border-brown text-brown hover:bg-brown hover:text-white",
+        outline: "button-14-semibold border border-gold text-gold hover:bg-gold hover:text-white",
         muted: "body-14-medium bg-muted text-brown hover:bg-brown hover:bg-[#EDE3D7] [&>svg]:text-brown [&_svg]:hover:text-white",
       },
       size: {

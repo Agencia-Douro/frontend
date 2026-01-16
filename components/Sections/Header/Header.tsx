@@ -122,7 +122,7 @@ export default function Header() {
                     <div className="w-full flex gap-2 justify-end items-center">
                         <LanguageSwitcher />
                         <Button
-                            variant="gold"
+                            variant={isTransparent ? "gold" : "outline"}
                             onClick={(e) => {
                                 e.preventDefault();
                                 const contactoSection = document.getElementById('contacto');
