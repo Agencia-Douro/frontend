@@ -34,6 +34,7 @@ function ImoveisContent() {
         isEmpreendimento:
             searchParams.get("isEmpreendimento") === "true" || undefined,
         status: "active", // Apenas mostrar imóveis ativos
+        country: searchParams.get("country") || undefined,
         distrito: searchParams.get("distrito") || undefined,
         concelho: searchParams.get("concelho") || undefined,
         minPrice: searchParams.get("minPrice")

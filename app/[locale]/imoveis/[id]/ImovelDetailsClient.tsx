@@ -368,23 +368,32 @@ export default function ImovelDetailsClient() {
                 <h1 className="pt-4 md:pt-5 lg:pt-6 body-18-medium md:body-20-medium lg:heading-quatro-medium text-brown">{property.title}</h1>
                 <h2 className="pt-2 md:pt-3 lg:pt-4 heading-quatro-medium lg:heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
 
-                <a
-                    href={`https://wa.me/351919766323?text=${encodeURIComponent(
-                        `Olá! Tenho interesse no imóvel:\n\n` +
-                        `${property.title}\n` +
-                        `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
-                        `Referência: ${property.reference}\n` +
-                        `Link: ${window.location.href}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center justify-center gap-2 bg-[#b39040] hover:bg-[#d2a649] text-white font-medium px-6 py-3 transition-colors"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                    </svg>
-                    {t("contactViaWhatsApp")}
-                </a>
+                <div className="grid grid-cols-2 gap-4 w-1/2 mt-2">
+                    <a
+                        href={`https://wa.me/351919766323?text=${encodeURIComponent(
+                            `Olá! Tenho interesse no imóvel:\n\n` +
+                            `${property.title}\n` +
+                            `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
+                            `Referência: ${property.reference}\n` +
+                            `Link: ${window.location.href}`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-muted text-white font-medium px-6 py-3 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                        {t("contactViaWhatsApp")}
+                    </a>
+
+                    <Button variant="gold" className="grow body-16-medium" onClick={handleDownloadPDF}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        {t("savePDF")}
+                    </Button>
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
@@ -400,6 +409,24 @@ export default function ImovelDetailsClient() {
                                     </p>
                                 </div>
                             )}
+
+                            <div className="mt-4 p-4 bg-brown/5 border border-brown/20 rounded-md">
+                                <p className="body-16-medium text-brown mb-2">
+                                    {t("whyChooseAgencyTitle")}
+                                </p>
+                                <p className="body-14-regular text-brown/80 mb-3">
+                                    {t("whyChooseAgencyDescription")}
+                                </p>
+                                <p className="body-14-medium text-brown/90 mb-2">
+                                    {t("whyChooseAgencyCTA")}
+                                </p>
+                                <p className="body-14-regular text-brown/80 mb-3">
+                                    {t("whyChooseAgencyOpportunity")}
+                                </p>
+                                <p className="body-14-regular text-brown/60 italic">
+                                    {t("whyChooseAgencyAgentNote")}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Mobile Only - Corretor Responsável, Botões e Form */}
@@ -545,12 +572,7 @@ export default function ImovelDetailsClient() {
                         </div>
                     </div>
                     <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 pt-4 md:pt-5 lg:pt-6">
-                        <Button variant="gold" className="grow body-16-medium w-full" onClick={handleDownloadPDF}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            {t("savePDF")}
-                        </Button>
+                        
                         {property.totalArea && property.totalArea > 0 && (
                             <Caracteristica titulo={t("totalArea")} valor={`${property.totalArea}m²`} />
                         )}
