@@ -470,12 +470,7 @@ export default function ImovelDetailsClient() {
                                         )}
                                         {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
                                     </Button>
-                                    <Button variant="gold" className="grow body-16-medium" onClick={handleDownloadPDF}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        {t("savePDF")}
-                                    </Button>
+
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -550,6 +545,12 @@ export default function ImovelDetailsClient() {
                         </div>
                     </div>
                     <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 pt-4 md:pt-5 lg:pt-6">
+                        <Button variant="gold" className="grow body-16-medium w-full" onClick={handleDownloadPDF}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            {t("savePDF")}
+                        </Button>
                         {property.totalArea && property.totalArea > 0 && (
                             <Caracteristica titulo={t("totalArea")} valor={`${property.totalArea}m²`} />
                         )}
@@ -698,12 +699,6 @@ export default function ImovelDetailsClient() {
                                             </svg>
                                         )}
                                         {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
-                                    </Button>
-                                    <Button variant="gold" className="w-full body-16-medium" onClick={handleDownloadPDF}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        {t("savePDF")}
                                     </Button>
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>

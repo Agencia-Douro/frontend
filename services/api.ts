@@ -1021,6 +1021,7 @@ export interface DesiredZone {
   image: string;
   displayOrder: number;
   isActive: boolean;
+  country: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -1112,8 +1113,15 @@ export const desiredZonesApi = {
     return response.json();
   },
 
-  getActive: async (): Promise<DesiredZone[]> => {
-    const response = await fetch(`${API_BASE_URL}/desired-zones/active`);
+  getActive: async (country?: string): Promise<DesiredZone[]> => {
+    const params = new URLSearchParams();
+    if (country) {
+      params.append("country", country);
+    }
+    const queryString = params.toString();
+    const url = `${API_BASE_URL}/desired-zones/active${queryString ? `?${queryString}` : ""}`;
+    
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Erro ao buscar zonas desejadas ativas");
@@ -1137,6 +1145,7 @@ export const desiredZonesApi = {
     image?: File;
     displayOrder?: number;
     isActive?: boolean;
+    country?: string;
   }): Promise<DesiredZone> => {
     const formData = new FormData();
     formData.append("name", data.name);
@@ -1151,6 +1160,10 @@ export const desiredZonesApi = {
 
     if (data.isActive !== undefined) {
       formData.append("isActive", data.isActive.toString());
+    }
+
+    if (data.country) {
+      formData.append("country", data.country);
     }
 
     const response = await fetch(`${API_BASE_URL}/desired-zones`, {
@@ -1175,6 +1188,7 @@ export const desiredZonesApi = {
       image?: File;
       displayOrder?: number;
       isActive?: boolean;
+      country?: string;
     }
   ): Promise<DesiredZone> => {
     const formData = new FormData();
@@ -1193,6 +1207,10 @@ export const desiredZonesApi = {
 
     if (data.isActive !== undefined) {
       formData.append("isActive", data.isActive.toString());
+    }
+
+    if (data.country) {
+      formData.append("country", data.country);
     }
 
     const response = await fetch(`${API_BASE_URL}/desired-zones/${id}`, {

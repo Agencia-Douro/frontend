@@ -18,7 +18,8 @@
     "title": "The most desired areas",
     "description": "Discover the regions that attract those seeking exclusivity, comfort and an unparalleled lifestyle.",
     "imageAlt": "Image of {nome}",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "noZones": "No zones available for this country"
   },
   "Testemunhos": {
     "title": "What our customers say",

@@ -18,7 +18,8 @@
     "title": "Les zones les plus recherchées",
     "description": "Découvrez les régions qui attirent ceux qui recherchent l'exclusivité, le confort et un style de vie incomparable.",
     "imageAlt": "Image de {nome}",
-    "viewAll": "Voir tout"
+    "viewAll": "Voir tout",
+    "noZones": "Aucune zone disponible pour ce pays"
   },
   "Testemunhos": {
     "title": "Ce que disent nos clients",

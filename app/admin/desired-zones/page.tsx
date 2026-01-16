@@ -12,7 +12,6 @@ import { Pencil, Trash2, Plus, X } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import Image from "next/image"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DISTRITOS } from "@/app/shared/distritos"
 
 export default function DesiredZonesPage() {
   const queryClient = useQueryClient()
@@ -22,7 +21,15 @@ export default function DesiredZonesPage() {
     name: "",
     displayOrder: 0,
     isActive: true,
+    country: "PT",
   })
+
+  // Mapeamento de códigos de países para nomes
+  const countryOptions = [
+    { code: "PT", name: "Portugal" },
+    { code: "AE", name: "Dubai" },
+    { code: "GB", name: "Reino Unido" },
+  ]
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
@@ -85,6 +92,7 @@ export default function DesiredZonesPage() {
       name: formData.name,
       displayOrder: formData.displayOrder,
       isActive: formData.isActive,
+      country: formData.country,
     }
 
     if (imageFile) {
@@ -104,6 +112,7 @@ export default function DesiredZonesPage() {
       name: zone.name,
       displayOrder: zone.displayOrder,
       isActive: zone.isActive,
+      country: zone.country || "PT",
     })
     setImagePreview(zone.image)
     setShowForm(true)
@@ -122,6 +131,7 @@ export default function DesiredZonesPage() {
       name: "",
       displayOrder: 0,
       isActive: true,
+      country: "PT",
     })
     setImageFile(null)
     setImagePreview(null)
@@ -168,23 +178,34 @@ export default function DesiredZonesPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Distrito *</Label>
+                <Label htmlFor="country">País *</Label>
                 <Select
-                  value={formData.name}
-                  onValueChange={(value) => setFormData({ ...formData, name: value })}
+                  value={formData.country}
+                  onValueChange={(value) => setFormData({ ...formData, country: value })}
                   required
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o distrito" />
+                    <SelectValue placeholder="Selecione o país" />
                   </SelectTrigger>
                   <SelectContent>
-                    {DISTRITOS.map((distrito) => (
-                      <SelectItem key={distrito} value={distrito}>
-                        {distrito}
+                    {countryOptions.map((country) => (
+                      <SelectItem key={country.code} value={country.code}>
+                        {country.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="name">Nome da Zona *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Ex: Porto, Lisboa, Marina Dubai..."
+                  required
+                />
               </div>
 
               <div className="space-y-2">
@@ -262,7 +283,7 @@ export default function DesiredZonesPage() {
                 <div>
                   <h3 className="font-semibold text-lg">{zone.name}</h3>
                   <p className="text-sm text-gray-500">
-                    Ordem: {zone.displayOrder} | {zone.isActive ? "Ativa" : "Inativa"}
+                    {countryOptions.find(c => c.code === zone.country)?.name || zone.country || "Portugal"} | Ordem: {zone.displayOrder} | {zone.isActive ? "Ativa" : "Inativa"}
                   </p>
                 </div>
               </div>
