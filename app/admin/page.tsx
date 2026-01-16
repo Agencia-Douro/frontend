@@ -90,6 +90,23 @@ export default function AdminPage() {
                     </div>
                 </div>
 
+                {/* Seção Vender Imóvel */}
+                <div className="mb-8">
+                    <h2 className="mb-4 body-16-medium text-brown">Vender Imóvel</h2>
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        <Link href="/admin/sell-property-content" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Conteúdo da Página</CardTitle>
+                                    <CardDescription>
+                                        Edite os textos da página Vender Imóvel (hero, estatísticas, canais de marketing)
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                    </div>
+                </div>
+
                 {/* Seção Podcast */}
                 <div>
                     <h2 className="mb-4 body-16-medium text-brown">Podcast</h2>

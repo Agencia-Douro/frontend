@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
+import { useQuery } from "@tanstack/react-query"
 import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
@@ -9,11 +10,13 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
-import { contactApi } from "@/services/api"
+import { contactApi, sellPropertyContentApi } from "@/services/api"
 import { Building2, Mail, Store, Newspaper, Users, Globe, MapPin, TrendingUp } from "lucide-react"
 
 export default function VenderImovelPage() {
     const t = useTranslations("VenderImovel");
+    const locale = useLocale();
+    
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
@@ -22,6 +25,12 @@ export default function VenderImovelPage() {
         tipoImovel: "",
         mensagem: "",
     })
+
+    // Fetch dynamic content
+    const { data: content } = useQuery({
+        queryKey: ["sell-property-content", locale],
+        queryFn: () => sellPropertyContentApi.get(locale),
+    });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -59,18 +68,22 @@ export default function VenderImovelPage() {
                 <div className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl">
-                        <span className="body-14-medium text-gold uppercase tracking-wider">{t("hero.badge")}</span>
+                        <span className="body-14-medium text-gold uppercase tracking-wider">
+                            {content?.heroBadge || t("hero.badge")}
+                        </span>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4">
-                            {t("hero.title")}
+                            {content?.heroTitle || t("hero.title")}
                         </h1>
                         <p className="body-16-regular md:body-18-regular text-black-muted mt-4 md:mt-6 max-w-2xl">
-                            {t("hero.description")}
+                            {content?.heroDescription || t("hero.description")}
                         </p>
                     </div>
 
                     {/* Evaluation Form */}
                     <div className="mt-10 md:mt-14 lg:mt-16 bg-white p-6 md:p-8 lg:p-10 border border-brown/10 max-w-3xl">
-                        <h2 className="body-20-medium md:heading-quatro-medium text-black mb-6 md:mb-8">{t("form.title")}</h2>
+                        <h2 className="body-20-medium md:heading-quatro-medium text-black mb-6 md:mb-8">
+                            {content?.formTitle || t("form.title")}
+                        </h2>
                         <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
@@ -150,7 +163,7 @@ export default function VenderImovelPage() {
                                 />
                             </div>
                             <Button type="submit" variant="gold" className="w-full md:w-auto">
-                                {t("form.submit")}
+                                {content?.formSubmit || t("form.submit")}
                             </Button>
                         </form>
                     </div>
@@ -160,13 +173,15 @@ export default function VenderImovelPage() {
             {/* Statistics Section - Our Reach */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">{t("stats.badge")}</span>
+                    <span className="button-14-medium text-gold">
+                        {content?.statsBadge || t("stats.badge")}
+                    </span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
-                        {t("stats.title")}
+                        {content?.statsTitle || t("stats.title")}
                     </h2>
                 </div>
                 <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
-                    {t("stats.description")}
+                    {content?.statsDescription || t("stats.description")}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     <div className="flex gap-4">
@@ -177,9 +192,11 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Globe className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("stats.reach.label")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.statsReachLabel || t("stats.reach.label")}
+                                </div>
                             </div>
-                            <p>{t("stats.reach.description")}</p>
+                            <p>{content?.statsReachDescription || t("stats.reach.description")}</p>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -190,9 +207,11 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Users className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("stats.clients.label")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.statsClientsLabel || t("stats.clients.label")}
+                                </div>
                             </div>
-                            <p>{t("stats.clients.description")}</p>
+                            <p>{content?.statsClientsDescription || t("stats.clients.description")}</p>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -203,9 +222,11 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <MapPin className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("stats.locations.label")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.statsLocationsLabel || t("stats.locations.label")}
+                                </div>
                             </div>
-                            <p>{t("stats.locations.description")}</p>
+                            <p>{content?.statsLocationsDescription || t("stats.locations.description")}</p>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -216,9 +237,11 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <TrendingUp className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("stats.experience.label")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.statsExperienceLabel || t("stats.experience.label")}
+                                </div>
                             </div>
-                            <p>{t("stats.experience.description")}</p>
+                            <p>{content?.statsExperienceDescription || t("stats.experience.description")}</p>
                         </div>
                     </div>
                 </div>
@@ -227,13 +250,15 @@ export default function VenderImovelPage() {
             {/* Marketing Channels Section */}
             <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">{t("marketing.badge")}</span>
+                    <span className="button-14-medium text-gold">
+                        {content?.marketingBadge || t("marketing.badge")}
+                    </span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
-                        {t("marketing.title")}
+                        {content?.marketingTitle || t("marketing.title")}
                     </h2>
                 </div>
                 <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
-                    {t("marketing.description")}
+                    {content?.marketingDescription || t("marketing.description")}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     <div className="flex gap-4">
@@ -244,10 +269,14 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Building2 className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("marketing.channels.website.title")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.marketingWebsiteTitle || t("marketing.channels.website.title")}
+                                </div>
                             </div>
-                            <p>{t("marketing.channels.website.description")}</p>
-                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.website.stat")}</div>
+                            <p>{content?.marketingWebsiteDescription || t("marketing.channels.website.description")}</p>
+                            <div className="heading-quatro-medium text-brown">
+                                {content?.marketingWebsiteStat || t("marketing.channels.website.stat")}
+                            </div>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -258,10 +287,14 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Mail className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("marketing.channels.newsletter.title")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.marketingNewsletterTitle || t("marketing.channels.newsletter.title")}
+                                </div>
                             </div>
-                            <p>{t("marketing.channels.newsletter.description")}</p>
-                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.newsletter.stat")}</div>
+                            <p>{content?.marketingNewsletterDescription || t("marketing.channels.newsletter.description")}</p>
+                            <div className="heading-quatro-medium text-brown">
+                                {content?.marketingNewsletterStat || t("marketing.channels.newsletter.stat")}
+                            </div>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -272,10 +305,14 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Store className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("marketing.channels.agencies.title")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.marketingAgenciesTitle || t("marketing.channels.agencies.title")}
+                                </div>
                             </div>
-                            <p>{t("marketing.channels.agencies.description")}</p>
-                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.agencies.stat")}</div>
+                            <p>{content?.marketingAgenciesDescription || t("marketing.channels.agencies.description")}</p>
+                            <div className="heading-quatro-medium text-brown">
+                                {content?.marketingAgenciesStat || t("marketing.channels.agencies.stat")}
+                            </div>
                         </div>
                     </div>
                     <div className="flex gap-4">
@@ -286,10 +323,14 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <div className="flex items-center gap-3">
                                 <Newspaper className="w-6 h-6 text-gold shrink-0" />
-                                <div className="body-16-regular text-black">{t("marketing.channels.media.title")}</div>
+                                <div className="body-16-regular text-black">
+                                    {content?.marketingMediaTitle || t("marketing.channels.media.title")}
+                                </div>
                             </div>
-                            <p>{t("marketing.channels.media.description")}</p>
-                            <div className="heading-quatro-medium text-brown">{t("marketing.channels.media.stat")}</div>
+                            <p>{content?.marketingMediaDescription || t("marketing.channels.media.description")}</p>
+                            <div className="heading-quatro-medium text-brown">
+                                {content?.marketingMediaStat || t("marketing.channels.media.stat")}
+                            </div>
                         </div>
                     </div>
                 </div>

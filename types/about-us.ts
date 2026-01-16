@@ -167,3 +167,83 @@ export interface UpdatePodcastContentDto {
   hostName?: string;
   hostDescription_pt?: string;
 }
+
+// Sell Property Content interfaces
+export interface SellPropertyContent {
+  id: string;
+  // Hero Section
+  heroBadge: string;
+  heroTitle: string;
+  heroDescription: string;
+  // Form Section
+  formTitle: string;
+  formSubmit: string;
+  // Stats Section
+  statsBadge: string;
+  statsTitle: string;
+  statsDescription: string;
+  statsReachLabel: string;
+  statsReachDescription: string;
+  statsClientsLabel: string;
+  statsClientsDescription: string;
+  statsLocationsLabel: string;
+  statsLocationsDescription: string;
+  statsExperienceLabel: string;
+  statsExperienceDescription: string;
+  // Marketing Section
+  marketingBadge: string;
+  marketingTitle: string;
+  marketingDescription: string;
+  marketingWebsiteTitle: string;
+  marketingWebsiteDescription: string;
+  marketingWebsiteStat: string;
+  marketingNewsletterTitle: string;
+  marketingNewsletterDescription: string;
+  marketingNewsletterStat: string;
+  marketingAgenciesTitle: string;
+  marketingAgenciesDescription: string;
+  marketingAgenciesStat: string;
+  marketingMediaTitle: string;
+  marketingMediaDescription: string;
+  marketingMediaStat: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpdateSellPropertyContentDto {
+  // Hero Section
+  heroBadge_pt?: string;
+  heroTitle_pt?: string;
+  heroDescription_pt?: string;
+  // Form Section
+  formTitle_pt?: string;
+  formSubmit_pt?: string;
+  // Stats Section
+  statsBadge_pt?: string;
+  statsTitle_pt?: string;
+  statsDescription_pt?: string;
+  statsReachLabel_pt?: string;
+  statsReachDescription_pt?: string;
+  statsClientsLabel_pt?: string;
+  statsClientsDescription_pt?: string;
+  statsLocationsLabel_pt?: string;
+  statsLocationsDescription_pt?: string;
+  statsExperienceLabel_pt?: string;
+  statsExperienceDescription_pt?: string;
+  // Marketing Section
+  marketingBadge_pt?: string;
+  marketingTitle_pt?: string;
+  marketingDescription_pt?: string;
+  marketingWebsiteTitle_pt?: string;
+  marketingWebsiteDescription_pt?: string;
+  marketingWebsiteStat_pt?: string;
+  marketingNewsletterTitle_pt?: string;
+  marketingNewsletterDescription_pt?: string;
+  marketingNewsletterStat_pt?: string;
+  marketingAgenciesTitle_pt?: string;
+  marketingAgenciesDescription_pt?: string;
+  marketingAgenciesStat_pt?: string;
+  marketingMediaTitle_pt?: string;
+  marketingMediaDescription_pt?: string;
+  marketingMediaStat_pt?: string;
+}

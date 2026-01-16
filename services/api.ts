@@ -20,6 +20,8 @@ import {
   UpdateDepoimentoDto,
   PodcastContent,
   UpdatePodcastContentDto,
+  SellPropertyContent,
+  UpdateSellPropertyContentDto,
 } from "@/types/about-us";
 
 const API_BASE_URL = "https://novo.agenciadouro.pt/api";
@@ -1530,6 +1532,37 @@ export const podcastContentApi = {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
         errorData.message || `Erro ao atualizar conteúdo do podcast (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};
+
+// Sell Property Content API
+export const sellPropertyContentApi = {
+  get: async (locale?: string): Promise<SellPropertyContent> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/sell-property-content${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar conteúdo da página vender imóvel");
+    }
+
+    return response.json();
+  },
+
+  update: async (data: UpdateSellPropertyContentDto): Promise<SellPropertyContent> => {
+    const response = await fetch(`${API_BASE_URL}/sell-property-content`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar conteúdo da página vender imóvel (${response.status})`;
       throw new Error(errorMessage);
     }
 
