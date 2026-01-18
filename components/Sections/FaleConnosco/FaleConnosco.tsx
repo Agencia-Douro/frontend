@@ -55,7 +55,7 @@ export const FaleConnosco = () => {
                 <form onSubmit={handleSubmit} className="space-y-6 w-full">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                        <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
+                            <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="nome"
                                 value={formData.nome}
@@ -64,7 +64,7 @@ export const FaleConnosco = () => {
                             />
                         </div>
                         <div className="space-y-1">
-                        <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
+                            <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                             <Input
                                 id="telefone"
                                 value={formData.telefone}

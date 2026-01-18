@@ -192,7 +192,7 @@ export function usePropertyDraft(draftId?: string | null) {
         console.log("Salvando rascunho - formData:", formData) // Debug
 
         const saved = localStorage.getItem(DRAFTS_KEY)
-        let drafts: PropertyDraft[] = saved ? JSON.parse(saved) : []
+        const drafts: PropertyDraft[] = saved ? JSON.parse(saved) : []
 
         const id = existingId || currentDraftId || generateId()
 
