@@ -38,23 +38,23 @@ export default function PodcastPage() {
         <>
             {/* Primeira Seção - Apresentação do Podcast */}
             <section className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 relative">
-                <Image
-                    src={logoPodcast}
-                    alt={t("logoAlt")}
-                    width={200}
-                    height={90}
-                    className="hidden lg:block absolute -right-2 lg:-right-6 xl:-right-12 top-0 lg:top-4 xl:top-2 size-26 lg:size-48"
-                />
-                <div className="lg:space-y-6 space-y-4">
-                    <div className="body-14-medium text-gold uppercase tracking-wider">{podcastContent?.headerLabel || t("exclusiveContent")}</div>
-                    <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{podcastContent?.pageTitle || t("title")}</h1>
-                    <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2>
-                    <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
+                <div className="flex justify-between gap-6">
+                    <div>
+                        <p className="body-14-medium text-gold uppercase tracking-wider w-48">{podcastContent?.headerLabel || t("exclusiveContent")}</p>
+                        <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black xl:max-w-4xl">{podcastContent?.pageTitle || t("title")}</h1>
+                        <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
+                    </div>
+                    <Image
+                        src={logoPodcast}
+                        alt={t("logoAlt")}
+                        className="hidden xl:block"
+                        width={300}
+                        height={90}
+                    />
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <div className="hidden md:block">
-                        <StatCard value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} />
-                    </div>
+                    <StatCard className="hidden md:block" value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} />
                     <StatCard value={config?.temporadas?.toString() || ""} label={t("seasons")} />
                     <StatCard value={config?.especialistasConvidados?.toString() || ""} label={t("guests")} />
                 </div>
