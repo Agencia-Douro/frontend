@@ -54,7 +54,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
   useEffect(() => {
     if (editor && value !== editor.getHTML()) {
       isUpdatingRef.current = true
-      editor.commands.setContent(value, false)
+      editor.commands.setContent(value, { emitUpdate: false })
       isUpdatingRef.current = false
     }
   }, [editor, value])

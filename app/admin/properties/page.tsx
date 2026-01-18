@@ -128,7 +128,6 @@ export default function PropertiesPage() {
               {drafts.length > 1 && (
                 <Button
                   variant="ghost"
-                  size="sm"
                   onClick={() => {
                     if (confirm("Tem certeza que deseja limpar todos os rascunhos?")) {
                       deleteAllDrafts()
@@ -185,7 +184,6 @@ export default function PropertiesPage() {
                   </div>
                   <div className="flex gap-1">
                     <Button
-                      size="sm"
                       variant="ghost"
                       onClick={() => router.push(`/admin/properties/create?draft=${draft.id}`)}
                       className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"

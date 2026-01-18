@@ -147,8 +147,8 @@ export const propertiesApi = {
     formData.append("garageSpaces", data.garageSpaces.toString());
     formData.append("hasOffice", data.hasOffice.toString());
     formData.append("hasLaundry", data.hasLaundry.toString());
-    formData.append("distrito", data.distrito);
-    formData.append("concelho", data.concelho);
+    formData.append("distrito", data.distrito ?? "");
+    formData.append("concelho", data.concelho ?? "");
     if (data.freguesia) formData.append("freguesia", data.freguesia);
     formData.append("status", data.status);
 
@@ -228,8 +228,8 @@ export const propertiesApi = {
     formData.append("garageSpaces", data.garageSpaces.toString());
     formData.append("hasOffice", data.hasOffice.toString());
     formData.append("hasLaundry", data.hasLaundry.toString());
-    formData.append("distrito", data.distrito);
-    formData.append("concelho", data.concelho);
+    formData.append("distrito", data.distrito ?? "");
+    formData.append("concelho", data.concelho ?? "");
     if (data.freguesia) formData.append("freguesia", data.freguesia);
     formData.append("status", data.status);
 

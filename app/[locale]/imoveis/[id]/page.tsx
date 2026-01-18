@@ -37,9 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const transactionType = transactionTypeMap[property.transactionType] || property.transactionType
         const propertyType = propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType
         const price = parseFloat(property.price).toLocaleString('pt-PT')
+        const totalArea = property.totalArea ?? 0
 
         const title = `${property.title} - ${price} € | Agência Douro`
-        const description = `${transactionType} ${propertyType} em ${property.concelho}, ${property.distrito}. ${property.bedrooms > 0 ? `${property.bedrooms} quartos` : ''}${property.bathrooms > 0 ? `, ${property.bathrooms} casas de banho` : ''}${property.totalArea > 0 ? `, ${property.totalArea}m²` : ''}. Referência: ${property.reference}`
+        const description = `${transactionType} ${propertyType} em ${property.concelho}, ${property.distrito}. ${property.bedrooms > 0 ? `${property.bedrooms} quartos` : ''}${property.bathrooms > 0 ? `, ${property.bathrooms} casas de banho` : ''}${totalArea > 0 ? `, ${totalArea}m²` : ''}. Referência: ${property.reference}`
 
         // Get absolute URL for og:image
         const imageUrl = property.image?.startsWith('http')
