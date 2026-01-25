@@ -557,7 +557,7 @@ export function Hero() {
                 </div>
                 {/* Botão Pesquisar */}
                 <Button type="submit" variant="gold" className="whitespace-nowrap px-8 w-full">
-                  Encontrar
+                  {t("searchButton")}
                 </Button>
               </motion.form>
             </div>

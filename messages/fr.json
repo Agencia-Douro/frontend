@@ -12,7 +12,8 @@
     "select": "Sélectionner",
     "search": "Rechercher",
     "searchPlaceholder": "Louer t3 à Porto",
-    "noResults": "Aucun résultat trouvé"
+    "noResults": "Aucun résultat trouvé",
+    "searchButton": "Rechercher"
   },
   "ZonasMaisDesejadas": {
     "title": "Les zones les plus recherchées",

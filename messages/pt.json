@@ -12,7 +12,8 @@
     "select": "Selecione",
     "search": "Pesquisar",
     "searchPlaceholder": "Alugar t3 no porto",
-    "noResults": "Nenhum resultado encontrado"
+    "noResults": "Nenhum resultado encontrado",
+    "searchButton": "Procurar"
   },
   "ZonasMaisDesejadas": {
     "title": "As zonas mais desejadas",

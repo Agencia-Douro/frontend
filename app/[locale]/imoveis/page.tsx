@@ -171,7 +171,7 @@ function ImoveisContent() {
                                 <p className="body-16-medium text-brown">{t("noResults")}</p>
                                 <p className="body-14-regular mt-1 w-80 text-grey">{t("noResultsDescription")}</p>
                             </div>) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pb-8 md:pb-4">
                                 {filteredData.data.map((property) => (
                                     <Card
                                         key={property.id}
