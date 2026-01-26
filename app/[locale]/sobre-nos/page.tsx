@@ -89,7 +89,7 @@ export default function InstitucionalPage() {
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                         <div className="lg:col-span-7 lg:space-y-6 space-y-4">
-                            <div><span className="body-14-medium text-gold uppercase tracking-wider">Quem Somos</span></div>
+                            <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">
                                 {aboutUsContent?.pageTitle || ""}
                             </h1>
@@ -114,10 +114,12 @@ export default function InstitucionalPage() {
                         </div>
                     </div>
                 )}
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12 gap-6 md:gap-8">
-                    <StatCard value={`${siteConfig?.anosExperiencia || 0}+`} label="Anos de Experiência" />
-                    <StatCard value={`${siteConfig?.imoveisVendidos || 0}+`} label="Imóveis Vendidos" />
-                    <StatCard value={`${siteConfig?.clientesSatisfeitos || 0}+`} label="Clientes Satisfeitos" />
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12 gap-6 md:gap-8">
+                    <StatCard value={`${siteConfig?.anosExperiencia || 0}`} label={t("yearsExperience")} />
+                    <StatCard value={`${siteConfig?.imoveisVendidos || 0}`} label={t("propertiesSold")} />
+                    <StatCard value={`${siteConfig?.clientesSatisfeitos || 0}`} label={t("satisfiedClients")} />
+                    <StatCard value={`${siteConfig?.eurosEmTransacoes || 0}`} label={t("eurosInTransactions")} />
+
                 </div>
             </section>
 
