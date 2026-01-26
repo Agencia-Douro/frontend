@@ -526,5 +526,48 @@
     "whyChooseAgencyCTA": "📞 Contactez-nous dès maintenant et planifiez votre visite !",
     "whyChooseAgencyOpportunity": "Ne manquez pas cette opportunité unique de vivre dans l'un des cadres les plus époustouflants du Portugal. 🌟",
     "whyChooseAgencyAgentNote": "*Si vous êtes un agent immobilier, chez Agência Douro nous travaillons en régime de partage."
+  },
+  "TermosECondicoes": {
+    "title": "Termes et Conditions",
+    "description": "En accédant au site Agência Douro, vous acceptez de respecter ces conditions de service, toutes les lois et réglementations applicables.",
+    "section1": {
+      "title": "1. Termes",
+      "content": "En accédant au site Agência Douro, vous acceptez de respecter ces conditions de service, toutes les lois et réglementations applicables, et acceptez d'être responsable du respect de toutes les lois locales applicables. Si vous n'acceptez pas l'une de ces conditions, vous êtes interdit d'utiliser ou d'accéder à ce site. Les matériaux contenus dans ce site sont protégés par les lois applicables sur le droit d'auteur et les marques de commerce."
+    },
+    "section2": {
+      "title": "2. Licence d'utilisation",
+      "intro": "L'autorisation est accordée de télécharger temporairement une copie des matériaux (informations ou logiciels) sur le site Agência Douro, uniquement pour une visualisation transitoire personnelle et non commerciale. Il s'agit de l'octroi d'une licence, et non d'un transfert de titre, et sous cette licence, vous ne pouvez pas :",
+      "item1": "modifier ou copier les matériaux ;",
+      "item2": "utiliser les matériaux à des fins commerciales ou pour tout affichage public (commercial ou non commercial) ;",
+      "item3": "tenter de décompiler ou de faire de l'ingénierie inverse de tout logiciel contenu sur le site Agência Douro ;",
+      "item4": "retirer toute notation de droit d'auteur ou autre propriété des matériaux ; ou",
+      "item5": "transférer les matériaux à une autre personne ou 'mettre en miroir' les matériaux sur tout autre serveur.",
+      "conclusion": "Cette licence sera automatiquement résiliée si vous violez l'une de ces restrictions et peut être résiliée par Agência Douro à tout moment. Lors de la résiliation de votre visualisation de ces matériaux ou lors de la résiliation de cette licence, vous devez détruire tous les matériaux téléchargés en votre possession, qu'ils soient en format électronique ou imprimé."
+    },
+    "section3": {
+      "title": "3. Avertissement",
+      "content1": "Les matériaux sur le site Agência Douro sont fournis 'tels quels'. Agência Douro ne fait aucune garantie, expresse ou implicite, et par les présentes, décline et nie toutes les autres garanties, y compris, sans limitation, les garanties implicites ou conditions de commercialisation, d'adéquation à un usage particulier ou de non-violation de la propriété intellectuelle ou autre violation de droits.",
+      "content2": "De plus, Agência Douro ne garantit pas ou ne fait aucune représentation concernant l'exactitude, les résultats probables ou la fiabilité de l'utilisation des matériaux sur son site Web ou autrement liés à ces matériaux ou sur tout site lié à ce site."
+    },
+    "section4": {
+      "title": "4. Limitations",
+      "content": "En aucun cas Agência Douro ou ses fournisseurs ne seront responsables de tout dommage (y compris, sans limitation, les dommages pour perte de données ou de profit, ou en raison d'une interruption des activités) résultant de l'utilisation ou de l'incapacité d'utiliser les matériaux sur Agência Douro, même si Agência Douro ou un représentant autorisé d'Agência Douro a été informé oralement ou par écrit de la possibilité de tels dommages. Parce que certaines juridictions n'autorisent pas les limitations sur les garanties implicites, ou les limitations de responsabilité pour les dommages consécutifs ou accessoires, ces limitations peuvent ne pas s'appliquer à vous."
+    },
+    "section5": {
+      "title": "5. Exactitude des matériaux",
+      "content": "Les matériaux apparaissant sur le site Agência Douro pourraient inclure des erreurs techniques, typographiques ou photographiques. Agência Douro ne garantit pas que tout matériau sur son site Web soit exact, complet ou à jour. Agência Douro peut apporter des modifications aux matériaux contenus sur son site Web à tout moment sans préavis. Cependant, Agência Douro ne s'engage pas à mettre à jour les matériaux."
+    },
+    "section6": {
+      "title": "6. Liens",
+      "content": "Agência Douro n'a pas examiné tous les sites liés à son site Web et n'est pas responsable du contenu de tout site lié. L'inclusion d'un lien n'implique pas l'approbation par Agência Douro du site. L'utilisation de tout site Web lié est aux risques de l'utilisateur."
+    },
+    "section7": {
+      "title": "7. Modifications",
+      "content": "Agência Douro peut réviser ces conditions de service pour son site Web à tout moment sans préavis. En utilisant ce site Web, vous acceptez d'être lié par la version actuelle de ces conditions de service."
+    },
+    "section8": {
+      "title": "8. Loi applicable",
+      "content": "Ces termes et conditions sont régis et interprétés conformément aux lois d'Agência Douro et vous vous soumettez irrévocablement à la juridiction exclusive des tribunaux dans cet état ou cette localité."
+    }
   }
 }

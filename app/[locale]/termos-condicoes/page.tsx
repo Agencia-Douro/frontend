@@ -15,7 +15,7 @@ export default async function TermosECondicoesPage() {
     
     return (
         <>
-            <div className="bg-deaf">
+            <div className="bg-[#F4F0E9] pt-10">
                 <section className="container">
                     <div className="py-6 md:py-10 lg:py-12 xl:py-16">
                         <div className="lg:space-y-6 space-y-4 mb-8 md:mb-10 lg:mb-12">

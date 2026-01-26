@@ -542,5 +542,48 @@
     "whyChooseAgencyCTA": "📞 Entre em contato agora mesmo e agende a sua visita!",
     "whyChooseAgencyOpportunity": "Não perca esta oportunidade única de viver em um dos cenários mais deslumbrantes de Portugal. 🌟",
     "whyChooseAgencyAgentNote": "*Se você é um agente imobiliário, na Agência Douro trabalhamos em regime de partilha."
+  },
+  "TermosECondicoes": {
+    "title": "Termos e Condições",
+    "description": "Ao acessar ao site Agência Douro, concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.",
+    "section1": {
+      "title": "1. Termos",
+      "content": "Ao acessar ao site Agência Douro, concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis."
+    },
+    "section2": {
+      "title": "2. Uso de Licença",
+      "intro": "É concedida permissão para baixar temporariamente uma cópia dos materiais (informações ou software) no site Agência Douro, apenas para visualização transitória pessoal e não comercial. Esta é a concessão de uma licença, não uma transferência de título e, sob esta licença, você não pode:",
+      "item1": "modificar ou copiar os materiais;",
+      "item2": "usar os materiais para qualquer finalidade comercial ou para exibição pública (comercial ou não comercial);",
+      "item3": "tentar descompilar ou fazer engenharia reversa de qualquer software contido no site Agência Douro;",
+      "item4": "remover quaisquer direitos autorais ou outras notações de propriedade dos materiais; ou",
+      "item5": "transferir os materiais para outra pessoa ou 'espelhe' os materiais em qualquer outro servidor.",
+      "conclusion": "Esta licença será automaticamente rescindida se você violar alguma dessas restrições e poderá ser rescindida por Agência Douro a qualquer momento. Ao encerrar a visualização desses materiais ou após o término desta licença, você deve apagar todos os materiais baixados em sua posse, seja em formato eletrónico ou impresso."
+    },
+    "section3": {
+      "title": "3. Isenção de responsabilidade",
+      "content1": "Os materiais no site da Agência Douro são fornecidos 'como estão'. Agência Douro não oferece garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem limitação, garantias implícitas ou condições de comercialização, adequação a um fim específico ou não violação de propriedade intelectual ou outra violação de direitos.",
+      "content2": "Além disso, o Agência Douro não garante ou faz qualquer representação relativa à precisão, aos resultados prováveis ​​ou à confiabilidade do uso dos materiais em seu site ou de outra forma relacionado a esses materiais ou em sites vinculados a este site."
+    },
+    "section4": {
+      "title": "4. Limitações",
+      "content": "Em nenhum caso o Agência Douro ou seus fornecedores serão responsáveis ​​por quaisquer danos (incluindo, sem limitação, danos por perda de dados ou lucro ou devido a interrupção dos negócios) decorrentes do uso ou da incapacidade de usar os materiais em Agência Douro, mesmo que Agência Douro ou um representante autorizado da Agência Douro tenha sido notificado oralmente ou por escrito da possibilidade de tais danos. Como algumas jurisdições não permitem limitações em garantias implícitas, ou limitações de responsabilidade por danos conseqüentes ou incidentais, essas limitações podem não se aplicar a você."
+    },
+    "section5": {
+      "title": "5. Precisão dos materiais",
+      "content": "Os materiais exibidos no site da Agência Douro podem incluir erros técnicos, tipográficos ou fotográficos. Agência Douro não garante que qualquer material em seu site seja preciso, completo ou atual. Agência Douro pode fazer alterações nos materiais contidos em seu site a qualquer momento, sem aviso prévio. No entanto, Agência Douro não se compromete a atualizar os materiais."
+    },
+    "section6": {
+      "title": "6. Links",
+      "content": "O Agência Douro não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado. A inclusão de qualquer link não implica endosso por Agência Douro do site. O uso de qualquer site vinculado é por conta e risco do usuário."
+    },
+    "section7": {
+      "title": "7. Modificações",
+      "content": "O Agência Douro pode revisar estes termos de serviço do site a qualquer momento, sem aviso prévio. Ao usar este site, você concorda em ficar vinculado à versão atual desses termos de serviço."
+    },
+    "section8": {
+      "title": "8. Lei aplicável",
+      "content": "Estes termos e condições são regidos e interpretados de acordo com as leis do Agência Douro e você se submete irrevogavelmente à jurisdição exclusiva dos tribunais naquele estado ou localidade."
+    }
   }
 }
