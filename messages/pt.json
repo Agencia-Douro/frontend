@@ -166,7 +166,9 @@
     },
     "meetOurTeam": "Conheça a Nossa Equipa",
     "ourTeam": "A Nossa Equipa",
-    "teamDescription": "A nossa equipa é composta por profissionais altamente qualificados e experientes, dedicados a proporcionar o melhor serviço e a transformar os seus sonhos em realidade."
+    "teamDescription": "A nossa equipa é composta por profissionais altamente qualificados e experientes, dedicados a proporcionar o melhor serviço e a transformar os seus sonhos em realidade.",
+    "viewMore": "Ver mais",
+    "viewLess": "Ver menos"
   },
   "Podcast": {
     "exclusiveContent": "Conteúdo Exclusivo",

@@ -166,7 +166,9 @@
     },
     "meetOurTeam": "Meet Our Team",
     "ourTeam": "Our Team",
-    "teamDescription": "Our team consists of highly qualified and experienced professionals, dedicated to providing the best service and turning your dreams into reality."
+    "teamDescription": "Our team consists of highly qualified and experienced professionals, dedicated to providing the best service and turning your dreams into reality.",
+    "viewMore": "View more",
+    "viewLess": "View less"
   },
   "Podcast": {
     "exclusiveContent": "Exclusive Content",

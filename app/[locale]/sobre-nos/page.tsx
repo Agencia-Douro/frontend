@@ -31,6 +31,7 @@ export default function InstitucionalPage() {
     const tNewsletter = useTranslations("Newsletter");
     const t = useTranslations("SobreNos");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [showAllTeam, setShowAllTeam] = useState(false);
 
     const { data: siteConfig } = useQuery({
         queryKey: ["site-config"],
@@ -205,7 +206,8 @@ export default function InstitucionalPage() {
                         {aboutUsContent?.teamDescription || ""}
                     </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                {/* Desktop - mostra todos */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     {teamMembers?.map((member) => (
                         <EquipaCard
                             key={member.id}
@@ -215,6 +217,29 @@ export default function InstitucionalPage() {
                             photo={member.photo}
                         />
                     ))}
+                </div>
+                {/* Mobile - mostra 3 inicialmente, com botão para ver mais */}
+                <div className="md:hidden">
+                    <div className="grid grid-cols-1 gap-6 mt-6">
+                        {teamMembers?.slice(0, showAllTeam ? undefined : 3).map((member) => (
+                            <EquipaCard
+                                key={member.id}
+                                name={member.name}
+                                email={member.email}
+                                phone={member.phone}
+                                photo={member.photo}
+                            />
+                        ))}
+                    </div>
+                    {teamMembers && teamMembers.length > 3 && (
+                        <Button
+                            variant="gold"
+                            className="w-full mt-6"
+                            onClick={() => setShowAllTeam(!showAllTeam)}
+                        >
+                            {showAllTeam ? t("viewLess") : t("viewMore")}
+                        </Button>
+                    )}
                 </div>
             </section>
 

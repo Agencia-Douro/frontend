@@ -166,7 +166,9 @@
     },
     "meetOurTeam": "Rencontrez notre équipe",
     "ourTeam": "Notre équipe",
-    "teamDescription": "Notre équipe est composée de professionnels hautement qualifiés et expérimentés, dédiés à fournir le meilleur service et à transformer vos rêves en réalité."
+    "teamDescription": "Notre équipe est composée de professionnels hautement qualifiés et expérimentés, dédiés à fournir le meilleur service et à transformer vos rêves en réalité.",
+    "viewMore": "Voir plus",
+    "viewLess": "Voir moins"
   },
   "Podcast": {
     "exclusiveContent": "Contenu exclusif",
