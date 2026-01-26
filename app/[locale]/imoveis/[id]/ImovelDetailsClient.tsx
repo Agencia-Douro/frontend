@@ -403,14 +403,14 @@ export default function ImovelDetailsClient() {
                                 style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
                                 dangerouslySetInnerHTML={{ __html: property.description }} />
                             {property.isEmpreendimento && (
-                                <div className="mt-4 p-4 bg-brown/5 border border-brown/20 rounded-md">
+                                <div className="mt-4 p-4 bg-brown/5 border border-brown/20">
                                     <p className="body-14-regular text-brown/80 italic">
                                         {t("developmentNote")}
                                     </p>
                                 </div>
                             )}
 
-                            <div className="mt-4 p-4 bg-brown/5 border border-brown/20 rounded-md">
+                            <div className="mt-4 p-4 bg-brown/5 border border-brown/20">
                                 <p className="body-16-medium text-brown mb-2">
                                     {t("whyChooseAgencyTitle")}
                                 </p>
