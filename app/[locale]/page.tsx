@@ -33,7 +33,7 @@ export default function Home() {
       <ImoveisDestacados />
 
       {/* Logo Section */}
-      <section className="container py-8 md:py-10 lg:py-12 xl:py-16 flex justify-center items-center">
+      <section className="container pt-8 md:pt-10 lg:pt-12 xl:pt-16 pb-0 flex justify-center items-center">
         <Image
           src={Logo}
           alt="Agência do Douro"
