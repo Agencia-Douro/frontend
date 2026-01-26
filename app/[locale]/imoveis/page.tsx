@@ -142,7 +142,7 @@ function ImoveisContent() {
                                         </svg>
                                     </button>
                                 </div>
-                                <p className="text-sm md:text-base"><span>{startItem} - {endItem}</span> {t("of")} <span>{totalItems}</span> {t("properties")}</p>
+                                <p className="text-[15px] text-black-muted"><span>{startItem} - {endItem}</span> {t("of")} <span>{totalItems}</span> {t("properties")}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Label htmlFor="tipo" className="body-14-medium text-grey whitespace-nowrap">{t("sortBy")}</Label>

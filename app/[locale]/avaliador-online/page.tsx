@@ -21,6 +21,8 @@ import { useTranslations } from "next-intl"
 import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos"
+import Image from "next/image"
+import Logo from "@/public/Logo.png"
 
 export default function AvaliadorOnlinePage() {
     const t = useTranslations("AvaliadorOnline")
@@ -87,7 +89,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
     return (
         <>
             <section className="relative">
-                <div className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
+                <div className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-8 md:mb-10 lg:mb-12">
@@ -235,7 +237,18 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                 </div>
             </section>
 
+            {/* Logo */}
+            <div className="flex justify-center py-8 md:py-10 lg:py-12 xl:py-16">
+                <Image
+                    src={Logo}
+                    alt="Agência Douro"
+                    className="w-64 md:w-80 lg:w-96"
+                />
+            </div>
+
             <Testemunhos />
+
+            <div className="h-16 md:h-24 lg:h-32 xl:h-40"></div>
 
             <Footer />
         </>
