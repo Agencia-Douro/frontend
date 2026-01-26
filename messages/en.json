@@ -210,7 +210,10 @@
         "episodiosGravados": "Recorded Episodes"
       },
       "imageAlt": "Vânia Fernandes - Real Estate Consultant & Host"
-    }
+    },
+    "whereToFindUs": "Where to Find Us",
+    "whereToFindUsTitle": "Listen on Your Favorite Platforms",
+    "whereToFindUsDescription": "Follow us on the main streaming platforms so you never miss an episode. Available wherever you are."
   },
   "Sidebar": {
     "buy": "Buy",

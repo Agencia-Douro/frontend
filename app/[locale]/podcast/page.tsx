@@ -59,14 +59,14 @@ export default function PodcastPage() {
                     <StatCard value={config?.especialistasConvidados?.toString() || ""} label={t("guests")} />
                 </div>
             </section>
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
 
             <Apresentadora />
 
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
 
             {/* Segunda Seção - O Que Abordamos */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
                     <span className="button-14-medium text-brown">{podcastContent?.topicsLabel || t("themesAndInsights")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{podcastContent?.topicsTitle || t("whatWeCover")}</h2>
@@ -97,10 +97,10 @@ export default function PodcastPage() {
                 )}
             </section>
 
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
 
             {/* Terceira Seção - Episódios */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="lg:space-y-6 space-y-4 mb-6 md:mb-8 lg:mb-10 xl:mb-12">
                     <div>
                         <span className="button-14-medium text-brown">{podcastContent?.episodesLabel || t("watchNow")}</span>
@@ -149,10 +149,10 @@ export default function PodcastPage() {
                 </div>
             </section>
 
-            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-8 md:mt-8 lg:mt-12 xl:mt-16"></div>
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
 
             {/* Secção - Onde nos encontrar */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="lg:space-y-6 space-y-4 mb-6 md:mb-8 lg:mb-10 xl:mb-12">
                     <div>
                         <span className="button-14-medium text-brown">{t("whereToFindUs")}</span>

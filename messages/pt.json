@@ -210,7 +210,10 @@
         "episodiosGravados": "Episódios Gravados"
       },
       "imageAlt": "Vânia Fernandes - Consultora Imobiliária & Host"
-    }
+    },
+    "whereToFindUs": "Onde Nos Encontrar",
+    "whereToFindUsTitle": "Ouça nas Suas Plataformas Favoritas",
+    "whereToFindUsDescription": "Siga-nos nas principais plataformas de streaming para nunca perder um episódio. Disponível onde quer que esteja."
   },
   "Sidebar": {
     "buy": "Comprar",
