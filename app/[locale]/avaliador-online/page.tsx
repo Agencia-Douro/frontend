@@ -228,7 +228,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                             setFormData({ ...formData, aceitaMarketing: checked as boolean })
                                         }
                                     />
-                                    <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")}</label>
+                                    <label htmlFor="modal-marketing" className="body-14-medium text-black-muted cursor-pointer">{t("marketingConsent")} <span className="text-red body-14-medium">*</span></label>
                                 </div>
                             </div>
 
