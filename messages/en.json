@@ -12,7 +12,8 @@
     "select": "Select",
     "search": "Search",
     "searchPlaceholder": "Rent t3 in Porto",
-    "noResults": "No results found"
+    "noResults": "No results found",
+    "searchButton": "Find"
   },
   "ZonasMaisDesejadas": {
     "title": "The most desired areas",
