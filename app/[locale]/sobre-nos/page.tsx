@@ -80,7 +80,7 @@ export default function InstitucionalPage() {
     return (
         <>
             {/* Primeira Seção - Apresentação */}
-            <section className="container pt-12 md:pt-20 lg:pt-24 xl:pt-32 relative">
+            <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 {contentLoading ? (
                     <div className="text-center py-12">
                         <p className="body-16-regular text-brown">A carregar...</p>
