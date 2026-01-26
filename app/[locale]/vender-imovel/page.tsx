@@ -68,20 +68,22 @@ export default function VenderImovelPage() {
             <section className="relative">
                 <div className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
-                    <div className="max-w-4xl">
-                        <span className="body-14-medium text-brown uppercase tracking-wider">
-                            {content?.heroBadge || t("hero.badge")}
-                        </span>
-                        <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4">
-                            {content?.heroTitle || t("hero.title")}
-                        </h1>
-                        <p className="body-16-regular md:body-18-regular text-black-muted mt-4 md:mt-6 max-w-2xl">
-                            {content?.heroDescription || t("hero.description")}
-                        </p>
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-8 md:mb-10 lg:mb-12">
+                            <span className="body-14-medium text-brown uppercase tracking-wider">
+                                {content?.heroBadge || t("hero.badge")}
+                            </span>
+                            <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4 mb-6">
+                                {content?.heroTitle || t("hero.title")}
+                            </h1>
+                            <p className="body-16-regular md:body-18-regular text-black-muted max-w-2xl mx-auto">
+                                {content?.heroDescription || t("hero.description")}
+                            </p>
+                        </div>
                     </div>
 
                     {/* Evaluation Form */}
-                    <div className="mt-10 md:mt-14 lg:mt-16 p-6 md:p-8 lg:p-10 border border-brown/20 max-w-3xl">
+                    <div className="max-w-4xl mx-auto mt-10 md:mt-14 lg:mt-16 p-6 md:p-8 lg:p-10 border border-brown/20">
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mb-6 md:mb-8">
                             {content?.formTitle || t("form.title")}
                         </h2>
