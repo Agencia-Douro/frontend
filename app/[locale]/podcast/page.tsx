@@ -37,12 +37,12 @@ export default function PodcastPage() {
     return (
         <>
             {/* Primeira Seção - Apresentação do Podcast */}
-            <section className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 relative">
+            <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 <div className="flex justify-between gap-6">
-                    <div>
+                    <div className="space-y-3 md:space-y-4">
                         <p className="body-14-medium text-gold uppercase tracking-wider w-48">{podcastContent?.headerLabel || t("exclusiveContent")}</p>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black xl:max-w-4xl">{podcastContent?.pageTitle || t("title")}</h1>
-                        <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2>
+                        {/* <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2> */}
                         <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
                     </div>
                     <Image
@@ -66,7 +66,7 @@ export default function PodcastPage() {
             <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
 
             {/* Segunda Seção - O Que Abordamos */}
-            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-20 space-y-6">
                 <div>
                     <span className="button-14-medium text-brown">{podcastContent?.topicsLabel || t("themesAndInsights")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{podcastContent?.topicsTitle || t("whatWeCover")}</h2>
