@@ -89,7 +89,7 @@ export default function InstitucionalPage() {
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                         <div className="lg:col-span-7 lg:space-y-6 space-y-4">
-                            <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>
+                            <div><span className="body-14-medium text-brown uppercase tracking-wider">{t("whoWeAre")}</span></div>
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">
                                 {aboutUsContent?.pageTitle || ""}
                             </h1>
@@ -126,7 +126,7 @@ export default function InstitucionalPage() {
             {/* Terceira Seção - Cultura */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">{aboutUsContent?.cultureLabel || "Nossa Identidade"}</span>
+                    <span className="button-14-medium text-brown">{aboutUsContent?.cultureLabel || "Nossa Identidade"}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.cultureTitle || "A Nossa Cultura"}</h2>
                 </div>
                 {cultureLoading ? (
@@ -150,7 +150,7 @@ export default function InstitucionalPage() {
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div>
-                        <span className="button-14-medium text-gold">{aboutUsContent?.servicesLabel || "O Que Oferecemos"}</span>
+                        <span className="button-14-medium text-brown">{aboutUsContent?.servicesLabel || "O Que Oferecemos"}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || "Os Nossos Serviços"}</h2>
                     </div>
                     <Button
@@ -202,7 +202,7 @@ export default function InstitucionalPage() {
             {/* Quinta Seção - Equipa */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-gold">{aboutUsContent?.teamLabel || "Conheça a Nossa Equipa"}</span>
+                    <span className="button-14-medium text-brown">{aboutUsContent?.teamLabel || "Conheça a Nossa Equipa"}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || "A Nossa Equipa"}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl mt-4 leading-relaxed">
                         {aboutUsContent?.teamDescription || ""}

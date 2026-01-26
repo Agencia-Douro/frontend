@@ -40,7 +40,7 @@ export default function PodcastPage() {
             <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 <div className="flex justify-between gap-6">
                     <div className="space-y-3 md:space-y-4">
-                        <p className="body-14-medium text-gold uppercase tracking-wider w-48">{podcastContent?.headerLabel || t("exclusiveContent")}</p>
+                        <p className="body-14-medium text-brown uppercase tracking-wider w-48">{podcastContent?.headerLabel || t("exclusiveContent")}</p>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black xl:max-w-4xl">{podcastContent?.pageTitle || t("title")}</h1>
                         {/* <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2> */}
                         <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
