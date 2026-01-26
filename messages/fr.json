@@ -53,7 +53,7 @@
     "emailPlaceholder": "contacto@agenciadouro.pt",
     "message": "Message",
     "messagePlaceholder": "Envoyez-nous un message !",
-    "marketingConsent": "J'autorise Agência Douro à conserver ces données à des fins de marketing et de contact.",
+    "marketingConsent": "J'autorise Agência Douro à conserver ces données",
     "send": "Envoyer",
     "emailDescription": "Envoyez-nous votre question ou demande par email.",
     "contact": "Contact",
@@ -307,7 +307,7 @@
         "rent": "Location"
       }
     },
-    "marketingConsent": "J'autorise Agência Douro à stocker ces données",
+    "marketingConsent": "J'autorise Agência Douro à conserver ces données",
     "submitButton": "Demander une évaluation",
     "toast": {
       "sending": "Envoi de l'évaluation...",
@@ -491,7 +491,7 @@
     "phonePlaceholder": "+351 919 766 323",
     "emailPlaceholder": "contact@agenciadouro.pt",
     "messagePlaceholder": "Envoyez-nous un message !",
-    "marketingConsent": "J'autorise Agência Douro à conserver ces données à des fins de marketing et de contact.",
+    "marketingConsent": "J'autorise Agência Douro à conserver ces données",
     "send": "Envoyer",
     "totalArea": "Surface totale",
     "builtArea": "Surface construite",

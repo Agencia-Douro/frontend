@@ -69,7 +69,7 @@
     "emailPlaceholder": "contacto@agenciadouro.pt",
     "message": "Mensagem",
     "messagePlaceholder": "Envie-nos uma mensagem!",
-    "marketingConsent": "Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.",
+    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
     "send": "Enviar",
     "emailDescription": "Envie-nos a sua dúvida ou questão para o nosso email.",
     "contact": "Contacto",
@@ -323,7 +323,7 @@
         "rent": "Arrendar"
       }
     },
-    "marketingConsent": "Autorizo a Agência Douro a armazenar estes dados",
+    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
     "submitButton": "Solicitar Avaliação",
     "toast": {
       "sending": "Enviando avaliação...",
@@ -507,7 +507,7 @@
     "phonePlaceholder": "+351 919 766 323",
     "emailPlaceholder": "contacto@agenciadouro.pt",
     "messagePlaceholder": "Envie-nos uma mensagem!",
-    "marketingConsent": "Autorizo a Agência Douro a guardar estes dados para efeitos de marketing e de contacto.",
+    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
     "send": "Enviar",
     "totalArea": "Área Total",
     "builtArea": "Área Construída",
