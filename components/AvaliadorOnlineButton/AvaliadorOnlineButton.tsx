@@ -29,6 +29,7 @@ import { useTranslations } from "next-intl"
 
 export const AvaliadorOnlineButton = () => {
     const t = useTranslations("AvaliadorOnline")
+    const tPropertyTypes = useTranslations("PropertyTypes")
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
 
@@ -176,7 +177,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                         <SelectContent className="z-2001">
                                             {TIPOS_IMOVEL.map((tipo) => (
                                                 <SelectItem key={tipo.value} value={tipo.value}>
-                                                    {tipo.label}
+                                                    {tPropertyTypes(tipo.labelKey)}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>

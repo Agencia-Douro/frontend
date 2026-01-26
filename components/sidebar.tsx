@@ -20,6 +20,7 @@ interface SidebarProps {
 
 export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose }: SidebarProps) {
     const t = useTranslations("Sidebar");
+    const tPropertyTypes = useTranslations("PropertyTypes");
     const router = useRouter()
     const searchParams = useSearchParams()
     const isFirstRender = useRef(true)
@@ -248,7 +249,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         <SelectContent>
                                             {TIPOS_IMOVEL.map((tipo) => (
                                                 <SelectItem key={tipo.value} value={tipo.value}>
-                                                    {tipo.label}
+                                                    {tPropertyTypes(tipo.labelKey)}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -677,7 +678,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                             {TIPOS_IMOVEL.map((tipo) => (
                                                 <SelectItem key={tipo.value} value={tipo.value}>
-                                                    {tipo.label}
+                                                    {tPropertyTypes(tipo.labelKey)}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>

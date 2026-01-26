@@ -24,6 +24,7 @@ const heroImages = [
 
 export function Hero() {
   const t = useTranslations("Hero")
+  const tPropertyTypes = useTranslations("PropertyTypes")
   const router = useRouter();
   const params = useParams();
   const locale = params.locale as string;
@@ -367,7 +368,7 @@ export function Hero() {
                           <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                             {TIPOS_IMOVEL.map((tipo) => (
                               <SelectItem key={tipo.value} value={tipo.value}>
-                                {tipo.label}
+                                {tPropertyTypes(tipo.labelKey)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -513,7 +514,7 @@ export function Hero() {
                         <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                           {TIPOS_IMOVEL.map((tipo) => (
                             <SelectItem key={tipo.value} value={tipo.value}>
-                              {tipo.label}
+                              {tPropertyTypes(tipo.labelKey)}
                             </SelectItem>
                           ))}
                         </SelectContent>

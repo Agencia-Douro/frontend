@@ -1,4 +1,19 @@
 {
+  "PropertyTypes": {
+    "moradia": "House",
+    "apartamento": "Apartment",
+    "casa": "Home",
+    "terreno": "Land",
+    "escritorio": "Office",
+    "comercial": "Commercial",
+    "industrial": "Industrial",
+    "armazem": "Warehouse",
+    "loja": "Shop",
+    "garagem": "Garage",
+    "quinta": "Farm",
+    "terreno_urbano": "Urban Land",
+    "terreno_rustico": "Rural Land"
+  },
   "Hero": {
     "title": "Portugal's most exclusive real estate agency.",
     "description": "Discover exclusive properties in Portugal with our specialized real estate agency.",
@@ -62,7 +77,7 @@
     "socialMedia": "Social Media",
     "socialMediaDescription": "We are very active on social media, follow us!",
     "address": "Address",
-    "addressDescription": "Come visit us, we're here waiting for you"
+    "addressDescription": "Come visit us, we're here waiting for you."
   },
   "Footer": {
     "home": "Home",

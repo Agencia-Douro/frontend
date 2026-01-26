@@ -26,6 +26,7 @@ import Logo from "@/public/Logo.png"
 
 export default function AvaliadorOnlinePage() {
     const t = useTranslations("AvaliadorOnline")
+    const tPropertyTypes = useTranslations("PropertyTypes")
     const pathname = usePathname()
 
     // Não mostrar o botão nas páginas de admin
@@ -159,7 +160,7 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                                 <SelectContent className="z-2001">
                                                     {TIPOS_IMOVEL.map((tipo) => (
                                                         <SelectItem key={tipo.value} value={tipo.value}>
-                                                            {tipo.label}
+                                                            {tPropertyTypes(tipo.labelKey)}
                                                         </SelectItem>
                                                     ))}
                                                 </SelectContent>

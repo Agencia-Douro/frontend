@@ -1,4 +1,19 @@
 {
+  "PropertyTypes": {
+    "moradia": "Moradia",
+    "apartamento": "Apartamento",
+    "casa": "Casa",
+    "terreno": "Terreno",
+    "escritorio": "Escritório",
+    "comercial": "Comercial",
+    "industrial": "Industrial",
+    "armazem": "Armazém",
+    "loja": "Loja",
+    "garagem": "Garagem",
+    "quinta": "Quinta",
+    "terreno_urbano": "Terreno Urbano",
+    "terreno_rustico": "Terreno Rústico"
+  },
   "Hero": {
     "title": "A imobiliária mais exclusiva de Portugal.",
     "description": "Descubra imóveis exclusivos em Portugal com a nossa imobiliária especializada.",
@@ -62,7 +77,7 @@
     "socialMedia": "Redes Sociais",
     "socialMediaDescription": "Somos bastante ativos nas redes, siga-nos!",
     "address": "Morada",
-    "addressDescription": "Venha fazer-nos uma visita, ficamos por cá à sua espera"
+    "addressDescription": "Venha fazer-nos uma visita, ficamos por cá à sua espera."
   },
   "Footer": {
     "home": "Ínicio",
