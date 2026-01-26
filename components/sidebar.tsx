@@ -864,7 +864,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
                                                 {COUNTRIES.map((c) => (
                                                     <SelectItem key={c.code} value={c.code}>
-                                                        {c.name}
+                                                        {c.flag} {c.name}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>

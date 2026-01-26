@@ -12,8 +12,7 @@
     "select": "Select",
     "search": "Search",
     "searchPlaceholder": "Rent t3 in Porto",
-    "noResults": "No results found",
-    "searchButton": "Search"
+    "noResults": "No results found"
   },
   "ZonasMaisDesejadas": {
     "title": "The most desired areas",
@@ -198,9 +197,6 @@
     "featuredEpisodes": "Featured Episodes",
     "episodesDescription": "Check out our most watched episodes and stay up to date with the conversations that are transforming the luxury real estate market.",
     "episode": "Episode",
-    "whereToFindUs": "Where to find us",
-    "whereToFindUsTitle": "Where to find us",
-    "whereToFindUsDescription": "Follow us on the main platforms and don't miss any episode.",
     "apresentadora": {
       "label": "Host",
       "description": "Vânia Fernandes is a recognized professional in the real estate sector in Northern Portugal, with over 15 years of experience in residential and commercial properties. As host of the Norte Imobiliário & Business Podcast, she shares knowledge, trends and strategies for buyers, sellers and investors in the Portuguese real estate market.",
@@ -472,7 +468,7 @@
     "errorSendingMessage": "Error sending message. Please try again.",
     "downloadStarted": "Download started!",
     "errorDownloadingFile": "Error downloading file",
-    "contactViaWhatsApp": "CONTACT US",
+    "contactViaWhatsApp": "Contact us via WhatsApp",
     "expectedDelivery": "Expected delivery:",
     "paymentConditions": "Payment Conditions:",
     "responsibleBroker": "Responsible Broker",
