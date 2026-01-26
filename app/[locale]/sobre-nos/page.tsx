@@ -29,6 +29,7 @@ import Logo from "@/public/Logo.png";
 export default function InstitucionalPage() {
     const locale = useLocale();
     const tNewsletter = useTranslations("Newsletter");
+    const t = useTranslations("SobreNos");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const { data: siteConfig } = useQuery({
@@ -120,7 +121,7 @@ export default function InstitucionalPage() {
             </section>
 
             {/* Terceira Seção - Cultura */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
                     <span className="button-14-medium text-gold">{aboutUsContent?.cultureLabel || "Nossa Identidade"}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.cultureTitle || "A Nossa Cultura"}</h2>
@@ -143,14 +144,15 @@ export default function InstitucionalPage() {
             </section>
 
             {/* Quarta Seção - Serviços */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
-                <div className="flex justify-between items-center">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div>
                         <span className="button-14-medium text-gold">{aboutUsContent?.servicesLabel || "O Que Oferecemos"}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || "Os Nossos Serviços"}</h2>
                     </div>
                     <Button
                         variant="gold"
+                        className="hidden md:flex"
                         onClick={(e) => {
                             e.preventDefault();
                             const contactoSection = document.getElementById("contacto");
@@ -159,7 +161,7 @@ export default function InstitucionalPage() {
                             }
                         }}
                     >
-                        Solicitar Informações
+                        {t("requestInfo")}
                     </Button>
                 </div>
                 {servicesLoading ? (
@@ -178,10 +180,24 @@ export default function InstitucionalPage() {
                         ))}
                     </div>
                 )}
+                {/* Botão mobile - aparece no final da seção */}
+                <Button
+                    variant="gold"
+                    className="md:hidden w-full mt-6"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        const contactoSection = document.getElementById("contacto");
+                        if (contactoSection) {
+                            contactoSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                    }}
+                >
+                    {t("requestInfo")}
+                </Button>
             </section>
 
             {/* Quinta Seção - Equipa */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16 space-y-6">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
                     <span className="button-14-medium text-gold">{aboutUsContent?.teamLabel || "Conheça a Nossa Equipa"}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || "A Nossa Equipa"}</h2>
@@ -203,7 +219,7 @@ export default function InstitucionalPage() {
             </section>
 
             {/* Seção Newsletter */}
-            <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="lg:space-y-6 space-y-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">{tNewsletter("title")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full">{tNewsletter("description")}</p>
