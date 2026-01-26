@@ -584,7 +584,7 @@ export default function ImovelDetailsClient() {
                         </div>
                     </div>
                     <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 pt-4 md:pt-5 lg:pt-6">
-                        
+
                         {property.totalArea && property.totalArea > 0 && (
                             <Caracteristica titulo={t("totalArea")} valor={`${property.totalArea}m²`} />
                         )}
