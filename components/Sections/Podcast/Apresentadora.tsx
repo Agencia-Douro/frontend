@@ -21,7 +21,7 @@ export function Apresentadora() {
     });
 
     return (
-        <section className="container pt-6 md:pt-10 lg:pt-12 xl:pt-16">
+        <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
                 <div className="space-y-6 md:space-y-8 text-center lg:text-left">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
@@ -29,6 +29,18 @@ export function Apresentadora() {
 
                     <div className="space-y-4">
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">{podcastContent?.hostDescription || t("description")}</p>
+                    </div>
+
+                    {/* Imagem - Mobile */}
+                    <div className="lg:hidden relative w-full max-w-md mx-auto aspect-4/5 overflow-hidden bg-muted">
+                        <Image
+                            src={siteConfig?.apresentadoraImage || VaniaPodcast}
+                            alt={t("imageAlt")}
+                            fill
+                            className="object-cover"
+                            priority
+                            unoptimized={!!siteConfig?.apresentadoraImage}
+                        />
                     </div>
 
                     {/* Estatísticas */}
@@ -68,8 +80,8 @@ export function Apresentadora() {
                     </div>
                 </div>
 
-                {/* Lado Direito - Imagem */}
-                <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 aspect-4/5 lg:aspect-3/4 xl:aspect-4/5 overflow-hidden bg-muted">
+                {/* Imagem - Desktop */}
+                <div className="hidden lg:block relative w-full lg:max-w-none lg:mx-0 lg:aspect-3/4 xl:aspect-4/5 overflow-hidden bg-muted">
                     <Image
                         src={siteConfig?.apresentadoraImage || VaniaPodcast}
                         alt={t("imageAlt")}
