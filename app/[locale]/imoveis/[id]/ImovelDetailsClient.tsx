@@ -830,7 +830,7 @@ export default function ImovelDetailsClient() {
                     <DialogHeader>
                         <DialogTitle className="text-brown body-18-medium">{t("propertyFiles")}</DialogTitle>
                         <DialogDescription>
-                            Documentos, plantas e outros ficheiros relacionados a este imóvel
+                            {t("filesDescription")}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-3">

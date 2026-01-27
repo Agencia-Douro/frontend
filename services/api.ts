@@ -917,6 +917,8 @@ export interface TeamMember {
   phone: string;
   email: string;
   photo?: string;
+  role?: string;
+  displayOrder?: number;
 }
 
 export const teamMembersApi = {
@@ -949,6 +951,14 @@ export const teamMembersApi = {
     formData.append("phone", data.phone);
     formData.append("email", data.email);
 
+    if (data.role) {
+      formData.append("role", data.role);
+    }
+
+    if (data.displayOrder !== undefined) {
+      formData.append("displayOrder", data.displayOrder.toString());
+    }
+
     if (photoFile) {
       formData.append("photo", photoFile);
     }
@@ -979,6 +989,8 @@ export const teamMembersApi = {
     if (data.name) formData.append("name", data.name);
     if (data.phone) formData.append("phone", data.phone);
     if (data.email) formData.append("email", data.email);
+    if (data.role !== undefined) formData.append("role", data.role);
+    if (data.displayOrder !== undefined) formData.append("displayOrder", data.displayOrder.toString());
 
     if (photoFile) {
       formData.append("photo", photoFile);

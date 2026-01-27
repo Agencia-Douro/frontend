@@ -28,6 +28,8 @@ export default function SiteConfigPage() {
     name: "",
     phone: "",
     email: "",
+    role: "",
+    displayOrder: 0,
   })
 
   const [photoFile, setPhotoFile] = useState<File | null>(null)
@@ -147,6 +149,8 @@ export default function SiteConfigPage() {
       name: member.name,
       phone: member.phone,
       email: member.email,
+      role: member.role || "",
+      displayOrder: member.displayOrder || 0,
     })
     setPhotoPreview(member.photo || null)
     setPhotoFile(null)
@@ -164,6 +168,8 @@ export default function SiteConfigPage() {
       name: "",
       phone: "",
       email: "",
+      role: "",
+      displayOrder: 0,
     })
     setPhotoFile(null)
     setPhotoPreview(null)
@@ -440,6 +446,33 @@ export default function SiteConfigPage() {
                     required
                   />
                 </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-role">Cargo</Label>
+                  <Input
+                    id="member-role"
+                    type="text"
+                    value={memberFormData.role}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, role: e.target.value })
+                    }
+                    placeholder="Digite o cargo (ex: Consultor Imobiliário)"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-displayOrder">Ordem de Exibição</Label>
+                  <Input
+                    id="member-displayOrder"
+                    type="number"
+                    min="0"
+                    value={memberFormData.displayOrder}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, displayOrder: parseInt(e.target.value) || 0 })
+                    }
+                    placeholder="Ordem (0 = primeiro)"
+                  />
+                </div>
               </div>
 
               <div className="mt-4 space-y-2">
@@ -507,10 +540,14 @@ export default function SiteConfigPage() {
                         className="rounded-lg object-cover"
                       />
                     )}
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4">
                       <div>
                         <p className="text-sm text-gray-500">Nome</p>
                         <p className="font-medium">{member.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Cargo</p>
+                        <p className="font-medium">{member.role || "-"}</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Telefone</p>
@@ -519,6 +556,10 @@ export default function SiteConfigPage() {
                       <div>
                         <p className="text-sm text-gray-500">Email</p>
                         <p className="font-medium">{member.email}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Ordem</p>
+                        <p className="font-medium">{member.displayOrder ?? 0}</p>
                       </div>
                     </div>
                   </div>

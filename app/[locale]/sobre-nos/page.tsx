@@ -217,6 +217,7 @@ export default function InstitucionalPage() {
                             email={member.email}
                             phone={member.phone}
                             photo={member.photo}
+                            role={member.role}
                         />
                     ))}
                 </div>
@@ -230,6 +231,7 @@ export default function InstitucionalPage() {
                                 email={member.email}
                                 phone={member.phone}
                                 photo={member.photo}
+                                role={member.role}
                             />
                         ))}
                     </div>
