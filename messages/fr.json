@@ -1,4 +1,19 @@
 {
+  "PropertyTypes": {
+    "moradia": "Maison",
+    "apartamento": "Appartement",
+    "casa": "Maison",
+    "terreno": "Terrain",
+    "escritorio": "Bureau",
+    "comercial": "Commercial",
+    "industrial": "Industriel",
+    "armazem": "Entrepôt",
+    "loja": "Magasin",
+    "garagem": "Garage",
+    "quinta": "Ferme",
+    "terreno_urbano": "Terrain Urbain",
+    "terreno_rustico": "Terrain Rural"
+  },
   "Hero": {
     "title": "L'agence immobilière la plus exclusive du Portugal.",
     "description": "Découvrez des propriétés exclusives au Portugal avec notre agence immobilière spécialisée.",
