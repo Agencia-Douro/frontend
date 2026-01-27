@@ -95,7 +95,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="nome"
-                                        placeholder={t("form.namePlaceholder")}
                                         value={formData.nome}
                                         onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                         required
@@ -107,7 +106,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="telefone"
-                                        placeholder={t("form.phonePlaceholder")}
                                         value={formData.telefone}
                                         onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                         required
@@ -121,7 +119,6 @@ export default function VenderImovelPage() {
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder={t("form.emailPlaceholder")}
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required
@@ -134,7 +131,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="localizacao"
-                                        placeholder={t("form.locationPlaceholder")}
                                         value={formData.localizacao}
                                         onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
                                         required
@@ -146,7 +142,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="tipoImovel"
-                                        placeholder={t("form.propertyTypePlaceholder")}
                                         value={formData.tipoImovel}
                                         onChange={(e) => setFormData({ ...formData, tipoImovel: e.target.value })}
                                         required
@@ -159,7 +154,6 @@ export default function VenderImovelPage() {
                                 </Label>
                                 <Textarea
                                     id="mensagem"
-                                    placeholder={t("form.messagePlaceholder")}
                                     value={formData.mensagem}
                                     onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                     rows={4}

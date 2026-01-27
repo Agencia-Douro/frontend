@@ -118,7 +118,7 @@ export default function InstitucionalPage() {
                     <StatCard value={`${siteConfig?.anosExperiencia || 0}`} label={t("yearsExperience")} />
                     <StatCard value={`${siteConfig?.imoveisVendidos || 0}`} label={t("propertiesSold")} />
                     <StatCard value={`${siteConfig?.clientesSatisfeitos || 0}`} label={t("satisfiedClients")} />
-                    <StatCard value={`${siteConfig?.eurosEmTransacoes || 0}`} label={t("eurosInTransactions")} />
+                    <StatCard value={`${siteConfig?.seguidoresInstagram || 0}`} label={t("instagramFollowers")} />
 
                 </div>
             </section>

@@ -22,6 +22,7 @@ export default function SiteConfigPage() {
     episodiosPublicados: 0,
     especialistasConvidados: 0,
     eurosEmTransacoes: 0,
+    seguidoresInstagram: 0,
   })
 
   const [memberFormData, setMemberFormData] = useState({
@@ -58,6 +59,7 @@ export default function SiteConfigPage() {
         episodiosPublicados: config.episodiosPublicados || 0,
         especialistasConvidados: config.especialistasConvidados || 0,
         eurosEmTransacoes: config.eurosEmTransacoes || 0,
+        seguidoresInstagram: config.seguidoresInstagram || 0,
       })
     }
   }, [config])
@@ -300,6 +302,24 @@ export default function SiteConfigPage() {
                   })
                 }
                 placeholder="Digite a quantidade de euros em transações"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="seguidoresInstagram">Seguidores no Instagram</Label>
+              <Input
+                id="seguidoresInstagram"
+                type="number"
+                min="0"
+                value={formData.seguidoresInstagram}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    seguidoresInstagram: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite a quantidade de seguidores no Instagram"
                 required
               />
             </div>

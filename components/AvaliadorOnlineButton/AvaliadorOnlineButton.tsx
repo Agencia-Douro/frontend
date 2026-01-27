@@ -131,7 +131,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                     <Label htmlFor="modal-nome" className="body-14-medium text-black">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
                                     <Input
                                         id="modal-nome"
-                                        placeholder={t("personalData.namePlaceholder")}
                                         value={formData.nome}
                                         onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                         required

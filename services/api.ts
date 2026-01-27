@@ -844,6 +844,7 @@ export interface SiteConfig {
   temporadas?: number;
   especialistasConvidados?: number;
   eurosEmTransacoes?: number;
+  seguidoresInstagram?: number;
   apresentadoraImage?: string;
 }
 
@@ -887,6 +888,9 @@ export const siteConfigApi = {
     }
     if (data.eurosEmTransacoes !== undefined) {
       formData.append("eurosEmTransacoes", data.eurosEmTransacoes.toString());
+    }
+    if (data.seguidoresInstagram !== undefined) {
+      formData.append("seguidoresInstagram", data.seguidoresInstagram.toString());
     }
 
     // Adicionar imagem se fornecida

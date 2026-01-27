@@ -517,7 +517,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome"
-                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
@@ -741,7 +740,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="nome-desktop" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome-desktop"
-                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
@@ -751,7 +749,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="telefone-desktop" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="telefone-desktop"
-                                                placeholder={t("phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -764,7 +761,6 @@ export default function ImovelDetailsClient() {
                                         <Input
                                             id="email-desktop"
                                             type="email"
-                                            placeholder={t("emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -775,7 +771,6 @@ export default function ImovelDetailsClient() {
                                         <Label htmlFor="mensagem-desktop" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                                         <Textarea
                                             id="mensagem-desktop"
-                                            placeholder={t("messagePlaceholder")}
                                             value={formData.mensagem}
                                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
