@@ -402,6 +402,21 @@ export default function ImovelDetailsClient() {
                                 className="tiptap max-w-none break-words whitespace-pre-line"
                                 style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
                                 dangerouslySetInnerHTML={{ __html: property.description }} />
+
+                            {/* Acabamentos & Equipamentos */}
+                            {property.features && (
+                                <div className="flex items-center justify-between py-4 border-b border-brown/10 mt-4">
+                                    <p className="body-16-medium text-brown">{t("features")}</p>
+                                    <Button
+                                        variant="gold"
+                                        size="default"
+                                        onClick={() => setShowFeaturesModal(true)}
+                                    >
+                                        {t("view")}
+                                    </Button>
+                                </div>
+                            )}
+
                             {property.isEmpreendimento && (
                                 <div className="mt-4 p-4 bg-brown/5 border border-brown/20">
                                     <p className="body-14-regular text-brown/80 italic">
@@ -615,18 +630,6 @@ export default function ImovelDetailsClient() {
                         )}
                         {property.energyClass && (
                             <Caracteristica titulo={t("energyClass")} valor={property.energyClass.toUpperCase()} />
-                        )}
-                        {property.features && (
-                            <div className="flex items-center justify-between py-4 border-b border-brown/10">
-                                <p className="body-16-medium text-brown">{t("features")}</p>
-                                <Button
-                                    variant="gold"
-                                    size="default"
-                                    onClick={() => setShowFeaturesModal(true)}
-                                >
-                                    {t("view")}
-                                </Button>
-                            </div>
                         )}
                         {property.whyChoose && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
