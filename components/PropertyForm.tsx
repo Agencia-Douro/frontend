@@ -300,17 +300,17 @@ export default function PropertyForm({
     const newErrors = { ...errors }
     const areas = { ...formData, [field]: value }
 
-    // Área bruta não pode ser maior que área total
+    // Área bruta privativa não pode ser maior que área total
     if (areas.builtArea && areas.totalArea && areas.builtArea > areas.totalArea) {
-      newErrors.builtArea = "Área bruta não pode ser maior que área total"
+      newErrors.builtArea = "Área bruta privativa não pode ser maior que área total"
     } else {
       delete newErrors.builtArea
     }
 
-    // Área útil não pode ser maior que área bruta ou total
+    // Área útil não pode ser maior que área bruta privativa ou total
     if (areas.usefulArea) {
       if (areas.builtArea && areas.usefulArea > areas.builtArea) {
-        newErrors.usefulArea = "Área útil não pode ser maior que área bruta"
+        newErrors.usefulArea = "Área útil não pode ser maior que área bruta privativa"
       } else if (areas.totalArea && areas.usefulArea > areas.totalArea) {
         newErrors.usefulArea = "Área útil não pode ser maior que área total"
       } else {
@@ -871,7 +871,7 @@ export default function PropertyForm({
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Área Bruta (m²)</Label>
+                  <Label>Área Bruta Privativa (m²)</Label>
                   <Input
                     type="number"
                     placeholder="120"

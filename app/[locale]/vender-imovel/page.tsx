@@ -79,6 +79,14 @@ export default function VenderImovelPage() {
                             <p className="body-16-regular md:body-18-regular text-black-muted max-w-2xl mx-auto">
                                 {content?.heroDescription || t("hero.description")}
                             </p>
+                            <a
+                                href="tel:+351919766324"
+                                className="flex justify-center"
+                            >
+                                <Button variant="gold" className="mt-6 md:mt-8 lg:mt-10">
+                                    {t("hero.callNow")}
+                                </Button >
+                            </a>
                         </div>
                     </div>
 
@@ -95,7 +103,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="nome"
-                                        placeholder={t("form.namePlaceholder")}
                                         value={formData.nome}
                                         onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                         required
@@ -107,7 +114,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="telefone"
-                                        placeholder={t("form.phonePlaceholder")}
                                         value={formData.telefone}
                                         onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                         required
@@ -121,7 +127,6 @@ export default function VenderImovelPage() {
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder={t("form.emailPlaceholder")}
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required
@@ -134,7 +139,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="localizacao"
-                                        placeholder={t("form.locationPlaceholder")}
                                         value={formData.localizacao}
                                         onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
                                         required
@@ -146,7 +150,6 @@ export default function VenderImovelPage() {
                                     </Label>
                                     <Input
                                         id="tipoImovel"
-                                        placeholder={t("form.propertyTypePlaceholder")}
                                         value={formData.tipoImovel}
                                         onChange={(e) => setFormData({ ...formData, tipoImovel: e.target.value })}
                                         required
@@ -159,7 +162,6 @@ export default function VenderImovelPage() {
                                 </Label>
                                 <Textarea
                                     id="mensagem"
-                                    placeholder={t("form.messagePlaceholder")}
                                     value={formData.mensagem}
                                     onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                     rows={4}
@@ -178,67 +180,7 @@ export default function VenderImovelPage() {
                 <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
             </div>
 
-            {/* Statistics Section - Our Reach */}
-            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
-                <div>
-                    <span className="button-14-medium text-brown">
-                        {content?.statsBadge || t("stats.badge")}
-                    </span>
-                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
-                        {content?.statsTitle || t("stats.title")}
-                    </h2>
-                </div>
-                <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
-                    {content?.statsDescription || t("stats.description")}
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                    <div className="flex gap-4">
-                        <div className="flex flex-col gap-3">
-                            <div className="w-px bg-brown h-1/3"></div>
-                            <div className="w-px bg-brown/20 h-2/3"></div>
-                        </div>
-                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.statsReachLabel || t("stats.reach.label")}</h3>
-                            <p>{content?.statsReachDescription || t("stats.reach.description")}</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <div className="flex flex-col gap-3">
-                            <div className="w-px bg-brown h-1/3"></div>
-                            <div className="w-px bg-brown/20 h-2/3"></div>
-                        </div>
-                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.statsClientsLabel || t("stats.clients.label")}</h3>
-                            <p>{content?.statsClientsDescription || t("stats.clients.description")}</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <div className="flex flex-col gap-3">
-                            <div className="w-px bg-brown h-1/3"></div>
-                            <div className="w-px bg-brown/20 h-2/3"></div>
-                        </div>
-                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.statsLocationsLabel || t("stats.locations.label")}</h3>
-                            <p>{content?.statsLocationsDescription || t("stats.locations.description")}</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <div className="flex flex-col gap-3">
-                            <div className="w-px bg-brown h-1/3"></div>
-                            <div className="w-px bg-brown/20 h-2/3"></div>
-                        </div>
-                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.statsExperienceLabel || t("stats.experience.label")}</h3>
-                            <p>{content?.statsExperienceDescription || t("stats.experience.description")}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            {/* Divider */}
-            <div className="container">
-                <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
-            </div>
 
             {/* Marketing Channels Section */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
@@ -292,6 +234,63 @@ export default function VenderImovelPage() {
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
                             <h3 className="body-18-medium text-black">{content?.marketingMediaTitle || t("marketing.channels.media.title")}</h3>
                             <p>{content?.marketingMediaStat || t("marketing.channels.media.stat")}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Statistics Section - Our Reach */}
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
+                <div>
+                    <span className="button-14-medium text-brown">
+                        {content?.statsBadge || t("stats.badge")}
+                    </span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
+                        {content?.statsTitle || t("stats.title")}
+                    </h2>
+                </div>
+                <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl">
+                    {content?.statsDescription || t("stats.description")}
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <h3 className="body-18-medium text-black">{content?.statsReachLabel || t("stats.reach.label")}</h3>
+                            <p>{content?.statsReachDescription || t("stats.reach.description")}</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <h3 className="body-18-medium text-black">{content?.statsClientsLabel || t("stats.clients.label")}</h3>
+                            <p>{content?.statsClientsDescription || t("stats.clients.description")}</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <h3 className="body-18-medium text-black">{content?.statsLocationsLabel || t("stats.locations.label")}</h3>
+                            <p>{content?.statsLocationsDescription || t("stats.locations.description")}</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-3">
+                            <div className="w-px bg-brown h-1/3"></div>
+                            <div className="w-px bg-brown/20 h-2/3"></div>
+                        </div>
+                        <div className="space-y-3 body-16-regular text-black-muted flex-1">
+                            <h3 className="body-18-medium text-black">{content?.statsExperienceLabel || t("stats.experience.label")}</h3>
+                            <p>{content?.statsExperienceDescription || t("stats.experience.description")}</p>
                         </div>
                     </div>
                 </div>

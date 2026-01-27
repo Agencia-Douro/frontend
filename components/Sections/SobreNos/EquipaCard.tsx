@@ -7,9 +7,10 @@ interface EquipaCardProps {
     email: string;
     phone?: string;
     photo?: string;
+    role?: string;
 }
 
-export function EquipaCard({ name, email, phone, photo }: EquipaCardProps) {
+export function EquipaCard({ name, email, phone, photo, role }: EquipaCardProps) {
     // Limpar o número de telefone para o WhatsApp (remover espaços e caracteres especiais)
     const whatsappNumber = phone?.replace(/\s+/g, '').replace(/[^0-9+]/g, '');
     const t = useTranslations("SobreNos");
@@ -24,6 +25,9 @@ export function EquipaCard({ name, email, phone, photo }: EquipaCardProps) {
                 <div className="flex-1 space-y-2">
                     <div>
                         <h3 className="body-18-medium text-black">{name}</h3>
+                        {role && (
+                            <p className="body-14-regular text-grey">{role}</p>
+                        )}
                         <a
                             href={`mailto:${email}`}
                             className="flex items-center gap-2 mt-1 hover:opacity-80 transition-opacity"

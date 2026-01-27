@@ -45,13 +45,15 @@ export default function PodcastPage() {
                         {/* <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2> */}
                         <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
                     </div>
-                    <Image
-                        src={logoPodcast}
-                        alt={t("logoAlt")}
-                        className="hidden xl:block"
-                        width={300}
-                        height={90}
-                    />
+                    {(config?.podcastImagem || logoPodcast) && (
+                        <Image
+                            src={config?.podcastImagem || logoPodcast}
+                            alt={t("logoAlt")}
+                            className="hidden xl:block object-contain"
+                            width={300}
+                            height={90}
+                        />
+                    )}
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
                     <StatCard className="hidden md:block" value={config?.episodiosPublicados?.toString() || ""} label={t("episodes")} />

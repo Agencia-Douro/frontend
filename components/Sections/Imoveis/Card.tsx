@@ -19,7 +19,7 @@ interface CardProps {
 
 export default function Card({ href, titulo, localizacao, preco, image, status }: CardProps) {
     return (
-        <Link href={href} className="w-full">
+        <Link href={href} className="w-full h-full flex flex-col">
             <div className="relative">
                 {isVideoUrl(image) ? (
                     <video
@@ -38,7 +38,7 @@ export default function Card({ href, titulo, localizacao, preco, image, status }
                     </div>
                 )}
             </div>
-            <div className="mt-2">
+            <div className="mt-2 flex-1">
                 <p className="body-16-medium text-black">{titulo}</p>
                 <p className="body-14-medium text-grey mt-1">{localizacao}</p>
             </div>

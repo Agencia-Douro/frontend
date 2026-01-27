@@ -11,6 +11,12 @@ export interface AboutUsContent {
   teamLabel: string;
   teamTitle: string;
   teamDescription: string;
+  televisionLabel?: string;
+  televisionTitle?: string;
+  televisionDescription?: string;
+  youtubeLink1?: string;
+  youtubeLink2?: string;
+  youtubeLink3?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -46,6 +52,12 @@ export interface UpdateAboutUsContentDto {
   teamLabel_pt?: string;
   teamTitle_pt?: string;
   teamDescription_pt?: string;
+  televisionLabel_pt?: string;
+  televisionTitle_pt?: string;
+  televisionDescription_pt?: string;
+  youtubeLink1?: string;
+  youtubeLink2?: string;
+  youtubeLink3?: string;
 }
 
 export interface CreateCultureItemDto {

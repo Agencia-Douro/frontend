@@ -26,6 +26,12 @@ export default function AboutUsContentPage() {
     teamLabel_pt: "",
     teamTitle_pt: "",
     teamDescription_pt: "",
+    televisionLabel_pt: "",
+    televisionTitle_pt: "",
+    televisionDescription_pt: "",
+    youtubeLink1: "",
+    youtubeLink2: "",
+    youtubeLink3: "",
   })
 
   const { data: content, isLoading } = useQuery({
@@ -47,6 +53,12 @@ export default function AboutUsContentPage() {
         teamLabel_pt: (content as any).teamLabel_pt || "",
         teamTitle_pt: (content as any).teamTitle_pt || "",
         teamDescription_pt: (content as any).teamDescription_pt || "",
+        televisionLabel_pt: (content as any).televisionLabel_pt || "",
+        televisionTitle_pt: (content as any).televisionTitle_pt || "",
+        televisionDescription_pt: (content as any).televisionDescription_pt || "",
+        youtubeLink1: (content as any).youtubeLink1 || "",
+        youtubeLink2: (content as any).youtubeLink2 || "",
+        youtubeLink3: (content as any).youtubeLink3 || "",
       })
     }
   }, [content])
@@ -262,6 +274,94 @@ export default function AboutUsContentPage() {
                 placeholder="A nossa equipa é composta por..."
                 required
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Nova Seção - Television */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Nova Seção - Television</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-1">
+              <Label htmlFor="televisionLabel">Label</Label>
+              <Input
+                id="televisionLabel"
+                value={formData.televisionLabel_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, televisionLabel_pt: e.target.value })
+                }
+                placeholder="Na Televisão"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="televisionTitle">Título</Label>
+              <Input
+                id="televisionTitle"
+                value={formData.televisionTitle_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, televisionTitle_pt: e.target.value })
+                }
+                placeholder="Veja-nos na Televisão"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="televisionDescription">Descrição</Label>
+              <Textarea
+                id="televisionDescription"
+                value={formData.televisionDescription_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, televisionDescription_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Confira as nossas aparições e entrevistas..."
+              />
+            </div>
+
+            <div className="space-y-4 pt-4 border-t">
+              <Label className="text-lg font-semibold">Links do YouTube</Label>
+              
+              <div className="space-y-1">
+                <Label htmlFor="youtubeLink1">Link do YouTube 1</Label>
+                <Input
+                  id="youtubeLink1"
+                  type="url"
+                  value={formData.youtubeLink1}
+                  onChange={(e) =>
+                    setFormData({ ...formData, youtubeLink1: e.target.value })
+                  }
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="youtubeLink2">Link do YouTube 2</Label>
+                <Input
+                  id="youtubeLink2"
+                  type="url"
+                  value={formData.youtubeLink2}
+                  onChange={(e) =>
+                    setFormData({ ...formData, youtubeLink2: e.target.value })
+                  }
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="youtubeLink3">Link do YouTube 3</Label>
+                <Input
+                  id="youtubeLink3"
+                  type="url"
+                  value={formData.youtubeLink3}
+                  onChange={(e) =>
+                    setFormData({ ...formData, youtubeLink3: e.target.value })
+                  }
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+              </div>
             </div>
           </CardContent>
         </Card>

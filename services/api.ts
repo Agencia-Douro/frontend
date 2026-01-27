@@ -844,7 +844,9 @@ export interface SiteConfig {
   temporadas?: number;
   especialistasConvidados?: number;
   eurosEmTransacoes?: number;
+  seguidoresInstagram?: number;
   apresentadoraImage?: string;
+  podcastImagem?: string;
 }
 
 export const siteConfigApi = {
@@ -860,7 +862,8 @@ export const siteConfigApi = {
 
   update: async (
     data: SiteConfig,
-    apresentadoraImageFile?: File
+    apresentadoraImageFile?: File,
+    podcastImagemFile?: File
   ): Promise<SiteConfig> => {
     const formData = new FormData();
 
@@ -888,10 +891,16 @@ export const siteConfigApi = {
     if (data.eurosEmTransacoes !== undefined) {
       formData.append("eurosEmTransacoes", data.eurosEmTransacoes.toString());
     }
+    if (data.seguidoresInstagram !== undefined) {
+      formData.append("seguidoresInstagram", data.seguidoresInstagram.toString());
+    }
 
-    // Adicionar imagem se fornecida
+    // Adicionar imagens se fornecidas
     if (apresentadoraImageFile) {
       formData.append("apresentadoraImage", apresentadoraImageFile);
+    }
+    if (podcastImagemFile) {
+      formData.append("podcastImagem", podcastImagemFile);
     }
 
     const response = await fetch(`${API_BASE_URL}/site-config`, {
@@ -917,6 +926,8 @@ export interface TeamMember {
   phone: string;
   email: string;
   photo?: string;
+  role?: string;
+  displayOrder?: number;
 }
 
 export const teamMembersApi = {
@@ -949,6 +960,14 @@ export const teamMembersApi = {
     formData.append("phone", data.phone);
     formData.append("email", data.email);
 
+    if (data.role) {
+      formData.append("role", data.role);
+    }
+
+    if (data.displayOrder !== undefined) {
+      formData.append("displayOrder", data.displayOrder.toString());
+    }
+
     if (photoFile) {
       formData.append("photo", photoFile);
     }
@@ -979,6 +998,8 @@ export const teamMembersApi = {
     if (data.name) formData.append("name", data.name);
     if (data.phone) formData.append("phone", data.phone);
     if (data.email) formData.append("email", data.email);
+    if (data.role !== undefined) formData.append("role", data.role);
+    if (data.displayOrder !== undefined) formData.append("displayOrder", data.displayOrder.toString());
 
     if (photoFile) {
       formData.append("photo", photoFile);

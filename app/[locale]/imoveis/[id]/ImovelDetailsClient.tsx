@@ -370,7 +370,7 @@ export default function ImovelDetailsClient() {
 
                 <div className="grid lg:grid-cols-2 gap-4 w-full lg:w-1/2 mt-2">
                     <a
-                        href={`https://wa.me/351919766323?text=${encodeURIComponent(
+                        href={`https://wa.me/351919766324?text=${encodeURIComponent(
                             `Olá! Tenho interesse no imóvel:\n\n` +
                             `${property.title}\n` +
                             `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
@@ -402,6 +402,21 @@ export default function ImovelDetailsClient() {
                                 className="tiptap max-w-none break-words whitespace-pre-line"
                                 style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
                                 dangerouslySetInnerHTML={{ __html: property.description }} />
+
+                            {/* Acabamentos & Equipamentos */}
+                            {property.features && (
+                                <div className="flex items-center justify-between py-4 border-b border-brown/10 mt-4">
+                                    <p className="body-16-medium text-brown">{t("features")}</p>
+                                    <Button
+                                        variant="gold"
+                                        size="default"
+                                        onClick={() => setShowFeaturesModal(true)}
+                                    >
+                                        {t("view")}
+                                    </Button>
+                                </div>
+                            )}
+
                             {property.isEmpreendimento && (
                                 <div className="mt-4 p-4 bg-brown/5 border border-brown/20">
                                     <p className="body-14-regular text-brown/80 italic">
@@ -517,7 +532,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="nome" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome"
-                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
@@ -616,18 +630,6 @@ export default function ImovelDetailsClient() {
                         )}
                         {property.energyClass && (
                             <Caracteristica titulo={t("energyClass")} valor={property.energyClass.toUpperCase()} />
-                        )}
-                        {property.features && (
-                            <div className="flex items-center justify-between py-4 border-b border-brown/10">
-                                <p className="body-16-medium text-brown">{t("features")}</p>
-                                <Button
-                                    variant="gold"
-                                    size="default"
-                                    onClick={() => setShowFeaturesModal(true)}
-                                >
-                                    {t("view")}
-                                </Button>
-                            </div>
                         )}
                         {property.whyChoose && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
@@ -741,7 +743,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="nome-desktop" className="body-14-medium text-black">{t("name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="nome-desktop"
-                                                placeholder={t("namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
@@ -751,7 +752,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="telefone-desktop" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="telefone-desktop"
-                                                placeholder={t("phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -764,7 +764,6 @@ export default function ImovelDetailsClient() {
                                         <Input
                                             id="email-desktop"
                                             type="email"
-                                            placeholder={t("emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -775,7 +774,6 @@ export default function ImovelDetailsClient() {
                                         <Label htmlFor="mensagem-desktop" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                                         <Textarea
                                             id="mensagem-desktop"
-                                            placeholder={t("messagePlaceholder")}
                                             value={formData.mensagem}
                                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required
@@ -830,7 +828,7 @@ export default function ImovelDetailsClient() {
                     <DialogHeader>
                         <DialogTitle className="text-brown body-18-medium">{t("propertyFiles")}</DialogTitle>
                         <DialogDescription>
-                            Documentos, plantas e outros ficheiros relacionados a este imóvel
+                            {t("filesDescription")}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-3">

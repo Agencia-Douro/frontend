@@ -7,32 +7,32 @@
 export function formatCurrency(
   value: string | number,
   options?: {
-    minimumFractionDigits?: number
-    maximumFractionDigits?: number
-  }
+    minimumFractionDigits?: number;
+    maximumFractionDigits?: number;
+  },
 ): string {
-  const numValue = typeof value === 'string' ? parseFloat(value) : value
+  const numValue = typeof value === "string" ? parseFloat(value) : value;
 
-  return new Intl.NumberFormat('pt-PT', {
-    style: 'currency',
-    currency: 'EUR',
+  return new Intl.NumberFormat("pt-PT", {
+    style: "currency",
+    currency: "EUR",
     minimumFractionDigits: options?.minimumFractionDigits ?? 0,
     maximumFractionDigits: options?.maximumFractionDigits ?? 0,
-  }).format(numValue)
+  }).format(numValue);
 }
 
 /**
  * Formata apenas o número do preço, sem o símbolo da moeda
  * @param value - Valor a ser formatado (number ou string)
- * @returns String formatada apenas com o número (ex: "250.000")
+ * @returns String formatada apenas com o número com espaço como separador (ex: "250 000")
  */
 export function formatPriceNumber(value: string | number): string {
-  const numValue = typeof value === 'string' ? parseFloat(value) : value
+  const numValue = typeof value === "string" ? parseFloat(value) : value;
 
-  return new Intl.NumberFormat('pt-PT', {
+  return new Intl.NumberFormat("fr-FR", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(numValue)
+  }).format(numValue);
 }
 
 /**
@@ -41,8 +41,8 @@ export function formatPriceNumber(value: string | number): string {
  * @returns String contendo apenas dígitos
  */
 export function parseCurrency(value: string): string {
-  const cleanedValue = value.replace(/[^\d]/g, '')
-  return cleanedValue || "0"
+  const cleanedValue = value.replace(/[^\d]/g, "");
+  return cleanedValue || "0";
 }
 
 /**
@@ -51,15 +51,15 @@ export function parseCurrency(value: string): string {
  * @returns String formatada de forma compacta
  */
 export function formatCompactCurrency(value: string | number): string {
-  const numValue = typeof value === 'string' ? parseFloat(value) : value
+  const numValue = typeof value === "string" ? parseFloat(value) : value;
 
-  return new Intl.NumberFormat('pt-PT', {
-    style: 'currency',
-    currency: 'EUR',
-    notation: 'compact',
+  return new Intl.NumberFormat("pt-PT", {
+    style: "currency",
+    currency: "EUR",
+    notation: "compact",
     minimumFractionDigits: 0,
     maximumFractionDigits: 1,
-  }).format(numValue)
+  }).format(numValue);
 }
 
 /**
@@ -72,9 +72,9 @@ export function translatePropertyStatus(status: string): string {
     active: "Ativo",
     inactive: "Inativo",
     sold: "Vendido",
-    rented: "Arrendado"
-  }
-  return translations[status] || status
+    rented: "Arrendado",
+  };
+  return translations[status] || status;
 }
 
 /**
@@ -87,7 +87,7 @@ export function getStatusColor(status: string): string {
     active: "bg-green-100 text-green-800",
     inactive: "bg-gray-100 text-gray-800",
     sold: "bg-red-100 text-red-800",
-    rented: "bg-blue-100 text-blue-800"
-  }
-  return colors[status] || "bg-gray-100 text-gray-800"
+    rented: "bg-blue-100 text-blue-800",
+  };
+  return colors[status] || "bg-gray-100 text-gray-800";
 }

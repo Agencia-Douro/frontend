@@ -1,4 +1,19 @@
 {
+  "PropertyTypes": {
+    "moradia": "Maison",
+    "apartamento": "Appartement",
+    "casa": "Maison",
+    "terreno": "Terrain",
+    "escritorio": "Bureau",
+    "comercial": "Commercial",
+    "industrial": "Industriel",
+    "armazem": "Entrepôt",
+    "loja": "Magasin",
+    "garagem": "Garage",
+    "quinta": "Ferme",
+    "terreno_urbano": "Terrain Urbain",
+    "terreno_rustico": "Terrain Rural"
+  },
   "Hero": {
     "title": "L'agence immobilière la plus exclusive du Portugal.",
     "description": "Découvrez des propriétés exclusives au Portugal avec notre agence immobilière spécialisée.",
@@ -119,6 +134,7 @@
     "satisfiedClients": "Clients satisfaits",
     "eurosInTransactions": "Euros en transactions",
     "legal": "(appel à la réseau mobile national)",
+    "instagramFollowers": "Abonnés Instagram",
     "ourIdentity": "Notre identité",
     "ourCulture": "Notre culture",
     "culture": {
@@ -368,7 +384,8 @@
     "hero": {
       "badge": "Vendre votre propriété",
       "title": "Demandez une évaluation gratuite de votre propriété",
-      "description": "Notre équipe d'experts est prête à évaluer votre propriété et à vous aider à obtenir la meilleure valeur sur le marché. Remplissez le formulaire et recevez une évaluation professionnelle sans engagement."
+      "description": "Notre équipe d'experts est prête à évaluer votre propriété et à vous aider à obtenir la meilleure valeur sur le marché. Remplissez le formulaire et recevez une évaluation professionnelle sans engagement.",
+      "callNow": "Appelez Maintenant"
     },
     "form": {
       "title": "Décrivez votre propriété",

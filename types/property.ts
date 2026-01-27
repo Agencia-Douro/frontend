@@ -27,6 +27,8 @@ export interface TeamMember {
   name: string;
   phone: string;
   email: string;
+  role?: string;
+  displayOrder: number;
   createdAt: string;
   updatedAt: string;
 }

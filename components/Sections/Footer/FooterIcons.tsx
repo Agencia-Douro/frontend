@@ -5,7 +5,7 @@ export default function FooterIcons() {
     return (
         <div className="flex items-center gap-3">
             <Link
-                href="https://wa.me/351919766323"
+                href="https://wa.me/351919766324"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gold transition-colors">
@@ -29,6 +29,33 @@ export default function FooterIcons() {
                 className="text-gold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.0008 1.66626C5.39844 1.66626 1.66748 5.39722 1.66748 9.99959C1.66748 14.159 4.71486 17.6065 8.69875 18.2317V12.4084H6.58284V9.99959H8.69875V8.16366C8.69875 6.07512 9.94283 4.92147 11.8463 4.92147C12.7581 4.92147 13.7117 5.08423 13.7117 5.08423V7.13501H12.6609C11.6257 7.13501 11.3029 7.77738 11.3029 8.43643V9.99959H13.6141L13.2447 12.4084H11.3029V18.2317C15.2867 17.6065 18.3342 14.159 18.3342 9.99959C18.3342 5.39722 14.6032 1.66626 10.0008 1.66626Z" />
+                </svg>
+            </Link>
+            <Link
+                href="https://www.linkedin.com/company/agência-douro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M4.16667 2.5C3.24619 2.5 2.5 3.24619 2.5 4.16667C2.5 5.08714 3.24619 5.83333 4.16667 5.83333C5.08714 5.83333 5.83333 5.08714 5.83333 4.16667C5.83333 3.24619 5.08714 2.5 4.16667 2.5ZM2.5 7.5V17.5H5.83333V7.5H2.5ZM7.5 7.5V17.5H10.8333V12.0833C10.8333 11.1629 11.5795 10.4167 12.5 10.4167C13.4205 10.4167 14.1667 11.1629 14.1667 12.0833V17.5H17.5V12.0833C17.5 9.32191 15.2614 7.08333 12.5 7.08333C11.3807 7.08333 10.3546 7.46944 9.53125 8.11198V7.5H7.5Z" />
+                </svg>
+            </Link>
+            <Link
+                href="https://www.tiktok.com/@douroimobiliaria"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M14.1667 1.66667H11.25V13.3333C11.25 14.2538 10.5038 15 9.58333 15C8.66286 15 7.91667 14.2538 7.91667 13.3333C7.91667 12.4129 8.66286 11.6667 9.58333 11.6667V8.75C7.05208 8.75 5 10.8021 5 13.3333C5 15.8646 7.05208 17.9167 9.58333 17.9167C12.1146 17.9167 14.1667 15.8646 14.1667 13.3333V7.29167C15.1875 8.04167 16.4583 8.5 17.8333 8.5V5.58333C15.8021 5.58333 14.1667 3.94792 14.1667 1.66667Z" />
+                </svg>
+            </Link>
+            <Link
+                href="https://www.youtube.com/@agenciadouromediacaoimobil3889"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M17.7734 5.60156C17.5651 4.79948 16.9349 4.16927 16.1328 3.96094C14.6745 3.58333 10 3.58333 10 3.58333C10 3.58333 5.32552 3.58333 3.86719 3.96094C3.06511 4.16927 2.4349 4.79948 2.22656 5.60156C1.84896 7.0599 1.84896 10.1042 1.84896 10.1042C1.84896 10.1042 1.84896 13.1484 2.22656 14.6068C2.4349 15.4089 3.06511 16.0391 3.86719 16.2474C5.32552 16.625 10 16.625 10 16.625C10 16.625 14.6745 16.625 16.1328 16.2474C16.9349 16.0391 17.5651 15.4089 17.7734 14.6068C18.151 13.1484 18.151 10.1042 18.151 10.1042C18.151 10.1042 18.151 7.0599 17.7734 5.60156ZM8.22917 12.9167V7.29167L12.9167 10.1042L8.22917 12.9167Z" />
                 </svg>
             </Link>
         </div>

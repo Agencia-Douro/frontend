@@ -22,18 +22,24 @@ export default function SiteConfigPage() {
     episodiosPublicados: 0,
     especialistasConvidados: 0,
     eurosEmTransacoes: 0,
+    seguidoresInstagram: 0,
   })
 
   const [memberFormData, setMemberFormData] = useState({
     name: "",
     phone: "",
     email: "",
+    role: "",
+    displayOrder: 0,
   })
 
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
   const [showMemberForm, setShowMemberForm] = useState(false)
+
+  const [podcastImagemFile, setPodcastImagemFile] = useState<File | null>(null)
+  const [podcastImagemPreview, setPodcastImagemPreview] = useState<string | null>(null)
 
   const { data: config, isLoading } = useQuery({
     queryKey: ["site-config"],
@@ -56,15 +62,21 @@ export default function SiteConfigPage() {
         episodiosPublicados: config.episodiosPublicados || 0,
         especialistasConvidados: config.especialistasConvidados || 0,
         eurosEmTransacoes: config.eurosEmTransacoes || 0,
+        seguidoresInstagram: config.seguidoresInstagram || 0,
       })
+      if (config.podcastImagem) {
+        setPodcastImagemPreview(config.podcastImagem)
+      }
     }
   }, [config])
 
   const updateMutation = useMutation({
-    mutationFn: (data: any) => siteConfigApi.update(data),
+    mutationFn: ({ data, podcastImagemFile }: { data: any; podcastImagemFile?: File }) =>
+      siteConfigApi.update(data, undefined, podcastImagemFile),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["site-config"] })
       toast.success("Configurações atualizadas com sucesso!")
+      setPodcastImagemFile(null)
     },
     onError: (error: any) => {
       toast.error(error?.message || "Erro ao atualizar configurações")
@@ -116,7 +128,22 @@ export default function SiteConfigPage() {
       return
     }
 
-    updateMutation.mutate(formData)
+    updateMutation.mutate({
+      data: formData,
+      podcastImagemFile: podcastImagemFile || undefined,
+    })
+  }
+
+  const handlePodcastImagemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPodcastImagemFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPodcastImagemPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   const handleMemberSubmit = async (e: React.FormEvent) => {
@@ -147,6 +174,8 @@ export default function SiteConfigPage() {
       name: member.name,
       phone: member.phone,
       email: member.email,
+      role: member.role || "",
+      displayOrder: member.displayOrder || 0,
     })
     setPhotoPreview(member.photo || null)
     setPhotoFile(null)
@@ -164,6 +193,8 @@ export default function SiteConfigPage() {
       name: "",
       phone: "",
       email: "",
+      role: "",
+      displayOrder: 0,
     })
     setPhotoFile(null)
     setPhotoPreview(null)
@@ -297,6 +328,24 @@ export default function SiteConfigPage() {
                 required
               />
             </div>
+
+            <div className="space-y-1 w-full">
+              <Label htmlFor="seguidoresInstagram">Seguidores no Instagram</Label>
+              <Input
+                id="seguidoresInstagram"
+                type="number"
+                min="0"
+                value={formData.seguidoresInstagram}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    seguidoresInstagram: parseInt(e.target.value) || 0,
+                  })
+                }
+                placeholder="Digite a quantidade de seguidores no Instagram"
+                required
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -355,6 +404,27 @@ export default function SiteConfigPage() {
                 placeholder="Digite o número de convidados"
                 required
               />
+            </div>
+
+            <div className="space-y-1 w-full col-span-2">
+              <Label htmlFor="podcastImagem">Imagem do Podcast</Label>
+              <Input
+                id="podcastImagem"
+                type="file"
+                accept="image/*"
+                onChange={handlePodcastImagemChange}
+              />
+              {podcastImagemPreview && (
+                <div className="mt-2">
+                  <Image
+                    src={podcastImagemPreview}
+                    alt="Preview Podcast"
+                    width={200}
+                    height={120}
+                    className="rounded-lg object-cover"
+                  />
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -440,6 +510,33 @@ export default function SiteConfigPage() {
                     required
                   />
                 </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-role">Cargo</Label>
+                  <Input
+                    id="member-role"
+                    type="text"
+                    value={memberFormData.role}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, role: e.target.value })
+                    }
+                    placeholder="Digite o cargo (ex: Consultor Imobiliário)"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="member-displayOrder">Ordem de Exibição</Label>
+                  <Input
+                    id="member-displayOrder"
+                    type="number"
+                    min="0"
+                    value={memberFormData.displayOrder}
+                    onChange={(e) =>
+                      setMemberFormData({ ...memberFormData, displayOrder: parseInt(e.target.value) || 0 })
+                    }
+                    placeholder="Ordem (0 = primeiro)"
+                  />
+                </div>
               </div>
 
               <div className="mt-4 space-y-2">
@@ -507,10 +604,14 @@ export default function SiteConfigPage() {
                         className="rounded-lg object-cover"
                       />
                     )}
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4">
                       <div>
                         <p className="text-sm text-gray-500">Nome</p>
                         <p className="font-medium">{member.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Cargo</p>
+                        <p className="font-medium">{member.role || "-"}</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Telefone</p>
@@ -519,6 +620,10 @@ export default function SiteConfigPage() {
                       <div>
                         <p className="text-sm text-gray-500">Email</p>
                         <p className="font-medium">{member.email}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Ordem</p>
+                        <p className="font-medium">{member.displayOrder ?? 0}</p>
                       </div>
                     </div>
                   </div>

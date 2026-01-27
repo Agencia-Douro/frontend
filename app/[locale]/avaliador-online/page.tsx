@@ -114,7 +114,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                             <Label htmlFor="modal-nome" className="body-14-medium text-black">{t("personalData.name")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="modal-nome"
-                                                placeholder={t("personalData.namePlaceholder")}
                                                 value={formData.nome}
                                                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                                 required
@@ -124,7 +123,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                             <Label htmlFor="modal-telefone" className="body-14-medium text-black">{t("personalData.phone")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="modal-telefone"
-                                                placeholder={t("personalData.phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -137,7 +135,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                         <Input
                                             id="modal-email"
                                             type="email"
-                                            placeholder={t("personalData.emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -211,7 +208,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                                         </Label>
                                         <Textarea
                                             id="modal-observacoes"
-                                            placeholder={t("propertyData.observationsPlaceholder")}
                                             value={imovelData.observacoes}
                                             onChange={(e) => setImovelData({ ...imovelData, observacoes: e.target.value })}
                                             className="min-h-[100px]"

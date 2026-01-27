@@ -118,7 +118,7 @@ export default function InstitucionalPage() {
                     <StatCard value={`${siteConfig?.anosExperiencia || 0}`} label={t("yearsExperience")} />
                     <StatCard value={`${siteConfig?.imoveisVendidos || 0}`} label={t("propertiesSold")} />
                     <StatCard value={`${siteConfig?.clientesSatisfeitos || 0}`} label={t("satisfiedClients")} />
-                    <StatCard value={`${siteConfig?.eurosEmTransacoes || 0}`} label={t("eurosInTransactions")} />
+                    <StatCard value={`${siteConfig?.seguidoresInstagram || 0}`} label={t("instagramFollowers")} />
 
                 </div>
             </section>
@@ -145,6 +145,66 @@ export default function InstitucionalPage() {
                     </div>
                 )}
             </section>
+
+            {/* Nova Seção - Television */}
+            {aboutUsContent?.televisionLabel && aboutUsContent?.televisionTitle && (
+                <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
+                    <div>
+                        <span className="button-14-medium text-brown">{aboutUsContent?.televisionLabel || ""}</span>
+                        <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.televisionTitle || ""}</h2>
+                        {aboutUsContent?.televisionDescription && (
+                            <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl mt-4 leading-relaxed">
+                                {aboutUsContent?.televisionDescription}
+                            </p>
+                        )}
+                    </div>
+                    
+                    {/* YouTube Videos */}
+                    {(aboutUsContent as any)?.youtubeLink1 || (aboutUsContent as any)?.youtubeLink2 || (aboutUsContent as any)?.youtubeLink3 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
+                            {[(aboutUsContent as any)?.youtubeLink1, (aboutUsContent as any)?.youtubeLink2, (aboutUsContent as any)?.youtubeLink3]
+                                .filter(link => link)
+                                .map((link, index) => {
+                                    // Extrair videoId do YouTube
+                                    const getYouTubeVideoId = (url: string): string | null => {
+                                        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                                        const match = url.match(regExp);
+                                        return (match && match[2].length === 11) ? match[2] : null;
+                                    };
+
+                                    const videoId = getYouTubeVideoId(link);
+                                    if (!videoId) return null;
+
+                                    return (
+                                        <div key={index} className="relative w-full aspect-video overflow-hidden bg-gray-100 rounded-lg">
+                                            <a
+                                                href={link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="group block w-full h-full"
+                                            >
+                                                <Image
+                                                    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                                                    alt={`YouTube video ${index + 1}`}
+                                                    fill
+                                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    unoptimized
+                                                />
+                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M8 5v14l11-7z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    ) : null}
+                </section>
+            )}
 
             {/* Quarta Seção - Serviços */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
@@ -212,6 +272,7 @@ export default function InstitucionalPage() {
                             email={member.email}
                             phone={member.phone}
                             photo={member.photo}
+                            role={member.role}
                         />
                     ))}
                 </div>
@@ -225,6 +286,7 @@ export default function InstitucionalPage() {
                                 email={member.email}
                                 phone={member.phone}
                                 photo={member.photo}
+                                role={member.role}
                             />
                         ))}
                     </div>

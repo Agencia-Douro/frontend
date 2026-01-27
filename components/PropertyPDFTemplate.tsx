@@ -89,70 +89,79 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
         </div>
 
         {/* Características em grid */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-4 gap-2 mb-4">
           {property.totalArea && property.totalArea > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Área Total</p>
-              <p className="body-16-medium text-brown">{property.totalArea}m²</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Área Total</p>
+              <p className="body-14-medium text-brown">{property.totalArea}m²</p>
             </div>
           )}
           {property.builtArea && property.builtArea > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Área Construída</p>
-              <p className="body-16-medium text-brown">{property.builtArea}m²</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Área Construída</p>
+              <p className="body-14-medium text-brown">{property.builtArea}m²</p>
             </div>
           )}
           {property.usefulArea && property.usefulArea > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Área Útil</p>
-              <p className="body-16-medium text-brown">{property.usefulArea}m²</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Área Útil</p>
+              <p className="body-14-medium text-brown">{property.usefulArea}m²</p>
             </div>
           )}
           {property.bedrooms > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Quartos</p>
-              <p className="body-16-medium text-brown">{property.bedrooms}</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Quartos</p>
+              <p className="body-14-medium text-brown">{property.bedrooms}</p>
             </div>
           )}
           {property.bathrooms > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Casas de Banho</p>
-              <p className="body-16-medium text-brown">{property.bathrooms}</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Casas de Banho</p>
+              <p className="body-14-medium text-brown">{property.bathrooms}</p>
             </div>
           )}
           {property.garageSpaces > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Garagem</p>
-              <p className="body-16-medium text-brown">
-                {property.garageSpaces} {property.garageSpaces === 1 ? 'Lugar' : 'Lugares'}
-              </p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Garagem</p>
+              <p className="body-14-medium text-brown">{property.garageSpaces}</p>
             </div>
           )}
           {property.constructionYear && property.constructionYear > 0 && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Ano</p>
-              <p className="body-16-medium text-brown">{property.constructionYear}</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Ano</p>
+              <p className="body-14-medium text-brown">{property.constructionYear}</p>
             </div>
           )}
           {property.energyClass && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Classe Energética</p>
-              <p className="body-16-medium text-brown">{property.energyClass.toUpperCase()}</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Classe Energética</p>
+              <p className="body-14-medium text-brown">{property.energyClass.toUpperCase()}</p>
             </div>
           )}
           {property.hasOffice && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Escritório</p>
-              <p className="body-16-medium text-brown">Sim</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Escritório</p>
+              <p className="body-14-medium text-brown">Sim</p>
             </div>
           )}
           {property.hasLaundry && (
-            <div className="bg-deaf p-3 rounded-md">
-              <p className="text-xs text-brown/60 mb-1">Lavandaria</p>
-              <p className="body-16-medium text-brown">Sim</p>
+            <div className="bg-deaf px-2 py-1.5 rounded">
+              <p className="text-[10px] text-brown/60">Lavandaria</p>
+              <p className="body-14-medium text-brown">Sim</p>
             </div>
           )}
         </div>
+
+        {/* Características/Features */}
+        {property.features && (
+          <div className="mb-4">
+            <h3 className="body-14-medium text-brown mb-2">Características</h3>
+            <div
+              className="text-[11px] text-brown/80 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: property.features }}
+            />
+          </div>
+        )}
 
         {/* Descrição - limitada */}
         <div className="mb-6">
