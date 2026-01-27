@@ -38,6 +38,9 @@ export default function SiteConfigPage() {
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
   const [showMemberForm, setShowMemberForm] = useState(false)
 
+  const [podcastImagemFile, setPodcastImagemFile] = useState<File | null>(null)
+  const [podcastImagemPreview, setPodcastImagemPreview] = useState<string | null>(null)
+
   const { data: config, isLoading } = useQuery({
     queryKey: ["site-config"],
     queryFn: () => siteConfigApi.get(),
@@ -61,14 +64,19 @@ export default function SiteConfigPage() {
         eurosEmTransacoes: config.eurosEmTransacoes || 0,
         seguidoresInstagram: config.seguidoresInstagram || 0,
       })
+      if (config.podcastImagem) {
+        setPodcastImagemPreview(config.podcastImagem)
+      }
     }
   }, [config])
 
   const updateMutation = useMutation({
-    mutationFn: (data: any) => siteConfigApi.update(data),
+    mutationFn: ({ data, podcastImagemFile }: { data: any; podcastImagemFile?: File }) =>
+      siteConfigApi.update(data, undefined, podcastImagemFile),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["site-config"] })
       toast.success("Configurações atualizadas com sucesso!")
+      setPodcastImagemFile(null)
     },
     onError: (error: any) => {
       toast.error(error?.message || "Erro ao atualizar configurações")
@@ -120,7 +128,22 @@ export default function SiteConfigPage() {
       return
     }
 
-    updateMutation.mutate(formData)
+    updateMutation.mutate({
+      data: formData,
+      podcastImagemFile: podcastImagemFile || undefined,
+    })
+  }
+
+  const handlePodcastImagemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPodcastImagemFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPodcastImagemPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   const handleMemberSubmit = async (e: React.FormEvent) => {
@@ -381,6 +404,27 @@ export default function SiteConfigPage() {
                 placeholder="Digite o número de convidados"
                 required
               />
+            </div>
+
+            <div className="space-y-1 w-full col-span-2">
+              <Label htmlFor="podcastImagem">Imagem do Podcast</Label>
+              <Input
+                id="podcastImagem"
+                type="file"
+                accept="image/*"
+                onChange={handlePodcastImagemChange}
+              />
+              {podcastImagemPreview && (
+                <div className="mt-2">
+                  <Image
+                    src={podcastImagemPreview}
+                    alt="Preview Podcast"
+                    width={200}
+                    height={120}
+                    className="rounded-lg object-cover"
+                  />
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

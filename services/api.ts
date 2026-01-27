@@ -846,6 +846,7 @@ export interface SiteConfig {
   eurosEmTransacoes?: number;
   seguidoresInstagram?: number;
   apresentadoraImage?: string;
+  podcastImagem?: string;
 }
 
 export const siteConfigApi = {
@@ -861,7 +862,8 @@ export const siteConfigApi = {
 
   update: async (
     data: SiteConfig,
-    apresentadoraImageFile?: File
+    apresentadoraImageFile?: File,
+    podcastImagemFile?: File
   ): Promise<SiteConfig> => {
     const formData = new FormData();
 
@@ -893,9 +895,12 @@ export const siteConfigApi = {
       formData.append("seguidoresInstagram", data.seguidoresInstagram.toString());
     }
 
-    // Adicionar imagem se fornecida
+    // Adicionar imagens se fornecidas
     if (apresentadoraImageFile) {
       formData.append("apresentadoraImage", apresentadoraImageFile);
+    }
+    if (podcastImagemFile) {
+      formData.append("podcastImagem", podcastImagemFile);
     }
 
     const response = await fetch(`${API_BASE_URL}/site-config`, {
