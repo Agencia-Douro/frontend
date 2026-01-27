@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "novo.agenciadouro.pt",
+        hostname: "agenciadouro.pt",
         pathname: "/**",
       },
       {

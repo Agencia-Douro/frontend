@@ -24,7 +24,7 @@ import {
   UpdateSellPropertyContentDto,
 } from "@/types/about-us";
 
-const API_BASE_URL = "https://novo.agenciadouro.pt/api";
+const API_BASE_URL = "https://agenciadouro.pt/api";
 //const API_BASE_URL = "http://localhost:3008";
 
 export interface PropertyFilters {
@@ -66,7 +66,7 @@ export const propertiesApi = {
   search: async (
     query: string,
     limit: number = 5,
-    lang: string = "pt"
+    lang: string = "pt",
   ): Promise<Property[]> => {
     const params = new URLSearchParams();
     params.append("q", query);
@@ -74,7 +74,7 @@ export const propertiesApi = {
     params.append("lang", lang);
 
     const response = await fetch(
-      `${API_BASE_URL}/properties/search?${params.toString()}`
+      `${API_BASE_URL}/properties/search?${params.toString()}`,
     );
 
     if (!response.ok) {
@@ -209,7 +209,7 @@ export const propertiesApi = {
   update: async (
     id: string,
     data: Property,
-    imagesToAdd?: File[]
+    imagesToAdd?: File[],
   ): Promise<Property> => {
     const formData = new FormData();
 
@@ -378,7 +378,7 @@ export const newslettersApi = {
 
   update: async (
     id: string,
-    data: Partial<Newsletter>
+    data: Partial<Newsletter>,
   ): Promise<Newsletter> => {
     const response = await fetch(`${API_BASE_URL}/newsletters/${id}`, {
       method: "PATCH",
@@ -439,7 +439,7 @@ export const newslettersApi = {
 export const imageSectionsApi = {
   getAll: async (propertyId: string): Promise<PropertyImageSection[]> => {
     const response = await fetch(
-      `${API_BASE_URL}/properties/${propertyId}/image-sections`
+      `${API_BASE_URL}/properties/${propertyId}/image-sections`,
     );
 
     if (!response.ok) {
@@ -453,7 +453,7 @@ export const imageSectionsApi = {
     propertyId: string,
     sectionName: string,
     displayOrder: number,
-    images?: File[]
+    images?: File[],
   ): Promise<PropertyImageSection> => {
     const formData = new FormData();
     formData.append("sectionName", sectionName);
@@ -470,7 +470,7 @@ export const imageSectionsApi = {
       {
         method: "POST",
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -491,7 +491,7 @@ export const imageSectionsApi = {
       displayOrder?: number;
       imagesToRemove?: string[];
       imagesToAdd?: File[];
-    }
+    },
   ): Promise<PropertyImageSection> => {
     const formData = new FormData();
 
@@ -518,7 +518,7 @@ export const imageSectionsApi = {
       {
         method: "PATCH",
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -537,7 +537,7 @@ export const imageSectionsApi = {
       `${API_BASE_URL}/properties/image-sections/${sectionId}`,
       {
         method: "DELETE",
-      }
+      },
     );
 
     if (!response.ok) {
@@ -553,7 +553,7 @@ export const imageSectionsApi = {
 export const propertyFilesApi = {
   getAll: async (propertyId: string): Promise<PropertyFile[]> => {
     const response = await fetch(
-      `${API_BASE_URL}/properties/${propertyId}/files`
+      `${API_BASE_URL}/properties/${propertyId}/files`,
     );
 
     if (!response.ok) {
@@ -577,7 +577,7 @@ export const propertyFilesApi = {
     propertyId: string,
     file: File,
     title?: string,
-    isVisible: boolean = true
+    isVisible: boolean = true,
   ): Promise<PropertyFile> => {
     const formData = new FormData();
     formData.append("file", file);
@@ -593,7 +593,7 @@ export const propertyFilesApi = {
       {
         method: "POST",
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -611,7 +611,7 @@ export const propertyFilesApi = {
     propertyId: string,
     files: File[],
     title?: string,
-    isVisible: boolean = true
+    isVisible: boolean = true,
   ): Promise<{ message: string; files: PropertyFile[] }> => {
     const formData = new FormData();
 
@@ -630,7 +630,7 @@ export const propertyFilesApi = {
       {
         method: "POST",
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -649,7 +649,7 @@ export const propertyFilesApi = {
     data: {
       title?: string;
       isVisible?: boolean;
-    }
+    },
   ): Promise<PropertyFile> => {
     const response = await fetch(`${API_BASE_URL}/properties/files/${fileId}`, {
       method: "PATCH",
@@ -670,7 +670,7 @@ export const propertyFilesApi = {
   },
 
   delete: async (
-    fileId: string
+    fileId: string,
   ): Promise<{ message: string; file: PropertyFile }> => {
     const response = await fetch(`${API_BASE_URL}/properties/files/${fileId}`, {
       method: "DELETE",
@@ -690,7 +690,7 @@ export const propertyFilesApi = {
 export const propertyRelationshipsApi = {
   getRelated: async (propertyId: string): Promise<Property[]> => {
     const response = await fetch(
-      `${API_BASE_URL}/properties/${propertyId}/related`
+      `${API_BASE_URL}/properties/${propertyId}/related`,
     );
 
     if (!response.ok) {
@@ -702,10 +702,10 @@ export const propertyRelationshipsApi = {
 
   getSimilar: async (
     propertyId: string,
-    limit: number = 5
+    limit: number = 5,
   ): Promise<Property[]> => {
     const response = await fetch(
-      `${API_BASE_URL}/properties/${propertyId}/similar?limit=${limit}`
+      `${API_BASE_URL}/properties/${propertyId}/similar?limit=${limit}`,
     );
 
     if (!response.ok) {
@@ -717,7 +717,7 @@ export const propertyRelationshipsApi = {
 
   addRelated: async (
     propertyId: string,
-    relatedPropertyIds: string[]
+    relatedPropertyIds: string[],
   ): Promise<Property> => {
     const response = await fetch(
       `${API_BASE_URL}/properties/${propertyId}/related`,
@@ -727,7 +727,7 @@ export const propertyRelationshipsApi = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ relatedPropertyIds }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -743,7 +743,7 @@ export const propertyRelationshipsApi = {
 
   removeRelated: async (
     propertyId: string,
-    relatedPropertyIds: string[]
+    relatedPropertyIds: string[],
   ): Promise<{ message: string; property: Property }> => {
     const response = await fetch(
       `${API_BASE_URL}/properties/${propertyId}/related`,
@@ -753,7 +753,7 @@ export const propertyRelationshipsApi = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ relatedPropertyIds }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -769,7 +769,7 @@ export const propertyRelationshipsApi = {
 
   setRelated: async (
     propertyId: string,
-    relatedPropertyIds: string[]
+    relatedPropertyIds: string[],
   ): Promise<Property> => {
     const response = await fetch(
       `${API_BASE_URL}/properties/${propertyId}/related`,
@@ -779,7 +779,7 @@ export const propertyRelationshipsApi = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ relatedPropertyIds }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -863,7 +863,7 @@ export const siteConfigApi = {
   update: async (
     data: SiteConfig,
     apresentadoraImageFile?: File,
-    podcastImagemFile?: File
+    podcastImagemFile?: File,
   ): Promise<SiteConfig> => {
     const formData = new FormData();
 
@@ -876,7 +876,7 @@ export const siteConfigApi = {
     if (data.episodiosPublicados !== undefined) {
       formData.append(
         "episodiosPublicados",
-        data.episodiosPublicados.toString()
+        data.episodiosPublicados.toString(),
       );
     }
     if (data.temporadas !== undefined) {
@@ -885,14 +885,17 @@ export const siteConfigApi = {
     if (data.especialistasConvidados !== undefined) {
       formData.append(
         "especialistasConvidados",
-        data.especialistasConvidados.toString()
+        data.especialistasConvidados.toString(),
       );
     }
     if (data.eurosEmTransacoes !== undefined) {
       formData.append("eurosEmTransacoes", data.eurosEmTransacoes.toString());
     }
     if (data.seguidoresInstagram !== undefined) {
-      formData.append("seguidoresInstagram", data.seguidoresInstagram.toString());
+      formData.append(
+        "seguidoresInstagram",
+        data.seguidoresInstagram.toString(),
+      );
     }
 
     // Adicionar imagens se fornecidas
@@ -953,7 +956,7 @@ export const teamMembersApi = {
 
   create: async (
     data: Omit<TeamMember, "id">,
-    photoFile?: File
+    photoFile?: File,
   ): Promise<TeamMember> => {
     const formData = new FormData();
     formData.append("name", data.name);
@@ -991,7 +994,7 @@ export const teamMembersApi = {
   update: async (
     id: string,
     data: Partial<TeamMember>,
-    photoFile?: File
+    photoFile?: File,
   ): Promise<TeamMember> => {
     const formData = new FormData();
 
@@ -999,7 +1002,8 @@ export const teamMembersApi = {
     if (data.phone) formData.append("phone", data.phone);
     if (data.email) formData.append("email", data.email);
     if (data.role !== undefined) formData.append("role", data.role);
-    if (data.displayOrder !== undefined) formData.append("displayOrder", data.displayOrder.toString());
+    if (data.displayOrder !== undefined)
+      formData.append("displayOrder", data.displayOrder.toString());
 
     if (photoFile) {
       formData.append("photo", photoFile);
@@ -1088,7 +1092,7 @@ export const depoimentosApi = {
   },
   update: async (
     id: string,
-    data: UpdateDepoimentoDto
+    data: UpdateDepoimentoDto,
   ): Promise<Depoimento> => {
     const response = await fetch(`${API_BASE_URL}/depoimentos/${id}`, {
       method: "PATCH",
@@ -1141,7 +1145,7 @@ export const desiredZonesApi = {
     }
     const queryString = params.toString();
     const url = `${API_BASE_URL}/desired-zones/active${queryString ? `?${queryString}` : ""}`;
-    
+
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -1210,7 +1214,7 @@ export const desiredZonesApi = {
       displayOrder?: number;
       isActive?: boolean;
       country?: string;
-    }
+    },
   ): Promise<DesiredZone> => {
     const formData = new FormData();
 
@@ -1329,7 +1333,7 @@ export const podcastTopicsApi = {
       title_pt?: string;
       description_pt?: string;
       order?: number;
-    }
+    },
   ): Promise<PodcastTopic> => {
     const response = await fetch(`${API_BASE_URL}/podcast-topics/${id}`, {
       method: "PATCH",
@@ -1439,7 +1443,7 @@ export const cultureItemsApi = {
 
   update: async (
     id: string,
-    data: UpdateCultureItemDto
+    data: UpdateCultureItemDto,
   ): Promise<CultureItem> => {
     const response = await fetch(`${API_BASE_URL}/culture-items/${id}`, {
       method: "PATCH",
@@ -1516,7 +1520,7 @@ export const serviceItemsApi = {
 
   update: async (
     id: string,
-    data: UpdateServiceItemDto
+    data: UpdateServiceItemDto,
   ): Promise<ServiceItem> => {
     const response = await fetch(`${API_BASE_URL}/service-items/${id}`, {
       method: "PATCH",
@@ -1573,7 +1577,8 @@ export const podcastContentApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao atualizar conteúdo do podcast (${response.status})`;
+        errorData.message ||
+        `Erro ao atualizar conteúdo do podcast (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -1585,7 +1590,9 @@ export const podcastContentApi = {
 export const sellPropertyContentApi = {
   get: async (locale?: string): Promise<SellPropertyContent> => {
     const params = locale ? `?lang=${locale}` : "";
-    const response = await fetch(`${API_BASE_URL}/sell-property-content${params}`);
+    const response = await fetch(
+      `${API_BASE_URL}/sell-property-content${params}`,
+    );
 
     if (!response.ok) {
       throw new Error("Erro ao buscar conteúdo da página vender imóvel");
@@ -1594,7 +1601,9 @@ export const sellPropertyContentApi = {
     return response.json();
   },
 
-  update: async (data: UpdateSellPropertyContentDto): Promise<SellPropertyContent> => {
+  update: async (
+    data: UpdateSellPropertyContentDto,
+  ): Promise<SellPropertyContent> => {
     const response = await fetch(`${API_BASE_URL}/sell-property-content`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -1604,7 +1613,8 @@ export const sellPropertyContentApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao atualizar conteúdo da página vender imóvel (${response.status})`;
+        errorData.message ||
+        `Erro ao atualizar conteúdo da página vender imóvel (${response.status})`;
       throw new Error(errorMessage);
     }
 
