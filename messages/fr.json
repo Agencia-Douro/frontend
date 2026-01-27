@@ -28,6 +28,7 @@
     "satisfiedClients": "clients satisfaits",
     "viewMore": "Voir plus",
     "imageAlt": "image-témoignage",
+    "noTestimonials": "Aucun témoignage disponible pour le moment",
     "testimonial1": {
       "text": "Vânia est merveilleuse, elle connaît très bien le marché où elle opère et assiste depuis la recherche de propriété jusqu'aux détails finaux. Super important d'avoir une personne de confiance toujours prête à aider. Nous recommandons à 100% !",
       "name": "Lucimara Bordignon Borghetti"
@@ -117,6 +118,7 @@
     "propertiesSold": "Propriétés vendues",
     "satisfiedClients": "Clients satisfaits",
     "eurosInTransactions": "Euros en transactions",
+    "legal": "(appel à la réseau mobile national)",
     "ourIdentity": "Notre identité",
     "ourCulture": "Notre culture",
     "culture": {
@@ -135,7 +137,7 @@
     },
     "whatWeOffer": "Ce que nous offrons",
     "ourServices": "Nos services",
-    "requestInfo": "Demander des informations",
+    "contact": "Appelez maintenant",
     "services": {
       "legalConsulting": {
         "title": "Conseil juridique",
@@ -336,7 +338,7 @@
     "aboutUs": "À propos de nous",
     "podcast": "Podcast",
     "newsletter": "Newsletter",
-    "contact": "Contact",
+    "contact": "Appelez maintenant",
     "institutional": "Institutionnel",
     "logoAlt": "Logo Agência Douro",
     "sellMyProperty": "Vendre ma propriété"
@@ -350,6 +352,7 @@
     "error": "Erreur lors du chargement des propriétés en vedette. Veuillez réessayer plus tard.",
     "noProperties": "Aucune propriété en vedette disponible pour le moment.",
     "area": "superficie",
+    "contact": "Appelez maintenant",
     "bathroom": "salle de bain",
     "bathrooms": "salles de bain",
     "bedroom": "chambre",

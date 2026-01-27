@@ -43,6 +43,7 @@
     "satisfiedClients": "clientes satisfeitos",
     "viewMore": "Ver mais",
     "imageAlt": "testemunho-image",
+    "noTestimonials": "Nenhum depoimento disponível no momento",
     "testimonial1": {
       "text": "A Vânia é maravilhosa, conhece super bem o mercado onde atua e auxilia desde a procura do imóvel até os detalhes finais. Super importante ter uma pessoa de confiança e sempre disposta a ajudar. Recomendamos 100%!",
       "name": "Lucimara Bordignon Borghetti"
@@ -133,6 +134,7 @@
     "satisfiedClients": "Clientes Satisfeitos",
     "eurosInTransactions": "Euros em Transações",
     "ourIdentity": "Nossa Identidade",
+    "legal": "(chamada para rede móvel nacional)",
     "ourCulture": "A Nossa Cultura",
     "culture": {
       "excellence": {
@@ -150,7 +152,7 @@
     },
     "whatWeOffer": "O Que Oferecemos",
     "ourServices": "Os Nossos Serviços",
-    "requestInfo": "Pedir informações",
+    "contact": "Ligue agora",
     "services": {
       "legalConsulting": {
         "title": "Consultoria Jurídica",
@@ -351,7 +353,7 @@
     "aboutUs": "Sobre Nós",
     "podcast": "Podcast",
     "newsletter": "Newsletter",
-    "contact": "Contacto",
+    "contact": "Ligue Agora",
     "institutional": "Institucional",
     "logoAlt": "Agência Douro Logótipo",
     "sellMyProperty": "Vender meu imóvel"
@@ -365,6 +367,7 @@
     "error": "Erro ao carregar imóveis destacados. Tente novamente mais tarde.",
     "noProperties": "Nenhum imóvel destacado disponível no momento.",
     "area": "área",
+    "contact": "Ligue agora",
     "bathroom": "casa de banho",
     "bathrooms": "casas de banho",
     "bedroom": "quarto",
@@ -433,9 +436,9 @@
           "stat": "+50.000 visitantes/mês"
         },
         "newsletter": {
-          "title": "Newsletter",
+          "title": "Televisão",
           "description": "Envio para a nossa base de clientes qualificados",
-          "stat": "+10.000 subscritores"
+          "stat": "Estamos na Record"
         },
         "agencies": {
           "title": "Agências Parceiras",

@@ -122,20 +122,14 @@ export default function Header() {
                     <div className="w-full flex gap-2 justify-end items-center">
                         <LanguageSwitcher />
                         <Button
+                            asChild
                             variant={isTransparent ? "gold" : "outline"}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                const contactoSection = document.getElementById('contacto');
-                                if (contactoSection) {
-                                    contactoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                } else {
-                                    // Se não estiver na página inicial, navega para lá
-                                    window.location.href = '/#contacto';
-                                }
-                            }}
                         >
-                            {t("contact")}
+                            <a href="tel:+351919766324">
+                                {t("contact")}
+                            </a>
                         </Button>
+
                         <button className={`block p-1 xl:hidden cursor-pointer z-[60] relative transition-colors duration-300 ${textColor}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

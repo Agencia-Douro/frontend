@@ -154,18 +154,13 @@ export default function InstitucionalPage() {
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || "Os Nossos Serviços"}</h2>
                     </div>
                     <Button
-                        variant="gold"
-                        className="hidden md:flex"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            const contactoSection = document.getElementById("contacto");
-                            if (contactoSection) {
-                                contactoSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                            }
-                        }}
-                    >
-                        {t("requestInfo")}
-                    </Button>
+                            asChild
+                            variant={"gold"}
+                        >
+                            <a href="tel:+351919766324">
+                                {t("contact")}
+                            </a>
+                        </Button>
                 </div>
                 {servicesLoading ? (
                     <div className="text-center py-8">
@@ -195,7 +190,7 @@ export default function InstitucionalPage() {
                         }
                     }}
                 >
-                    {t("requestInfo")}
+                    {t("contact")}
                 </Button>
             </section>
 

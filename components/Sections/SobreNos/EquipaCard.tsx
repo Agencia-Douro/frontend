@@ -1,5 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl"
 
 interface EquipaCardProps {
     name: string;
@@ -11,6 +12,7 @@ interface EquipaCardProps {
 export function EquipaCard({ name, email, phone, photo }: EquipaCardProps) {
     // Limpar o número de telefone para o WhatsApp (remover espaços e caracteres especiais)
     const whatsappNumber = phone?.replace(/\s+/g, '').replace(/[^0-9+]/g, '');
+    const t = useTranslations("SobreNos");
 
     return (
         <div className="flex gap-4 items-center">
@@ -41,7 +43,8 @@ export function EquipaCard({ name, email, phone, photo }: EquipaCardProps) {
                             <p className="body-16-regular text-black-muted">{phone}</p>
                         </a>
                     )}
-                </div>
+                    <p className="text-grey body-14-regular">{t("legal")}</p>
+                    </div>
             </div>
             {photo && (
                 <div className="w-32 h-32 relative overflow-hidden rounded-lg flex-shrink-0">

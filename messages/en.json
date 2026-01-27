@@ -41,6 +41,7 @@
     "title": "What our customers say",
     "description": "Each key carries a story, each home welcomes a dream, these are the voices of those who found their perfect place.",
     "satisfiedClients": "satisfied clients",
+    "noTestimonials": "No testimonials available at the moment",
     "viewMore": "View more",
     "imageAlt": "testimonial-image",
     "testimonial1": {
@@ -132,6 +133,7 @@
     "propertiesSold": "Properties Sold",
     "satisfiedClients": "Satisfied Clients",
     "eurosInTransactions": "Euros in Transactions",
+    "legal": "(call to national mobile network)",
     "ourIdentity": "Our Identity",
     "ourCulture": "Our Culture",
     "culture": {
@@ -150,7 +152,7 @@
     },
     "whatWeOffer": "What We Offer",
     "ourServices": "Our Services",
-    "requestInfo": "Request information",
+    "contact": "Call now",
     "services": {
       "legalConsulting": {
         "title": "Legal Consulting",
@@ -351,7 +353,7 @@
     "aboutUs": "About Us",
     "podcast": "Podcast",
     "newsletter": "Newsletter",
-    "contact": "Contact",
+    "contact": "Call Now",
     "institutional": "Institutional",
     "logoAlt": "Agência Douro Logo",
     "sellMyProperty": "Sell my property"
@@ -369,6 +371,7 @@
     "bathrooms": "bathrooms",
     "bedroom": "bedroom",
     "bedrooms": "bedrooms",
+    "contact": "Call now",
     "garageSpace": "garage space",
     "garageSpaces": "garage spaces",
     "development": "Development",
