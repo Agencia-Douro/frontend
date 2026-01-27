@@ -5,7 +5,7 @@ export default function FooterIcons() {
     return (
         <div className="flex items-center gap-3">
             <Link
-                href="https://wa.me/351919766323"
+                href="https://wa.me/351919766324"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gold transition-colors">

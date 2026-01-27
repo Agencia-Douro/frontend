@@ -370,7 +370,7 @@ export default function ImovelDetailsClient() {
 
                 <div className="grid lg:grid-cols-2 gap-4 w-full lg:w-1/2 mt-2">
                     <a
-                        href={`https://wa.me/351919766323?text=${encodeURIComponent(
+                        href={`https://wa.me/351919766324?text=${encodeURIComponent(
                             `Olá! Tenho interesse no imóvel:\n\n` +
                             `${property.title}\n` +
                             `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +

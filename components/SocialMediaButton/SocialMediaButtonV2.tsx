@@ -13,7 +13,7 @@ export const SocialMediaButtonV2 = () => {
 
     return (
         <Link
-            href="https://wa.me/351919766323"
+            href="https://wa.me/351919766324"
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 bg-[#25D366] hover:bg-[#20BD5A] will-change-transform text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"

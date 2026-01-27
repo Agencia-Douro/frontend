@@ -381,7 +381,8 @@
     "hero": {
       "badge": "Vendre votre propriété",
       "title": "Demandez une évaluation gratuite de votre propriété",
-      "description": "Notre équipe d'experts est prête à évaluer votre propriété et à vous aider à obtenir la meilleure valeur sur le marché. Remplissez le formulaire et recevez une évaluation professionnelle sans engagement."
+      "description": "Notre équipe d'experts est prête à évaluer votre propriété et à vous aider à obtenir la meilleure valeur sur le marché. Remplissez le formulaire et recevez une évaluation professionnelle sans engagement.",
+      "callNow": "Appelez Maintenant"
     },
     "form": {
       "title": "Décrivez votre propriété",

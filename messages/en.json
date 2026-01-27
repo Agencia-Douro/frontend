@@ -381,7 +381,8 @@
     "hero": {
       "badge": "Sell your property",
       "title": "Request a free property evaluation",
-      "description": "Our team of experts is ready to evaluate your property and help you get the best market value. Fill out the form and receive a professional evaluation with no commitment."
+      "description": "Our team of experts is ready to evaluate your property and help you get the best market value. Fill out the form and receive a professional evaluation with no commitment.",
+      "callNow": "Call Now"
     },
     "form": {
       "title": "Describe your property",

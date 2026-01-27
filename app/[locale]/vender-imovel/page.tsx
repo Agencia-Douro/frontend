@@ -79,6 +79,14 @@ export default function VenderImovelPage() {
                             <p className="body-16-regular md:body-18-regular text-black-muted max-w-2xl mx-auto">
                                 {content?.heroDescription || t("hero.description")}
                             </p>
+                            <a
+                                href="tel:+351919766324"
+                                className="flex justify-center"
+                            >
+                                <Button variant="gold" className="mt-6 md:mt-8 lg:mt-10">
+                                    {t("hero.callNow")}
+                                </Button >
+                            </a>
                         </div>
                     </div>
 

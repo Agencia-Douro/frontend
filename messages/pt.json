@@ -381,7 +381,8 @@
     "hero": {
       "badge": "Vender o seu imóvel",
       "title": "Solicite uma avaliação gratuita do seu imóvel",
-      "description": "A nossa equipa de especialistas está pronta para avaliar o seu imóvel e ajudá-lo a obter o melhor valor no mercado. Preencha o formulário e receba uma avaliação profissional sem compromisso."
+      "description": "A nossa equipa de especialistas está pronta para avaliar o seu imóvel e ajudá-lo a obter o melhor valor no mercado. Preencha o formulário e receba uma avaliação profissional sem compromisso.",
+      "callNow": "Ligue Agora"
     },
     "form": {
       "title": "Descreva o seu imóvel",
