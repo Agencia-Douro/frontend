@@ -136,8 +136,10 @@ export function Hero() {
   return (
     <section className="relative">
       {/* Hero com Carousel de Imagens */}
-      <div className="relative w-full h-dvh overflow-hidden">
-        {heroImages.map((image, index) => (
+      <div className="relative w-full h-dvh">
+        {/* Container das imagens com overflow hidden */}
+        <div className="absolute inset-0 overflow-hidden">
+          {heroImages.map((image, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0 }}
@@ -199,6 +201,7 @@ export function Hero() {
               </div>
             </button>
           ))}
+        </div>
         </div>
 
         {/* Conteúdo sobre a imagem */}
@@ -277,7 +280,6 @@ export function Hero() {
                             onFocus={() => {
                               if (searchResults.length > 0) setShowResults(true);
                             }}
-                            placeholder={t("searchPlaceholder")}
                             className="w-full body-14-medium py-2 px-0 text-black-muted border-b border-b-gold placeholder:text-black-muted focus:outline-none focus:border-b-brown"
                           />
                           {isSearching && (
@@ -290,51 +292,57 @@ export function Hero() {
 
                       {/* Resultados do autocomplete */}
                       {showResults && searchResults.length > 0 && (
-                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg max-h-96 overflow-y-auto">
-                          {searchResults.map((property) => (
-                            <button
-                              key={property.id}
-                              onClick={() => handlePropertyClick(property.id)}
-                              className="w-full p-3 hover:bg-muted transition-colors text-left border-b last:border-b-0 flex gap-3"
-                            >
-                              {property.image && (
-                                <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
-                                  <Image
-                                    src={property.image}
-                                    alt={property.title}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                </div>
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <h4 className="body-14-medium truncate">{property.title}</h4>
-                                <p className="text-xs text-grey truncate">
-                                  {property.concelho}, {property.distrito}
-                                </p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <span className="body-14-medium text-brown">
-                                    €{property.price.toLocaleString()}
-                                  </span>
-                                  {property.bedrooms > 0 && (
-                                    <span className="text-xs text-grey">
-                                      T{property.bedrooms}
+                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted max-h-[70vh] overflow-y-auto">
+                          <div className="p-2 space-y-1">
+                            {searchResults.map((property) => (
+                              <button
+                                key={property.id}
+                                onClick={() => handlePropertyClick(property.id)}
+                                className="w-full p-2.5 hover:bg-muted/50 transition-all duration-200 text-left rounded-lg flex gap-3 group"
+                              >
+                                {property.image && (
+                                  <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden shadow-sm">
+                                    <Image
+                                      src={property.image}
+                                      alt={property.title}
+                                      fill
+                                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0 py-0.5">
+                                  <h4 className="body-14-medium text-black truncate group-hover:text-brown transition-colors">{property.title}</h4>
+                                  <p className="text-xs text-grey truncate mt-0.5">
+                                    {property.concelho}, {property.distrito}
+                                  </p>
+                                  <div className="flex items-center gap-2 mt-2">
+                                    <span className="body-14-medium text-gold">
+                                      €{property.price.toLocaleString()}
                                     </span>
-                                  )}
-                                  {property.usefulArea && (
-                                    <span className="text-xs text-grey">
-                                      {property.usefulArea}m²
-                                    </span>
-                                  )}
+                                    <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                    {property.bedrooms > 0 && (
+                                      <span className="text-xs text-grey">
+                                        T{property.bedrooms}
+                                      </span>
+                                    )}
+                                    {property.usefulArea && (
+                                      <>
+                                        <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                        <span className="text-xs text-grey">
+                                          {property.usefulArea}m²
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            </button>
-                          ))}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       )}
 
                       {showResults && searchQuery.trim().length >= 2 && searchResults.length === 0 && !isSearching && (
-                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg p-4 text-center text-grey body-14-regular">
+                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted p-6 text-center text-grey body-14-regular">
                           {t("noResults")}
                         </div>
                       )}
@@ -424,7 +432,6 @@ export function Hero() {
                             onFocus={() => {
                               if (searchResults.length > 0) setShowResults(true);
                             }}
-                            placeholder={t("searchPlaceholder")}
                             className="w-full body-14-medium py-2 px-0 text-black-muted border-b border-b-gold placeholder:text-black-muted focus:outline-none focus:border-b-brown"
                           />
                           {isSearching && (
@@ -437,51 +444,57 @@ export function Hero() {
 
                       {/* Resultados do autocomplete */}
                       {showResults && searchResults.length > 0 && (
-                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg max-h-96 overflow-y-auto">
-                          {searchResults.map((property) => (
-                            <button
-                              key={property.id}
-                              onClick={() => handlePropertyClick(property.id)}
-                              className="w-full p-3 hover:bg-muted transition-colors text-left border-b last:border-b-0 flex gap-3"
-                            >
-                              {property.image && (
-                                <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden">
-                                  <Image
-                                    src={property.image}
-                                    alt={property.title}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                </div>
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <h4 className="body-14-medium truncate">{property.title}</h4>
-                                <p className="text-xs text-grey truncate">
-                                  {property.concelho}, {property.distrito}
-                                </p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <span className="body-14-medium text-brown">
-                                    €{property.price.toLocaleString()}
-                                  </span>
-                                  {property.bedrooms > 0 && (
-                                    <span className="text-xs text-grey">
-                                      T{property.bedrooms}
+                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted max-h-[60vh] overflow-y-auto">
+                          <div className="p-2 space-y-1">
+                            {searchResults.map((property) => (
+                              <button
+                                key={property.id}
+                                onClick={() => handlePropertyClick(property.id)}
+                                className="w-full p-3 hover:bg-muted/50 transition-all duration-200 text-left rounded-lg flex gap-4 group"
+                              >
+                                {property.image && (
+                                  <div className="relative w-24 h-24 shrink-0 rounded-lg overflow-hidden shadow-sm">
+                                    <Image
+                                      src={property.image}
+                                      alt={property.title}
+                                      fill
+                                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0 py-1">
+                                  <h4 className="body-16-medium text-black truncate group-hover:text-brown transition-colors">{property.title}</h4>
+                                  <p className="body-14-regular text-grey truncate mt-1">
+                                    {property.concelho}, {property.distrito}
+                                  </p>
+                                  <div className="flex items-center gap-3 mt-2">
+                                    <span className="body-16-medium text-gold">
+                                      €{property.price.toLocaleString()}
                                     </span>
-                                  )}
-                                  {property.usefulArea && (
-                                    <span className="text-xs text-grey">
-                                      {property.usefulArea}m²
-                                    </span>
-                                  )}
+                                    <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                    {property.bedrooms > 0 && (
+                                      <span className="body-14-regular text-grey">
+                                        T{property.bedrooms}
+                                      </span>
+                                    )}
+                                    {property.usefulArea && (
+                                      <>
+                                        <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                        <span className="body-14-regular text-grey">
+                                          {property.usefulArea}m²
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            </button>
-                          ))}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       )}
 
                       {showResults && searchQuery.trim().length >= 2 && searchResults.length === 0 && !isSearching && (
-                        <div className="absolute z-50 w-full mt-1 bg-white shadow-lg p-4 text-center text-grey body-14-regular">
+                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted p-6 text-center text-grey body-14-regular">
                           {t("noResults")}
                         </div>
                       )}
