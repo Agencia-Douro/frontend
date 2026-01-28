@@ -22,7 +22,7 @@ export default function ImoveisDestacados() {
     return (
         <section className="relative">
             {/* Logo Esquerda */}
-            <div className="hidden xl:block absolute left-8 top-1/2 -translate-y-1/2 z-10">
+            <div className="hidden xl:block absolute left-8 top-1/2 -translate-y-1/2 -z-10">
                 <Image
                     src={Logo}
                     alt="Agência do Douro"
@@ -33,7 +33,7 @@ export default function ImoveisDestacados() {
             </div>
 
             {/* Logo Direita */}
-            <div className="hidden xl:block absolute right-8 top-1/2 -translate-y-1/2 z-10">
+            <div className="hidden xl:block absolute right-8 top-1/2 -translate-y-1/2 -z-10">
                 <Image
                     src={Logo}
                     alt="Agência do Douro"
