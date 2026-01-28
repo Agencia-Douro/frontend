@@ -352,10 +352,10 @@ export function PropertyFractionsTab({
           customData:
             prev.customData && columnKeyToRemove in prev.customData
               ? (() => {
-                  const next = { ...prev.customData };
-                  delete next[columnKeyToRemove];
-                  return Object.keys(next).length > 0 ? next : null;
-                })()
+                const next = { ...prev.customData };
+                delete next[columnKeyToRemove];
+                return Object.keys(next).length > 0 ? next : null;
+              })()
               : prev.customData,
         }));
       }
@@ -487,49 +487,49 @@ export function PropertyFractionsTab({
                 {/* Natureza e Tipologia – só mostramos se a coluna estiver visível */}
                 {(columnVisibility["nature"] ||
                   columnVisibility["fractionType"]) && (
-                  <div className="grid grid-cols-2 gap-4">
-                    {columnVisibility["nature"] && (
-                      <div className="space-y-2">
-                        <Label>Natureza</Label>
-                        <Select
-                          value={newFraction.nature_pt || undefined}
-                          onValueChange={handleNatureChange}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {NATURE_OPTIONS.map((option) => (
-                              <SelectItem key={option.pt} value={option.pt}>
-                                {option.pt}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-                    {columnVisibility["fractionType"] && (
-                      <div className="space-y-2">
-                        <Label>Tipologia</Label>
-                        <Select
-                          value={newFraction.fractionType_pt || undefined}
-                          onValueChange={handleFractionTypeChange}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {FRACTION_TYPE_OPTIONS.map((option) => (
-                              <SelectItem key={option.pt} value={option.pt}>
-                                {option.pt}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-                  </div>
-                )}
+                    <div className="grid grid-cols-2 gap-4">
+                      {columnVisibility["nature"] && (
+                        <div className="space-y-2">
+                          <Label>Natureza</Label>
+                          <Select
+                            value={newFraction.nature_pt || undefined}
+                            onValueChange={handleNatureChange}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {NATURE_OPTIONS.map((option) => (
+                                <SelectItem key={option.pt} value={option.pt}>
+                                  {option.pt}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+                      {columnVisibility["fractionType"] && (
+                        <div className="space-y-2">
+                          <Label>Tipologia</Label>
+                          <Select
+                            value={newFraction.fractionType_pt || undefined}
+                            onValueChange={handleFractionTypeChange}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {FRACTION_TYPE_OPTIONS.map((option) => (
+                                <SelectItem key={option.pt} value={option.pt}>
+                                  {option.pt}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                 {/* Piso e Fração */}
                 {(columnVisibility["floor"] || columnVisibility["unit"]) && (
@@ -574,218 +574,218 @@ export function PropertyFractionsTab({
                 {/* Áreas */}
                 {(columnVisibility["grossArea"] ||
                   columnVisibility["outdoorArea"]) && (
-                  <div className="grid grid-cols-2 gap-4">
-                    {columnVisibility["grossArea"] && (
-                      <div className="space-y-2">
-                        <Label>Área Bruta (m²)</Label>
-                        <Input
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          placeholder="Ex: 100"
-                          value={newFraction.grossArea ?? ""}
-                          onChange={(e) =>
-                            setNewFraction({
-                              ...newFraction,
-                              grossArea: e.target.value
-                                ? parseFloat(e.target.value)
-                                : null,
-                            })
-                          }
-                        />
-                      </div>
-                    )}
-                    {columnVisibility["outdoorArea"] && (
-                      <div className="space-y-2">
-                        <Label>Área Exterior (m²)</Label>
-                        <Input
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          placeholder="Ex: 20"
-                          value={newFraction.outdoorArea ?? ""}
-                          onChange={(e) =>
-                            setNewFraction({
-                              ...newFraction,
-                              outdoorArea: e.target.value
-                                ? parseFloat(e.target.value)
-                                : null,
-                            })
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
+                    <div className="grid grid-cols-2 gap-4">
+                      {columnVisibility["grossArea"] && (
+                        <div className="space-y-2">
+                          <Label>Área Bruta (m²)</Label>
+                          <Input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 100"
+                            value={newFraction.grossArea ?? ""}
+                            onChange={(e) =>
+                              setNewFraction({
+                                ...newFraction,
+                                grossArea: e.target.value
+                                  ? parseFloat(e.target.value)
+                                  : null,
+                              })
+                            }
+                          />
+                        </div>
+                      )}
+                      {columnVisibility["outdoorArea"] && (
+                        <div className="space-y-2">
+                          <Label>Área Exterior (m²)</Label>
+                          <Input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 20"
+                            value={newFraction.outdoorArea ?? ""}
+                            onChange={(e) =>
+                              setNewFraction({
+                                ...newFraction,
+                                outdoorArea: e.target.value
+                                  ? parseFloat(e.target.value)
+                                  : null,
+                              })
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                 {/* Estacionamento e Preço */}
                 {(columnVisibility["parkingSpaces"] ||
                   columnVisibility["price"]) && (
-                  <div className="grid grid-cols-2 gap-4">
-                    {columnVisibility["parkingSpaces"] && (
-                      <div className="space-y-2">
-                        <Label>Lugares de Garagem</Label>
-                        <Input
-                          type="number"
-                          min="0"
-                          placeholder="Ex: 1"
-                          value={newFraction.parkingSpaces || ""}
-                          onChange={(e) =>
-                            setNewFraction({
-                              ...newFraction,
-                              parkingSpaces: parseInt(e.target.value) || 0,
-                            })
-                          }
-                        />
-                      </div>
-                    )}
-                    {columnVisibility["price"] && (
-                      <div className="space-y-2">
-                        <Label>Preço (€)</Label>
-                        <CurrencyInput
-                          id="fraction-price"
-                          name="price"
-                          placeholder="250.000 €"
-                          value={newFraction.price ?? ""}
-                          decimalsLimit={0}
-                          groupSeparator="."
-                          decimalSeparator=","
-                          suffix=" €"
-                          onValueChange={(value) => {
-                            setNewFraction({
-                              ...newFraction,
-                              price: value ? parseFloat(value) : null,
-                            });
-                          }}
-                          className={cn(
-                            "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
-                          )}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
+                    <div className="grid grid-cols-2 gap-4">
+                      {columnVisibility["parkingSpaces"] && (
+                        <div className="space-y-2">
+                          <Label>Lugares de Garagem</Label>
+                          <Input
+                            type="number"
+                            min="0"
+                            placeholder="Ex: 1"
+                            value={newFraction.parkingSpaces || ""}
+                            onChange={(e) =>
+                              setNewFraction({
+                                ...newFraction,
+                                parkingSpaces: parseInt(e.target.value) || 0,
+                              })
+                            }
+                          />
+                        </div>
+                      )}
+                      {columnVisibility["price"] && (
+                        <div className="space-y-2">
+                          <Label>Preço (€)</Label>
+                          <CurrencyInput
+                            id="fraction-price"
+                            name="price"
+                            placeholder="250.000 €"
+                            value={newFraction.price ?? ""}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            suffix=" €"
+                            onValueChange={(value) => {
+                              setNewFraction({
+                                ...newFraction,
+                                price: value ? parseFloat(value) : null,
+                              });
+                            }}
+                            className={cn(
+                              "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
+                            )}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                 {/* Planta e Status – só mostramos se a coluna estiver visível */}
                 {(columnVisibility["floorPlan"] ||
                   columnVisibility["reservationStatus"]) && (
-                  <div className="grid grid-cols-2 gap-4">
-                    {columnVisibility["floorPlan"] && (
-                      <div className="space-y-2">
-                        <Label>Planta (PDF ou imagem)</Label>
-                        <input
-                          ref={floorPlanInputRef}
-                          type="file"
-                          accept=".pdf,application/pdf,image/*"
-                          className="hidden"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-                            setFloorPlanUploading(true);
-                            try {
-                              const result = await uploadApi.uploadFile(
-                                file,
-                                isEditMode ? propertyId : undefined,
-                              );
-                              setNewFraction({
-                                ...newFraction,
-                                floorPlan: result.url,
-                              });
-                              toast.success("Planta enviada com sucesso");
-                            } catch (err) {
-                              toast.error(
-                                err instanceof Error
-                                  ? err.message
-                                  : "Erro ao enviar planta",
-                              );
-                            } finally {
-                              setFloorPlanUploading(false);
-                              e.target.value = "";
-                            }
-                          }}
-                        />
-                        <div className="flex items-center gap-2">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="default"
-                            disabled={floorPlanUploading}
-                            onClick={() =>
-                              floorPlanInputRef.current?.click()
-                            }
-                          >
-                            <Upload className="h-4 w-4 mr-2" />
-                            {floorPlanUploading
-                              ? "A enviar..."
-                              : newFraction.floorPlan
-                                ? "Substituir ficheiro"
-                                : "Escolher ficheiro"}
-                          </Button>
-                          {newFraction.floorPlan && (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon"
-                              onClick={() =>
+                    <div className="grid grid-cols-2 gap-4">
+                      {columnVisibility["floorPlan"] && (
+                        <div className="space-y-2">
+                          <Label>Planta (PDF ou imagem)</Label>
+                          <input
+                            ref={floorPlanInputRef}
+                            type="file"
+                            accept=".pdf,application/pdf,image/*"
+                            className="hidden"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              setFloorPlanUploading(true);
+                              try {
+                                const result = await uploadApi.uploadFile(
+                                  file,
+                                  isEditMode ? propertyId : undefined,
+                                );
                                 setNewFraction({
                                   ...newFraction,
-                                  floorPlan: null,
-                                })
+                                  floorPlan: result.url,
+                                });
+                                toast.success("Planta enviada com sucesso");
+                              } catch (err) {
+                                toast.error(
+                                  err instanceof Error
+                                    ? err.message
+                                    : "Erro ao enviar planta",
+                                );
+                              } finally {
+                                setFloorPlanUploading(false);
+                                e.target.value = "";
                               }
-                              title="Remover planta"
+                            }}
+                          />
+                          <div className="flex items-center gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="default"
+                              disabled={floorPlanUploading}
+                              onClick={() =>
+                                floorPlanInputRef.current?.click()
+                              }
                             >
-                              <X className="h-4 w-4" />
+                              <Upload className="h-4 w-4 mr-2" />
+                              {floorPlanUploading
+                                ? "A enviar..."
+                                : newFraction.floorPlan
+                                  ? "Substituir ficheiro"
+                                  : "Escolher ficheiro"}
                             </Button>
+                            {newFraction.floorPlan && (
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() =>
+                                  setNewFraction({
+                                    ...newFraction,
+                                    floorPlan: null,
+                                  })
+                                }
+                                title="Remover planta"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
+                          {newFraction.floorPlan && !floorPlanUploading && (
+                            <p className="text-xs text-muted-foreground truncate">
+                              Planta anexada.{" "}
+                              <a
+                                href={newFraction.floorPlan}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:underline"
+                              >
+                                Abrir
+                              </a>
+                            </p>
                           )}
                         </div>
-                        {newFraction.floorPlan && !floorPlanUploading && (
-                          <p className="text-xs text-muted-foreground truncate">
-                            Planta anexada.{" "}
-                            <a
-                              href={newFraction.floorPlan}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline"
-                            >
-                              Abrir
-                            </a>
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    {columnVisibility["reservationStatus"] && (
-                      <div className="space-y-2">
-                        <Label>Status de Reserva</Label>
-                        <Select
-                          value={newFraction.reservationStatus}
-                          onValueChange={(value) =>
-                            setNewFraction({
-                              ...newFraction,
-                              reservationStatus: value as
-                                | "available"
-                                | "reserved"
-                                | "sold",
-                            })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {RESERVATION_STATUS_OPTIONS.map((option) => (
-                              <SelectItem
-                                key={option.value}
-                                value={option.value}
-                              >
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-                  </div>
-                )}
+                      )}
+                      {columnVisibility["reservationStatus"] && (
+                        <div className="space-y-2">
+                          <Label>Status de Reserva</Label>
+                          <Select
+                            value={newFraction.reservationStatus}
+                            onValueChange={(value) =>
+                              setNewFraction({
+                                ...newFraction,
+                                reservationStatus: value as
+                                  | "available"
+                                  | "reserved"
+                                  | "sold",
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {RESERVATION_STATUS_OPTIONS.map((option) => (
+                                <SelectItem
+                                  key={option.value}
+                                  value={option.value}
+                                >
+                                  {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                 {/* Colunas personalizadas – sempre baseado em customColumns atual */}
                 {customColumns.length > 0 && (
@@ -799,7 +799,7 @@ export function PropertyFractionsTab({
                           <div key={col.id} className="space-y-2">
                             <Label>{col.label_pt}</Label>
                             {col.dataType === "select" &&
-                            col.selectOptions?.length ? (
+                              col.selectOptions?.length ? (
                               <Select
                                 value={
                                   value !== "" && value != null
@@ -989,7 +989,7 @@ export function PropertyFractionsTab({
                       <Select
                         value={newColumn.dataType}
                         onValueChange={(value) =>
-                          setNewColumn({ ...newColumn, dataType: value })
+                          setNewColumn({ ...newColumn, dataType: value as any })
                         }
                       >
                         <SelectTrigger>
