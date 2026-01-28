@@ -546,7 +546,11 @@
     "whyChooseAgencyDescription": "Présente sur les marchés national et international, Agência Douro est reconnue pour sa transparence, sa responsabilité et son engagement à garantir la tranquillité d'esprit dans chaque négociation. Que ce soit pour votre résidence ou un investissement, nous offrons un accompagnement complet pour rendre votre transaction sûre et efficace.",
     "whyChooseAgencyCTA": "📞 Contactez-nous dès maintenant et planifiez votre visite !",
     "whyChooseAgencyOpportunity": "Ne manquez pas cette opportunité unique de vivre dans l'un des cadres les plus époustouflants du Portugal. 🌟",
-    "whyChooseAgencyAgentNote": "*Si vous êtes un agent immobilier, chez Agência Douro nous travaillons en régime de partage."
+    "whyChooseAgencyAgentNote": "*Si vous êtes un agent immobilier, chez Agência Douro nous travaillons en régime de partage.",
+    "fractionsTitle": "Fractions",
+    "fractionsDescription": "Unités et fractions disponibles dans ce programme",
+    "fractionsLoading": "Chargement des fractions...",
+    "callNow": "Appelez maintenant"
   },
   "TermosECondicoes": {
     "title": "Termes et Conditions",

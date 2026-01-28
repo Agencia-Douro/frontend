@@ -2,12 +2,12 @@
 
 import { useRouter, useSearchParams } from "next/navigation"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { propertiesApi, propertyFilesApi, propertyRelationshipsApi } from "@/services/api"
+import { propertiesApi, propertyFilesApi, propertyFractionsApi, propertyRelationshipsApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import PropertyForm from "@/components/PropertyForm"
-import { Property } from "@/types/property"
+import { CreatePropertyFractionDto, Property } from "@/types/property"
 import { Suspense } from "react"
 
 function CreatePropertyContent() {
@@ -55,7 +55,8 @@ function CreatePropertyContent() {
     images: File[],
     imagesToRemove?: string[],
     pendingFiles?: File[],
-    pendingRelated?: string[]
+    pendingRelated?: string[],
+    pendingFractions?: CreatePropertyFractionDto[]
   ): Promise<Property> => {
     // Validar se tem exatamente uma imagem
     if (images.length === 0) {
@@ -93,7 +94,18 @@ function CreatePropertyContent() {
               }
             }
 
-            // Invalidar cache novamente após upload de arquivos e relacionamentos
+            // Processar frações pendentes se houver
+            if (pendingFractions && pendingFractions.length > 0) {
+              try {
+                await propertyFractionsApi.bulkCreate(property.id, pendingFractions)
+                toast.success(`${pendingFractions.length} fração(ões) criada(s) com sucesso!`)
+              } catch (error) {
+                console.error("Erro ao criar frações:", error)
+                toast.error("Erro ao criar frações")
+              }
+            }
+
+            // Invalidar cache novamente após upload de arquivos, relacionamentos e frações
             await queryClient.invalidateQueries({ queryKey: ["property", property.id] })
 
             resolve(property)

@@ -546,7 +546,11 @@
     "whyChooseAgencyDescription": "Com atuação no mercado nacional e internacional, a Agência Douro é reconhecida por sua transparência, responsabilidade e compromisso em proporcionar tranquilidade em cada negociação. Seja para habitação própria ou investimento, oferecemos suporte completo para tornar o seu negócio seguro e eficaz.",
     "whyChooseAgencyCTA": "📞 Entre em contato agora mesmo e agende a sua visita!",
     "whyChooseAgencyOpportunity": "Não perca esta oportunidade única de viver em um dos cenários mais deslumbrantes de Portugal. 🌟",
-    "whyChooseAgencyAgentNote": "*Se você é um agente imobiliário, na Agência Douro trabalhamos em regime de partilha."
+    "whyChooseAgencyAgentNote": "*Se você é um agente imobiliário, na Agência Douro trabalhamos em regime de partilha.",
+    "fractionsTitle": "Frações",
+    "fractionsDescription": "Unidades e frações disponíveis neste empreendimento",
+    "fractionsLoading": "A carregar frações...",
+    "callNow": "Ligue agora"
   },
   "TermosECondicoes": {
     "title": "Termos e Condições",

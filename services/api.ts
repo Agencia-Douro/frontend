@@ -3,6 +3,12 @@ import {
   Property,
   PropertyImageSection,
   PropertyFile,
+  PropertyFraction,
+  PropertyFractionColumn,
+  CreatePropertyFractionDto,
+  UpdatePropertyFractionDto,
+  CreatePropertyFractionColumnDto,
+  UpdatePropertyFractionColumnDto,
 } from "@/types/property";
 import { Newsletter } from "@/types/newsletter";
 import {
@@ -547,6 +553,31 @@ export const imageSectionsApi = {
         `Erro ao deletar seção de imagens (${response.status})`;
       throw new Error(errorMessage);
     }
+  },
+};
+
+/** Upload genérico de ficheiro (ex.: PDF para planta de fração) */
+export const uploadApi = {
+  uploadFile: async (
+    file: File,
+    propertyId?: string,
+  ): Promise<{ url: string; filename: string; originalName: string }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (propertyId) {
+      formData.append("propertyId", propertyId);
+    }
+    const response = await fetch(`${API_BASE_URL}/upload/file`, {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao fazer upload do ficheiro (${response.status})`;
+      throw new Error(errorMessage);
+    }
+    return response.json();
   },
 };
 
@@ -1615,6 +1646,190 @@ export const sellPropertyContentApi = {
       const errorMessage =
         errorData.message ||
         `Erro ao atualizar conteúdo da página vender imóvel (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+};
+
+// Property Fractions API
+export const propertyFractionsApi = {
+  getAll: async (propertyId: string): Promise<PropertyFraction[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/fractions`,
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar frações da propriedade");
+    }
+
+    return response.json();
+  },
+
+  create: async (
+    propertyId: string,
+    data: CreatePropertyFractionDto,
+  ): Promise<PropertyFraction> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/fractions`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar fração (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    fractionId: string,
+    data: UpdatePropertyFractionDto,
+  ): Promise<PropertyFraction> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/fractions/${fractionId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar fração (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (
+    fractionId: string,
+  ): Promise<{ message: string; fraction: PropertyFraction }> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/fractions/${fractionId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar fração (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  bulkCreate: async (
+    propertyId: string,
+    fractions: CreatePropertyFractionDto[],
+  ): Promise<{ message: string; fractions: PropertyFraction[] }> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/fractions/bulk`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fractions }),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message ||
+        `Erro ao criar frações em lote (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  // Métodos para colunas
+  getColumns: async (propertyId: string): Promise<PropertyFractionColumn[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/fraction-columns`,
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar colunas de frações");
+    }
+
+    return response.json();
+  },
+
+  createColumn: async (
+    propertyId: string,
+    data: CreatePropertyFractionColumnDto,
+  ): Promise<PropertyFractionColumn> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/${propertyId}/fraction-columns`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar coluna (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  updateColumn: async (
+    columnId: string,
+    data: UpdatePropertyFractionColumnDto,
+  ): Promise<PropertyFractionColumn> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/fraction-columns/${columnId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar coluna (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  deleteColumn: async (
+    columnId: string,
+  ): Promise<{ message: string; column: PropertyFractionColumn }> => {
+    const response = await fetch(
+      `${API_BASE_URL}/properties/fraction-columns/${columnId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar coluna (${response.status})`;
       throw new Error(errorMessage);
     }
 

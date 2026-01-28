@@ -19,7 +19,9 @@ import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { FileManagement } from "@/components/FileManagement"
 import { PropertyRelationships } from "@/components/PropertyRelationships"
+import { PropertyFractionsTab } from "@/components/PropertyFractionsTab"
 import { usePropertyDraft } from "@/hooks/usePropertyDraft"
+import { CreatePropertyFractionDto } from "@/types/property"
 
 interface PropertyFormProps {
   initialData?: Property | null
@@ -29,7 +31,8 @@ interface PropertyFormProps {
     images: File[],
     imagesToRemove?: string[],
     pendingFiles?: File[],
-    pendingRelated?: string[]
+    pendingRelated?: string[],
+    pendingFractions?: CreatePropertyFractionDto[]
   ) => Promise<Property> | void
   isLoading?: boolean
   submitButtonText?: string
@@ -114,9 +117,10 @@ export default function PropertyForm({
   const [loadingRemoveImage, setLoadingRemoveImage] = useState<string | null>(null)
   const [loadingAddImage, setLoadingAddImage] = useState<string | null>(null)
 
-  // Estados para arquivos e relacionamentos no modo de criação
+  // Estados para arquivos, relacionamentos e frações no modo de criação
   const [pendingFiles, setPendingFiles] = useState<File[]>([])
   const [pendingRelated, setPendingRelated] = useState<string[]>([])
+  const [pendingFractions, setPendingFractions] = useState<CreatePropertyFractionDto[]>([])
 
   // Estados para team members
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
@@ -491,7 +495,8 @@ export default function PropertyForm({
         images,
         imagesToRemove,
         isEditMode ? undefined : pendingFiles,
-        isEditMode ? undefined : pendingRelated
+        isEditMode ? undefined : pendingRelated,
+        isEditMode ? undefined : pendingFractions
       )
 
       // Se retornar uma propriedade e houver novas seções, criar as seções
@@ -515,7 +520,7 @@ export default function PropertyForm({
   }
 
   const goToNextTab = () => {
-    const tabs = ["info", "features", "location", "team", "images", "files", "relationships"]
+    const tabs = ["info", "features", "location", "team", "images", "files", "fractions", "relationships"]
     const currentIndex = tabs.indexOf(activeTab)
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1])
@@ -626,6 +631,12 @@ export default function PropertyForm({
             className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
           >
             Arquivos
+          </TabsTrigger>
+          <TabsTrigger
+            value="fractions"
+            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
+          >
+            Frações
           </TabsTrigger>
           <TabsTrigger
             value="relationships"
@@ -1493,6 +1504,25 @@ export default function PropertyForm({
                 isEditMode={isEditMode}
                 onPendingFilesChange={setPendingFiles}
                 pendingFiles={pendingFiles}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="fractions" className="space-y-6 mt-0">
+          <Card>
+            <CardHeader>
+              <CardTitle>Frações do Imóvel</CardTitle>
+              <CardDescription>
+                Gerencie as unidades/frações disponíveis neste empreendimento (apartamentos, lojas, etc.)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PropertyFractionsTab
+                propertyId={initialData?.id}
+                isEditMode={isEditMode}
+                onPendingFractionsChange={setPendingFractions}
+                pendingFractions={pendingFractions}
               />
             </CardContent>
           </Card>

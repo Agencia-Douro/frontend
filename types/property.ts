@@ -83,3 +83,69 @@ export interface PropertiesResponse {
   limit: number;
   totalPages: number;
 }
+
+export interface PropertyFraction {
+  id: string;
+  propertyId: string;
+  // Campos multilíngues - Natureza
+  nature_pt: string | null;
+  nature_en: string | null;
+  nature_fr: string | null;
+  // Campos multilíngues - Tipologia
+  fractionType_pt: string | null;
+  fractionType_en: string | null;
+  fractionType_fr: string | null;
+  // Campos multilíngues - Piso
+  floor_pt: string | null;
+  floor_en: string | null;
+  floor_fr: string | null;
+  // Campos multilíngues - Fração/Unidade
+  unit_pt: string | null;
+  unit_en: string | null;
+  unit_fr: string | null;
+  // Campos numéricos
+  grossArea: number | null;
+  outdoorArea: number | null;
+  parkingSpaces: number;
+  price: number | null;
+  // Campo URL
+  floorPlan: string | null;
+  // Status e ordem
+  reservationStatus: "available" | "reserved" | "sold";
+  displayOrder: number;
+  customData: Record<string, any> | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PropertyFractionColumn {
+  id: string;
+  propertyId: string;
+  columnKey: string;
+  label_pt: string;
+  label_en: string | null;
+  label_fr: string | null;
+  dataType: "text" | "number" | "currency" | "area" | "select";
+  selectOptions: string[] | null;
+  isVisible: boolean;
+  isRequired: boolean;
+  displayOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreatePropertyFractionDto = Omit<
+  PropertyFraction,
+  "id" | "propertyId" | "createdAt" | "updatedAt"
+>;
+
+export type UpdatePropertyFractionDto = Partial<CreatePropertyFractionDto>;
+
+export type CreatePropertyFractionColumnDto = Omit<
+  PropertyFractionColumn,
+  "id" | "propertyId" | "createdAt" | "updatedAt"
+>;
+
+export type UpdatePropertyFractionColumnDto = Partial<
+  CreatePropertyFractionColumnDto
+>;

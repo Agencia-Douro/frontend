@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
+import PropertyFractionsSection from "@/components/Sections/Imovel/PropertyFractionsSection"
 import { generatePropertyPDF } from "@/utils/pdfGenerator"
 import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImoveis"
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
@@ -797,6 +798,15 @@ export default function ImovelDetailsClient() {
                     </div>
                 </div>
             </section>
+
+            <PropertyFractionsSection
+                propertyId={property.id}
+                locale={locale}
+                title={t("fractionsTitle")}
+                description={t("fractionsDescription")}
+                loadingText={t("fractionsLoading")}
+                callNowLabel={t("callNow")}
+            />
 
             <ImoveisRelacionados
                 currentPropertyId={property.id}

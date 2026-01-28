@@ -546,7 +546,11 @@
     "whyChooseAgencyDescription": "Operating in both national and international markets, Agência Douro is recognized for its transparency, responsibility, and commitment to providing peace of mind in every negotiation. Whether for your own home or investment, we offer complete support to make your deal safe and effective.",
     "whyChooseAgencyCTA": "📞 Contact us now and schedule your visit!",
     "whyChooseAgencyOpportunity": "Don't miss this unique opportunity to live in one of Portugal's most stunning settings. 🌟",
-    "whyChooseAgencyAgentNote": "*If you are a real estate agent, at Agência Douro we work on a sharing basis."
+    "whyChooseAgencyAgentNote": "*If you are a real estate agent, at Agência Douro we work on a sharing basis.",
+    "fractionsTitle": "Fractions",
+    "fractionsDescription": "Units and fractions available in this development",
+    "fractionsLoading": "Loading fractions...",
+    "callNow": "Call now"
   },
   "TermosECondicoes": {
     "title": "Terms and Conditions",

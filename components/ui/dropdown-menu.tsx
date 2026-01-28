@@ -20,9 +20,23 @@ function DropdownMenuPortal({
   )
 }
 
+const dropdownTriggerChevron = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    className="transition-transform duration-200 group-data-[state=open]:rotate-180"
+  >
+    <path d="M7.99997 8.68178L11.1111 5.5L12 6.40908L7.99997 10.5L4 6.40908L4.88889 5.5L7.99997 8.68178Z" fill="#DCB053"/>
+  </svg>
+)
+
 function DropdownMenuTrigger({
   className,
   children,
+  asChild,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
   return (
@@ -32,19 +46,10 @@ function DropdownMenuTrigger({
         "group flex items-center gap-3 bg-black-muted border border-gold text-white py-2 pl-2.5 pr-1.5 body-14-medium cursor-pointer focus:outline-none",
         className
       )}
+      asChild={asChild}
       {...props}
     >
-      {children}
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="16" 
-        height="16" 
-        viewBox="0 0 16 16" 
-        fill="none"
-        className="transition-transform duration-200 group-data-[state=open]:rotate-180"
-      >
-        <path d="M7.99997 8.68178L11.1111 5.5L12 6.40908L7.99997 10.5L4 6.40908L4.88889 5.5L7.99997 8.68178Z" fill="#DCB053"/>
-      </svg>
+      {asChild ? children : <>{children}{dropdownTriggerChevron}</>}
     </DropdownMenuPrimitive.Trigger>
   )
 }
