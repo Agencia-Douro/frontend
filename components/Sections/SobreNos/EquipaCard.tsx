@@ -48,7 +48,7 @@ export function EquipaCard({ name, email, phone, photo, role }: EquipaCardProps)
                         </a>
                     )}
                     <p className="text-grey body-14-regular">{t("legal")}</p>
-                    </div>
+                </div>
             </div>
             {photo && (
                 <div className="w-32 h-32 relative overflow-hidden rounded-lg flex-shrink-0">

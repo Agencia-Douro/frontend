@@ -825,7 +825,7 @@ export default function ImovelDetailsClient() {
                     <DialogHeader>
                         <DialogTitle className="text-brown body-18-medium">{t("propertyFeatures")}</DialogTitle>
                         <DialogDescription>
-                            Características e comodidades especiais deste imóvel
+                            {t("featuresDescription")}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.features || "" }} />
