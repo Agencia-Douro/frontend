@@ -973,7 +973,7 @@ export function PropertyFractionsTab({
 
                     <div className="space-y-2">
                       <Label>
-                        Label (PT) <span className="text-red-500">*</span>
+                        Label <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         placeholder="Ex: Tipo de Garagem"
@@ -982,35 +982,6 @@ export function PropertyFractionsTab({
                           setNewColumn({ ...newColumn, label_pt: e.target.value })
                         }
                       />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label>Label (EN)</Label>
-                        <Input
-                          placeholder="Ex: Garage Type"
-                          value={newColumn.label_en || ""}
-                          onChange={(e) =>
-                            setNewColumn({
-                              ...newColumn,
-                              label_en: e.target.value || null,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Label (FR)</Label>
-                        <Input
-                          placeholder="Ex: Type de Garage"
-                          value={newColumn.label_fr || ""}
-                          onChange={(e) =>
-                            setNewColumn({
-                              ...newColumn,
-                              label_fr: e.target.value || null,
-                            })
-                          }
-                        />
-                      </div>
                     </div>
 
                     <div className="space-y-2">
