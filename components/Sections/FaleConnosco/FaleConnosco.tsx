@@ -161,7 +161,7 @@ export const FaleConnosco = () => {
                     <h3 className="body-20-medium text-black mb-4 md:mb-6">{t("address")}</h3>
                     <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("addressDescription")}</p>
                     <p className="body-16-medium text-black">
-                        Rua de Alfredo Cunha 155 rés do chão loja 07, 4450-031 Porto
+                        Rua de Alfredo Cunha 155 rés do chão loja 07, 4450-031, Matosinhos, Porto
                     </p>
                 </div>
             </div>
