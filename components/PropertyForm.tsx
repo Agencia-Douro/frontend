@@ -234,6 +234,7 @@ export default function PropertyForm({
 
   // Get freguesias based on selected concelho
   const freguesias = formData.concelho ? MUNICIPIO_FREGUESIAS[formData.concelho] || [] : []
+  console.log("Freguesias disponíveis para", formData.concelho, ":", freguesias) // Debug
 
   useEffect(() => {
     if (initialData) {
