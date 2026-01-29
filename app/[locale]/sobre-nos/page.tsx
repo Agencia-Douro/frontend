@@ -9,9 +9,20 @@ import { StatCard } from "@/components/Sections/SobreNos/StatCard";
 import { CulturaCard } from "@/components/Sections/SobreNos/CulturaCard";
 import { ServicoCard } from "@/components/Sections/SobreNos/ServicoCard";
 import { EquipaCard } from "@/components/Sections/SobreNos/EquipaCard";
-import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+
+// Formata números grandes para exibição amigável (ex: 150000 -> "150 mil")
+const formatLargeNumber = (num: number): string => {
+    if (num >= 1000000) {
+        const millions = num / 1000000;
+        return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)} M`;
+    }
+    if (num >= 1000) {
+        const thousands = num / 1000;
+        return `${thousands % 1 === 0 ? thousands.toFixed(0) : thousands.toFixed(1)}m`;
+    }
+    return num.toString();
+};
 import {
     siteConfigApi,
     teamMembersApi,
@@ -118,7 +129,7 @@ export default function InstitucionalPage() {
                     <StatCard value={`${siteConfig?.anosExperiencia || 0}`} label={t("yearsExperience")} />
                     <StatCard value={`${siteConfig?.imoveisVendidos || 0}`} label={t("propertiesSold")} />
                     <StatCard value={`${siteConfig?.clientesSatisfeitos || 0}`} label={t("satisfiedClients")} />
-                    <StatCard value={`${siteConfig?.seguidoresInstagram || 0}`} label={t("instagramFollowers")} />
+                    <StatCard value={formatLargeNumber(siteConfig?.seguidoresInstagram || 0)} label={t("instagramFollowers")} />
 
                 </div>
             </section>
