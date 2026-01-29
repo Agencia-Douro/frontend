@@ -165,7 +165,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto pb-24"
+                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100dvh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-y-auto pb-24"
                             >
                                 <motion.div
                                     initial="closed"

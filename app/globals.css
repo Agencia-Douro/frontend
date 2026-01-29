@@ -428,12 +428,7 @@ html, body {
     
 }
 
-
-/* Yet Another React Lightbox Customization */
-.yarl__container {
-    background-color: #F5F0E9 !important;
-}
-
-.yarl__slide {
-    background-color: #F5F0E9 !important;
+.yarl__root {
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
 }

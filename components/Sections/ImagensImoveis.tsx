@@ -108,8 +108,8 @@ export default function ImagensImoveis({
       index={photoIndex}
       plugins={[Video]}
       styles={{
-        container: {
-          backgroundColor: "rgba(0, 0, 0, 0.95)"
+        root: {
+          "--yarl__color_backdrop": "rgba(0, 0, 0, 0.2)"
         },
         slide: {
           padding: "80px 20px"
