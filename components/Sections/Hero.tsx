@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import { propertiesApi } from "@/services/api";
 import { Property } from "@/types/property";
 import Image from "next/image";
+import Logo from "@/public/Logo.png"
 
 
 type TransactionType = "comprar" | "arrendar" | "empreendimentos" | "trespasse";
@@ -140,30 +141,30 @@ export function Hero() {
         {/* Container das imagens com overflow hidden */}
         <div className="absolute inset-0 overflow-hidden">
           {heroImages.map((image, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: index === currentImageIndex ? 1 : 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={image}
-              alt={`Hero ${index + 1}`}
-              fill
-              className="object-cover"
-              priority={index === 0}
-              quality={90}
-              unoptimized
-            />
-            <div className="absolute inset-0 bg-black/45" />
-          </motion.div>
-        ))}
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: index === currentImageIndex ? 1 : 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={image}
+                alt={`Hero ${index + 1}`}
+                fill
+                className="object-cover"
+                priority={index === 0}
+                quality={90}
+                unoptimized
+              />
+              <div className="absolute inset-0 bg-black/45" />
+            </motion.div>
+          ))}
 
 
-        {/* Indicadores do carousel */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
+          {/* Indicadores do carousel */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
             @keyframes progressFill {
               from {
                 width: 0%;
@@ -176,45 +177,62 @@ export function Hero() {
               animation: progressFill 8s linear forwards;
             }
           `
-        }} />
-        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentImageIndex(index);
-                setAnimationKey((prev) => prev + 1);
-              }}
-              className="relative w-8 py-2 cursor-pointer transition-all group flex items-center justify-center"
-              aria-label={`Ir para imagem ${index + 1}`}
-            >
-              <div className="relative w-full h-[3px]">
-                {/* Background base para todos os indicadores */}
-                <div className={`absolute inset-0 ${index === currentImageIndex ? 'bg-white/40' : 'bg-white/30'}`} />
-                {/* Barra de progresso apenas para o indicador ativo */}
-                {index === currentImageIndex && (
-                  <div
-                    key={animationKey}
-                    className="absolute top-0 left-0 h-full bg-white hero-progress-bar"
-                  />
-                )}
-              </div>
-            </button>
-          ))}
-        </div>
+          }} />
+          <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setCurrentImageIndex(index);
+                  setAnimationKey((prev) => prev + 1);
+                }}
+                className="relative w-8 py-2 cursor-pointer transition-all group flex items-center justify-center"
+                aria-label={`Ir para imagem ${index + 1}`}
+              >
+                <div className="relative w-full h-[3px]">
+                  {/* Background base para todos os indicadores */}
+                  <div className={`absolute inset-0 ${index === currentImageIndex ? 'bg-white/40' : 'bg-white/30'}`} />
+                  {/* Barra de progresso apenas para o indicador ativo */}
+                  {index === currentImageIndex && (
+                    <div
+                      key={animationKey}
+                      className="absolute top-0 left-0 h-full bg-white hero-progress-bar"
+                    />
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Conteúdo sobre a imagem */}
         <div className="absolute inset-0 flex items-center justify-center py-16 md:py-20 lg:py-24">
           <div className="container px-4 w-full">
             <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
-              {/* Título alinhado à esquerda */}
-              <motion.h1
-                className="text-deaf leading-tight heading-quatro-medium md:heading-tres-regular lg:heading-dois-medium 
-             drop-shadow-lg mb-6 md:mb-8 lg:mb-10 text-center text-balance md:px-8 max-w-full px-4"
+              {/* Logo - apenas desktop */}
+              <motion.div
+                className="hidden lg:flex justify-center mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
+              >
+                <Image
+                  src={Logo}
+                  alt="Agência Douro"
+                  width={400}
+                  height={400}
+                  className="w-auto h-auto max-w-[400px] brightness-0 invert opacity-60"
+                  priority
+                />
+              </motion.div>
+
+              {/* Título alinhado à esquerda */}
+              <motion.h1
+                className="text-deaf leading-tight heading-quatro-medium md:heading-tres-regular lg:heading-dois-medium
+             drop-shadow-lg mb-6 md:mb-8 lg:mb-10 text-center text-balance md:px-8 max-w-full px-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
               >
                 {t("title")}
               </motion.h1>
