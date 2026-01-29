@@ -37,7 +37,7 @@ export default function Footer() {
                             <ul className="space-y-4">
                                 <li><Link href="/" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("home")}</Link></li>
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("properties")}</Link></li>
-                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
+                                <li><Link href="/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("buy")}</Link></li>
@@ -52,9 +52,9 @@ export default function Footer() {
                                 <li><Link href="#contacto" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("contact")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
-                                <li><Link href="/institucional/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
+                                <li><Link href="/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
                                 <li><Link href="/newsletter" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("newsletter")}</Link></li>
-                                <li><Link href="/institucional/podcast" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("podcast")}</Link></li>
+                                <li><Link href="/podcast" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("podcast")}</Link></li>
                             </ul>
                             <ul className="space-y-4">
                                 <li><Link href="/imoveis?transactionType=comprar" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("buy")}</Link></li>
