@@ -240,7 +240,7 @@ export function Hero() {
 
               {/* Formulário de Pesquisa */}
               <motion.form
-                className="w-full overflow-hidden"
+                className="w-full"
                 onSubmit={handleSearch}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -310,16 +310,16 @@ export function Hero() {
 
                       {/* Resultados do autocomplete */}
                       {showResults && searchResults.length > 0 && (
-                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted max-h-[70vh] overflow-y-auto">
+                        <div className="absolute z-50 w-full mt-2 bg-white shadow-xl border border-muted max-h-[70vh] overflow-y-auto max-w-[1088px]">
                           <div className="p-2 space-y-1">
                             {searchResults.map((property) => (
                               <button
                                 key={property.id}
                                 onClick={() => handlePropertyClick(property.id)}
-                                className="w-full p-2.5 hover:bg-muted/50 transition-all duration-200 text-left rounded-lg flex gap-3 group"
+                                className="w-full p-2.5 hover:bg-muted/50 transition-all duration-200 text-left flex gap-3 group"
                               >
                                 {property.image && (
-                                  <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden shadow-sm">
+                                  <div className="relative w-20 h-20 shrink-0 overflow-hidden shadow-sm">
                                     <Image
                                       src={property.image}
                                       alt={property.title}
@@ -360,7 +360,7 @@ export function Hero() {
                       )}
 
                       {showResults && searchQuery.trim().length >= 2 && searchResults.length === 0 && !isSearching && (
-                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted p-6 text-center text-grey body-14-regular">
+                        <div className="absolute z-50 w-full mt-2 bg-white shadow-xl border border-muted p-6 text-center text-grey body-14-regular">
                           {t("noResults")}
                         </div>
                       )}
@@ -462,16 +462,15 @@ export function Hero() {
 
                       {/* Resultados do autocomplete */}
                       {showResults && searchResults.length > 0 && (
-                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted max-h-[60vh] overflow-y-auto">
-                          <div className="p-2 space-y-1">
+                        <div className="remove-scrollbar p-2 space-y-1 absolute z-50 mt-2 bg-white shadow-xl max-h-96 overflow-y-auto min-w-[calc(100%-64px)]">
                             {searchResults.map((property) => (
                               <button
                                 key={property.id}
                                 onClick={() => handlePropertyClick(property.id)}
-                                className="w-full p-3 hover:bg-muted/50 transition-all duration-200 text-left rounded-lg flex gap-4 group"
+                                className="w-full p-2 hover:bg-muted/50 transition-all duration-200 text-left flex gap-4 group"
                               >
                                 {property.image && (
-                                  <div className="relative w-24 h-24 shrink-0 rounded-lg overflow-hidden shadow-sm">
+                                  <div className="relative size-20 shrink-0 overflow-hidden shadow-sm">
                                     <Image
                                       src={property.image}
                                       alt={property.title}
@@ -489,7 +488,7 @@ export function Hero() {
                                     <span className="body-16-medium text-gold">
                                       €{property.price.toLocaleString()}
                                     </span>
-                                    <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                    <span className="size-0.5 rounded-full bg-grey/40"></span>
                                     {property.bedrooms > 0 && (
                                       <span className="body-14-regular text-grey">
                                         T{property.bedrooms}
@@ -497,7 +496,7 @@ export function Hero() {
                                     )}
                                     {property.usefulArea && (
                                       <>
-                                        <span className="w-1 h-1 rounded-full bg-grey/40"></span>
+                                        <span className="size-0.5 rounded-full bg-grey/40"></span>
                                         <span className="body-14-regular text-grey">
                                           {property.usefulArea}m²
                                         </span>
@@ -507,12 +506,11 @@ export function Hero() {
                                 </div>
                               </button>
                             ))}
-                          </div>
                         </div>
                       )}
 
                       {showResults && searchQuery.trim().length >= 2 && searchResults.length === 0 && !isSearching && (
-                        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-xl border border-muted p-6 text-center text-grey body-14-regular">
+                        <div className="absolute z-50 w-full mt-2 bg-white shadow-xl p-6 text-center text-grey body-14-regular">
                           {t("noResults")}
                         </div>
                       )}
