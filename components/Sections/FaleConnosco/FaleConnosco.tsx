@@ -117,7 +117,7 @@ export const FaleConnosco = () => {
                 <div className="flex flex-col">
                     <h3 className="md:body-20-medium body-18-medium text-black mb-4 md:mb-6">{t("contact")}</h3>
                     <p className="body-16-regular text-grey mb-4 text-balance hidden md:block">{t("contactDescription")}</p>
-                    <div className="flex md:flex-col gap-x-4 gap-y-2">
+                    <div className="flex flex-col gap-x-4 gap-y-2">
                         <Link href="tel:+351919766324" className="body-16-medium text-black underline underline-offset-4 decoration-1">+351 919 766 323</Link>
                         <p className="text-grey body-14-regular">{tr("legal")}</p>
                         <Link href="tel:+351919766324" className="body-16-medium text-black underline underline-offset-4 decoration-1">+351 919 766 324</Link>

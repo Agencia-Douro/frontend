@@ -75,7 +75,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
                 {displayProperties.map((property) => (
                     <Card
                         key={property.id}
-                        href={`/${locale}/imoveis/${property.id}`}
+                        href={`/imoveis/${property.id}`}
                         titulo={property.title}
                         localizacao={`${property.concelho}, ${property.distrito}`}
                         preco={property.price.toString()}

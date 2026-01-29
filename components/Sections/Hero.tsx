@@ -91,7 +91,7 @@ export function Hero() {
   }, []);
 
   const handlePropertyClick = (propertyId: string) => {
-    router.push(`/${locale}/imoveis/${propertyId}`);
+    router.push(`/imoveis/${propertyId}`);
     setShowResults(false);
     setSearchQuery("");
   };
@@ -132,7 +132,7 @@ export function Hero() {
     // Tipologia = bedrooms (múltipla seleção)
     if (tipologias.length > 0) params.set("bedrooms", tipologias.join(","));
 
-    router.push(`/${locale}/imoveis?${params.toString()}`);
+    router.push(`/imoveis?${params.toString()}`);
   };
 
   return (
