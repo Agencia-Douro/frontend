@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Cards from "./Cards";
 import { useFeaturedProperties } from "@/hooks/useFeaturedProperties";
 import { useTranslations } from "next-intl";

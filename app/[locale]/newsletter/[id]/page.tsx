@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { newslettersApi } from "@/services/api";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import Footer from "@/components/Sections/Footer/Footer";
 import Logo from "@/public/Logo.svg";

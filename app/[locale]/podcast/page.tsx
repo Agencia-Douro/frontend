@@ -3,7 +3,7 @@
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Footer from "@/components/Sections/Footer/Footer";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { StatCard } from "@/components/Sections/SobreNos/StatCard";
 import { CulturaCard } from "@/components/Sections/SobreNos/CulturaCard";
 import { useQuery } from "@tanstack/react-query";

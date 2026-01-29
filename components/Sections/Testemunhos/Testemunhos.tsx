@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Testemunho from "./Testemunho";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useRef, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi, depoimentosApi } from "@/services/api";

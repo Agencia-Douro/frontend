@@ -1,6 +1,6 @@
 import { Newsletter } from "@/types/newsletter"
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface NewsletterCardProps {
     newsletter: Newsletter;

@@ -21,7 +21,7 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {

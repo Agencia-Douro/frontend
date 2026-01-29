@@ -11,7 +11,7 @@ import { ServicoCard } from "@/components/Sections/SobreNos/ServicoCard";
 import { EquipaCard } from "@/components/Sections/SobreNos/EquipaCard";
 import Folha from "@/components/Folha";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
     siteConfigApi,
     teamMembersApi,

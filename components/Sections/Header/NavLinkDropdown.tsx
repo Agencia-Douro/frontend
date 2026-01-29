@@ -5,10 +5,10 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Link } from "@/i18n/navigation";
 import NavLink from "./NavLink";
 
 interface NavLinkDropdownProps {
@@ -65,9 +65,12 @@ export default function NavLinkDropdown({ trigger, triggerHref, items, isTranspa
             <ul className="flex flex-col gap-1 list-none m-0 p-0">
               {items.map((item) => (
                 <li key={item.href} className="list-none">
-                  <NavigationMenuLink href={item.href}>
+                  <Link
+                    href={item.href}
+                    className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground text-sm"
+                  >
                     {item.label}
-                  </NavigationMenuLink>
+                  </Link>
                 </li>
               ))}
             </ul>
