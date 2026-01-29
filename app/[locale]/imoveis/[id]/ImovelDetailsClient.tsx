@@ -543,7 +543,6 @@ export default function ImovelDetailsClient() {
                                             <Label htmlFor="telefone" className="body-14-medium text-black">{t("phoneNumber")} <span className="text-red body-14-medium">*</span></Label>
                                             <Input
                                                 id="telefone"
-                                                placeholder={t("phonePlaceholder")}
                                                 value={formData.telefone}
                                                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                                                 required
@@ -556,7 +555,6 @@ export default function ImovelDetailsClient() {
                                         <Input
                                             id="email"
                                             type="email"
-                                            placeholder={t("emailPlaceholder")}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             required
@@ -567,7 +565,6 @@ export default function ImovelDetailsClient() {
                                         <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>
                                         <Textarea
                                             id="mensagem"
-                                            placeholder={t("messagePlaceholder")}
                                             value={formData.mensagem}
                                             onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                                             required

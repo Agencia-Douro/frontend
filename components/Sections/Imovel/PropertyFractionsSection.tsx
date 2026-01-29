@@ -14,7 +14,7 @@ import {
 import { FileText, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const PHONE_NUMBER = "+351937644165"
+const PHONE_NUMBER = "+351919766324"
 
 const DEFAULT_COLUMNS = [
   { key: "nature", label: "Natureza" },
