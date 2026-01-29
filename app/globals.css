@@ -430,5 +430,4 @@ html, body {
 
 .yarl__root {
     backdrop-filter: blur(var(--blur-md));
-    -webkit-backdrop-filter: blur(var(--blur-md));
 }
