@@ -13,6 +13,7 @@ import { propertiesApi } from "@/services/api";
 import { Property } from "@/types/property";
 import Image from "next/image";
 import Logo from "@/public/Logo.png"
+import { formatPriceNumber } from "@/lib/currency";
 
 
 type TransactionType = "comprar" | "arrendar" | "empreendimentos" | "trespasse";
@@ -335,7 +336,7 @@ export function Hero() {
                                   </p>
                                   <div className="flex items-center gap-2 mt-2">
                                     <span className="body-14-medium text-gold">
-                                      €{property.price.toLocaleString()}
+                                      {formatPriceNumber(property.price)}€
                                     </span>
                                     <span className="w-1 h-1 rounded-full bg-grey/40"></span>
                                     {property.bedrooms > 0 && (
@@ -463,49 +464,49 @@ export function Hero() {
                       {/* Resultados do autocomplete */}
                       {showResults && searchResults.length > 0 && (
                         <div className="remove-scrollbar p-2 space-y-1 absolute z-50 mt-2 bg-white shadow-xl max-h-96 overflow-y-auto min-w-[calc(100%-64px)]">
-                            {searchResults.map((property) => (
-                              <button
-                                key={property.id}
-                                onClick={() => handlePropertyClick(property.id)}
-                                className="w-full p-2 hover:bg-muted/50 transition-all duration-200 text-left flex gap-4 group"
-                              >
-                                {property.image && (
-                                  <div className="relative size-20 shrink-0 overflow-hidden shadow-sm">
-                                    <Image
-                                      src={property.image}
-                                      alt={property.title}
-                                      fill
-                                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                  </div>
-                                )}
-                                <div className="flex-1 min-w-0 py-1">
-                                  <h4 className="body-16-medium text-black truncate group-hover:text-brown transition-colors">{property.title}</h4>
-                                  <p className="body-14-regular text-grey truncate mt-1">
-                                    {property.concelho}, {property.distrito}
-                                  </p>
-                                  <div className="flex items-center gap-3 mt-2">
-                                    <span className="body-16-medium text-gold">
-                                      €{property.price.toLocaleString()}
-                                    </span>
-                                    <span className="size-0.5 rounded-full bg-grey/40"></span>
-                                    {property.bedrooms > 0 && (
-                                      <span className="body-14-regular text-grey">
-                                        T{property.bedrooms}
-                                      </span>
-                                    )}
-                                    {property.usefulArea && (
-                                      <>
-                                        <span className="size-0.5 rounded-full bg-grey/40"></span>
-                                        <span className="body-14-regular text-grey">
-                                          {property.usefulArea}m²
-                                        </span>
-                                      </>
-                                    )}
-                                  </div>
+                          {searchResults.map((property) => (
+                            <button
+                              key={property.id}
+                              onClick={() => handlePropertyClick(property.id)}
+                              className="w-full p-2 hover:bg-muted/50 transition-all duration-200 text-left flex gap-4 group"
+                            >
+                              {property.image && (
+                                <div className="relative size-20 shrink-0 overflow-hidden shadow-sm">
+                                  <Image
+                                    src={property.image}
+                                    alt={property.title}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                  />
                                 </div>
-                              </button>
-                            ))}
+                              )}
+                              <div className="flex-1 min-w-0 py-1">
+                                <h4 className="body-16-medium text-black truncate group-hover:text-brown transition-colors">{property.title}</h4>
+                                <p className="body-14-regular text-grey truncate mt-1">
+                                  {property.concelho}, {property.distrito}
+                                </p>
+                                <div className="flex items-center gap-3 mt-2">
+                                  <span className="body-16-medium text-gold">
+                                    {formatPriceNumber(property.price)}€
+                                  </span>
+                                  <span className="size-0.5 rounded-full bg-grey/40"></span>
+                                  {property.bedrooms > 0 && (
+                                    <span className="body-14-regular text-grey">
+                                      T{property.bedrooms}
+                                    </span>
+                                  )}
+                                  {property.usefulArea && (
+                                    <>
+                                      <span className="size-0.5 rounded-full bg-grey/40"></span>
+                                      <span className="body-14-regular text-grey">
+                                        {property.usefulArea}m²
+                                      </span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </button>
+                          ))}
                         </div>
                       )}
 
