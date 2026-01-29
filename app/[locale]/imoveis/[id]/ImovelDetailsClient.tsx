@@ -22,6 +22,7 @@ import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
+import { formatPriceNumber } from "@/lib/currency"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -367,7 +368,7 @@ export default function ImovelDetailsClient() {
                     <p className="body-16-medium text-brown">{t("businessType")} <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
                 </div>
                 <h1 className="pt-4 md:pt-5 lg:pt-6 body-18-medium md:body-20-medium lg:heading-quatro-medium text-brown">{property.title}</h1>
-                <h2 className="pt-2 md:pt-3 lg:pt-4 heading-quatro-medium lg:heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
+                <h2 className="pt-2 md:pt-3 lg:pt-4 heading-quatro-medium lg:heading-tres-medium text-brown">{formatPriceNumber(property.price)} €</h2>
 
                 <div className="grid lg:grid-cols-2 gap-4 w-full lg:w-1/2 mt-2">
                     <Link
@@ -810,7 +811,7 @@ export default function ImovelDetailsClient() {
 
             <ImoveisRelacionados
                 currentPropertyId={property.id}
-                currentPrice={property.price}
+                currentPrice={formatPriceNumber(property.price)}
                 property={property}
             />
 
