@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Link, usePathname } from "@/i18n/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLink from "@/components/Sections/Header/NavLink";
 import NavLinkDropdown from "@/components/Sections/Header/NavLinkDropdown";
@@ -15,6 +15,7 @@ export default function Header() {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const savedScrollY = useRef(0);
     const t = useTranslations("Header");
 
     // Detectar scroll
@@ -27,23 +28,21 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Bloquear scroll quando menu mobile está aberto
+    // Bloquear scroll quando menu mobile está aberto e restaurar posição ao fechar
     useEffect(() => {
         if (mobileMenuOpen) {
-            // Guardar posição atual de scroll
-            const scrollY = window.scrollY;
+            savedScrollY.current = window.scrollY;
             document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollY}px`;
+            document.body.style.top = `-${savedScrollY.current}px`;
             document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
         } else {
-            // Restaurar posição de scroll
-            const scrollY = document.body.style.top;
+            const scrollToRestore = savedScrollY.current;
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.width = '';
             document.body.style.overflow = '';
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            window.scrollTo(0, scrollToRestore);
         }
         return () => {
             document.body.style.position = '';
