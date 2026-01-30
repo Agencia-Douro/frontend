@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { newslettersApi } from "@/services/api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/dialog"
 
 export default function NewslettersPage() {
-  const router = useRouter()
   const queryClient = useQueryClient()
   const [searchInput, setSearchInput] = useState("")
   const [deleteId, setDeleteId] = useState<string | null>(null)
@@ -120,9 +119,11 @@ export default function NewslettersPage() {
             }
           </p>
         </div>
-        <Button onClick={() => router.push("/admin/newsletters/create")}>
-          <Plus className="h-4 w-4 mr-2" />
-          Nova Newsletter
+        <Button asChild>
+          <Link href="/admin/newsletters/create">
+            <Plus className="h-4 w-4 mr-2" />
+            Nova Newsletter
+          </Link>
         </Button>
       </div>
 
@@ -191,11 +192,13 @@ export default function NewslettersPage() {
                 <Button
                   variant="outline"
                   size="default"
-                  onClick={() => router.push(`/admin/newsletters/${newsletter.id}/edit`)}
                   className="flex-1"
+                  asChild
                 >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Editar
+                  <Link href={`/admin/newsletters/${newsletter.id}/edit`}>
+                    <Edit className="h-4 w-4 mr-2" />
+                    Editar
+                  </Link>
                 </Button>
                 <Button
                   variant="brown"

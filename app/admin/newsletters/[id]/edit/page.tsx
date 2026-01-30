@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
+import Link from "next/link"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { newslettersApi } from "@/services/api"
 import Image from "next/image"
@@ -135,13 +136,11 @@ export default function EditNewsletterPage() {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => router.push("/admin/newsletters")}
-          className="mb-4"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Voltar
+        <Button variant="ghost" className="mb-4" asChild>
+          <Link href="/admin/newsletters">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar
+          </Link>
         </Button>
       </div>
 
@@ -308,12 +307,8 @@ export default function EditNewsletterPage() {
         <div className="flex gap-4 mt-6 justify-end">
           {activeTab === "properties" ? (
             <>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => router.push("/admin/newsletters")}
-              >
-                Cancelar
+              <Button type="button" variant="outline" asChild>
+                <Link href="/admin/newsletters">Cancelar</Link>
               </Button>
               <Button
                 type="submit"

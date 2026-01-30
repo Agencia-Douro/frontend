@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
+import Link from "next/link"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { propertiesApi, propertyFilesApi, propertyFractionsApi, propertyRelationshipsApi } from "@/services/api"
 import { Button } from "@/components/ui/button"
@@ -121,13 +122,11 @@ function CreatePropertyContent() {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => router.push("/admin/properties")}
-          className="mb-4"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Voltar
+        <Button variant="ghost" className="mb-4" asChild>
+          <Link href="/admin/properties">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar
+          </Link>
         </Button>
       </div>
 

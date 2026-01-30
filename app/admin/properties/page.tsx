@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { propertiesApi, PropertyFilters } from "@/services/api"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -21,7 +21,6 @@ import { usePropertyDrafts, getTimeAgo } from "@/hooks/usePropertyDraft"
 import { toast } from "sonner"
 
 export default function PropertiesPage() {
-  const router = useRouter()
   const [showFilters, setShowFilters] = useState(false)
   const [searchInput, setSearchInput] = useState("")
   const [filters, setFilters] = useState<PropertyFilters>({
@@ -110,9 +109,11 @@ export default function PropertiesPage() {
             Total de {data?.total} propriedade(s)
           </p>
         </div>
-        <Button onClick={() => router.push("/admin/properties/create")}>
-          <Plus className="h-4 w-4 mr-2" />
-          Nova Propriedade
+        <Button asChild>
+          <Link href="/admin/properties/create">
+            <Plus className="h-4 w-4 mr-2" />
+            Nova Propriedade
+          </Link>
         </Button>
       </div>
 
@@ -185,10 +186,12 @@ export default function PropertiesPage() {
                   <div className="flex gap-1">
                     <Button
                       variant="ghost"
-                      onClick={() => router.push(`/admin/properties/create?draft=${draft.id}`)}
                       className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"
+                      asChild
                     >
-                      Continuar
+                      <Link href={`/admin/properties/create?draft=${draft.id}`}>
+                        Continuar
+                      </Link>
                     </Button>
                     <Button
                       size="icon"

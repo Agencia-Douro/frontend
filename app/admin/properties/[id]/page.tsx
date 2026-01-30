@@ -177,12 +177,11 @@ export default function PropertyDetailsPage() {
                                         : "Destacar"}
                             </Button>
 
-                            <Button
-                                variant="brown"
-                                onClick={() => router.push(`/admin/properties/${propertyId}/edit`)}
-                            >
-                                <Pencil className="h-4 w-4 mr-2" />
-                                Editar
+                            <Button variant="brown" asChild>
+                                <Link href={`/admin/properties/${propertyId}/edit`}>
+                                    <Pencil className="h-4 w-4 mr-2" />
+                                    Editar
+                                </Link>
                             </Button>
 
                             <Button
