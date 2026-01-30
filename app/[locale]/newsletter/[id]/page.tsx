@@ -71,7 +71,7 @@ export default function NewsletterDetailsPage() {
             <Folha className="top-[1900px] left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
             <section className="bg-muted container pt-24 relative">
                 <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
-                    <Link href="/newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">{t("newsletter")}</Link>
+                    <Link href="/sobre-nos#newsletter" className="body-16-medium text-brown capitalize whitespace-nowrap">{t("newsletter")}</Link>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
                         <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor"></path>
                     </svg>

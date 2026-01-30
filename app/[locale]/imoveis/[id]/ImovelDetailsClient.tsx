@@ -584,7 +584,7 @@ export default function ImovelDetailsClient() {
                                     <Button type="submit" variant="gold" className="w-full">{t("send")}</Button>
                                 </form>
                                 <iframe
-                                    className="mt-6 h-75 border-0"
+                                    className="my-6 h-75 border-0"
                                     src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
                                         `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
                                     )}`}

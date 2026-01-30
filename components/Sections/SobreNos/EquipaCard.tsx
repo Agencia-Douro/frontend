@@ -51,7 +51,7 @@ export function EquipaCard({ name, email, phone, photo, role }: EquipaCardProps)
                 </div>
             </div>
             {photo && (
-                <div className="w-32 h-32 relative overflow-hidden rounded-lg flex-shrink-0">
+                <div className="size-32 relative overflow-hidden flex-shrink-0">
                     <Image
                         src={photo}
                         alt={name}
