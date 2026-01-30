@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Link } from "@/i18n/navigation"
+import Link from "next/link"
 import { formatPriceNumber } from "@/lib/currency"
 
 // Helper function to check if URL is a video
@@ -15,11 +15,12 @@ interface CardProps {
     preco: string
     image: string
     status?: string
+    locale?: string
 }
 
-export default function Card({ href, titulo, localizacao, preco, image, status }: CardProps) {
+export default function Card({ href, titulo, localizacao, preco, image, status, locale }: CardProps) {
     return (
-        <Link href={href} className="w-full h-full flex flex-col">
+        <Link href={locale ? `/${locale}/${href}` : href} className="w-full h-full flex flex-col">
             <div className="relative">
                 {isVideoUrl(image) ? (
                     <video

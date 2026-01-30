@@ -181,6 +181,7 @@ function ImoveisContent() {
                                                     localizacao={`${property.concelho}, ${property.distrito}`}
                                                     preco={property.price}
                                                     status={property.status}
+                                                    locale={locale}
                                                 />))}
                                         </div>
                                     )}
