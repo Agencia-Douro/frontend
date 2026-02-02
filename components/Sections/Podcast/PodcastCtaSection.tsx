@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 interface PodcastCtaSectionProps {
@@ -10,6 +9,7 @@ interface PodcastCtaSectionProps {
     hint: string;
     buttonLabel: string;
     buttonAriaLabel: string;
+    mailtoHref: string;
 }
 
 export function PodcastCtaSection({
@@ -19,18 +19,8 @@ export function PodcastCtaSection({
     hint,
     buttonLabel,
     buttonAriaLabel,
+    mailtoHref,
 }: PodcastCtaSectionProps) {
-    const pathname = usePathname();
-    const router = useRouter();
-
-    const handleContactClick = () => {
-        const url = `${pathname}?assunto=podcast-participate#contacto`;
-        router.replace(url);
-        setTimeout(() => {
-            document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-    };
-
     return (
         <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
             <div className="max-w-3xl space-y-4 md:space-y-5 lg:space-y-6">
@@ -45,14 +35,10 @@ export function PodcastCtaSection({
                     {hint}
                 </p>
                 <div className="pt-2">
-                    <Button
-                        type="button"
-                        variant="brown"
-                        className="w-fit px-6 py-3 transition-colors duration-200"
-                        onClick={handleContactClick}
-                        aria-label={buttonAriaLabel}
-                    >
-                        {buttonLabel}
+                    <Button asChild variant="brown" className="w-fit px-6 py-3 transition-colors duration-200">
+                        <a href={mailtoHref} aria-label={buttonAriaLabel}>
+                            {buttonLabel}
+                        </a>
                     </Button>
                 </div>
             </div>

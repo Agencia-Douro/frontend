@@ -1,13 +1,11 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
-import { useSearchParams, usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
 import { toast } from "sonner"
 import { Link } from "@/i18n/navigation"
 import { contactApi } from "@/services/api"
@@ -17,93 +15,47 @@ import { useTranslations } from "next-intl"
 export const FaleConnosco = () => {
     const t = useTranslations("FaleConnosco");
     const tr = useTranslations("SobreNos");
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const router = useRouter();
-    const assuntoFromUrl = searchParams.get("assunto") === "podcast-participate" ? "podcast-participate" : null;
-    const [userHasChangedAssunto, setUserHasChangedAssunto] = useState(false);
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
         email: "",
-        assunto: "general" as string,
         mensagem: "",
         aceitaMarketing: false,
     });
-    const assuntoValue = useMemo(
-        () => (assuntoFromUrl && !userHasChangedAssunto ? assuntoFromUrl : formData.assunto),
-        [assuntoFromUrl, userHasChangedAssunto, formData.assunto]
-    );
-
-    const syncAssuntoToUrl = useCallback(
-        (assunto: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            if (assunto === "general") {
-                params.delete("assunto");
-            } else {
-                params.set("assunto", assunto);
-            }
-            const query = params.toString();
-            const hash = typeof window !== "undefined" ? window.location.hash : "";
-            const newUrl = (query ? `${pathname}?${query}` : pathname) + hash;
-            router.replace(newUrl);
-        },
-        [pathname, router, searchParams]
-    );
-
-    const assuntoLabelForMessage = (value: string) => {
-        const map: Record<string, string> = {
-            general: t("subjectOptionGeneral"),
-            "podcast-participate": t("subjectOptionPodcastParticipate"),
-            "podcast-suggest": t("subjectOptionPodcastSuggest"),
-            "podcast-question": t("subjectOptionPodcastQuestion"),
-            "property-buy": t("subjectOptionPropertyBuy"),
-            "property-sell": t("subjectOptionPropertySell"),
-        };
-        return map[value] ?? value;
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         const toastId = toast.loading(t("sendingMessage"))
 
-        const assuntoLabel = assuntoValue ? assuntoLabelForMessage(assuntoValue) : "";
-        const messageToSend = assuntoLabel
-            ? `[Assunto: ${assuntoLabel}]\n\n${formData.mensagem}`
-            : formData.mensagem
-
         try {
             await contactApi.send({
                 nome: formData.nome,
                 telefone: formData.telefone,
                 email: formData.email,
-                mensagem: messageToSend,
+                mensagem: formData.mensagem,
                 aceitaMarketing: formData.aceitaMarketing,
             })
 
             toast.success(t("messageSentSuccess"), { id: toastId })
-            setUserHasChangedAssunto(false);
             setFormData({
                 nome: "",
                 telefone: "",
                 email: "",
-                assunto: "general",
                 mensagem: "",
                 aceitaMarketing: false,
-            });
-            syncAssuntoToUrl("general");
-        } catch (error: any) {
-            toast.error(error.message || t("messageSendError"), { id: toastId })
+            })
+        } catch (error: unknown) {
+            toast.error(error instanceof Error ? error.message : t("messageSendError"), { id: toastId })
         }
     }
 
     return (
         <section className="relative container py-12 md:py-10 lg:py-12 xl:py-16 scroll-mt-6 md:scroll-mt-10 lg:scroll-mt-12 xl:scroll-mt-16" id="contacto">
             <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">{t("title")}</h2>
-            <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
+            <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12 lg:items-stretch">
                 {/* Mapa */}
-                <div className="relative h-64 md:h-93 bg-muted w-full lg:h-[461px]">
+                <div className="relative h-64 md:h-93 bg-muted w-full lg:h-[376px]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1502.0337394772985!2d-8.6822294!3d41.1842493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f70571b1a9b%3A0xd18009e3350eed24!2sAg%C3%AAncia%20Douro%20-%20Media%C3%A7%C3%A3o%20Imobili%C3%A1ria%20AMI%2017%20632!5e0!3m2!1spt-PT!2spt!4v1234567890" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
                 </div>
                 {/* Formulário */}
@@ -137,29 +89,6 @@ export const FaleConnosco = () => {
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
                         />
-                    </div>
-                    <div className="space-y-1 w-full">
-                        <Label htmlFor="assunto" className="body-14-medium text-black">{t("subject")}</Label>
-                        <Select
-                            value={assuntoValue || "general"}
-                            onValueChange={(v) => {
-                                setUserHasChangedAssunto(true);
-                                setFormData({ ...formData, assunto: v });
-                                syncAssuntoToUrl(v);
-                            }}
-                        >
-                            <SelectTrigger id="assunto" className="w-full">
-                                <SelectValue placeholder={t("subjectPlaceholder")} />
-                            </SelectTrigger>
-                            <SelectContent className="[&>*:nth-child(2)]:!grid-cols-1">
-                                <SelectItem value="general">{t("subjectOptionGeneral")}</SelectItem>
-                                <SelectItem value="podcast-participate">{t("subjectOptionPodcastParticipate")}</SelectItem>
-                                <SelectItem value="podcast-suggest">{t("subjectOptionPodcastSuggest")}</SelectItem>
-                                <SelectItem value="podcast-question">{t("subjectOptionPodcastQuestion")}</SelectItem>
-                                <SelectItem value="property-buy">{t("subjectOptionPropertyBuy")}</SelectItem>
-                                <SelectItem value="property-sell">{t("subjectOptionPropertySell")}</SelectItem>
-                            </SelectContent>
-                        </Select>
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>

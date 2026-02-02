@@ -3,6 +3,7 @@
 interface PodcastAboutSectionProps {
     label: string;
     title: string;
+    intro: string;
     origin: string;
     intention: string;
     presentation: string;
@@ -11,6 +12,7 @@ interface PodcastAboutSectionProps {
 export function PodcastAboutSection({
     label,
     title,
+    intro,
     origin,
     intention,
     presentation,
@@ -24,6 +26,9 @@ export function PodcastAboutSection({
                 </h2>
             </header>
             <div className="max-w-3xl space-y-6 md:space-y-8">
+                <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
+                    {intro}
+                </p>
                 <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
                     {origin}
                 </p>

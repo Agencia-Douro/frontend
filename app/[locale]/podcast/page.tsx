@@ -3,19 +3,21 @@
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Footer from "@/components/Sections/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
-import { siteConfigApi, podcastTopicsApi, podcastContentApi } from "@/services/api";
+import { siteConfigApi, podcastContentApi } from "@/services/api";
 import { useParams } from "next/navigation";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import { SectionDivider } from "@/components/Sections/Podcast/SectionDivider";
 import { PodcastHero } from "@/components/Sections/Podcast/PodcastHero";
-import { PodcastTopicsSection } from "@/components/Sections/Podcast/PodcastTopicsSection";
 import { PodcastEpisodesSection } from "@/components/Sections/Podcast/PodcastEpisodesSection";
 import { PodcastPlatformsSection } from "@/components/Sections/Podcast/PodcastPlatformsSection";
 import { PodcastCtaSection } from "@/components/Sections/Podcast/PodcastCtaSection";
 import { PodcastAboutSection } from "@/components/Sections/Podcast/PodcastAboutSection";
-import { PodcastGuestsSection } from "@/components/Sections/Podcast/PodcastGuestsSection";
+import { PodcastGuestsSection, type GuestItem } from "@/components/Sections/Podcast/PodcastGuestsSection";
+import { PodcastSponsorSection } from "@/components/Sections/Podcast/PodcastSponsorSection";
+import { PodcastWhyListenSection, type WhyListenCard } from "@/components/Sections/Podcast/PodcastWhyListenSection";
 import logoPodcast from "@/public/logoPodcast.jpg";
+import Logo from "@/public/Logo.png";
 import { useTranslations } from "next-intl";
 
 export default function PodcastPage() {
@@ -26,11 +28,6 @@ export default function PodcastPage() {
     const { data: config } = useQuery({
         queryKey: ["site-config"],
         queryFn: () => siteConfigApi.get(),
-    });
-
-    const { data: topics, isLoading: topicsLoading } = useQuery({
-        queryKey: ["podcast-topics"],
-        queryFn: () => podcastTopicsApi.getAll(),
     });
 
     const { data: podcastContent } = useQuery({
@@ -86,6 +83,7 @@ export default function PodcastPage() {
             <PodcastAboutSection
                 label={t("aboutLabel")}
                 title={t("aboutTitle")}
+                intro={t("aboutIntro")}
                 origin={t("aboutOrigin")}
                 intention={t("aboutIntention")}
                 presentation={t("aboutPresentation")}
@@ -100,18 +98,24 @@ export default function PodcastPage() {
             <PodcastGuestsSection
                 label={t("guestsLabel")}
                 title={t("guestsTitle")}
-                description={t("guestsDescription")}
+                guests={(t.raw("guestsList") as GuestItem[]) ?? []}
             />
 
             <SectionDivider />
 
-            <PodcastTopicsSection
-                label={podcastContent?.topicsLabel || t("themesAndInsights")}
-                title={podcastContent?.topicsTitle || t("whatWeCover")}
-                topics={topics ?? []}
-                locale={locale}
-                isLoading={topicsLoading}
-                loadingText="A carregar tópicos..."
+            <PodcastSponsorSection
+                imageSrc={Logo}
+                imageAlt={t("sponsorImageAlt")}
+                text={t("sponsorText")}
+            />
+
+            <SectionDivider />
+
+            <PodcastWhyListenSection
+                label={t("whyListenLabel")}
+                title={t("whyListenTitle")}
+                subtitle={t("whyListenSubtitle")}
+                cards={(t.raw("whyListenCards") as WhyListenCard[]) ?? []}
             />
 
             <SectionDivider />
@@ -141,6 +145,7 @@ export default function PodcastPage() {
                 hint={t("ctaFinalHint")}
                 buttonLabel={t("ctaFinalButton")}
                 buttonAriaLabel={t("ctaFinalButton")}
+                mailtoHref={`mailto:podcastnorteimobiliario@gmail.com?subject=${encodeURIComponent(t("ctaFinalMailSubject"))}`}
             />
 
             <Testemunhos />

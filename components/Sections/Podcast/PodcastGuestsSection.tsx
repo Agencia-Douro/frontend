@@ -1,30 +1,38 @@
 "use client";
 
+export interface GuestItem {
+    name: string;
+    role: string;
+    imageSrc?: string | { src: string };
+}
+
 interface PodcastGuestsSectionProps {
     label: string;
     title: string;
-    description: string;
+    guests: GuestItem[];
 }
 
 export function PodcastGuestsSection({
     label,
     title,
-    description,
+    guests,
 }: PodcastGuestsSectionProps) {
     return (
         <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
-            <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12 lg:items-start">
-                <header className="lg:col-span-4 space-y-2 lg:pt-1">
-                    <span className="button-14-medium text-brown block">{label}</span>
-                    <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
-                        {title}
-                    </h2>
-                </header>
-                <div className="lg:col-span-8 lg:pl-10 xl:pl-12">
-                    <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
-                        {description}
-                    </p>
-                </div>
+            <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-center max-w-3xl mx-auto">
+                <span className="button-14-medium text-brown block">{label}</span>
+                <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
+                    {title}
+                </h2>
+            </header>
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8 max-w-4xl mx-auto justify-items-center">
+                {guests.map((guest, index) => (
+                    <div key={index} className="flex flex-col items-center text-center">
+                        <div className="size-32 rounded-full bg-brown/20 shrink-0" aria-hidden />
+                        <h3 className="body-16-medium md:body-18-medium text-black mt-3 text-pretty">{guest.name}</h3>
+                        <p className="body-14-regular text-black-muted mt-1 text-pretty">{guest.role}</p>
+                    </div>
+                ))}
             </div>
         </section>
     );
