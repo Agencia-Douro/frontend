@@ -60,7 +60,7 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
             {property.title}
           </h1>
           <div className="flex items-baseline gap-3">
-            <h2 className="text-3xl font-bold text-brown">
+            <h2 className="text-3xl text-brown">
               {parseFloat(property.price.toString()).toLocaleString('pt-PT')} €
             </h2>
             <span className="text-sm text-brown/60">
@@ -135,7 +135,7 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
 
         {/* Descrição */}
         <div className="mb-4">
-          <h3 className="text-sm font-medium text-brown mb-1">Descrição</h3>
+          <h3 className="text-base font-medium text-brown mb-1">Descrição</h3>
           <div
             className="text-xs text-brown/80 leading-relaxed line-clamp-6"
             dangerouslySetInnerHTML={{ __html: property.description }}
@@ -145,9 +145,9 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
         {/* Características/Features */}
         {property.features && (
           <div className="mb-4">
-            <h3 className="text-sm font-medium text-brown mb-1">Características</h3>
+            <h3 className="text-base font-medium text-brown mb-1">Características</h3>
             <div
-              className="text-[11px] text-brown/70 leading-relaxed line-clamp-4"
+              className="text-xs text-brown/80 leading-relaxed line-clamp-4"
               dangerouslySetInnerHTML={{ __html: property.features }}
             />
           </div>
@@ -155,18 +155,18 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
 
         {/* Informações adicionais */}
         {(property.deliveryDate || property.paymentConditions) && (
-          <div className="flex flex-col gap-1 mb-4 text-xs">
+          <div className="flex flex-col gap-3 mb-4 text-xs text-brown/80">
             {property.deliveryDate && (
               <div>
-                <span className="font-medium text-brown">Previsão de Entrega:</span>
-                <span className="text-brown/70 ml-1">{property.deliveryDate}</span>
+                <p className="text-base font-medium text-brown">Previsão de Entrega:</p>
+                <p>{property.deliveryDate}</p>
               </div>
             )}
             {property.paymentConditions && (
               <div>
-                <span className="font-medium text-brown">Condições de Pagamento:</span>
+                <span className="text-base font-medium text-brown">Condições de Pagamento:</span>
                 <span
-                  className="text-brown/70 ml-1 line-clamp-1"
+                  className="ml-1 line-clamp-1"
                   dangerouslySetInnerHTML={{ __html: property.paymentConditions }}
                 />
               </div>
