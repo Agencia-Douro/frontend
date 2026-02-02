@@ -30,7 +30,7 @@ export default function DepoimentosPage() {
     mutationFn: (data: CreateDepoimentoDto) =>
       depoimentosApi.create(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["depoimentos"] })
+      queryClient.invalidateQueries({ queryKey: ["depoimentos-admin"] })
       toast.success("Depoimento criado com sucesso!")
       toast.info("Traduções automáticas em andamento...")
       resetForm()
@@ -44,7 +44,7 @@ export default function DepoimentosPage() {
     mutationFn: ({ id, data }: { id: string; data: UpdateDepoimentoDto }) =>
       depoimentosApi.update(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["depoimentos"] })
+      queryClient.invalidateQueries({ queryKey: ["depoimentos-admin"] })
       toast.success("Depoimento atualizado com sucesso!")
       toast.info("Traduções automáticas em andamento...")
       resetForm()
@@ -57,7 +57,7 @@ export default function DepoimentosPage() {
   const deleteMutation = useMutation({
     mutationFn: (id: string) => depoimentosApi.delete(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["depoimentos"] })
+      queryClient.invalidateQueries({ queryKey: ["depoimentos-admin"] })
       toast.success("Depoimento removido com sucesso!")
     },
     onError: (error: any) => {

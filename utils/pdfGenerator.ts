@@ -53,11 +53,23 @@ export const generatePropertyPDF = async (property: Property, ref: any) => {
     // Pré-carregar e converter imagens para base64
     await preloadImages(inputData);
 
+    // Forçar largura fixa para consistência entre dispositivos
+    const originalStyle = inputData.style.cssText;
+    inputData.style.width = '800px';
+    inputData.style.minWidth = '800px';
+    inputData.style.maxWidth = '800px';
+
     const canvas = await html2canvas(inputData, {
       useCORS: true,
       allowTaint: true,
       scale: 2,
+      width: 800,
+      windowWidth: 800,
     });
+
+    // Restaurar estilo original
+    inputData.style.cssText = originalStyle;
+
     const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF({
@@ -67,10 +79,25 @@ export const generatePropertyPDF = async (property: Property, ref: any) => {
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
     const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
-    pdf.save(`brochura-imovel-${property.id}.pdf`);
+    // Escalar para caber na página mantendo proporção
+    const scale = imgHeight > pageHeight ? pageHeight / imgHeight : 1;
+    const finalWidth = pageWidth * scale;
+    const finalHeight = imgHeight * scale;
+
+    // Centralizar verticalmente se houver espaço
+    const yOffset = imgHeight < pageHeight ? (pageHeight - finalHeight) / 2 : 0;
+
+    pdf.addImage(imgData, "PNG", 0, yOffset, finalWidth, finalHeight);
+    const sanitizedTitle = property.title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    pdf.save(`${sanitizedTitle}.pdf`);
   } catch (error) {
     console.error("Erro ao gerar PDF:", error);
   }
