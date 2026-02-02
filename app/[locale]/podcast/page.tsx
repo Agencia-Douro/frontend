@@ -13,6 +13,7 @@ import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import logoPodcast from "@/public/logoPodcast.jpg";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 export default function PodcastPage() {
     const t = useTranslations("Podcast");
@@ -36,14 +37,48 @@ export default function PodcastPage() {
 
     return (
         <>
-            {/* Primeira Seção - Apresentação do Podcast */}
+            {/* Hero Section / Introdução */}
             <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 <div className="flex justify-between gap-6">
                     <div className="space-y-3 md:space-y-4">
                         <p className="body-14-medium text-brown uppercase tracking-wider w-48">{podcastContent?.headerLabel || t("exclusiveContent")}</p>
                         <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black xl:max-w-4xl">{podcastContent?.pageTitle || t("title")}</h1>
-                        {/* <h2 className="body-18-medium md:body-20-medium text-black max-w-2xl">{podcastContent?.pageSubtitle || t("subtitle")}</h2> */}
-                        <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed">{podcastContent?.pageDescription || t("description")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl leading-relaxed text-pretty">
+                            {t("heroIntro")}
+                        </p>
+                        <div className="flex flex-wrap gap-3 pt-2">
+                            <Button asChild variant="outline" className="px-5 py-2.5 border-brown text-brown hover:bg-brown hover:text-white hover:border-brown">
+                                <Link
+                                    href="https://open.spotify.com/show/agenciadouro"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("heroCtaSpotify")}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.84-.66 0-.359.24-.66.54-.779 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.242 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
+                                    </svg>
+                                    {t("heroCtaSpotify")}
+                                </Link>
+                            </Button>
+                            <Button asChild variant="outline" className="px-5 py-2.5 border-brown text-brown hover:bg-brown hover:text-white hover:border-brown">
+                                <Link
+                                    href="https://www.youtube.com/@agenciadouromediacaoimobil3889"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("heroCtaYouTube")}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                    </svg>
+                                    {t("heroCtaYouTube")}
+                                </Link>
+                            </Button>
+                            <Button asChild variant="brown" className="px-5 py-2.5">
+                                <a href="#contacto" aria-label={t("heroCtaContact")}>
+                                    {t("heroCtaContact")}
+                                </a>
+                            </Button>
+                        </div>
                     </div>
                     {(config?.podcastImagem || logoPodcast) && (
                         <Image
@@ -171,7 +206,7 @@ export default function PodcastPage() {
                         href="https://www.instagram.com/agenciadouro"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white transition-opacity duration-200"
+                        className="flex items-center gap-3 px-6 py-3 bg-linear-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white transition-opacity duration-200"
                         aria-label="Instagram"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -249,6 +284,31 @@ export default function PodcastPage() {
                         </svg>
                         <span className="body-14-medium">TikTok</span>
                     </Link>
+                </div>
+            </section>
+
+            <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-12 lg:mt-16 xl:mt-20"></div>
+
+            {/* CTA Final / Conversão */}
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
+                <div className="max-w-3xl space-y-6">
+                    <span className="button-14-medium text-brown">{t("ctaFinalLabel")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">{t("ctaFinalTitle")}</h2>
+                    <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
+                        {t("ctaFinalDescription")}
+                    </p>
+                    <div className="flex flex-wrap gap-3 pt-2">
+                        <Button asChild variant="brown" className="px-6 py-3">
+                            <a href="#contacto" aria-label={t("ctaFinalButton")}>
+                                {t("ctaFinalButton")}
+                            </a>
+                        </Button>
+                        <Button asChild variant="outline" className="px-6 py-3 border-brown text-brown hover:bg-brown hover:text-white hover:border-brown">
+                            <a href="#contacto" aria-label={t("ctaFinalSuggestTopic")}>
+                                {t("ctaFinalSuggestTopic")}
+                            </a>
+                        </Button>
+                    </div>
                 </div>
             </section>
 

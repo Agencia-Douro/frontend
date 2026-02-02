@@ -229,6 +229,16 @@ img, iframe {
     user-select: none;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 html, body {
     overscroll-behavior-x: none;
     overflow-x: hidden;
