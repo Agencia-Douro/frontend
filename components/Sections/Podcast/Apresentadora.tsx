@@ -21,8 +21,8 @@ export function Apresentadora() {
     });
 
     return (
-        <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+        <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
+            <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16 items-center">
                 <div className="space-y-6 md:space-y-8 text-center lg:text-left">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
