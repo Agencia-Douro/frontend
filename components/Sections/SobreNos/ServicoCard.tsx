@@ -15,7 +15,7 @@ export function ServicoCard({ icon: Icon, title, description }: ServicoCardProps
             </div>
             <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                    <Icon className="size-5 text-brown" />
+                    {/* <Icon className="size-5 text-brown" /> */}
                     <h3 className="body-18-medium text-black">{title}</h3>
                 </div>
                 <p className="body-16-regular text-black-muted">{description}</p>

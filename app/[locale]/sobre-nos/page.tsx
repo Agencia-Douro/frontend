@@ -187,7 +187,7 @@ export default function InstitucionalPage() {
                                     if (!videoId) return null;
 
                                     return (
-                                        <div key={index} className="relative w-full aspect-video overflow-hidden bg-gray-100 rounded-lg">
+                                        <div key={index} className="relative w-full aspect-video overflow-hidden bg-gray-100 rounded-none">
                                             <a
                                                 href={link}
                                                 target="_blank"
