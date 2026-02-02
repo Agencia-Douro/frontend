@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo, useCallback } from "react"
+import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
@@ -16,22 +17,60 @@ import { useTranslations } from "next-intl"
 export const FaleConnosco = () => {
     const t = useTranslations("FaleConnosco");
     const tr = useTranslations("SobreNos");
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter();
+    const assuntoFromUrl = searchParams.get("assunto") === "podcast-participate" ? "podcast-participate" : null;
+    const [userHasChangedAssunto, setUserHasChangedAssunto] = useState(false);
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
         email: "",
-        assunto: "general",
+        assunto: "general" as string,
         mensagem: "",
         aceitaMarketing: false,
-    })
+    });
+    const assuntoValue = useMemo(
+        () => (assuntoFromUrl && !userHasChangedAssunto ? assuntoFromUrl : formData.assunto),
+        [assuntoFromUrl, userHasChangedAssunto, formData.assunto]
+    );
+
+    const syncAssuntoToUrl = useCallback(
+        (assunto: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (assunto === "general") {
+                params.delete("assunto");
+            } else {
+                params.set("assunto", assunto);
+            }
+            const query = params.toString();
+            const hash = typeof window !== "undefined" ? window.location.hash : "";
+            const newUrl = (query ? `${pathname}?${query}` : pathname) + hash;
+            router.replace(newUrl);
+        },
+        [pathname, router, searchParams]
+    );
+
+    const assuntoLabelForMessage = (value: string) => {
+        const map: Record<string, string> = {
+            general: t("subjectOptionGeneral"),
+            "podcast-participate": t("subjectOptionPodcastParticipate"),
+            "podcast-suggest": t("subjectOptionPodcastSuggest"),
+            "podcast-question": t("subjectOptionPodcastQuestion"),
+            "property-buy": t("subjectOptionPropertyBuy"),
+            "property-sell": t("subjectOptionPropertySell"),
+        };
+        return map[value] ?? value;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         const toastId = toast.loading(t("sendingMessage"))
 
-        const messageToSend = formData.assunto
-            ? `[Assunto: ${formData.assunto}]\n\n${formData.mensagem}`
+        const assuntoLabel = assuntoValue ? assuntoLabelForMessage(assuntoValue) : "";
+        const messageToSend = assuntoLabel
+            ? `[Assunto: ${assuntoLabel}]\n\n${formData.mensagem}`
             : formData.mensagem
 
         try {
@@ -44,6 +83,7 @@ export const FaleConnosco = () => {
             })
 
             toast.success(t("messageSentSuccess"), { id: toastId })
+            setUserHasChangedAssunto(false);
             setFormData({
                 nome: "",
                 telefone: "",
@@ -51,7 +91,8 @@ export const FaleConnosco = () => {
                 assunto: "general",
                 mensagem: "",
                 aceitaMarketing: false,
-            })
+            });
+            syncAssuntoToUrl("general");
         } catch (error: any) {
             toast.error(error.message || t("messageSendError"), { id: toastId })
         }
@@ -100,14 +141,19 @@ export const FaleConnosco = () => {
                     <div className="space-y-1 w-full">
                         <Label htmlFor="assunto" className="body-14-medium text-black">{t("subject")}</Label>
                         <Select
-                            value={formData.assunto || "general"}
-                            onValueChange={(v) => setFormData({ ...formData, assunto: v })}
+                            value={assuntoValue || "general"}
+                            onValueChange={(v) => {
+                                setUserHasChangedAssunto(true);
+                                setFormData({ ...formData, assunto: v });
+                                syncAssuntoToUrl(v);
+                            }}
                         >
                             <SelectTrigger id="assunto" className="w-full">
                                 <SelectValue placeholder={t("subjectPlaceholder")} />
                             </SelectTrigger>
                             <SelectContent className="[&>*:nth-child(2)]:!grid-cols-1">
                                 <SelectItem value="general">{t("subjectOptionGeneral")}</SelectItem>
+                                <SelectItem value="podcast-participate">{t("subjectOptionPodcastParticipate")}</SelectItem>
                                 <SelectItem value="podcast-suggest">{t("subjectOptionPodcastSuggest")}</SelectItem>
                                 <SelectItem value="podcast-question">{t("subjectOptionPodcastQuestion")}</SelectItem>
                                 <SelectItem value="property-buy">{t("subjectOptionPropertyBuy")}</SelectItem>
