@@ -67,9 +67,15 @@ export const generatePropertyPDF = async (property: Property, ref: any) => {
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
     const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
+    // Escalar para caber na página
+    const scale = imgHeight > pageHeight ? pageHeight / imgHeight : 1;
+    const finalWidth = pageWidth * scale;
+    const finalHeight = imgHeight * scale;
+
+    pdf.addImage(imgData, "PNG", 0, 0, finalWidth, finalHeight);
     pdf.save(`brochura-imovel-${property.id}.pdf`);
   } catch (error) {
     console.error("Erro ao gerar PDF:", error);

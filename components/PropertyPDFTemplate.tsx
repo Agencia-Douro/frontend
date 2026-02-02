@@ -20,36 +20,10 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
 
   return (
     <div className="w-[800px] bg-white">
-      {/* Header com logo e info */}
-      <div className="px-8 pt-6 pb-4 border-b border-brown/10">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <div className="flex items-center gap-2 body-14-medium text-brown mb-2">
-              <span className="capitalize">{property.transactionType}</span>
-              <span className="text-brown/30">•</span>
-              <span className="capitalize">{property.propertyType}</span>
-              <span className="text-brown/30">•</span>
-              <span>{property.distrito}</span>
-            </div>
-            <div className="flex items-center gap-3 body-14-regular text-brown/70">
-              <span>{property.concelho}, {property.distrito}</span>
-              <span className="text-brown/30">•</span>
-              <span><span className="text-brown/50">#</span>{property.reference}</span>
-            </div>
-          </div>
-          <img
-            src="/logo.png"
-            alt="Agência Douro"
-            className="h-10 w-auto"
-          />
-        </div>
-      </div>
-
-      {/* Conteúdo principal */}
-      <div className="px-8 py-6">
-        {/* Grid de imagens - 2x2 */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="col-span-2 h-64 bg-brown/10 overflow-hidden rounded-md">
+      <div className="px-6 py-5">
+        {/* Grid de imagens */}
+        <div className="grid grid-cols-3 gap-2 mb-5">
+          <div className="col-span-2 h-52 bg-brown/10 overflow-hidden rounded">
             {property.image && (
               <img
                 src={property.image}
@@ -58,164 +32,147 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
               />
             )}
           </div>
-          <div className="h-32 bg-brown/10 overflow-hidden rounded-md">
-            {allImages[0] && (
-              <img
-                src={allImages[0].url}
-                alt={`${property.title} - ${allImages[0].name}`}
-                className="w-full h-full object-cover"
-              />
-            )}
-          </div>
-          <div className="h-32 bg-brown/10 overflow-hidden rounded-md">
-            {allImages[1] && (
-              <img
-                src={allImages[1].url}
-                alt={`${property.title} - ${allImages[1].name}`}
-                className="w-full h-full object-cover"
-              />
-            )}
+          <div className="flex flex-col gap-2">
+            <div className="h-[102px] bg-brown/10 overflow-hidden rounded">
+              {allImages[0] && (
+                <img
+                  src={allImages[0].url}
+                  alt={`${property.title} - ${allImages[0].name}`}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
+            <div className="h-[102px] bg-brown/10 overflow-hidden rounded">
+              {allImages[1] && (
+                <img
+                  src={allImages[1].url}
+                  alt={`${property.title} - ${allImages[1].name}`}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Preço */}
-        <div className="mb-6">
-          <h2 className="text-4xl font-semibold text-brown mb-1">
-            {parseFloat(property.price.toString()).toLocaleString('pt-PT')} €
-          </h2>
-          <p className="body-14-medium text-brown/70">
-            {transactionTypeMap[property.transactionType]}
-          </p>
+        {/* Título e Preço */}
+        <div className="mb-4">
+          <h1 className="text-xl font-semibold text-brown mb-1 line-clamp-2">
+            {property.title}
+          </h1>
+          <div className="flex items-baseline gap-3">
+            <h2 className="text-3xl font-bold text-brown">
+              {parseFloat(property.price.toString()).toLocaleString('pt-PT')} €
+            </h2>
+            <span className="text-sm text-brown/60">
+              {transactionTypeMap[property.transactionType]} • {property.concelho}, {property.distrito} • #{property.reference}
+            </span>
+          </div>
         </div>
 
         {/* Características em grid */}
-        <div className="grid grid-cols-4 gap-2 mb-4">
+        <div className="grid grid-cols-5 gap-2 mb-4">
           {property.totalArea && property.totalArea > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Área Total</p>
-              <p className="body-14-medium text-brown">{property.totalArea}m²</p>
+              <p className="text-sm font-medium text-brown">{property.totalArea}m²</p>
             </div>
           )}
           {property.builtArea && property.builtArea > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Área Construída</p>
-              <p className="body-14-medium text-brown">{property.builtArea}m²</p>
+              <p className="text-sm font-medium text-brown">{property.builtArea}m²</p>
             </div>
           )}
           {property.usefulArea && property.usefulArea > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Área Útil</p>
-              <p className="body-14-medium text-brown">{property.usefulArea}m²</p>
+              <p className="text-sm font-medium text-brown">{property.usefulArea}m²</p>
             </div>
           )}
           {property.bedrooms > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Quartos</p>
-              <p className="body-14-medium text-brown">{property.bedrooms}</p>
+              <p className="text-sm font-medium text-brown">{property.bedrooms}</p>
             </div>
           )}
           {property.bathrooms > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Casas de Banho</p>
-              <p className="body-14-medium text-brown">{property.bathrooms}</p>
+              <p className="text-sm font-medium text-brown">{property.bathrooms}</p>
             </div>
           )}
           {property.garageSpaces > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Garagem</p>
-              <p className="body-14-medium text-brown">{property.garageSpaces}</p>
+              <p className="text-sm font-medium text-brown">{property.garageSpaces}</p>
             </div>
           )}
           {property.constructionYear && property.constructionYear > 0 && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Ano</p>
-              <p className="body-14-medium text-brown">{property.constructionYear}</p>
+              <p className="text-sm font-medium text-brown">{property.constructionYear}</p>
             </div>
           )}
           {property.energyClass && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Classe Energética</p>
-              <p className="body-14-medium text-brown">{property.energyClass.toUpperCase()}</p>
+              <p className="text-sm font-medium text-brown">{property.energyClass.toUpperCase()}</p>
             </div>
           )}
           {property.hasOffice && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Escritório</p>
-              <p className="body-14-medium text-brown">Sim</p>
+              <p className="text-sm font-medium text-brown">Sim</p>
             </div>
           )}
           {property.hasLaundry && (
-            <div className="bg-deaf px-2 py-1.5 rounded">
+            <div className="bg-deaf px-2 py-1.5 rounded text-center">
               <p className="text-[10px] text-brown/60">Lavandaria</p>
-              <p className="body-14-medium text-brown">Sim</p>
+              <p className="text-sm font-medium text-brown">Sim</p>
             </div>
           )}
+        </div>
+
+        {/* Descrição */}
+        <div className="mb-4">
+          <h3 className="text-sm font-medium text-brown mb-1">Descrição</h3>
+          <div
+            className="text-xs text-brown/80 leading-relaxed line-clamp-6"
+            dangerouslySetInnerHTML={{ __html: property.description }}
+          />
         </div>
 
         {/* Características/Features */}
         {property.features && (
           <div className="mb-4">
-            <h3 className="body-14-medium text-brown mb-2">Características</h3>
+            <h3 className="text-sm font-medium text-brown mb-1">Características</h3>
             <div
-              className="text-[11px] text-brown/80 leading-relaxed"
+              className="text-[11px] text-brown/70 leading-relaxed line-clamp-4"
               dangerouslySetInnerHTML={{ __html: property.features }}
             />
           </div>
         )}
 
-        {/* Descrição - limitada */}
-        <div className="mb-6">
-          <h3 className="body-16-medium text-brown mb-2">Descrição</h3>
-          <div
-            className="prose prose-brown prose-sm max-w-none text-brown body-14-regular line-clamp-6 overflow-hidden"
-            style={{ maxHeight: '120px' }}
-            dangerouslySetInnerHTML={{ __html: property.description }}
-          />
-        </div>
-
         {/* Informações adicionais */}
         {(property.deliveryDate || property.paymentConditions) && (
-          <div className="space-y-3 mb-6">
+          <div className="flex flex-col gap-1 mb-4 text-xs">
             {property.deliveryDate && (
               <div>
-                <p className="body-14-medium text-brown mb-1">Previsão de entrega:</p>
-                <p className="body-14-regular text-brown/70">{property.deliveryDate}</p>
+                <span className="font-medium text-brown">Previsão de Entrega:</span>
+                <span className="text-brown/70 ml-1">{property.deliveryDate}</span>
               </div>
             )}
             {property.paymentConditions && (
               <div>
-                <p className="body-14-medium text-brown mb-1">Condições de Pagamento:</p>
-                <div
-                  className="body-14-regular text-brown/70 line-clamp-3"
-                  style={{ maxHeight: '60px', overflow: 'hidden' }}
+                <span className="font-medium text-brown">Condições de Pagamento:</span>
+                <span
+                  className="text-brown/70 ml-1 line-clamp-1"
                   dangerouslySetInnerHTML={{ __html: property.paymentConditions }}
                 />
               </div>
             )}
           </div>
         )}
-
-        {/* Mapa */}
-        <div className="h-48 bg-brown/10 rounded-md overflow-hidden mb-6">
-          <iframe
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-              `${property.concelho}, ${property.distrito}, Portugal`
-            )}`}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-
-        {/* Footer */}
-        <div className="pt-4 border-t border-brown/10 text-center">
-          <p className="body-12-regular text-brown/60">
-            www.agenciadouro.pt • contacto@agenciadouro.pt • +351 919 766 323
-          </p>
-        </div>
       </div>
     </div>
   );
