@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select-line"
 import { toast } from "sonner"
 import { Link } from "@/i18n/navigation"
 import { contactApi } from "@/services/api"
@@ -19,6 +20,7 @@ export const FaleConnosco = () => {
         nome: "",
         telefone: "",
         email: "",
+        assunto: "general",
         mensagem: "",
         aceitaMarketing: false,
     })
@@ -28,14 +30,25 @@ export const FaleConnosco = () => {
 
         const toastId = toast.loading(t("sendingMessage"))
 
+        const messageToSend = formData.assunto
+            ? `[Assunto: ${formData.assunto}]\n\n${formData.mensagem}`
+            : formData.mensagem
+
         try {
-            await contactApi.send(formData)
+            await contactApi.send({
+                nome: formData.nome,
+                telefone: formData.telefone,
+                email: formData.email,
+                mensagem: messageToSend,
+                aceitaMarketing: formData.aceitaMarketing,
+            })
 
             toast.success(t("messageSentSuccess"), { id: toastId })
             setFormData({
                 nome: "",
                 telefone: "",
                 email: "",
+                assunto: "general",
                 mensagem: "",
                 aceitaMarketing: false,
             })
@@ -49,7 +62,7 @@ export const FaleConnosco = () => {
             <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular">{t("title")}</h2>
             <div className="flex lg:flex-row flex-col-reverse gap-4 mt-4 md:mt-5 lg:mt-10 xl:mt-12">
                 {/* Mapa */}
-                <div className="relative h-64 md:h-93 bg-muted w-full">
+                <div className="relative h-64 md:h-93 bg-muted w-full lg:h-[461px]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1502.0337394772985!2d-8.6822294!3d41.1842493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f70571b1a9b%3A0xd18009e3350eed24!2sAg%C3%AAncia%20Douro%20-%20Media%C3%A7%C3%A3o%20Imobili%C3%A1ria%20AMI%2017%20632!5e0!3m2!1spt-PT!2spt!4v1234567890" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
                 </div>
                 {/* Formulário */}
@@ -83,6 +96,24 @@ export const FaleConnosco = () => {
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
                         />
+                    </div>
+                    <div className="space-y-1 w-full">
+                        <Label htmlFor="assunto" className="body-14-medium text-black">{t("subject")}</Label>
+                        <Select
+                            value={formData.assunto || "general"}
+                            onValueChange={(v) => setFormData({ ...formData, assunto: v })}
+                        >
+                            <SelectTrigger id="assunto" className="w-full">
+                                <SelectValue placeholder={t("subjectPlaceholder")} />
+                            </SelectTrigger>
+                            <SelectContent className="[&>*:nth-child(2)]:!grid-cols-1">
+                                <SelectItem value="general">{t("subjectOptionGeneral")}</SelectItem>
+                                <SelectItem value="podcast-suggest">{t("subjectOptionPodcastSuggest")}</SelectItem>
+                                <SelectItem value="podcast-question">{t("subjectOptionPodcastQuestion")}</SelectItem>
+                                <SelectItem value="property-buy">{t("subjectOptionPropertyBuy")}</SelectItem>
+                                <SelectItem value="property-sell">{t("subjectOptionPropertySell")}</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div className="space-y-1">
                         <Label htmlFor="mensagem" className="body-14-medium text-black">{t("message")} <span className="text-red body-14-medium">*</span></Label>

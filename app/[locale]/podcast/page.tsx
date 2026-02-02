@@ -35,8 +35,28 @@ export default function PodcastPage() {
         queryFn: () => podcastContentApi.get(locale),
     })
 
+    const podcastSchema = podcastContent
+        ? {
+            "@context": "https://schema.org",
+            "@type": "PodcastSeries",
+            name: podcastContent.pageTitle || t("title"),
+            description: podcastContent.pageDescription || t("description"),
+            episode: (podcastContent.episodes || []).slice(0, 12).map((ep: { title: string; url: string }) => ({
+                "@type": "PodcastEpisode",
+                name: ep.title,
+                url: ep.url,
+            })),
+        }
+        : null;
+
     return (
         <>
+            {podcastSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(podcastSchema) }}
+                />
+            )}
             {/* Hero Section / Introdução */}
             <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 <div className="flex justify-between gap-6">
@@ -297,15 +317,11 @@ export default function PodcastPage() {
                     <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
                         {t("ctaFinalDescription")}
                     </p>
+                    <p className="body-14-regular text-black-muted text-pretty">{t("ctaFinalHint")}</p>
                     <div className="flex flex-wrap gap-3 pt-2">
                         <Button asChild variant="brown" className="px-6 py-3">
                             <a href="#contacto" aria-label={t("ctaFinalButton")}>
                                 {t("ctaFinalButton")}
-                            </a>
-                        </Button>
-                        <Button asChild variant="outline" className="px-6 py-3 border-brown text-brown hover:bg-brown hover:text-white hover:border-brown">
-                            <a href="#contacto" aria-label={t("ctaFinalSuggestTopic")}>
-                                {t("ctaFinalSuggestTopic")}
                             </a>
                         </Button>
                     </div>

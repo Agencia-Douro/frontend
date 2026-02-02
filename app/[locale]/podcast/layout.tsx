@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Podcast - Agência Douro",
-    description: "Fique por dentro das últimas novidades do mercado imobiliário. Assista aos nossos podcasts sobre imóveis, investimentos e tendências do setor.",
-    keywords: "podcast, imobiliário, mercado imobiliário, investimentos, imóveis, Agência Douro",
+    title: "Podcast Norte Imobiliário & Business | Agência Douro",
+    description: "Podcast da Agência Douro sobre mercado imobiliário no Norte de Portugal. Tendências, estratégias e conversas com especialistas. Ouça no Spotify e YouTube. Contacte para sugerir temas ou agendar conversa.",
+    keywords: "podcast imobiliário, Norte Imobiliário, Agência Douro, mercado imobiliário Portugal, investimento imobiliário, podcast negócios",
     openGraph: {
-        title: "Podcast - Agência Douro",
-        description: "Fique por dentro das últimas novidades do mercado imobiliário.",
+        title: "Podcast Norte Imobiliário & Business | Agência Douro",
+        description: "Podcast sobre mercado imobiliário no Norte de Portugal. Tendências, estratégias e conversas com especialistas.",
         type: "website",
     },
 };

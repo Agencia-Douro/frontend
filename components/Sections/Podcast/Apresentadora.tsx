@@ -26,9 +26,11 @@ export function Apresentadora() {
                 <div className="space-y-6 md:space-y-8 text-center lg:text-left">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
+                    <p className="body-16-medium text-brown">{t("credential")}</p>
 
                     <div className="space-y-4">
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed">{podcastContent?.hostDescription || t("description")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{podcastContent?.hostDescription || t("description")}</p>
+                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty">"{t("quote")}"</p>
                     </div>
 
                     {/* Imagem - Mobile */}
