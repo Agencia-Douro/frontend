@@ -29,7 +29,7 @@ export function PodcastSponsorSection({
                 style={{ aspectRatio }}
             >
                 <Image
-                    src={imageSrc}
+                    src={imageSrc as any}
                     alt={imageAlt}
                     fill
                     className="object-contain"
