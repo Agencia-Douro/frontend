@@ -63,11 +63,12 @@ export default function Header() {
     const isImoveisPage = pathname === "/imoveis";
     const isImoveisLuxoPage = pathname === "/imoveis-luxo";
     const isHomePage = pathname === "/";
+    const isPodcastPage = pathname === "/podcast";
     const useSticky = isImoveisPage || isImoveisLuxoPage;
     const positionClass = useSticky ? "" : "fixed";
 
-    // Header transparente na home quando não deu scroll (apenas em desktop)
-    const isTransparent = isHomePage && !isScrolled && !mobileMenuOpen;
+    // Header transparente na home e no podcast (hero com imagem) quando não deu scroll (apenas em desktop)
+    const isTransparent = (isHomePage || isPodcastPage) && !isScrolled && !mobileMenuOpen;
     // Em mobile, sempre ter background preenchido
     const headerBg = isTransparent ? "bg-muted xl:bg-transparent" : "bg-muted";
     const borderColor = isTransparent ? "border-[#EAE6DF] xl:border-white/20" : "border-[#EAE6DF]";

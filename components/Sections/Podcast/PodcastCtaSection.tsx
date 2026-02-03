@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface PodcastCtaSectionProps {
@@ -10,6 +12,8 @@ interface PodcastCtaSectionProps {
     buttonLabel: string;
     buttonAriaLabel: string;
     mailtoHref: string;
+    logoSrc?: StaticImageData | string;
+    logoAlt?: string;
 }
 
 export function PodcastCtaSection({
@@ -20,10 +24,26 @@ export function PodcastCtaSection({
     buttonLabel,
     buttonAriaLabel,
     mailtoHref,
+    logoSrc,
+    logoAlt = "Norte Imobiliário & Business",
 }: PodcastCtaSectionProps) {
     return (
-        <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
-            <div className="max-w-3xl space-y-4 md:space-y-5 lg:space-y-6">
+        <section className="container py-8 md:py-10 lg:py-12 xl:py-16 relative overflow-hidden">
+            {logoSrc && (
+                <div
+                    className="absolute right-6 xl:right-8 top-1/2 -translate-y-1/2 hidden lg:block w-[260px] xl:w-[300px] aspect-2/1 pointer-events-none"
+                    aria-hidden
+                >
+                    <Image
+                        src={logoSrc}
+                        alt={logoAlt}
+                        fill
+                        className="object-contain object-right"
+                        sizes="(max-width: 1280px) 260px, 300px"
+                    />
+                </div>
+            )}
+            <div className="max-w-3xl space-y-4 md:space-y-5 lg:space-y-6 relative z-10">
                 <span className="button-14-medium text-brown block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}

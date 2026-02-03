@@ -27,12 +27,12 @@ export function Apresentadora() {
     return (
         <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
             <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16 lg:items-stretch">
-                <div className="space-y-6 md:space-y-8 text-center lg:text-left flex flex-col">
+                <div className="space-y-6 md:space-y-8 text-left flex flex-col">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
                     <p className="body-16-medium text-brown">{t("credential")}</p>
 
-                    <div className="space-y-4">
+                    <div className="space-y-4 text-justify lg:text-left">
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph1")}</p>
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph2")}</p>
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph3")}</p>
@@ -40,7 +40,7 @@ export function Apresentadora() {
                     </div>
 
                     {/* Imagem - Mobile */}
-                    <div className="lg:hidden relative w-full max-w-md mx-auto aspect-4/5 overflow-hidden bg-muted">
+                    <div className="lg:hidden relative w-full max-w-md aspect-4/5 overflow-hidden bg-muted">
                         <Image
                             src={siteConfig?.apresentadoraImage || VaniaPodcast}
                             alt={t("imageAlt")}

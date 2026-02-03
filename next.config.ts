@@ -58,6 +58,14 @@ const nextConfig: NextConfig = {
         source: "/:locale(pt|en|fr)/flags/:image*",
         destination: "/flags/:image*",
       },
+      {
+        source: "/:locale(pt|en|fr)/podcast.png",
+        destination: "/podcast.png",
+      },
+      {
+        source: "/:locale(pt|en|fr)/patrocinador-podcast.jpeg",
+        destination: "/patrocinador-podcast.jpeg",
+      },
     ];
   },
 };

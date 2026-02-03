@@ -25,7 +25,7 @@ export function PodcastGuestsSection({
                     {title}
                 </h2>
             </header>
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8 max-w-4xl mx-auto justify-items-center">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 sm:gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-10 max-w-4xl mx-auto justify-items-center">
                 {guests.map((guest, index) => (
                     <div key={index} className="flex flex-col items-center text-center">
                         <div className="size-32 rounded-full bg-brown/20 shrink-0" aria-hidden />

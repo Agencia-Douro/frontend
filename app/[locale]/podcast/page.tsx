@@ -5,7 +5,6 @@ import Footer from "@/components/Sections/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { siteConfigApi, podcastContentApi } from "@/services/api";
 import { useParams } from "next/navigation";
-import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import { SectionDivider } from "@/components/Sections/Podcast/SectionDivider";
 import { PodcastHero } from "@/components/Sections/Podcast/PodcastHero";
@@ -16,8 +15,10 @@ import { PodcastAboutSection } from "@/components/Sections/Podcast/PodcastAboutS
 import { PodcastGuestsSection, type GuestItem } from "@/components/Sections/Podcast/PodcastGuestsSection";
 import { PodcastSponsorSection } from "@/components/Sections/Podcast/PodcastSponsorSection";
 import { PodcastWhyListenSection, type WhyListenCard } from "@/components/Sections/Podcast/PodcastWhyListenSection";
+import { PodcastTestimonialsSection, type PodcastTestimonialItem } from "@/components/Sections/Podcast/PodcastTestimonialsSection";
 import logoPodcast from "@/public/logoPodcast.jpg";
-import Logo from "@/public/Logo.png";
+import patrocinadorPodcast from "@/public/patrocinador-podcast.jpeg";
+import logoNorteImobiliario from "@/public/norte-imobilirio-business-gold.png";
 import { useTranslations } from "next-intl";
 
 export default function PodcastPage() {
@@ -78,7 +79,6 @@ export default function PodcastPage() {
                 guestsLabel={t("guests")}
             />
 
-            <SectionDivider />
 
             <PodcastAboutSection
                 label={t("aboutLabel")}
@@ -89,11 +89,7 @@ export default function PodcastPage() {
                 presentation={t("aboutPresentation")}
             />
 
-            <SectionDivider />
-
             <Apresentadora />
-
-            <SectionDivider />
 
             <PodcastGuestsSection
                 label={t("guestsLabel")}
@@ -101,15 +97,10 @@ export default function PodcastPage() {
                 guests={(t.raw("guestsList") as GuestItem[]) ?? []}
             />
 
-            <SectionDivider />
-
             <PodcastSponsorSection
-                imageSrc={Logo}
+                imageSrc={patrocinadorPodcast}
                 imageAlt={t("sponsorImageAlt")}
-                text={t("sponsorText")}
             />
-
-            <SectionDivider />
 
             <PodcastWhyListenSection
                 label={t("whyListenLabel")}
@@ -146,9 +137,21 @@ export default function PodcastPage() {
                 buttonLabel={t("ctaFinalButton")}
                 buttonAriaLabel={t("ctaFinalButton")}
                 mailtoHref={`mailto:podcastnorteimobiliario@gmail.com?subject=${encodeURIComponent(t("ctaFinalMailSubject"))}`}
+                logoSrc={logoNorteImobiliario}
+                logoAlt="Norte Imobiliário & Business"
             />
 
-            <Testemunhos />
+            <PodcastTestimonialsSection
+                label={t("testimonialsLabel")}
+                title={t("testimonialsTitle")}
+                subtitle={t("testimonialsSubtitle")}
+                testimonials={(t.raw("testimonialsList") as PodcastTestimonialItem[]) ?? []}
+                prevAriaLabel={t("testimonialsPrevAria")}
+                nextAriaLabel={t("testimonialsNextAria")}
+                logoSrc={logoNorteImobiliario}
+                logoAlt="Norte Imobiliário & Business"
+            />
+
             <FaleConnosco />
             <Footer />
         </>
