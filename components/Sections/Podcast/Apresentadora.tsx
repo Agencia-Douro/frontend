@@ -25,7 +25,7 @@ export function Apresentadora() {
     });
 
     return (
-        <section className="container py-8 md:py-10 lg:py-12 xl:py-16 overflow-x-hidden">
+        <section className="container pt-8 md:pt-10 lg:pt-12 xl:pt-16 overflow-x-hidden">
             <div className="flex flex-col gap-6 md:gap-8 lg:flex-row lg:justify-between lg:gap-12 xl:gap-16 lg:items-stretch min-h-0">
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
