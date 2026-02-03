@@ -636,6 +636,9 @@ export default function ImovelDetailsClient() {
                                 valor={`${property.garageSpaces} ${property.garageSpaces === 1 ? t("space") : t("spaces")}`}
                             />
                         )}
+                        {property.floor && (
+                            <Caracteristica titulo={t("floor")} valor={property.floor} />
+                        )}
                         {property.constructionYear && property.constructionYear > 0 && (
                             <Caracteristica titulo={t("constructionYear")} valor={property.constructionYear.toString()} />
                         )}

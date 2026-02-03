@@ -179,6 +179,7 @@ export const propertiesApi = {
       formData.append("constructionYear", data.constructionYear.toString());
     }
     if (data.deliveryDate) formData.append("deliveryDate", data.deliveryDate);
+    if (data.floor) formData.append("floor", data.floor);
 
     // Campos opcionais - Localização
     if (data.address) formData.append("address", data.address);
@@ -260,6 +261,7 @@ export const propertiesApi = {
       formData.append("constructionYear", data.constructionYear.toString());
     }
     if (data.deliveryDate) formData.append("deliveryDate", data.deliveryDate);
+    if (data.floor) formData.append("floor", data.floor);
 
     // Campos opcionais - Localização
     if (data.address) formData.append("address", data.address);

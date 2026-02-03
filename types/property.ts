@@ -55,6 +55,7 @@ export interface Property {
   garageSpaces: number;
   constructionYear: number | null;
   deliveryDate: string | null;
+  floor: string | null;
   country: string;
   distrito: string | null;
   concelho: string | null;

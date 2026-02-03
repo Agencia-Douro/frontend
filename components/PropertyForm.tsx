@@ -86,6 +86,7 @@ export default function PropertyForm({
       garageSpaces: 0,
       constructionYear: null as number | null,
       deliveryDate: "",
+      floor: "",
       country: "PT",
       distrito: "",
       concelho: "",
@@ -569,6 +570,7 @@ export default function PropertyForm({
                   garageSpaces: 0,
                   constructionYear: null,
                   deliveryDate: "",
+                  floor: "",
                   country: "PT",
                   distrito: "",
                   concelho: "",
@@ -1003,6 +1005,15 @@ export default function PropertyForm({
                     placeholder="Ex: Dezembro 2025"
                     value={formData.deliveryDate || ""}
                     onChange={(e) => updateField("deliveryDate", e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Piso</Label>
+                  <Input
+                    placeholder="Ex: 2º andar, R/C, -1"
+                    value={formData.floor ?? ""}
+                    onChange={(e) => updateField("floor", e.target.value)}
                   />
                 </div>
               </div>

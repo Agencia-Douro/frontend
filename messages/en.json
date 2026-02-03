@@ -592,6 +592,7 @@
     "garage": "Garage",
     "space": "Space",
     "spaces": "Spaces",
+    "floor": "Floor",
     "constructionYear": "Construction Year",
     "state": "State",
     "energyClass": "Energy Class",
