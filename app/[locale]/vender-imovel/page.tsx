@@ -11,8 +11,7 @@ import { toast } from "sonner"
 import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
 import { contactApi, sellPropertyContentApi } from "@/services/api"
-import Image from "next/image"
-import Logo from "@/public/Logo.png"
+import { ExternalLink } from "lucide-react"
 
 export default function VenderImovelPage() {
     const t = useTranslations("VenderImovel");
@@ -206,16 +205,24 @@ export default function VenderImovelPage() {
                             <p>{content?.marketingWebsiteStat || t("marketing.channels.website.stat")}</p>
                         </div>
                     </div>
-                    <div className="flex gap-4">
+                    <a
+                        href="https://www.youtube.com/@agenciadouromediacaoimobil3889"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex gap-4 rounded p-2 -m-2 cursor-pointer transition-colors hover:bg-brown/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brown group"
+                    >
                         <div className="flex flex-col gap-3">
                             <div className="w-px bg-brown h-1/3"></div>
                             <div className="w-px bg-brown/20 h-2/3"></div>
                         </div>
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.marketingNewsletterTitle || t("marketing.channels.newsletter.title")}</h3>
+                            <h3 className="body-18-medium text-black flex items-center gap-2 group-hover:text-brown transition-colors">
+                                {content?.marketingNewsletterTitle || t("marketing.channels.newsletter.title")}
+                                <ExternalLink className="h-4 w-4 shrink-0 text-brown/70 group-hover:text-brown group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" aria-hidden />
+                            </h3>
                             <p>{content?.marketingNewsletterStat || t("marketing.channels.newsletter.stat")}</p>
                         </div>
-                    </div>
+                    </a>
                     <div className="flex gap-4">
                         <div className="flex flex-col gap-3">
                             <div className="w-px bg-brown h-1/3"></div>
@@ -226,16 +233,24 @@ export default function VenderImovelPage() {
                             <p>{content?.marketingAgenciesStat || t("marketing.channels.agencies.stat")}</p>
                         </div>
                     </div>
-                    <div className="flex gap-4">
+                    <a
+                        href="https://www.instagram.com/agenciadouro"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex gap-4 rounded p-2 -m-2 cursor-pointer transition-colors hover:bg-brown/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brown group"
+                    >
                         <div className="flex flex-col gap-3">
                             <div className="w-px bg-brown h-1/3"></div>
                             <div className="w-px bg-brown/20 h-2/3"></div>
                         </div>
                         <div className="space-y-3 body-16-regular text-black-muted flex-1">
-                            <h3 className="body-18-medium text-black">{content?.marketingMediaTitle || t("marketing.channels.media.title")}</h3>
+                            <h3 className="body-18-medium text-black flex items-center gap-2 group-hover:text-brown transition-colors">
+                                {content?.marketingMediaTitle || t("marketing.channels.media.title")}
+                                <ExternalLink className="h-4 w-4 shrink-0 text-brown/70 group-hover:text-brown group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" aria-hidden />
+                            </h3>
                             <p>{content?.marketingMediaStat || t("marketing.channels.media.stat")}</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </section>
 
