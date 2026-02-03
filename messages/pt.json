@@ -297,6 +297,12 @@
       },
       "imageAlt": "Vânia Fernandes - Consultora Imobiliária & Host"
     },
+    "galleryLabel": "Galeria",
+    "galleryTitle": "O Nosso Estúdio",
+    "galleryDescription": "Gravado num estúdio profissional no coração do Porto, garantimos a máxima qualidade de áudio e vídeo em todos os episódios. Um ambiente pensado para conversas inspiradoras e produtivas.",
+    "galleryOpenAria": "Ver imagem em tamanho maior",
+    "galleryCloseAria": "Fechar",
+    "galleryImageAlt": "Estúdio do podcast",
     "whereToFindUs": "Onde Nos Encontrar",
     "whereToFindUsTitle": "Ouça nas Suas Plataformas Favoritas",
     "whereToFindUsDescription": "Siga-nos nas principais plataformas de streaming para nunca perder um episódio. Disponível onde quer que esteja."

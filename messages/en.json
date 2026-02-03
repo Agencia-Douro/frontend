@@ -297,6 +297,12 @@
       },
       "imageAlt": "Vânia Fernandes - Real Estate Consultant & Host"
     },
+    "galleryLabel": "Gallery",
+    "galleryTitle": "Our Studio",
+    "galleryDescription": "Recorded in a professional studio in the heart of Porto, we guarantee maximum audio and video quality in every episode. An environment designed for inspiring and productive conversations.",
+    "galleryOpenAria": "View image larger",
+    "galleryCloseAria": "Close",
+    "galleryImageAlt": "Podcast studio",
     "whereToFindUs": "Where to Find Us",
     "whereToFindUsTitle": "Listen on Your Favorite Platforms",
     "whereToFindUsDescription": "Follow us on the main streaming platforms so you never miss an episode. Available wherever you are."

@@ -16,10 +16,23 @@ import { PodcastGuestsSection, type GuestItem } from "@/components/Sections/Podc
 import { PodcastSponsorSection } from "@/components/Sections/Podcast/PodcastSponsorSection";
 import { PodcastWhyListenSection, type WhyListenCard } from "@/components/Sections/Podcast/PodcastWhyListenSection";
 import { PodcastTestimonialsSection, type PodcastTestimonialItem } from "@/components/Sections/Podcast/PodcastTestimonialsSection";
+import { PodcastGallerySection } from "@/components/Sections/Podcast/PodcastGallerySection";
 import logoPodcast from "@/public/logoPodcast.jpg";
 import patrocinadorPodcast from "@/public/patrocinador-podcast.jpeg";
 import logoNorteImobiliario from "@/public/norte-imobilirio-business-gold.png";
+import hero1 from "@/public/hero/hero1.jpg";
+import hero2 from "@/public/hero/hero2.jpg";
+import hero3 from "@/public/hero/hero3.jpg";
 import { useTranslations } from "next-intl";
+
+const GALLERY_IMAGES = [
+    { src: hero1, altKey: "galleryImageAlt" },
+    { src: hero2, altKey: "galleryImageAlt" },
+    { src: hero3, altKey: "galleryImageAlt" },
+    { src: hero1, altKey: "galleryImageAlt" },
+    { src: hero2, altKey: "galleryImageAlt" },
+    { src: hero3, altKey: "galleryImageAlt" },
+] as const;
 
 export default function PodcastPage() {
     const t = useTranslations("Podcast");
@@ -69,6 +82,7 @@ export default function PodcastPage() {
                 ctaSpotifyLabel={t("heroCtaSpotify")}
                 ctaYouTubeLabel={t("heroCtaYouTube")}
                 ctaContactLabel={t("heroCtaContact")}
+                ctaContactMailto={`mailto:podcastnorteimobiliario@gmail.com?subject=${encodeURIComponent(t("ctaFinalMailSubject"))}`}
                 logoAlt={t("logoAlt")}
                 logo={config?.podcastImagem || logoPodcast}
                 episodesCount={config?.episodiosPublicados?.toString()}
@@ -100,6 +114,15 @@ export default function PodcastPage() {
             <PodcastSponsorSection
                 imageSrc={patrocinadorPodcast}
                 imageAlt={t("sponsorImageAlt")}
+            />
+
+            <PodcastGallerySection
+                label={t("galleryLabel")}
+                title={t("galleryTitle")}
+                description={t("galleryDescription")}
+                images={GALLERY_IMAGES.map((img) => ({ src: img.src, alt: t(img.altKey) }))}
+                openLightboxAriaLabel={t("galleryOpenAria")}
+                closeLightboxAriaLabel={t("galleryCloseAria")}
             />
 
             <PodcastWhyListenSection

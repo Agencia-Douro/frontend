@@ -14,6 +14,7 @@ interface PodcastHeroProps {
     ctaSpotifyLabel: string;
     ctaYouTubeLabel: string;
     ctaContactLabel: string;
+    ctaContactMailto?: string;
     logoAlt: string;
     logo?: string | StaticImageData;
     episodesCount?: string;
@@ -31,6 +32,7 @@ export function PodcastHero({
     ctaSpotifyLabel,
     ctaYouTubeLabel,
     ctaContactLabel,
+    ctaContactMailto,
     logoAlt,
     logo,
     episodesCount = "",
@@ -110,7 +112,11 @@ export function PodcastHero({
                                     variant="gold"
                                     className="px-4 py-2.5 md:px-5 transition-colors duration-200"
                                 >
-                                    <a href="#contacto" aria-label={ctaContactLabel}>
+                                    <a
+                                        href={ctaContactMailto ?? "#contacto"}
+                                        aria-label={ctaContactLabel}
+                                        {...(ctaContactMailto?.startsWith("mailto:") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                                    >
                                         {ctaContactLabel}
                                     </a>
                                 </Button>

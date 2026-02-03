@@ -36,7 +36,7 @@ export function Apresentadora() {
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph1")}</p>
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph2")}</p>
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph3")}</p>
-                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty">&quot;{t("quote")}&quot;</p>
+                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty lg:hidden">&quot;{t("quote")}&quot;</p>
                     </div>
 
                     {/* Imagem - Mobile */}
@@ -87,8 +87,8 @@ export function Apresentadora() {
                         </div>
                     </div>
 
-                    {/* LinkedIn - mesmo estilo da secção Onde nos encontrar */}
-                    <div className="pt-2">
+                    {/* LinkedIn - Mobile: abaixo das stats */}
+                    <div className="pt-2 lg:hidden">
                         <Link
                             href={t("linkedInUrl")}
                             target="_blank"
@@ -104,17 +104,39 @@ export function Apresentadora() {
                     </div>
                 </div>
 
-                {/* Imagem - Desktop: mesma altura que a coluna esquerda */}
-                <div className="hidden lg:block relative w-full min-h-0 overflow-hidden bg-muted">
-                    <Image
-                        src={siteConfig?.apresentadoraImage || VaniaPodcast}
-                        alt={t("imageAlt")}
-                        fill
-                        className="object-cover object-top"
-                        priority
-                        unoptimized={!!siteConfig?.apresentadoraImage}
-                        sizes="(min-width: 1024px) 50vw, 0"
-                    />
+                {/* Imagem - Desktop: wrapper com aspect da imagem para a box ficar contida na área visível */}
+                <div className="hidden lg:flex lg:justify-center lg:items-center w-full h-full min-h-0 bg-muted">
+                    <div className="relative h-full w-auto self-stretch aspect-4/5 overflow-hidden">
+                        <Image
+                            src={siteConfig?.apresentadoraImage || VaniaPodcast}
+                            alt={t("imageAlt")}
+                            fill
+                            className="object-cover object-center"
+                            priority
+                            unoptimized={!!siteConfig?.apresentadoraImage}
+                            sizes="(min-width: 1024px) 50vw, 0"
+                        />
+                        {/* Área inferior: LinkedIn em cima, box da quote em baixo (24px de recorte dentro da imagem) */}
+                        <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col items-end gap-4">
+                            <Link
+                                href={t("linkedInUrl")}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 px-5 py-3 md:px-6 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182] shrink-0"
+                                aria-label={t("linkedInLabel")}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                    <path d={LINKEDIN_ICON} />
+                                </svg>
+                                <span>{t("linkedInLabel")}</span>
+                            </Link>
+                            <div className="w-full p-6 bg-black/30 backdrop-blur-md">
+                                <p className="body-16-medium text-white italic text-pretty max-w-2xl">
+                                    &quot;{t("quote")}&quot;
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

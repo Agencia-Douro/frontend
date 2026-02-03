@@ -46,7 +46,7 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
 
   return (
     <html lang="pt-BR" className={`${prata.variable} ${inter.variable}`}>
-      <body className="antialiased bg-muted">
+      <body className="antialiased bg-muted isolate">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
             <Header />

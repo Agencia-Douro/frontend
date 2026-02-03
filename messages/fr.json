@@ -297,6 +297,12 @@
       },
       "imageAlt": "Vânia Fernandes - Consultante immobilière & Animatrice"
     },
+    "galleryLabel": "Galerie",
+    "galleryTitle": "Notre Studio",
+    "galleryDescription": "Enregistré dans un studio professionnel au cœur de Porto, nous garantissons une qualité audio et vidéo maximale pour chaque épisode. Un cadre pensé pour des conversations inspirantes et productives.",
+    "galleryOpenAria": "Voir l'image en grand",
+    "galleryCloseAria": "Fermer",
+    "galleryImageAlt": "Studio du podcast",
     "whereToFindUs": "Où Nous Trouver",
     "whereToFindUsTitle": "Écoutez sur Vos Plateformes Préférées",
     "whereToFindUsDescription": "Suivez-nous sur les principales plateformes de streaming pour ne jamais manquer un épisode. Disponible où que vous soyez."
