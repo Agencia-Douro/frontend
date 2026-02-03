@@ -221,7 +221,7 @@
     ],
     "sponsorImageAlt": "Sponsor",
     "sponsorText": "Our sponsor supports quality conversations about real estate and business in Northern Portugal.",
-    "whyListenLabel": "Why listen to us",
+    "whyListenLabel": "Reasons",
     "whyListenTitle": "Why listen to us",
     "whyListenSubtitle": "Content designed for those who want to stay on top of the market and make informed decisions.",
     "whyListenCards": [
@@ -598,7 +598,6 @@
     "garage": "Garage",
     "space": "Space",
     "spaces": "Spaces",
-    "floor": "Floor",
     "constructionYear": "Construction Year",
     "state": "State",
     "energyClass": "Energy Class",

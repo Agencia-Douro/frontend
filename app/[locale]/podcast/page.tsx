@@ -17,22 +17,23 @@ import { PodcastSponsorSection } from "@/components/Sections/Podcast/PodcastSpon
 import { PodcastWhyListenSection, type WhyListenCard } from "@/components/Sections/Podcast/PodcastWhyListenSection";
 import { PodcastTestimonialsSection, type PodcastTestimonialItem } from "@/components/Sections/Podcast/PodcastTestimonialsSection";
 import { PodcastGallerySection } from "@/components/Sections/Podcast/PodcastGallerySection";
+import type { PodcastGalleryImage } from "@/components/Sections/Podcast/PodcastGallerySection";
 import logoPodcast from "@/public/logoPodcast.jpg";
 import patrocinadorPodcast from "@/public/patrocinador-podcast.jpeg";
 import logoNorteImobiliario from "@/public/norte-imobilirio-business-gold.png";
 import hero1 from "@/public/hero/hero1.jpg";
 import hero2 from "@/public/hero/hero2.jpg";
 import hero3 from "@/public/hero/hero3.jpg";
+import vaniaPodcast from "@/public/vania-podcast.png";
 import { useTranslations } from "next-intl";
 
-const GALLERY_IMAGES = [
-    { src: hero1, altKey: "galleryImageAlt" },
-    { src: hero2, altKey: "galleryImageAlt" },
-    { src: hero3, altKey: "galleryImageAlt" },
-    { src: hero1, altKey: "galleryImageAlt" },
-    { src: hero2, altKey: "galleryImageAlt" },
-    { src: hero3, altKey: "galleryImageAlt" },
-] as const;
+const GALLERY_IMAGES: PodcastGalleryImage[] = [
+    { src: hero1, alt: "" },
+    { src: hero2, alt: "" },
+    { src: hero3, alt: "" },
+    { src: logoPodcast, alt: "" },
+    { src: vaniaPodcast, alt: "" },
+];
 
 export default function PodcastPage() {
     const t = useTranslations("Podcast");
@@ -48,6 +49,11 @@ export default function PodcastPage() {
         queryKey: ["podcast-content", locale],
         queryFn: () => podcastContentApi.get(locale),
     });
+
+    const galleryImages = Array.from({ length: 9 }, (_, i) => ({
+        ...GALLERY_IMAGES[i % GALLERY_IMAGES.length],
+        alt: t("galleryImageAlt"),
+    }));
 
     const podcastSchema =
         podcastContent
@@ -111,18 +117,17 @@ export default function PodcastPage() {
                 guests={(t.raw("guestsList") as GuestItem[]) ?? []}
             />
 
-            <PodcastSponsorSection
-                imageSrc={patrocinadorPodcast}
-                imageAlt={t("sponsorImageAlt")}
-            />
-
             <PodcastGallerySection
                 label={t("galleryLabel")}
                 title={t("galleryTitle")}
                 description={t("galleryDescription")}
-                images={GALLERY_IMAGES.map((img) => ({ src: img.src, alt: t(img.altKey) }))}
+                images={galleryImages}
                 openLightboxAriaLabel={t("galleryOpenAria")}
-                closeLightboxAriaLabel={t("galleryCloseAria")}
+            />
+
+            <PodcastSponsorSection
+                imageSrc={patrocinadorPodcast}
+                imageAlt={t("sponsorImageAlt")}
             />
 
             <PodcastWhyListenSection
@@ -130,6 +135,8 @@ export default function PodcastPage() {
                 title={t("whyListenTitle")}
                 subtitle={t("whyListenSubtitle")}
                 cards={(t.raw("whyListenCards") as WhyListenCard[]) ?? []}
+                logoSrc={logoNorteImobiliario}
+                logoAlt="Norte Imobiliário & Business"
             />
 
             <SectionDivider />

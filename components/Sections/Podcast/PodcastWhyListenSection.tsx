@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import {
     Mic,
     TrendingUp,
@@ -30,6 +32,8 @@ interface PodcastWhyListenSectionProps {
     title: string;
     subtitle: string;
     cards: WhyListenCard[];
+    logoSrc?: StaticImageData | string;
+    logoAlt?: string;
 }
 
 export function PodcastWhyListenSection({
@@ -37,10 +41,35 @@ export function PodcastWhyListenSection({
     title,
     subtitle,
     cards,
+    logoSrc,
+    logoAlt = "Norte Imobiliário & Business",
 }: PodcastWhyListenSectionProps) {
     return (
-        <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
-            <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-center max-w-3xl mx-auto">
+        <section className="relative overflow-hidden py-8 md:py-10 lg:py-12 xl:py-16">
+            {logoSrc && (
+                <>
+                    <div className="absolute left-8 md:left-12 xl:left-16 top-2 md:top-4 xl:top-6 w-48 md:w-56 xl:w-64 aspect-2/1 opacity-50 pointer-events-none hidden xl:block z-0" aria-hidden>
+                        <Image
+                            src={logoSrc}
+                            alt=""
+                            fill
+                            className="object-contain object-left"
+                            sizes="(max-width: 768px) 192px, (max-width: 1280px) 224px, 256px"
+                        />
+                    </div>
+                    <div className="absolute right-8 md:right-12 xl:right-16 top-2 md:top-4 xl:top-6 w-48 md:w-56 xl:w-64 aspect-2/1 opacity-50 pointer-events-none hidden xl:block z-0" aria-hidden>
+                        <Image
+                            src={logoSrc}
+                            alt=""
+                            fill
+                            className="object-contain object-right"
+                            sizes="(max-width: 768px) 192px, (max-width: 1280px) 224px, 256px"
+                        />
+                    </div>
+                </>
+            )}
+            <div className="container relative z-10">
+                <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-left md:text-center max-w-3xl md:mx-auto">
                 <span className="button-14-medium text-brown block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}
@@ -68,6 +97,7 @@ export function PodcastWhyListenSection({
                     );
                 })}
             </div>
+        </div>
         </section>
     );
 }

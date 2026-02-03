@@ -65,7 +65,7 @@ export function PodcastPlatformsSection({ label, title, description }: PodcastPl
                     {description}
                 </p>
             </header>
-            <div className="flex flex-wrap gap-3 md:gap-4 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-3 md:gap-4 justify-start">
                 {PLATFORMS.map((platform) => (
                     <Link
                         key={platform.label}

@@ -25,104 +25,37 @@ export function Apresentadora() {
     });
 
     return (
-        <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
-            <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16 lg:items-stretch">
-                <div className="space-y-6 md:space-y-8 text-left flex flex-col">
+        <section className="container py-8 md:py-10 lg:py-12 xl:py-16 overflow-x-hidden">
+            <div className="flex flex-col gap-6 md:gap-8 lg:flex-row lg:justify-between lg:gap-12 xl:gap-16 lg:items-stretch min-h-0">
+                <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
                     <p className="body-16-medium text-brown">{t("credential")}</p>
 
-                    <div className="space-y-4 text-justify lg:text-left">
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph1")}</p>
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph2")}</p>
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">{t("paragraph3")}</p>
-                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty lg:hidden">&quot;{t("quote")}&quot;</p>
+                    <div className="space-y-4 text-justify lg:text-left min-w-0">
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph1")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph2")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph3")}</p>
+                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty wrap-break-word lg:hidden">&quot;{t("quote")}&quot;</p>
                     </div>
 
-                    {/* Imagem - Mobile */}
-                    <div className="lg:hidden relative w-full max-w-md aspect-4/5 overflow-hidden bg-muted">
-                        <Image
-                            src={siteConfig?.apresentadoraImage || VaniaPodcast}
-                            alt={t("imageAlt")}
-                            fill
-                            className="object-cover"
-                            priority
-                            unoptimized={!!siteConfig?.apresentadoraImage}
-                        />
-                    </div>
-
-                    {/* Estatísticas */}
-                    <div className="grid grid-cols-2 gap-6 md:gap-8 pt-4">
-                        <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
-                                {siteConfig?.anosExperiencia}+
-                            </div>
-                            <p className="body-16-medium text-brown">
-                                {t("stats.anosExperiencia")}
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
-                                {siteConfig?.eurosEmTransacoes}M+
-                            </div>
-                            <p className="body-16-medium text-brown">
-                                {t("stats.eurosTransacoes")}
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
-                                {siteConfig?.clientesSatisfeitos}+
-                            </div>
-                            <p className="body-16-medium text-brown">
-                                {t("stats.clientesSatisfeitos")}
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="heading-tres-regular md:heading-dois-regular text-brown">
-                                {siteConfig?.episodiosPublicados}+
-                            </div>
-                            <p className="body-16-medium text-brown">
-                                {t("stats.episodiosGravados")}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* LinkedIn - Mobile: abaixo das stats */}
-                    <div className="pt-2 lg:hidden">
-                        <Link
-                            href={t("linkedInUrl")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 px-5 py-3 md:px-6 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182]"
-                            aria-label={t("linkedInLabel")}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                                <path d={LINKEDIN_ICON} />
-                            </svg>
-                            <span>{t("linkedInLabel")}</span>
-                        </Link>
-                    </div>
-                </div>
-
-                {/* Imagem - Desktop: wrapper com aspect da imagem para a box ficar contida na área visível */}
-                <div className="hidden lg:flex lg:justify-center lg:items-center w-full h-full min-h-0 bg-muted">
-                    <div className="relative h-full w-auto self-stretch aspect-4/5 overflow-hidden">
-                        <Image
-                            src={siteConfig?.apresentadoraImage || VaniaPodcast}
-                            alt={t("imageAlt")}
-                            fill
-                            className="object-cover object-center"
-                            priority
-                            unoptimized={!!siteConfig?.apresentadoraImage}
-                            sizes="(min-width: 1024px) 50vw, 0"
-                        />
-                        {/* Área inferior: LinkedIn em cima, box da quote em baixo (24px de recorte dentro da imagem) */}
-                        <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col items-end gap-4">
+                    {/* Imagem - Mobile: 88% corta a base, LinkedIn dentro da área visível, canto inferior direito */}
+                    <div className="lg:hidden relative w-full max-w-md mx-auto aspect-4/5 max-h-[70vh] overflow-hidden bg-muted shrink-0">
+                        <div className="absolute inset-x-0 top-0 h-[88%] overflow-hidden">
+                            <Image
+                                src={siteConfig?.apresentadoraImage || VaniaPodcast}
+                                alt={t("imageAlt")}
+                                fill
+                                className="object-cover object-top"
+                                priority
+                                unoptimized={!!siteConfig?.apresentadoraImage}
+                                sizes="(max-width: 1023px) 448px, 0"
+                            />
                             <Link
                                 href={t("linkedInUrl")}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 px-5 py-3 md:px-6 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182] shrink-0"
+                                className="absolute bottom-4 right-4 z-10 inline-flex items-center justify-center gap-3 min-h-[44px] px-4 py-2.5 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182]"
                                 aria-label={t("linkedInLabel")}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -130,10 +63,42 @@ export function Apresentadora() {
                                 </svg>
                                 <span>{t("linkedInLabel")}</span>
                             </Link>
-                            <div className="w-full p-6 bg-black/30 backdrop-blur-md">
-                                <p className="body-16-medium text-white italic text-pretty max-w-2xl">
-                                    &quot;{t("quote")}&quot;
-                                </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Imagem - Desktop: wrapper com altura menor para cortar a parte de baixo */}
+                <div className="hidden lg:flex lg:justify-center lg:items-center lg:min-w-[340px] lg:w-[45%] lg:shrink-0 bg-muted">
+                    <div className="relative w-full aspect-4/5 overflow-hidden max-h-full">
+                        <div className="absolute inset-x-0 top-0 h-[88%] overflow-hidden">
+                            <Image
+                                src={siteConfig?.apresentadoraImage || VaniaPodcast}
+                                alt={t("imageAlt")}
+                                fill
+                                className="object-cover object-top"
+                                priority
+                                unoptimized={!!siteConfig?.apresentadoraImage}
+                                sizes="(min-width: 1024px) 50vw, 0"
+                            />
+                            {/* Quote e LinkedIn ao fundo da área visível da imagem (16px) */}
+                            <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col items-end gap-3">
+                                <Link
+                                    href={t("linkedInUrl")}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-3 px-4 py-2.5 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182] shrink-0"
+                                    aria-label={t("linkedInLabel")}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                        <path d={LINKEDIN_ICON} />
+                                    </svg>
+                                    <span>{t("linkedInLabel")}</span>
+                                </Link>
+                                <div className="w-full p-4 bg-black/30 backdrop-blur-md">
+                                    <p className="body-16-medium text-white italic text-pretty max-w-2xl">
+                                        &quot;{t("quote")}&quot;
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

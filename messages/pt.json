@@ -221,7 +221,7 @@
     ],
     "sponsorImageAlt": "Patrocinador",
     "sponsorText": "O nosso patrocinador apoia conversas de qualidade sobre imobiliário e negócios no Norte de Portugal.",
-    "whyListenLabel": "Por que nos ouvir",
+    "whyListenLabel": "Razões",
     "whyListenTitle": "Por que nos ouvir",
     "whyListenSubtitle": "Conteúdo pensado para quem quer estar a par do mercado e tomar decisões informadas.",
     "whyListenCards": [
@@ -297,15 +297,15 @@
       },
       "imageAlt": "Vânia Fernandes - Consultora Imobiliária & Host"
     },
+    "whereToFindUs": "Onde Nos Encontrar",
+    "whereToFindUsTitle": "Ouça nas Suas Plataformas Favoritas",
+    "whereToFindUsDescription": "Siga-nos nas principais plataformas de streaming para nunca perder um episódio. Disponível onde quer que esteja.",
     "galleryLabel": "Galeria",
     "galleryTitle": "O Nosso Estúdio",
     "galleryDescription": "Gravado num estúdio profissional no coração do Porto, garantimos a máxima qualidade de áudio e vídeo em todos os episódios. Um ambiente pensado para conversas inspiradoras e produtivas.",
     "galleryOpenAria": "Ver imagem em tamanho maior",
     "galleryCloseAria": "Fechar",
-    "galleryImageAlt": "Estúdio do podcast",
-    "whereToFindUs": "Onde Nos Encontrar",
-    "whereToFindUsTitle": "Ouça nas Suas Plataformas Favoritas",
-    "whereToFindUsDescription": "Siga-nos nas principais plataformas de streaming para nunca perder um episódio. Disponível onde quer que esteja."
+    "galleryImageAlt": "Estúdio do podcast"
   },
   "Sidebar": {
     "buy": "Comprar",
@@ -598,7 +598,6 @@
     "garage": "Garagem",
     "space": "Lugar",
     "spaces": "Lugares",
-    "floor": "Piso",
     "constructionYear": "Ano de construção",
     "state": "Estado",
     "energyClass": "Classe Energética",
