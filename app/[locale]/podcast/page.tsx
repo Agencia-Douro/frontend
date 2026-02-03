@@ -99,6 +99,7 @@ export default function PodcastPage() {
                 guestsLabel={t("guests")}
             />
 
+            <SectionDivider />
 
             <PodcastAboutSection
                 label={t("aboutLabel")}
@@ -107,6 +108,8 @@ export default function PodcastPage() {
                 origin={t("aboutOrigin")}
                 intention={t("aboutIntention")}
                 presentation={t("aboutPresentation")}
+                logoSrc={logoNorteImobiliario}
+                logoAlt="Norte Imobiliário & Business"
             />
 
             <Apresentadora />
