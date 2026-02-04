@@ -126,7 +126,7 @@ export default function PodcastPage() {
                 guestsLabel={t("guests")}
             />
 
-            <SectionDivider />
+            <SectionDivider noTopMargin />
 
             <PodcastAboutSection
                 label={podcastContent?.aboutLabel || t("aboutLabel")}
@@ -185,7 +185,6 @@ export default function PodcastPage() {
                 logoAlt="Norte Imobiliário & Business"
             />
 
-            <SectionDivider />
 
             <PodcastEpisodesSection
                 label={podcastContent?.episodesLabel || t("watchNow")}
@@ -203,7 +202,6 @@ export default function PodcastPage() {
                 description={podcastContent?.platformsDescription || t("whereToFindUsDescription")}
             />
 
-            <SectionDivider />
 
             <PodcastCtaSection
                 label={podcastContent?.ctaLabel || t("ctaFinalLabel")}
