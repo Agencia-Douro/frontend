@@ -5,7 +5,7 @@ import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
 import { Bold, Italic, List, ListOrdered } from "lucide-react"
-import { Button } from "./button"
+import { Button } from "@/components/ui-admin/button"
 
 interface RichTextEditorProps {
   value: string
@@ -37,7 +37,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
     },
     editorProps: {
       attributes: {
-        class: "tiptap min-h-[120px] px-2 py-1.5 text-black-muted body-14-medium outline-none",
+        class: "tiptap min-h-[120px] px-2 py-1.5 body-14-medium outline-none",
       },
       handleKeyDown: (view, event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
@@ -66,49 +66,53 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
   return (
     <div className={className}>
       {/* Toolbar */}
-      <div className="bg-white shadow-pretty border-b border-[#EAE6DF] px-2 py-1.5 flex gap-1">
+      <div className="border-border bg-muted border-b px-2 py-1.5 flex gap-1 rounded-t-md">
         <Button
           type="button"
-          variant={editor.isActive("bold") ? "brown" : "ghost"}
+          variant={editor.isActive("bold") ? "secondary" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleBold().run()}
           className="h-7 w-7"
+          aria-label={editor.isActive("bold") ? "Desativar negrito" : "Negrito"}
         >
-          <Bold className="h-4 w-4" />
+          <Bold className="size-4" aria-hidden />
         </Button>
         <Button
           type="button"
-          variant={editor.isActive("italic") ? "brown" : "ghost"}
+          variant={editor.isActive("italic") ? "secondary" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className="h-7 w-7"
+          aria-label={editor.isActive("italic") ? "Desativar itálico" : "Itálico"}
         >
-          <Italic className="h-4 w-4" />
+          <Italic className="size-4" aria-hidden />
         </Button>
         <Button
           type="button"
-          variant={editor.isActive("bulletList") ? "brown" : "ghost"}
+          variant={editor.isActive("bulletList") ? "secondary" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className="h-7 w-7"
+          aria-label={editor.isActive("bulletList") ? "Desativar lista com marcas" : "Lista com marcas"}
         >
-          <List className="h-4 w-4" />
+          <List className="size-4" aria-hidden />
         </Button>
         <Button
           type="button"
-          variant={editor.isActive("orderedList") ? "brown" : "ghost"}
+          variant={editor.isActive("orderedList") ? "secondary" : "ghost"}
           size="icon"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className="h-7 w-7"
+          aria-label={editor.isActive("orderedList") ? "Desativar lista numerada" : "Lista numerada"}
         >
-          <ListOrdered className="h-4 w-4" />
+          <ListOrdered className="size-4" aria-hidden />
         </Button>
       </div>
 
       {/* Editor */}
       <EditorContent
         editor={editor}
-        className="w-full shadow-pretty bg-white"
+        className="w-full bg-background border border-t-0 border-border rounded-b-md min-h-[120px]"
       />
     </div>
   )

@@ -67,12 +67,11 @@ export default function Header() {
     const useSticky = isImoveisPage || isImoveisLuxoPage;
     const positionClass = useSticky ? "" : "fixed";
 
-    // Header transparente na home e no podcast (hero com imagem) quando não deu scroll (apenas em desktop)
+    // Header transparente na home e no podcast (hero com imagem) quando no topo e menu fechado
     const isTransparent = (isHomePage || isPodcastPage) && !isScrolled && !mobileMenuOpen;
-    // Em mobile, sempre ter background preenchido
-    const headerBg = isTransparent ? "bg-muted xl:bg-transparent" : "bg-muted";
-    const borderColor = isTransparent ? "border-[#EAE6DF] xl:border-white/20" : "border-[#EAE6DF]";
-    const textColor = isTransparent ? "text-brown xl:text-white" : "text-brown";
+    const headerBg = isTransparent ? "bg-transparent" : "bg-muted";
+    const borderColor = isTransparent ? "border-white/20" : "border-[#EAE6DF]";
+    const textColor = isTransparent ? "text-white" : "text-brown";
 
     return (
         <header className={`border-b ${borderColor} ${positionClass} top-0 left-0 right-0 w-full max-w-full ${headerBg} z-50 transition-all duration-300`}>
@@ -81,7 +80,7 @@ export default function Header() {
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
                             <Image
-                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? 'xl:brightness-0 xl:invert' : ''}`}
+                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? "brightness-0 invert" : ""}`}
                                 src={Logo}
                                 alt={t("logoAlt")}
                                 width={88}
@@ -129,7 +128,7 @@ export default function Header() {
                             </a>
                         </Button>
 
-                        <button className={`block p-1 xl:hidden cursor-pointer z-60 relative transition-colors duration-300 ${textColor}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                        <button className={`block p-1 xl:hidden cursor-pointer relative z-10 transition-colors duration-300 ${textColor}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                             {mobileMenuOpen ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
@@ -146,16 +145,16 @@ export default function Header() {
                 <AnimatePresence>
                     {mobileMenuOpen && (
                         <>
-                            {/* Overlay com blur */}
+                            {/* Overlay com blur – abaixo do header, z acima do header */}
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                className="xl:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-999 top-16"
+                                className="xl:hidden fixed inset-0 top-16 bg-black/30 backdrop-blur-sm z-[100]"
                                 onClick={() => setMobileMenuOpen(false)}
                             />
-                            {/* Menu */}
+                            {/* Menu mobile – fundo sólido, acima do overlay */}
                             <motion.nav
                                 initial={{ x: "100%" }}
                                 animate={{ x: 0 }}
@@ -164,7 +163,7 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100dvh-64px)] fixed top-16 bg-muted w-full left-0 z-1000 overflow-y-auto pb-24"
+                                className="xl:hidden flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100dvh-64px)] fixed top-16 left-0 w-full z-[101] overflow-y-auto pb-24 border-t border-[#EAE6DF] bg-muted"
                             >
                                 <motion.div
                                     initial="closed"

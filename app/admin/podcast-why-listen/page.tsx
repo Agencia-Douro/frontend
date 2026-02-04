@@ -3,12 +3,22 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastWhyListenApi, PodcastWhyListenCard } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Switch } from "@/components/ui-admin/switch"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
 
@@ -101,9 +111,14 @@ export default function PodcastWhyListenPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover este card?")) {
-      deleteMutation.mutate(id)
+  const [cardToDelete, setCardToDelete] = useState<string | null>(null)
+
+  const handleDelete = (id: string) => setCardToDelete(id)
+
+  const confirmDelete = () => {
+    if (cardToDelete) {
+      deleteMutation.mutate(cardToDelete)
+      setCardToDelete(null)
     }
   }
 
@@ -120,21 +135,25 @@ export default function PodcastWhyListenPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Cards &quot;Por Que Ouvir&quot;</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-lg font-semibold text-foreground">Cards &quot;Por Que Ouvir&quot;</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Gerencie os cards da seção &quot;Por Que Ouvir&quot; na página do podcast.
           </p>
         </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Novo Card
           </Button>
         )}
@@ -145,8 +164,8 @@ export default function PodcastWhyListenPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingCard ? "Editar Card" : "Novo Card"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -162,7 +181,7 @@ export default function PodcastWhyListenPage() {
                     placeholder="Ex: mic, users, star, trending-up"
                     required
                   />
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Use nomes de ícones do Lucide: mic, users, star, trending-up, etc.
                   </p>
                 </div>
@@ -217,8 +236,8 @@ export default function PodcastWhyListenPage() {
                 </div>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                <p className="text-sm text-blue-800">
+              <div>
+                <p className="text-sm text-muted-foreground">
                   <strong>Nota:</strong> As traduções para inglês e francês serão geradas automaticamente via API DeepL.
                 </p>
               </div>
@@ -239,45 +258,65 @@ export default function PodcastWhyListenPage() {
       <div className="grid gap-4 md:grid-cols-2">
         {cards?.map((card: PodcastWhyListenCard) => (
           <Card key={card.id} className={!card.isActive ? "opacity-60" : ""}>
-            <CardContent className="p-4">
+            <CardContent>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl bg-brown/10 p-2 rounded">{card.iconKey}</span>
+                    <span className="text-2xl bg-muted p-2 rounded">{card.iconKey}</span>
                     <div>
-                      <h3 className="font-semibold">{card.title_pt}</h3>
+                      <h3 className="font-semibold text-foreground">{card.title_pt}</h3>
                       <div className="flex gap-1">
-                        <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">#{card.order}</span>
+                        <span className="text-xs bg-muted px-2 py-0.5 rounded">#{card.order}</span>
                         {!card.isActive && (
-                          <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">Inativo</span>
+                          <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded">Inativo</span>
                         )}
                       </div>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3">{card.subtext_pt}</p>
+                  <p className="text-sm text-muted-foreground mb-3 text-pretty">{card.subtext_pt}</p>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="bg-gray-50 p-2 rounded">
+                    <div>
                       <p className="font-medium mb-1">EN:</p>
                       <p className="line-clamp-2">{card.title_en || "..."}</p>
                     </div>
-                    <div className="bg-gray-50 p-2 rounded">
+                    <div>
                       <p className="font-medium mb-1">FR:</p>
                       <p className="line-clamp-2">{card.title_fr || "..."}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-2 ml-4">
-                  <Button variant="outline" size="icon" onClick={() => handleEdit(card)}>
-                    <Pencil className="h-4 w-4" />
+                  <Button variant="outline" size="icon" onClick={() => handleEdit(card)} aria-label="Editar card">
+                    <Pencil className="size-4" />
                   </Button>
                   <Button
-                    variant="brown"
+                    variant="destructive"
                     size="icon"
                     onClick={() => handleDelete(card.id)}
                     disabled={deleteMutation.isPending}
+                    aria-label="Remover card"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="size-4" />
                   </Button>
+                  <AlertDialog open={cardToDelete === card.id} onOpenChange={(open) => !open && setCardToDelete(null)}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Remover card</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tem certeza que deseja remover este card? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          onClick={confirmDelete}
+                        >
+                          Remover
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </CardContent>
@@ -287,7 +326,7 @@ export default function PodcastWhyListenPage() {
 
       {(!cards || cards.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
+          <CardContent className="text-center text-muted-foreground">
             Nenhum card cadastrado. Clique em &quot;Novo Card&quot; para começar.
           </CardContent>
         </Card>

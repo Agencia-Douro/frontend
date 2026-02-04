@@ -4,11 +4,11 @@ import { useState, useEffect } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { aboutUsContentApi } from "@/services/api"
 import { UpdateAboutUsContentDto } from "@/types/about-us"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
 import { toast } from "sonner"
 
 export default function AboutUsContentPage() {
@@ -81,19 +81,19 @@ export default function AboutUsContentPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <p>A carregar...</p>
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6">
-        <h1 className="heading-tres-medium text-brown mb-2">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-lg font-semibold text-foreground">
           Conteúdo da Página Sobre Nós
         </h1>
-        <p className="body-16-regular text-grey">
+        <p className="text-sm text-muted-foreground mt-1">
           Edite os textos em português. As traduções para inglês e francês serão
           feitas automaticamente via DeepL.
         </p>
@@ -321,8 +321,8 @@ export default function AboutUsContentPage() {
               />
             </div>
 
-            <div className="space-y-4 pt-4 border-t">
-              <Label className="text-lg font-semibold">Links do YouTube</Label>
+            <div className="space-y-4 pt-4 border-t border-border">
+              <Label className="text-base font-medium">Links do YouTube</Label>
               
               <div className="space-y-1">
                 <Label htmlFor="youtubeLink1">Link do YouTube 1</Label>
@@ -366,10 +366,9 @@ export default function AboutUsContentPage() {
           </CardContent>
         </Card>
 
-        <div className="flex gap-4 justify-end">
+        <div className="flex gap-2 justify-end">
           <Button
             type="submit"
-            variant="brown"
             disabled={updateMutation.isPending}
           >
             {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}

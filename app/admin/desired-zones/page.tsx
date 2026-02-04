@@ -3,15 +3,25 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { desiredZonesApi, DesiredZone } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui-admin/checkbox"
 import Image from "next/image"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 
 export default function DesiredZonesPage() {
   const queryClient = useQueryClient()
@@ -118,9 +128,16 @@ export default function DesiredZonesPage() {
     setShowForm(true)
   }
 
+  const [zoneToDelete, setZoneToDelete] = useState<string | null>(null)
+
   const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover esta zona?")) {
-      deleteMutation.mutate(id)
+    setZoneToDelete(id)
+  }
+
+  const confirmDelete = () => {
+    if (zoneToDelete) {
+      deleteMutation.mutate(zoneToDelete)
+      setZoneToDelete(null)
     }
   }
 
@@ -150,16 +167,23 @@ export default function DesiredZonesPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Zonas Mais Desejadas</h1>
+        <div>
+          <h1 className="text-lg font-semibold text-foreground">Zonas Mais Desejadas</h1>
+          <p className="text-sm text-muted-foreground mt-1">Gerir zonas destacadas na página Sobre Nós.</p>
+        </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Nova Zona
           </Button>
         )}
@@ -170,8 +194,8 @@ export default function DesiredZonesPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingZone ? "Editar Zona" : "Nova Zona"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -256,11 +280,11 @@ export default function DesiredZonesPage() {
               </div>
 
               <div className="flex gap-2">
-                <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
-                  {editingZone ? "Atualizar" : "Criar"}
-                </Button>
                 <Button type="button" variant="outline" onClick={resetForm}>
                   Cancelar
+                </Button>
+                <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
+                  {editingZone ? "Atualizar" : "Criar"}
                 </Button>
               </div>
             </form>
@@ -271,7 +295,7 @@ export default function DesiredZonesPage() {
       <div className="grid gap-4">
         {zones?.map((zone) => (
           <Card key={zone.id}>
-            <CardContent className="flex items-center justify-between p-4">
+            <CardContent className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Image
                   src={zone.image}
@@ -281,34 +305,54 @@ export default function DesiredZonesPage() {
                   className="rounded-lg object-cover"
                 />
                 <div>
-                  <h3 className="font-semibold text-lg">{zone.name}</h3>
-                  <p className="text-sm text-gray-500">
-                    {countryOptions.find(c => c.code === zone.country)?.name || zone.country || "Portugal"} | Ordem: {zone.displayOrder} | {zone.isActive ? "Ativa" : "Inativa"}
+                  <h3 className="font-semibold text-foreground">{zone.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {countryOptions.find(c => c.code === zone.country)?.name || zone.country || "Portugal"} · Ordem: {zone.displayOrder} · {zone.isActive ? "Ativa" : "Inativa"}
                   </p>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={() => handleEdit(zone)}>
-                  <Pencil className="h-4 w-4" />
+                <Button variant="outline" size="icon" onClick={() => handleEdit(zone)} aria-label="Editar zona">
+                  <Pencil className="size-4" />
                 </Button>
                 <Button
-                  variant="brown"
+                  variant="destructive"
                   size="icon"
                   onClick={() => handleDelete(zone.id)}
                   disabled={deleteMutation.isPending}
+                  aria-label="Remover zona"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="size-4" />
                 </Button>
+                <AlertDialog open={zoneToDelete === zone.id} onOpenChange={(open) => !open && setZoneToDelete(null)}>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Remover zona</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Tem certeza que deseja remover esta zona? Esta ação não pode ser desfeita.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        onClick={confirmDelete}
+                      >
+                        Remover
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {!zones || zones.length === 0 && (
+      {(!zones || zones.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
-            Nenhuma zona cadastrada
+          <CardContent className="text-center text-muted-foreground">
+            Nenhuma zona cadastrada. Clique em &quot;Nova Zona&quot; para começar.
           </CardContent>
         </Card>
       )}

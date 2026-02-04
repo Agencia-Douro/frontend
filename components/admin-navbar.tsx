@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuth } from "@/contexts/auth-context"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui-admin/button"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -26,7 +26,7 @@ export function AdminNavbar() {
   }, [mobileMenuOpen])
 
   return (
-    <header className="border-b border-[#EAE6DF] bg-white">
+    <header className="border-b border-border bg-card">
       <div className="container">
         <div className="flex items-center xl:h-18 h-16 gap-6">
           {/* Logo */}
@@ -46,40 +46,40 @@ export function AdminNavbar() {
           <nav className="hidden lg:flex items-center gap-6">
             <Link
               href="/admin"
-              className={`body-16-medium transition-colors ${
-                pathname === "/admin" ? "text-gold" : "text-brown hover:text-gold"
+              className={`text-base font-medium transition-colors ${
+                pathname === "/admin" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Dashboard
             </Link>
             <Link
               href="/admin/properties"
-              className={`body-16-medium transition-colors ${
-                pathname?.includes("/admin/properties") ? "text-gold" : "text-brown hover:text-gold"
+              className={`text-base font-medium transition-colors ${
+                pathname?.includes("/admin/properties") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Imóveis
             </Link>
             <Link
               href="/admin/newsletters"
-              className={`body-16-medium transition-colors ${
-                pathname?.includes("/admin/newsletters") ? "text-gold" : "text-brown hover:text-gold"
+              className={`text-base font-medium transition-colors ${
+                pathname?.includes("/admin/newsletters") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Newsletters
             </Link>
             <Link
               href="/admin/desired-zones"
-              className={`body-16-medium transition-colors ${
-                pathname?.includes("/admin/desired-zones") ? "text-gold" : "text-brown hover:text-gold"
+              className={`text-base font-medium transition-colors ${
+                pathname?.includes("/admin/desired-zones") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Zonas
             </Link>
             <Link
               href="/admin/site-config"
-              className={`body-16-medium transition-colors ${
-                pathname?.includes("/admin/site-config") ? "text-gold" : "text-brown hover:text-gold"
+              className={`text-base font-medium transition-colors ${
+                pathname?.includes("/admin/site-config") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Configurações
@@ -89,18 +89,23 @@ export function AdminNavbar() {
           {/* Logout Button + Mobile Menu Toggle */}
           <div className="w-full flex gap-2 justify-end">
             <Button
-              variant="brown"
+              variant="secondary"
               onClick={logout}
             >
               Sair
             </Button>
-            <button className="block p-1 lg:hidden cursor-pointer z-999" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button
+              type="button"
+              aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+              className="block p-1 lg:hidden cursor-pointer z-999 text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
               {mobileMenuOpen ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.42L10.59 12l-4.89 4.88a1 1 0 1 0 1.41 1.42L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" fill="currentColor" />
                 </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M3 6H21V8H3V6ZM3 16H21V18H3V16Z" fill="currentColor" />
                 </svg>
               )}
@@ -109,44 +114,44 @@ export function AdminNavbar() {
         </div>
 
         {/* Mobile Menu */}
-        <nav className={`lg:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-center pt-8 gap-6 h-[calc(100vh-64px)] fixed top-16 bg-muted w-full left-0 z-[1000] overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <nav className={`lg:hidden p-4 border-t border-border flex flex-col items-center pt-8 gap-6 h-[calc(100dvh-64px)] fixed top-16 bg-card w-full left-0 z-1000 overflow-hidden transition-transform duration-300 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
           <Link
             href="/admin"
-            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
             onClick={() => setMobileMenuOpen(false)}
           >
             Dashboard
           </Link>
           <Link
             href="/admin/properties"
-            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
             onClick={() => setMobileMenuOpen(false)}
           >
             Imóveis
           </Link>
           <Link
             href="/admin/newsletters"
-            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
             onClick={() => setMobileMenuOpen(false)}
           >
             Newsletters
           </Link>
           <Link
             href="/admin/desired-zones"
-            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
             onClick={() => setMobileMenuOpen(false)}
           >
             Zonas
           </Link>
           <Link
             href="/admin/site-config"
-            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
             onClick={() => setMobileMenuOpen(false)}
           >
             Configurações
           </Link>
           <Button
-            variant="brown"
+            variant="secondary"
             onClick={() => {
               logout()
               setMobileMenuOpen(false)

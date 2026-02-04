@@ -3,11 +3,21 @@
 import { useState, useRef } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastGalleryApi, PodcastGalleryImage, uploadApi, MediaType } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Switch } from "@/components/ui-admin/switch"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X, Upload, Loader2, Play, ImageIcon, Video } from "lucide-react"
 import Image from "next/image"
@@ -28,6 +38,7 @@ export default function PodcastGalleryPage() {
     order: 0,
     isActive: true,
   })
+  const [imageToDelete, setImageToDelete] = useState<string | null>(null)
 
   const { data: images, isLoading } = useQuery({
     queryKey: ["podcast-gallery"],
@@ -179,9 +190,12 @@ export default function PodcastGalleryPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover esta mídia?")) {
-      deleteMutation.mutate(id)
+  const handleDelete = (id: string) => setImageToDelete(id)
+
+  const confirmDelete = () => {
+    if (imageToDelete) {
+      deleteMutation.mutate(imageToDelete)
+      setImageToDelete(null)
     }
   }
 
@@ -205,21 +219,25 @@ export default function PodcastGalleryPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Galeria do Podcast</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-lg font-semibold text-foreground">Galeria do Podcast</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Gerencie as imagens e vídeos da galeria exibida na página do podcast.
           </p>
         </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Nova Mídia
           </Button>
         )}
@@ -230,8 +248,8 @@ export default function PodcastGalleryPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingImage ? "Editar Mídia" : "Nova Mídia"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -243,7 +261,7 @@ export default function PodcastGalleryPage() {
                 <div className="flex gap-2">
                   <Button
                     type="button"
-                    variant={formData.mediaType === "image" ? "brown" : "outline"}
+                    variant={formData.mediaType === "image" ? "default" : "outline"}
                     onClick={() => setFormData({ ...formData, mediaType: "image" })}
                     className="flex-1"
                   >
@@ -252,7 +270,7 @@ export default function PodcastGalleryPage() {
                   </Button>
                   <Button
                     type="button"
-                    variant={formData.mediaType === "video" ? "brown" : "outline"}
+                    variant={formData.mediaType === "video" ? "default" : "outline"}
                     onClick={() => setFormData({ ...formData, mediaType: "video" })}
                     className="flex-1"
                   >
@@ -267,7 +285,7 @@ export default function PodcastGalleryPage() {
                 <div className="space-y-2">
                   <Label>Vídeo *</Label>
                   {!formData.videoUrl ? (
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-muted-foreground/30 transition-colors">
                       <input
                         ref={videoInputRef}
                         type="file"
@@ -283,14 +301,14 @@ export default function PodcastGalleryPage() {
                       >
                         {uploadingVideo ? (
                           <>
-                            <Loader2 className="h-10 w-10 text-gray-400 animate-spin" />
-                            <span className="text-sm text-gray-500">Enviando vídeo...</span>
+                            <Loader2 className="size-10 text-muted-foreground animate-spin" />
+                            <span className="text-sm text-muted-foreground">Enviando vídeo...</span>
                           </>
                         ) : (
                           <>
-                            <Video className="h-10 w-10 text-gray-400" />
-                            <span className="text-sm text-gray-500">Clique para selecionar um vídeo</span>
-                            <span className="text-xs text-gray-400">MP4, WebM, MOV ou AVI (máx. 500MB)</span>
+                            <Video className="size-10 text-muted-foreground" />
+                            <span className="text-sm text-muted-foreground">Clique para selecionar um vídeo</span>
+                            <span className="text-xs text-muted-foreground">MP4, WebM, MOV ou AVI (máx. 500MB)</span>
                           </>
                         )}
                       </label>
@@ -304,7 +322,7 @@ export default function PodcastGalleryPage() {
                       />
                       <Button
                         type="button"
-                        variant="brown"
+                        variant="secondary"
                         size="icon"
                         className="absolute top-2 right-2"
                         onClick={handleRemoveVideo}
@@ -321,7 +339,7 @@ export default function PodcastGalleryPage() {
                 <div className="space-y-2">
                   <Label>Imagem *</Label>
                   {!formData.imageUrl ? (
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-muted-foreground/30 transition-colors">
                       <input
                         ref={imageInputRef}
                         type="file"
@@ -337,14 +355,14 @@ export default function PodcastGalleryPage() {
                       >
                         {uploadingImage ? (
                           <>
-                            <Loader2 className="h-10 w-10 text-gray-400 animate-spin" />
-                            <span className="text-sm text-gray-500">Enviando imagem...</span>
+                            <Loader2 className="size-10 text-muted-foreground animate-spin" />
+                            <span className="text-sm text-muted-foreground">Enviando imagem...</span>
                           </>
                         ) : (
                           <>
-                            <Upload className="h-10 w-10 text-gray-400" />
-                            <span className="text-sm text-gray-500">Clique para selecionar uma imagem</span>
-                            <span className="text-xs text-gray-400">PNG, JPG ou WEBP (máx. 10MB)</span>
+                            <Upload className="size-10 text-muted-foreground" />
+                            <span className="text-sm text-muted-foreground">Clique para selecionar uma imagem</span>
+                            <span className="text-xs text-muted-foreground">PNG, JPG ou WEBP (máx. 10MB)</span>
                           </>
                         )}
                       </label>
@@ -361,7 +379,7 @@ export default function PodcastGalleryPage() {
                       />
                       <Button
                         type="button"
-                        variant="brown"
+                        variant="secondary"
                         size="icon"
                         className="absolute top-2 right-2"
                         onClick={handleRemoveImage}
@@ -378,7 +396,7 @@ export default function PodcastGalleryPage() {
                 <div className="space-y-2">
                   <Label>Thumbnail do Vídeo (Opcional)</Label>
                   {!formData.imageUrl ? (
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
+                    <div className="border-2 border-dashed border-border rounded-lg p-4 text-center hover:border-muted-foreground/30 transition-colors">
                       <input
                         ref={imageInputRef}
                         type="file"
@@ -394,13 +412,13 @@ export default function PodcastGalleryPage() {
                       >
                         {uploadingImage ? (
                           <>
-                            <Loader2 className="h-6 w-6 text-gray-400 animate-spin" />
-                            <span className="text-xs text-gray-500">Enviando...</span>
+                            <Loader2 className="size-6 text-muted-foreground animate-spin" />
+                            <span className="text-xs text-muted-foreground">Enviando...</span>
                           </>
                         ) : (
                           <>
-                            <Upload className="h-6 w-6 text-gray-400" />
-                            <span className="text-xs text-gray-500">Clique para adicionar uma thumbnail</span>
+                            <Upload className="size-6 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">Clique para adicionar uma thumbnail</span>
                           </>
                         )}
                       </label>
@@ -417,7 +435,7 @@ export default function PodcastGalleryPage() {
                       />
                       <Button
                         type="button"
-                        variant="brown"
+                        variant="secondary"
                         size="icon"
                         className="absolute top-1 right-1 h-6 w-6"
                         onClick={handleRemoveImage}
@@ -485,7 +503,7 @@ export default function PodcastGalleryPage() {
           return (
             <Card key={image.id} className={!image.isActive ? "opacity-60" : ""}>
               <CardContent className="p-2">
-                <div className="relative aspect-video mb-2 rounded overflow-hidden bg-gray-100">
+                <div className="relative aspect-video mb-2 rounded overflow-hidden bg-muted">
                   {isVideo ? (
                     image.imageUrl ? (
                       <>
@@ -503,10 +521,10 @@ export default function PodcastGalleryPage() {
                         </div>
                       </>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                      <div className="w-full h-full flex items-center justify-center bg-muted">
                         <div className="text-center">
-                          <Video className="h-8 w-8 text-gray-400 mx-auto" />
-                          <span className="text-xs text-gray-400 mt-1 block">Vídeo</span>
+                          <Video className="size-8 text-muted-foreground mx-auto" />
+                          <span className="text-xs text-muted-foreground mt-1 block">Vídeo</span>
                         </div>
                       </div>
                     )
@@ -520,37 +538,57 @@ export default function PodcastGalleryPage() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <ImageIcon className="h-8 w-8 text-gray-400" />
+                      <ImageIcon className="size-8 text-muted-foreground" />
                     </div>
                   )}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
-                    <span className="text-xs bg-gray-100 px-2 py-1 rounded">#{image.order}</span>
+                    <span className="text-xs bg-muted px-2 py-1 rounded">#{image.order}</span>
                     {isVideo && (
                       <span className="text-xs bg-red-100 text-red-700 px-1 py-0.5 rounded">Vídeo</span>
                     )}
                     {!image.isActive && (
-                      <span className="text-xs bg-gray-200 text-gray-600 px-1 py-0.5 rounded">Off</span>
+                      <span className="text-xs bg-muted text-muted-foreground px-1 py-0.5 rounded">Off</span>
                     )}
                   </div>
                   <div className="flex gap-1">
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => handleEdit(image)}>
-                      <Pencil className="h-3 w-3" />
+                    <Button variant="outline" size="icon" className="size-7" onClick={() => handleEdit(image)} aria-label="Editar mídia">
+                      <Pencil className="size-3" />
                     </Button>
                     <Button
-                      variant="brown"
+                      variant="destructive"
                       size="icon"
-                      className="h-7 w-7"
+                      className="size-7"
                       onClick={() => handleDelete(image.id)}
                       disabled={deleteMutation.isPending}
+                      aria-label="Remover mídia"
                     >
-                      <Trash2 className="h-3 w-3" />
+                      <Trash2 className="size-3" />
                     </Button>
+                    <AlertDialog open={imageToDelete === image.id} onOpenChange={(open) => !open && setImageToDelete(null)}>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Remover mídia</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Tem certeza que deseja remover esta mídia? Esta ação não pode ser desfeita.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            onClick={confirmDelete}
+                          >
+                            Remover
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </div>
                 {image.alt_pt && (
-                  <p className="text-xs text-gray-500 mt-1 truncate">{image.alt_pt}</p>
+                  <p className="text-xs text-muted-foreground mt-1 truncate">{image.alt_pt}</p>
                 )}
               </CardContent>
             </Card>
@@ -560,7 +598,7 @@ export default function PodcastGalleryPage() {
 
       {(!images || images.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
+          <CardContent className="text-center text-muted-foreground">
             Nenhuma mídia na galeria. Clique em &quot;Nova Mídia&quot; para adicionar imagens ou vídeos.
           </CardContent>
         </Card>

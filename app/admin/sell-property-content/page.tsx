@@ -4,11 +4,12 @@ import { useState, useEffect } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { sellPropertyContentApi } from "@/services/api"
 import { UpdateSellPropertyContentDto } from "@/types/about-us"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-admin/tabs"
 import { toast } from "sonner"
 
 export default function SellPropertyContentPage() {
@@ -113,32 +114,40 @@ export default function SellPropertyContentPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <p>A carregar...</p>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 md:px-6">
+        <p className="text-sm text-muted-foreground">A carregar…</p>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6">
-        <h1 className="heading-tres-medium text-brown mb-2">
-          Conteúdo da Página Vender Imóvel
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
+      <div className="mb-4 shrink-0">
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">
+          Conteúdo da página Vender imóvel
         </h1>
-        <p className="body-16-regular text-grey">
-          Edite os textos em português. As traduções para inglês e francês serão
-          feitas automaticamente via DeepL.
+        <p className="mt-1 text-sm text-muted-foreground">
+          Edite os textos em português. As traduções para inglês e francês são feitas automaticamente via DeepL.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Hero Section */}
+      <form onSubmit={handleSubmit} className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <Tabs defaultValue="hero" className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <TabsList variant="line" className="w-full shrink-0 justify-start">
+            <TabsTrigger variant="line" value="hero">Hero</TabsTrigger>
+            <TabsTrigger variant="line" value="formulario">Formulário</TabsTrigger>
+            <TabsTrigger variant="line" value="estatisticas">Estatísticas</TabsTrigger>
+            <TabsTrigger variant="line" value="marketing">Marketing</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="hero" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         <Card>
           <CardHeader>
             <CardTitle>Seção Hero</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="heroBadge">Badge (etiqueta superior)</Label>
               <Input
                 id="heroBadge"
@@ -151,7 +160,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="heroTitle">Título Principal</Label>
               <Input
                 id="heroTitle"
@@ -164,7 +173,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="heroDescription">Descrição</Label>
               <Textarea
                 id="heroDescription"
@@ -179,14 +188,17 @@ export default function SellPropertyContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
-        {/* Form Section */}
+          <TabsContent value="formulario" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         <Card>
           <CardHeader>
             <CardTitle>Seção Formulário</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="formTitle">Título do Formulário</Label>
               <Input
                 id="formTitle"
@@ -199,7 +211,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="formSubmit">Texto do Botão de Envio</Label>
               <Input
                 id="formSubmit"
@@ -213,14 +225,17 @@ export default function SellPropertyContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
-        {/* Stats Section */}
+          <TabsContent value="estatisticas" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         <Card>
           <CardHeader>
             <CardTitle>Seção Estatísticas / Alcance</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="statsBadge">Badge</Label>
               <Input
                 id="statsBadge"
@@ -233,7 +248,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="statsTitle">Título</Label>
               <Input
                 id="statsTitle"
@@ -246,7 +261,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="statsDescription">Descrição</Label>
               <Textarea
                 id="statsDescription"
@@ -260,11 +275,11 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
               {/* Reach */}
               <div className="space-y-2">
-                <h4 className="font-medium">Alcance Global</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Alcance Global</h4>
+                <div className="space-y-2">
                   <Label htmlFor="statsReachLabel">Label</Label>
                   <Input
                     id="statsReachLabel"
@@ -275,7 +290,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Alcance Global"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="statsReachDescription">Descrição</Label>
                   <Input
                     id="statsReachDescription"
@@ -290,8 +305,8 @@ export default function SellPropertyContentPage() {
 
               {/* Clients */}
               <div className="space-y-2">
-                <h4 className="font-medium">Clientes</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Clientes</h4>
+                <div className="space-y-2">
                   <Label htmlFor="statsClientsLabel">Label</Label>
                   <Input
                     id="statsClientsLabel"
@@ -302,7 +317,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Clientes Ativos"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="statsClientsDescription">Descrição</Label>
                   <Input
                     id="statsClientsDescription"
@@ -317,8 +332,8 @@ export default function SellPropertyContentPage() {
 
               {/* Locations */}
               <div className="space-y-2">
-                <h4 className="font-medium">Localizações</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Localizações</h4>
+                <div className="space-y-2">
                   <Label htmlFor="statsLocationsLabel">Label</Label>
                   <Input
                     id="statsLocationsLabel"
@@ -329,7 +344,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Localizações"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="statsLocationsDescription">Descrição</Label>
                   <Input
                     id="statsLocationsDescription"
@@ -344,8 +359,8 @@ export default function SellPropertyContentPage() {
 
               {/* Experience */}
               <div className="space-y-2">
-                <h4 className="font-medium">Experiência</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Experiência</h4>
+                <div className="space-y-2">
                   <Label htmlFor="statsExperienceLabel">Label</Label>
                   <Input
                     id="statsExperienceLabel"
@@ -356,7 +371,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Anos de Experiência"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="statsExperienceDescription">Descrição</Label>
                   <Input
                     id="statsExperienceDescription"
@@ -371,14 +386,17 @@ export default function SellPropertyContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
-        {/* Marketing Section */}
+          <TabsContent value="marketing" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         <Card>
           <CardHeader>
             <CardTitle>Seção Marketing / Canais de Promoção</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="marketingBadge">Badge</Label>
               <Input
                 id="marketingBadge"
@@ -391,7 +409,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="marketingTitle">Título</Label>
               <Input
                 id="marketingTitle"
@@ -404,7 +422,7 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="marketingDescription">Descrição</Label>
               <Textarea
                 id="marketingDescription"
@@ -418,11 +436,11 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
               {/* Website */}
               <div className="space-y-2">
-                <h4 className="font-medium">Website</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Website</h4>
+                <div className="space-y-2">
                   <Label htmlFor="marketingWebsiteTitle">Título</Label>
                   <Input
                     id="marketingWebsiteTitle"
@@ -433,7 +451,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Website"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingWebsiteDescription">Descrição</Label>
                   <Input
                     id="marketingWebsiteDescription"
@@ -444,7 +462,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Divulgação no nosso portal imobiliário de alta qualidade"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingWebsiteStat">Estatística</Label>
                   <Input
                     id="marketingWebsiteStat"
@@ -459,8 +477,8 @@ export default function SellPropertyContentPage() {
 
               {/* Newsletter */}
               <div className="space-y-2">
-                <h4 className="font-medium">Newsletter</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Newsletter</h4>
+                <div className="space-y-2">
                   <Label htmlFor="marketingNewsletterTitle">Título</Label>
                   <Input
                     id="marketingNewsletterTitle"
@@ -471,7 +489,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Newsletter"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingNewsletterDescription">Descrição</Label>
                   <Input
                     id="marketingNewsletterDescription"
@@ -482,7 +500,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Envio para a nossa base de clientes qualificados"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingNewsletterStat">Estatística</Label>
                   <Input
                     id="marketingNewsletterStat"
@@ -497,8 +515,8 @@ export default function SellPropertyContentPage() {
 
               {/* Agencies */}
               <div className="space-y-2">
-                <h4 className="font-medium">Agências Parceiras</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Agências Parceiras</h4>
+                <div className="space-y-2">
                   <Label htmlFor="marketingAgenciesTitle">Título</Label>
                   <Input
                     id="marketingAgenciesTitle"
@@ -509,7 +527,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Agências Parceiras"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingAgenciesDescription">Descrição</Label>
                   <Input
                     id="marketingAgenciesDescription"
@@ -520,7 +538,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Exposição em vitrinas e escritórios"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingAgenciesStat">Estatística</Label>
                   <Input
                     id="marketingAgenciesStat"
@@ -535,8 +553,8 @@ export default function SellPropertyContentPage() {
 
               {/* Media */}
               <div className="space-y-2">
-                <h4 className="font-medium">Redes Sociais</h4>
-                <div className="space-y-1">
+                <h4 className="text-sm font-medium text-foreground">Redes Sociais</h4>
+                <div className="space-y-2">
                   <Label htmlFor="marketingMediaTitle">Título</Label>
                   <Input
                     id="marketingMediaTitle"
@@ -547,7 +565,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Redes Sociais"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingMediaDescription">Descrição</Label>
                   <Input
                     id="marketingMediaDescription"
@@ -558,7 +576,7 @@ export default function SellPropertyContentPage() {
                     placeholder="Divulgação nas principais plataformas digitais"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <Label htmlFor="marketingMediaStat">Estatística</Label>
                   <Input
                     id="marketingMediaStat"
@@ -573,14 +591,13 @@ export default function SellPropertyContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
 
-        <div className="flex gap-4 justify-end">
-          <Button
-            type="submit"
-            variant="brown"
-            disabled={updateMutation.isPending}
-          >
-            {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}
+        <div className="sticky bottom-0 left-0 right-0 z-10 flex justify-end bg-background/95 py-3 backdrop-blur-sm">
+          <Button type="submit" disabled={updateMutation.isPending}>
+            {updateMutation.isPending ? "A guardar…" : "Guardar alterações"}
           </Button>
         </div>
       </form>

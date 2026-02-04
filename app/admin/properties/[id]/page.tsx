@@ -3,377 +3,397 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useParams, useRouter } from "next/navigation"
-import { propertiesApi } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog"
-import Link from "next/link"
-import ImagensImoveis from "@/components/Sections/ImagensImoveis"
-import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
-import { Trash2, Pencil, Star } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { propertiesApi } from "@/services/api"
+import { Button, buttonVariants } from "@/components/ui-admin/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
+import ImagensImoveis from "@/components/Sections/ImagensImoveis"
+import { Trash2, Pencil, Star, ChevronLeft, Images } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-// Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
-    const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
-    return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
-};
+  const videoExtensions = [".mp4", ".webm", ".mov", ".avi", ".mkv", ".flv", ".wmv", ".m4v"]
+  return videoExtensions.some((ext) => url.toLowerCase().endsWith(ext))
+}
 
-// Helper component to render media (image or video)
 const MediaItem = ({
-    src,
-    alt,
-    className,
+  src,
+  alt,
+  className,
+  onClick,
 }: {
-    src: string;
-    alt: string;
-    className?: string;
+  src: string
+  alt: string
+  className?: string
+  onClick?: () => void
 }) => {
-    if (isVideoUrl(src)) {
-        return (
-            <video
-                src={src}
-                controls
-                className={className}
-                preload="metadata"
-            />
-        );
-    }
-
+  if (isVideoUrl(src)) {
     return (
-        <Image
-            width={1000}
-            height={1000}
-            src={src}
-            alt={alt}
-            className={className}
-        />
-    );
-};
+      <video
+        src={src}
+        controls
+        className={className}
+        preload="metadata"
+        onClick={onClick}
+      />
+    )
+  }
+  return (
+    <Image
+      width={1000}
+      height={1000}
+      src={src}
+      alt={alt}
+      className={className}
+      onClick={onClick}
+    />
+  )
+}
+
+function DetailRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-border py-2.5 text-sm last:border-b-0">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="font-medium tabular-nums text-foreground">{value}</span>
+    </div>
+  )
+}
 
 export default function PropertyDetailsPage() {
-    const params = useParams()
-    const router = useRouter()
-    const queryClient = useQueryClient()
-    const propertyId = params.id as string
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
-    const [showPanel, setShowPanel] = useState(false)
-    const [panelClosing, setPanelClosing] = useState(false)
-    const [panelOpening, setPanelOpening] = useState(false)
+  const params = useParams()
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  const propertyId = params.id as string
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
 
-    const { data: property, isLoading, error } = useQuery({
-        queryKey: ["property", propertyId],
-        queryFn: () => propertiesApi.getById(propertyId),
-        refetchInterval: 2000,
-        refetchIntervalInBackground: true,
-    })
+  const { data: property, isLoading, error } = useQuery({
+    queryKey: ["property", propertyId],
+    queryFn: () => propertiesApi.getById(propertyId),
+  })
 
-    const deleteMutation = useMutation({
-        mutationFn: (id: string) => propertiesApi.delete(id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["properties"] })
-            router.push("/admin/properties")
-        },
-    })
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => propertiesApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["properties"] })
+      router.push("/admin/properties")
+    },
+  })
 
-    const toggleFeaturedMutation = useMutation({
-        mutationFn: (id: string) => propertiesApi.toggleFeatured(id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
-            queryClient.invalidateQueries({ queryKey: ["properties"] })
-        },
-    })
+  const toggleFeaturedMutation = useMutation({
+    mutationFn: (id: string) => propertiesApi.toggleFeatured(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["property", propertyId] })
+      queryClient.invalidateQueries({ queryKey: ["properties"] })
+    },
+  })
 
-    const handleOpenPanel = () => {
-        document.body.style.overflow = 'hidden';
-        setShowPanel(true)
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setPanelOpening(true)
-            })
-        })
-    }
+  const handleDelete = () => deleteMutation.mutate(propertyId)
+  const handleToggleFeatured = () => toggleFeaturedMutation.mutate(propertyId)
 
-    const handleClosePanel = () => {
-        setPanelClosing(true)
-        setPanelOpening(false)
-    }
-
-    const handleTransitionEnd = () => {
-        if (panelClosing) {
-            setPanelClosing(false);
-            setShowPanel(false);
-            setPanelOpening(false);
-            document.body.style.overflow = '';
-        }
-    }
-
-    const handleDelete = () => {
-        deleteMutation.mutate(propertyId)
-    }
-
-    const handleToggleFeatured = () => {
-        toggleFeaturedMutation.mutate(propertyId)
-    }
-
-    if (isLoading) {
-        return (
-            <section className="bg-deaf">
-                <div className="container pb-16 pt-20">
-                    <p className="text-center text-brown">A carregar...</p>
-                </div>
-            </section>
-        )
-    }
-
-    if (error || !property) {
-        return (
-            <section className="bg-deaf">
-                <div className="container pb-16 pt-20">
-                    <p className="text-center text-red">Imóvel não encontrado</p>
-                </div>
-            </section>
-        )
-    }
-
-    const transactionTypeMap: Record<string, string> = {
-        comprar: "Compra",
-        arrendar: "Arrendamento",
-        trespasse: "Trespasse",
-    }
-
+  if (isLoading) {
     return (
-        <>
-            <section className="">
-                <div className="container pb-16">
-                    {/* Barra de administração */}
-                    <div className="flex justify-between items-center py-4 border-b border-brown/10 mb-4">
-                        <Link
-                            href="/admin/properties"
-                            className="body-14-medium text-brown flex items-center gap-2 px-1.5 py-1 hover:text-gold transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M5.16725 9.12965L2.19555 5.80428L5.16336 2.5M2 5.81495H11.0427C12.676 5.81495 14 7.31142 14 9.1575C14 11.0035 12.676 12.5 11.0427 12.5H7.38875" stroke="currentColor" strokeWidth="1.5" />
-                            </svg>
-                            Voltar para lista
-                        </Link>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
+        <h1 className="mb-2 text-lg font-semibold text-foreground tracking-tight">Imóvel</h1>
+        <p className="py-12 text-center text-sm text-muted-foreground">A carregar...</p>
+      </div>
+    )
+  }
 
-                        <div className="flex gap-2">
-                            <Button
-                                variant={property.isFeatured ? "gold" : "brown"}
-                                onClick={handleToggleFeatured}
-                                disabled={toggleFeaturedMutation.isPending}
-                            >
-                                <Star className={`h-4 w-4 mr-2 ${property.isFeatured ? "fill-current" : ""}`} />
-                                {toggleFeaturedMutation.isPending
-                                    ? "Processando..."
-                                    : property.isFeatured
-                                        ? "Remover Destaque"
-                                        : "Destacar"}
-                            </Button>
+  if (error || !property) {
+    return (
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
+        <h1 className="mb-2 text-lg font-semibold text-foreground tracking-tight">Imóvel</h1>
+        <p className="py-12 text-center text-sm text-destructive">Imóvel não encontrado</p>
+        <Button variant="outline" size="sm" asChild>
+          <Link href="/admin/properties">Voltar à lista</Link>
+        </Button>
+      </div>
+    )
+  }
 
-                            <Button variant="brown" asChild>
-                                <Link href={`/admin/properties/${propertyId}/edit`}>
-                                    <Pencil className="h-4 w-4 mr-2" />
-                                    Editar
-                                </Link>
-                            </Button>
+  const transactionTypeMap: Record<string, string> = {
+    comprar: "Compra",
+    arrendar: "Arrendamento",
+    trespasse: "Trespasse",
+  }
 
-                            <Button
-                                variant="brown"
-                                onClick={() => setOpenDeleteDialog(true)}
-                            >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Excluir
-                            </Button>
-                        </div>
-                    </div>
+  const allImages = property.imageSections
+    ?.filter((section) => section.images?.length)
+    .flatMap((section) =>
+      (section.images ?? []).map((url) => ({ url, name: section.sectionName }))
+    ) ?? []
 
-                    {/* Breadcrumb e Ver Todas */}
-                    <div className="flex justify-between items-center py-4">
-                        <div className="flex items-center gap-0.5">
-                            <p className="body-16-medium text-brown capitalize">{property.transactionType}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
-                                <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
-                            </svg>
-                            <p className="body-16-medium text-brown capitalize">{property.propertyType}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20">
-                                <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
-                            </svg>
-                            <p className="body-16-medium text-brown">{property.distrito}</p>
-                        </div>
-                        <ImagensImoveis
-                            property={property}
-                        />
-                    </div>
+  const openLightboxAt = (index: number) => {
+    setLightboxIndex(index)
+    setLightboxOpen(true)
+  }
 
-                    {/* Grid de imagens */}
-                    {(() => {
-                        const allImages = property.imageSections
-                            ?.filter(section => section.images && section.images.length > 0)
-                            .flatMap(section => section.images.map(img => ({
-                                url: img,
-                                name: section.sectionName
-                            }))) || [];
+  return (
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+      {/* Barra de ações */}
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+        <Button variant="ghost" size="sm" asChild>
+          <Link
+            href="/admin/properties"
+            className="flex items-center gap-2 text-foreground hover:text-muted-foreground"
+          >
+            <ChevronLeft className="size-4" aria-hidden />
+            Voltar para lista
+          </Link>
+        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={property.isFeatured ? "secondary" : "outline"}
+            size="sm"
+            onClick={handleToggleFeatured}
+            disabled={toggleFeaturedMutation.isPending}
+          >
+            <Star
+              className={cn("size-4", property.isFeatured && "fill-current")}
+              aria-hidden
+            />
+            {toggleFeaturedMutation.isPending
+              ? "A processar..."
+              : property.isFeatured
+                ? "Remover destaque"
+                : "Destacar"}
+          </Button>
+          <Button size="sm" asChild>
+            <Link href={`/admin/properties/${propertyId}/edit`}>
+              <Pencil className="size-4" aria-hidden />
+              Editar
+            </Link>
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setOpenDeleteDialog(true)}
+          >
+            <Trash2 className="size-4" aria-hidden />
+            Excluir
+          </Button>
+        </div>
+      </div>
 
-                        return (
-                            <div className="h-96 grid grid-cols-12 w-full gap-4">
-                                <div className="border border-brown/10 col-span-6 row-span-2 overflow-hidden rounded-lg">
-                                    {property.image && (
-                                        <MediaItem
-                                            src={property.image}
-                                            alt={property.title}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                                <div className="border border-brown/10 col-span-3 row-span-2 overflow-hidden rounded-lg">
-                                    {allImages[0] && (
-                                        <MediaItem
-                                            src={allImages[0].url}
-                                            alt={`${property.title} - ${allImages[0].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
-                                    {allImages[1] && (
-                                        <MediaItem
-                                            src={allImages[1].url}
-                                            alt={`${property.title} - ${allImages[1].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                                <div className="border border-brown/10 col-span-3 overflow-hidden rounded-lg">
-                                    {allImages[2] && (
-                                        <MediaItem
-                                            src={allImages[2].url}
-                                            alt={`${property.title} - ${allImages[2].name}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })()}
+      {/* Caminho e Ver todas as imagens */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-muted-foreground">
+          <span className="capitalize text-foreground">{property.transactionType}</span>
+          <span aria-hidden> / </span>
+          <span className="capitalize text-foreground">{property.propertyType}</span>
+          <span aria-hidden> / </span>
+          <span>{property.distrito}</span>
+        </p>
+        {(property.image || allImages.length > 0) && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => openLightboxAt(0)}
+            aria-label="Ver todas as imagens"
+          >
+            <Images className="size-4" aria-hidden />
+            Ver todas as imagens
+          </Button>
+        )}
+      </div>
 
-                    {/* Informações do imóvel */}
-                    <div className="pt-4 flex justify-between items-center">
-                        <div className="flex items-center gap-4 body-16-medium text-brown">
-                            <span>{property.concelho}, {property.distrito}</span>
-                            <div className="h-3 w-px bg-brown/30"></div>
-                            <span className="capitalize">{property.propertyType}</span>
-                            <div className="h-3 w-px bg-brown/30"></div>
-                            <p><span className="text-brown/50">#</span>{property.reference}</p>
-                        </div>
-                        <p className="body-16-medium text-brown">Tipo de negócio: <span className="capitalize">{transactionTypeMap[property.transactionType]}</span></p>
-                    </div>
+      {/* Lightbox (controlado) */}
+      <ImagensImoveis
+        property={property}
+        lightboxOpen={lightboxOpen}
+        lightboxIndex={lightboxIndex}
+        onLightboxClose={() => setLightboxOpen(false)}
+      />
 
-                    <h2 className="pt-6 heading-tres-medium text-brown">{parseFloat(property.price).toLocaleString('pt-PT')} €</h2>
+      {/* Grid de imagens (preview) – altura reduzida ~30% */}
+      <div className="grid h-64 grid-cols-12 gap-2 sm:h-72">
+        <button
+          type="button"
+          className="col-span-6 row-span-2 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          onClick={() => property.image && openLightboxAt(0)}
+        >
+          {property.image && (
+            <MediaItem
+              src={property.image}
+              alt={property.title}
+              className="size-full object-cover"
+            />
+          )}
+        </button>
+        {[0, 1, 2].map((i) => (
+          <button
+            key={i}
+            type="button"
+            className={cn(
+              "col-span-3 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              i === 0 && "row-span-2"
+            )}
+            onClick={() => allImages[i] && openLightboxAt(i + (property.image ? 1 : 0))}
+          >
+            {allImages[i] && (
+              <MediaItem
+                src={allImages[i].url}
+                alt={`${property.title} - ${allImages[i].name}`}
+                className="size-full object-cover"
+              />
+            )}
+          </button>
+        ))}
+      </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div className="lg:col-span-6 order-2 lg:order-1 pt-4 md:pt-5 lg:pt-6">
-                            <div
-                                className="tiptap max-w-none break-words whitespace-pre-line"
-                                style={{ wordBreak: "break-word", overflowWrap: "break-word", hyphens: "auto" }}
-                                dangerouslySetInnerHTML={{ __html: property.description }} />
-                            {property.deliveryDate && (
-                                <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">Previsão de entrega:</h6>
-                                    <p className="body-16-regular text-brown">{property.deliveryDate}</p>
-                                </div>
-                            )}
-                            {property.paymentConditions && (
-                                <div className="mt-4 px-4 bg-deaf border-l-3 border-brown">
-                                    <h6 className="body-16-medium text-brown mb-2">Condições de Pagamento:</h6>
-                                    <div className="tiptap body-16-regular text-brown" dangerouslySetInnerHTML={{ __html: property.paymentConditions }} />
-                                </div>
-                            )}
-                        </div>
+      {/* Localização e referência */}
+      <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+        <span className="font-medium text-foreground">
+          {property.concelho}, {property.distrito}
+        </span>
+        <span className="h-3 w-px bg-border" aria-hidden />
+        <span className="capitalize text-muted-foreground">{property.propertyType}</span>
+        <span className="h-3 w-px bg-border" aria-hidden />
+        <span className="tabular-nums text-muted-foreground">#{property.reference}</span>
+        <span className="h-3 w-px bg-border" aria-hidden />
+        <span className="text-muted-foreground">
+          Tipo de negócio:{" "}
+          <span className="capitalize text-foreground">
+            {transactionTypeMap[property.transactionType]}
+          </span>
+        </span>
+      </div>
 
-                        <div className="lg:col-span-5 lg:col-end-13 order-1 lg:order-2 lg:sticky lg:top-4 pt-4 md:pt-5 lg:pt-6 h-min">
-                            {property.totalArea && property.totalArea > 0 && (
-                                <Caracteristica titulo="Área Total" valor={`${property.totalArea}m²`} />
-                            )}
-                            {property.builtArea && property.builtArea > 0 && (
-                                <Caracteristica titulo="Área Construída" valor={`${property.builtArea}m²`} />
-                            )}
-                            {property.usefulArea && property.usefulArea > 0 && (
-                                <Caracteristica titulo="Área Útil" valor={`${property.usefulArea}m²`} />
-                            )}
-                            {property.bathrooms > 0 && (
-                                <Caracteristica titulo="Casas de Banho" valor={property.bathrooms.toString()} />
-                            )}
-                            {property.bedrooms > 0 && (
-                                <Caracteristica titulo="Quartos" valor={property.bedrooms.toString()} />
-                            )}
-                            {property.hasOffice && <Caracteristica titulo="Escritório" valor="Sim" />}
-                            {property.hasLaundry && <Caracteristica titulo="Lavandaria" valor="Sim" />}
-                            {property.garageSpaces > 0 && (
-                                <Caracteristica
-                                    titulo="Garagem"
-                                    valor={`${property.garageSpaces} ${property.garageSpaces === 1 ? 'Lugar' : 'Lugares'}`}
-                                />
-                            )}
-                            {property.constructionYear && property.constructionYear > 0 && (
-                                <Caracteristica titulo="Ano de construção" valor={property.constructionYear.toString()} />
-                            )}
-                            {property.propertyState && (
-                                <Caracteristica titulo="Estado" valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
-                            )}
-                            {property.energyClass && (
-                                <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />
-                            )}
-                            <iframe
-                                className="mt-6 h-75 border-0"
-                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                    `${property.concelho}, ${property.distrito}, Portugal`
-                                )}`}
-                                width="100%"
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <h2 className="mt-4 text-xl font-semibold tracking-tight text-foreground tabular-nums text-balance">
+        {parseFloat(property.price).toLocaleString("pt-PT")} €
+      </h2>
 
-            {/* Dialog de confirmação de exclusão */}
-            <Dialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="body-18-medium">Confirmar exclusão</DialogTitle>
-                        <DialogDescription>
-                            Tem certeza que deseja excluir a propriedade{" "}
-                            <span className="font-semibold">{property.title}</span>? Esta ação
-                            não pode ser desfeita.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <Button
-                            variant="brown"
-                            onClick={() => setOpenDeleteDialog(false)}
-                            disabled={deleteMutation.isPending}
-                        >
-                            Cancelar
-                        </Button>
-                        <Button
-                            variant="brown"
-                            onClick={handleDelete}
-                            disabled={deleteMutation.isPending}
-                        >
-                            {deleteMutation.isPending ? "Excluindo..." : "Excluir"}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-        </>
-    );
+      <div className="mt-6 grid gap-6 lg:grid-cols-12">
+        {/* Descrição */}
+        <div className="lg:col-span-7">
+          <div
+            className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line wrap-break-word text-pretty text-foreground"
+            dangerouslySetInnerHTML={{ __html: property.description }}
+          />
+          {property.deliveryDate && (
+            <div className="mt-4 border-l-4 border-border bg-muted/30 px-4 py-2">
+              <h6 className="mb-1 text-sm font-medium text-foreground">Previsão de entrega</h6>
+              <p className="text-sm text-muted-foreground">{property.deliveryDate}</p>
+            </div>
+          )}
+          {property.paymentConditions && (
+            <div className="mt-4 border-l-4 border-border bg-muted/30 px-4 py-2">
+              <h6 className="mb-1 text-sm font-medium text-foreground">Condições de pagamento</h6>
+              <div
+                className="prose prose-neutral dark:prose-invert text-sm text-muted-foreground"
+                dangerouslySetInnerHTML={{ __html: property.paymentConditions }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Características + mapa */}
+        <div className="space-y-6 lg:col-span-5 lg:col-end-13">
+          <Card>
+            <CardHeader className="p-0 pb-2">
+              <CardTitle className="text-base">Características</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-0 p-0 pt-0">
+              {property.totalArea != null && property.totalArea > 0 && (
+                <DetailRow label="Área total" value={`${property.totalArea} m²`} />
+              )}
+              {property.builtArea != null && property.builtArea > 0 && (
+                <DetailRow label="Área construída" value={`${property.builtArea} m²`} />
+              )}
+              {property.usefulArea != null && property.usefulArea > 0 && (
+                <DetailRow label="Área útil" value={`${property.usefulArea} m²`} />
+              )}
+              {property.bathrooms > 0 && (
+                <DetailRow label="Casas de banho" value={String(property.bathrooms)} />
+              )}
+              {property.bedrooms > 0 && (
+                <DetailRow label="Quartos" value={String(property.bedrooms)} />
+              )}
+              {property.hasOffice && <DetailRow label="Escritório" value="Sim" />}
+              {property.hasLaundry && <DetailRow label="Lavandaria" value="Sim" />}
+              {property.garageSpaces > 0 && (
+                <DetailRow
+                  label="Garagem"
+                  value={
+                    property.garageSpaces === 1
+                      ? "1 lugar"
+                      : `${property.garageSpaces} lugares`
+                  }
+                />
+              )}
+              {property.constructionYear != null && property.constructionYear > 0 && (
+                <DetailRow label="Ano de construção" value={String(property.constructionYear)} />
+              )}
+              {property.propertyState && (
+                <DetailRow
+                  label="Estado"
+                  value={
+                    property.propertyState.charAt(0).toUpperCase() +
+                    property.propertyState.slice(1)
+                  }
+                />
+              )}
+              {property.energyClass && (
+                <DetailRow label="Classe energética" value={property.energyClass.toUpperCase()} />
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="overflow-hidden">
+            <iframe
+              title="Localização"
+              className="h-72 w-full border-0"
+              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
+                `${property.concelho}, ${property.distrito}, Portugal`
+              )}`}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
+      </div>
+
+      <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem a certeza que deseja excluir a propriedade{" "}
+              <span className="font-semibold text-foreground">{property.title}</span>? Esta ação
+              não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => setOpenDeleteDialog(false)}
+              disabled={deleteMutation.isPending}
+            >
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className={buttonVariants({ variant: "destructive" })}
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? "A excluir..." : "Excluir"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  )
 }

@@ -3,11 +3,21 @@
 import { useState, useRef } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastGuestsApi, PodcastGuest, uploadApi } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Switch } from "@/components/ui-admin/switch"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X, Upload, Loader2 } from "lucide-react"
 import Image from "next/image"
@@ -108,9 +118,14 @@ export default function PodcastGuestsPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover este convidado?")) {
-      deleteMutation.mutate(id)
+  const [guestToDelete, setGuestToDelete] = useState<string | null>(null)
+
+  const handleDelete = (id: string) => setGuestToDelete(id)
+
+  const confirmDelete = () => {
+    if (guestToDelete) {
+      deleteMutation.mutate(guestToDelete)
+      setGuestToDelete(null)
     }
   }
 
@@ -163,21 +178,25 @@ export default function PodcastGuestsPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Convidados do Podcast</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-lg font-semibold text-foreground">Convidados do Podcast</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Gerencie os convidados exibidos na página do podcast.
           </p>
         </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Novo Convidado
           </Button>
         )}
@@ -188,8 +207,8 @@ export default function PodcastGuestsPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingGuest ? "Editar Convidado" : "Novo Convidado"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -222,7 +241,7 @@ export default function PodcastGuestsPage() {
               <div className="space-y-2">
                 <Label>Imagem</Label>
                 {!formData.imageUrl ? (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-muted-foreground/30 transition-colors">
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -238,14 +257,14 @@ export default function PodcastGuestsPage() {
                     >
                       {uploadingImage ? (
                         <>
-                          <Loader2 className="h-8 w-8 text-gray-400 animate-spin" />
-                          <span className="text-sm text-gray-500">Enviando imagem...</span>
+                          <Loader2 className="size-8 text-muted-foreground animate-spin" />
+                          <span className="text-sm text-muted-foreground">Enviando imagem...</span>
                         </>
                       ) : (
                         <>
-                          <Upload className="h-8 w-8 text-gray-400" />
-                          <span className="text-sm text-gray-500">Clique para selecionar uma imagem</span>
-                          <span className="text-xs text-gray-400">PNG, JPG ou WEBP (máx. 5MB)</span>
+                          <Upload className="size-8 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">Clique para selecionar uma imagem</span>
+                          <span className="text-xs text-muted-foreground">PNG, JPG ou WEBP (máx. 5MB)</span>
                         </>
                       )}
                     </label>
@@ -262,12 +281,13 @@ export default function PodcastGuestsPage() {
                     />
                     <Button
                       type="button"
-                      variant="brown"
+                      variant="secondary"
                       size="icon"
                       className="absolute top-2 right-2"
                       onClick={handleRemoveImage}
+                      aria-label="Remover imagem"
                     >
-                      <X className="h-4 w-4" />
+                      <X className="size-4" />
                     </Button>
                   </div>
                 )}
@@ -299,8 +319,8 @@ export default function PodcastGuestsPage() {
                 </div>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                <p className="text-sm text-blue-800">
+              <div>
+                <p className="text-sm text-muted-foreground">
                   <strong>Nota:</strong> As traduções para inglês e francês serão geradas automaticamente via API DeepL.
                 </p>
               </div>
@@ -321,11 +341,11 @@ export default function PodcastGuestsPage() {
       <div className="grid gap-4">
         {guests?.map((guest: PodcastGuest) => (
           <Card key={guest.id} className={!guest.isActive ? "opacity-60" : ""}>
-            <CardContent className="p-4">
+            <CardContent>
               <div className="flex items-start justify-between">
                 <div className="flex gap-4 flex-1">
                   {guest.imageUrl && (
-                    <div className="w-16 h-16 relative rounded-full overflow-hidden flex-shrink-0">
+                    <div className="w-16 h-16 relative rounded-full overflow-hidden shrink-0">
                       <Image
                         src={guest.imageUrl}
                         alt={guest.name}
@@ -337,35 +357,55 @@ export default function PodcastGuestsPage() {
                   )}
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-lg">{guest.name}</h3>
-                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">Ordem: {guest.order}</span>
+                      <h3 className="font-semibold text-foreground">{guest.name}</h3>
+                      <span className="text-xs bg-muted px-2 py-1 rounded">Ordem: {guest.order}</span>
                       {!guest.isActive && (
-                        <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Inativo</span>
+                        <span className="text-xs bg-destructive/10 text-destructive px-2 py-1 rounded">Inativo</span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{guest.role_pt}</p>
+                    <p className="text-sm text-muted-foreground mb-2">{guest.role_pt}</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                      <div className="bg-gray-50 p-2 rounded">
+                      <div>
                         <span className="font-medium">EN:</span> {guest.role_en || "Sem tradução"}
                       </div>
-                      <div className="bg-gray-50 p-2 rounded">
+                      <div>
                         <span className="font-medium">FR:</span> {guest.role_fr || "Sem tradução"}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-2 ml-4">
-                  <Button variant="outline" size="icon" onClick={() => handleEdit(guest)}>
-                    <Pencil className="h-4 w-4" />
+                  <Button variant="outline" size="icon" onClick={() => handleEdit(guest)} aria-label="Editar convidado">
+                    <Pencil className="size-4" />
                   </Button>
                   <Button
-                    variant="brown"
+                    variant="destructive"
                     size="icon"
                     onClick={() => handleDelete(guest.id)}
                     disabled={deleteMutation.isPending}
+                    aria-label="Remover convidado"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="size-4" />
                   </Button>
+                  <AlertDialog open={guestToDelete === guest.id} onOpenChange={(open) => !open && setGuestToDelete(null)}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Remover convidado</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tem certeza que deseja remover este convidado? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          onClick={confirmDelete}
+                        >
+                          Remover
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </CardContent>
@@ -375,7 +415,7 @@ export default function PodcastGuestsPage() {
 
       {(!guests || guests.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
+          <CardContent className="text-center text-muted-foreground">
             Nenhum convidado cadastrado. Clique em &quot;Novo Convidado&quot; para começar.
           </CardContent>
         </Card>

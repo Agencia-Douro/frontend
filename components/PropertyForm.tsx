@@ -1,13 +1,13 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-admin/tabs"
+import { Label } from "@/components/ui-admin/label"
+import { Input } from "@/components/ui-admin/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import { Checkbox } from "@/components/ui-admin/checkbox"
+import { Button } from "@/components/ui-admin/button"
 import { X, Plus, Trash2, Save } from "lucide-react"
 import { Property, PropertyImageSection } from "@/types/property"
 import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
@@ -530,24 +530,22 @@ export default function PropertyForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-8 pb-20">
       {/* Indicador de Rascunho (apenas no modo de criação) */}
       {!isEditMode && currentDraftId && (
-        <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
-          <div className="flex items-center gap-2">
-            <Save className="h-4 w-4 text-amber-600" />
-            <span className="text-sm text-amber-800">
-              Rascunho salvo automaticamente
-            </span>
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border px-4 py-3">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Save className="size-4 shrink-0" aria-hidden />
+            <span>Rascunho guardado automaticamente</span>
           </div>
           <Button
             type="button"
             variant="ghost"
-            size="default"
+            size="sm"
             onClick={() => {
-              if (confirm("Tem certeza que deseja limpar o rascunho? Esta ação não pode ser desfeita.")) {
+              if (confirm("Tem a certeza que deseja limpar o rascunho? Esta ação não pode ser desfeita.")) {
                 clearDraft(currentDraftId)
-                // Reset form to initial state
                 setFormData({
                   reference: "",
                   title: "",
@@ -589,76 +587,51 @@ export default function PropertyForm({
                 toast.success("Rascunho limpo!")
               }
             }}
-            className="text-amber-700 hover:text-amber-900 hover:bg-amber-100"
           >
-            <Trash2 className="h-4 w-4 mr-1" />
+            <Trash2 className="size-4" aria-hidden />
             Limpar rascunho
           </Button>
         </div>
       )}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3 mb-6">
-          <TabsTrigger
-            value="info"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+        <TabsList variant="line" className="mb-6 w-full flex-wrap justify-start">
+          <TabsTrigger variant="line" value="info">
             Informações Básicas
           </TabsTrigger>
-          <TabsTrigger
-            value="features"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="features">
             Características
           </TabsTrigger>
-          <TabsTrigger
-            value="location"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="location">
             Localização
           </TabsTrigger>
-          <TabsTrigger
-            value="team"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
-            Corretor Responsável
+          <TabsTrigger variant="line" value="team">
+            Corretor
           </TabsTrigger>
-          <TabsTrigger
-            value="images"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="images">
             Mídia
           </TabsTrigger>
-          <TabsTrigger
-            value="files"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="files">
             Arquivos
           </TabsTrigger>
-          <TabsTrigger
-            value="fractions"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="fractions">
             Frações
           </TabsTrigger>
-          <TabsTrigger
-            value="relationships"
-            className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-          >
+          <TabsTrigger variant="line" value="relationships">
             Relacionamentos
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="info" className="space-y-6 mt-0">
           {/* Informações Básicas */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações Básicas</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Informações Básicas</CardTitle>
               <CardDescription>
                 Dados principais da propriedade
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="px-0 pt-0 pb-4 space-y-4 bg-transparent">
               {isEditMode && (
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
@@ -813,8 +786,9 @@ export default function PropertyForm({
                       <Button
                         key={classe}
                         type="button"
-                        variant={formData.energyClass === classe ? "brown" : "outline"}
+                        variant={formData.energyClass === classe ? "default" : "outline"}
                         size="default"
+                        className={formData.energyClass === classe ? "ring-2 ring-ring ring-offset-2 ring-offset-background" : undefined}
                         onClick={() => updateField("energyClass", classe)}
                       >
                         {classe}
@@ -827,11 +801,11 @@ export default function PropertyForm({
           </Card>
 
           {/* Preço e Condições */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Preço e Condições</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Preço e Condições</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="px-0 pt-0 pb-4 space-y-4 bg-transparent">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Preço (€) <span className="text-red">*</span></Label>
@@ -848,7 +822,7 @@ export default function PropertyForm({
                       updateField("price", value || "0")
                     }}
                     className={cn(
-                      "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
+                      "flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     )}
                   />
                 </div>
@@ -868,11 +842,11 @@ export default function PropertyForm({
 
         <TabsContent value="features" className="space-y-6 mt-0">
           {/* Áreas */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Áreas</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Áreas</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
                   <Label>Área Total (m²)</Label>
@@ -916,11 +890,11 @@ export default function PropertyForm({
           </Card>
 
           {/* Características */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Características</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Características</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
                   <Label>Quartos <span className="text-red">*</span></Label>
@@ -983,11 +957,11 @@ export default function PropertyForm({
           </Card>
 
           {/* Construção */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações de Construção</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Informações de Construção</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Ano de Construção</Label>
@@ -1023,11 +997,11 @@ export default function PropertyForm({
 
         <TabsContent value="location" className="space-y-6 mt-0">
           {/* Localização */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Localização</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="p-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Localização</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-4 pt-0 space-y-4 bg-transparent">
               {/* Seleção de País */}
               <div className="space-y-2">
                 <Label>País <span className="text-red">*</span></Label>
@@ -1176,14 +1150,14 @@ export default function PropertyForm({
 
         <TabsContent value="team" className="space-y-6 mt-0">
           {/* Corretor Responsável */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Corretor Responsável</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="p-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Corretor Responsável</CardTitle>
               <CardDescription>
                 Selecione o membro da equipa responsável por esta propriedade
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-0 bg-transparent">
               <div className="space-y-2">
                 <Label>Corretor</Label>
                 {isLoadingTeamMembers ? (
@@ -1213,87 +1187,92 @@ export default function PropertyForm({
 
         <TabsContent value="images" className="space-y-6 mt-0">
           {/* Imagem/Vídeo Principal */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Mídia Principal *</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Mídia Principal *</CardTitle>
               <CardDescription>
                 {isEditMode ? "Gerencie a imagem ou vídeo de capa da propriedade" : "Adicione a imagem ou vídeo de capa da propriedade"}
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
+              <div className="space-y-6">
                 {isEditMode && formData.image && (
-                  <div>
-                    <h3 className="text-body-small font-medium mb-2">Mídia Atual</h3>
-                    <div className="relative group w-fit">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-foreground">Mídia Atual</p>
+                    <div className="relative inline-block overflow-hidden rounded-lg border border-border bg-muted/30">
                       {isVideoUrl(formData.image) ? (
                         <video
                           src={formData.image}
                           controls
-                          className="w-64 h-48 object-cover rounded"
+                          className="size-64 object-cover md:w-72 md:h-52"
                         />
                       ) : (
                         <img
                           src={formData.image}
                           alt="Imagem principal"
-                          className="w-64 h-48 object-cover rounded"
+                          className="size-64 object-cover md:w-72 md:h-52"
                         />
                       )}
                       <Button
                         type="button"
-                        variant="brown"
+                        variant="destructive"
                         size="icon"
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute right-2 top-2 size-8 opacity-90 hover:opacity-100 transition-opacity"
                         onClick={removeExistingImage}
+                        aria-label="Remover mídia atual"
                       >
-                        <X className="h-4 w-4" />
+                        <X className="size-4" aria-hidden />
                       </Button>
                     </div>
                   </div>
                 )}
 
                 {(!isEditMode || !formData.image) && !selectedImage && (
-                  <div>
-                    <h3 className="text-body-small font-medium mb-2">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-foreground">
                       {isEditMode ? "Adicionar Nova Mídia" : "Imagem ou Vídeo"}
-                    </h3>
-                    <Input
-                      type="file"
-                      accept="image/*,video/*"
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files.length > 0) {
-                          handleImageChange(e.target.files[0])
-                        }
-                      }}
-                    />
+                    </p>
+                    <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6">
+                      <Input
+                        type="file"
+                        accept="image/*,video/*"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            handleImageChange(e.target.files[0])
+                          }
+                        }}
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </div>
                 )}
 
                 {selectedImage && (
-                  <div>
-                    <h3 className="text-body-small font-medium mb-2">Nova Mídia</h3>
-                    <div className="relative group w-fit">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-foreground">Nova Mídia</p>
+                    <div className="relative inline-block overflow-hidden rounded-lg border border-border bg-muted/30">
                       {isVideoFile(selectedImage) ? (
                         <video
                           src={URL.createObjectURL(selectedImage)}
                           controls
-                          className="w-64 h-48 object-cover rounded"
+                          className="size-64 object-cover md:w-72 md:h-52"
                         />
                       ) : (
                         <img
                           src={URL.createObjectURL(selectedImage)}
                           alt="Nova imagem principal"
-                          className="w-64 h-48 object-cover rounded"
+                          className="size-64 object-cover md:w-72 md:h-52"
                         />
                       )}
                       <Button
                         type="button"
-                        variant="brown"
+                        variant="destructive"
                         size="icon"
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute right-2 top-2 size-8 opacity-90 hover:opacity-100 transition-opacity"
                         onClick={removeNewImage}
+                        aria-label="Remover nova mídia"
                       >
-                        <X className="h-4 w-4" />
+                        <X className="size-4" aria-hidden />
                       </Button>
                     </div>
                   </div>
@@ -1303,198 +1282,219 @@ export default function PropertyForm({
           </Card>
 
           {/* Galeria Organizada por Seções */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Galeria Organizada por Seções</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Galeria Organizada por Seções</CardTitle>
               <CardDescription>
                 Organize imagens e vídeos por ambientes (ex: Cozinha, Sala, Quartos, etc.)
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="px-0 pt-0 space-y-6 bg-transparent">
               {isLoadingSections ? (
-                <p className="text-muted-foreground">A carregar seções...</p>
+                <p className="text-sm text-muted-foreground">A carregar seções...</p>
               ) : (
                 <>
                   {/* Seções Existentes (apenas no modo edição) */}
                   {isEditMode && imageSections.length > 0 && (
-                    <div className="space-y-4">
-                      <h3 className="text-body-small font-medium">Seções Existentes</h3>
-                      {imageSections.map((section) => (
-                        <div key={section.id} className="border rounded-lg p-4 space-y-3">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-medium">{section.sectionName}</h4>
-                            <Button
-                              type="button"
-                              variant="brown"
-                              size="default"
-                              onClick={() => deleteExistingSection(section.id)}
-                              disabled={loadingDeleteSection === section.id}
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              {loadingDeleteSection === section.id ? "Deletando..." : "Deletar Seção"}
-                            </Button>
-                          </div>
-
-                          {section.images.length > 0 && (
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                              {section.images.map((url, imgIndex) => (
-                                <div key={imgIndex} className="relative group">
-                                  {isVideoUrl(url) ? (
-                                    <video
-                                      src={url}
-                                      controls
-                                      className="w-full h-32 object-cover rounded"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={url}
-                                      alt={`${section.sectionName} ${imgIndex + 1}`}
-                                      className="w-full h-32 object-cover rounded"
-                                    />
-                                  )}
-                                  <Button
-                                    type="button"
-                                    variant="brown"
-                                    size="icon"
-                                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    onClick={() => removeImageFromExistingSection(section.id, url)}
-                                    disabled={loadingRemoveImage === `${section.id}-${url}`}
-                                  >
-                                    {loadingRemoveImage === `${section.id}-${url}` ? (
-                                      <span className="animate-spin">⏳</span>
-                                    ) : (
-                                      <X className="h-4 w-4" />
-                                    )}
-                                  </Button>
-                                </div>
-                              ))}
+                    <div className="space-y-6">
+                      <p className="text-sm font-medium text-foreground">Seções Existentes</p>
+                      <div className="space-y-4">
+                        {imageSections.map((section) => (
+                          <div
+                            key={section.id}
+                            className="rounded-lg border border-border bg-muted/10 p-4 space-y-4"
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                              <h4 className="text-sm font-semibold text-foreground">{section.sectionName}</h4>
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => deleteExistingSection(section.id)}
+                                disabled={loadingDeleteSection === section.id}
+                                aria-label={`Eliminar secção ${section.sectionName}`}
+                              >
+                                <Trash2 className="size-4 shrink-0" aria-hidden />
+                                {loadingDeleteSection === section.id ? "A eliminar…" : "Eliminar secção"}
+                              </Button>
                             </div>
-                          )}
 
-                          <div>
-                            <Label htmlFor={`section-${section.id}-images`} className="text-sm">
-                              {loadingAddImage === section.id ? "Adicionando mídia..." : "Adicionar Imagens/Vídeos"}
-                            </Label>
-                            <Input
-                              id={`section-${section.id}-images`}
-                              type="file"
-                              accept="image/*,video/*"
-                              multiple
-                              disabled={loadingAddImage === section.id}
-                              onChange={(e) => {
-                                if (e.target.files) {
-                                  const files = Array.from(e.target.files)
-                                  addImageToExistingSection(section.id, files)
-                                  e.target.value = ''
-                                }
-                              }}
-                            />
+                            {section.images.length > 0 && (
+                              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                                {section.images.map((url, imgIndex) => (
+                                  <div
+                                    key={imgIndex}
+                                    className="relative aspect-square overflow-hidden rounded-md border border-border bg-muted/30"
+                                  >
+                                    {isVideoUrl(url) ? (
+                                      <video
+                                        src={url}
+                                        controls
+                                        className="size-full object-cover"
+                                      />
+                                    ) : (
+                                      <img
+                                        src={url}
+                                        alt={`${section.sectionName} ${imgIndex + 1}`}
+                                        className="size-full object-cover"
+                                      />
+                                    )}
+                                    <Button
+                                      type="button"
+                                      variant="destructive"
+                                      size="icon"
+                                      className="absolute right-1.5 top-1.5 size-7 opacity-90 hover:opacity-100 transition-opacity"
+                                      onClick={() => removeImageFromExistingSection(section.id, url)}
+                                      disabled={loadingRemoveImage === `${section.id}-${url}`}
+                                      aria-label="Remover imagem"
+                                    >
+                                      {loadingRemoveImage === `${section.id}-${url}` ? (
+                                        <span className="animate-spin text-[10px]" aria-hidden>⟳</span>
+                                      ) : (
+                                        <X className="size-3.5" aria-hidden />
+                                      )}
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            <div className="space-y-1.5">
+                              <Label htmlFor={`section-${section.id}-images`} className="text-sm">
+                                {loadingAddImage === section.id ? "A adicionar…" : "Adicionar imagens ou vídeos"}
+                              </Label>
+                              <Input
+                                id={`section-${section.id}-images`}
+                                type="file"
+                                accept="image/*,video/*"
+                                multiple
+                                disabled={loadingAddImage === section.id}
+                                onChange={(e) => {
+                                  if (e.target.files) {
+                                    const files = Array.from(e.target.files)
+                                    addImageToExistingSection(section.id, files)
+                                    e.target.value = ""
+                                  }
+                                }}
+                                className="cursor-pointer"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   )}
 
                   {/* Novas Seções */}
                   {newSections.length > 0 && (
-                    <div className="space-y-4">
-                      <h3 className="text-body-small font-medium">Novas Seções</h3>
-                      {newSections.map((section, index) => (
-                        <div key={index} className="border rounded-lg p-4 space-y-3">
-                          <div className="flex gap-4 items-start">
-                            <div className="flex-1 space-y-2">
-                              <Label htmlFor={`new-section-${index}-name`}>Nome da Seção <span className="text-red">*</span></Label>
-                              <Select
-                                value={section.sectionName}
-                                onValueChange={(value) => updateNewSection(index, 'sectionName', value)}
+                    <div className="space-y-6">
+                      <p className="text-sm font-medium text-foreground">Novas Seções</p>
+                      <div className="space-y-4">
+                        {newSections.map((section, index) => (
+                          <div
+                            key={index}
+                            className="rounded-lg border border-border bg-muted/10 p-4 space-y-4"
+                          >
+                            <div className="flex flex-wrap items-end gap-3">
+                              <div className="min-w-0 flex-1 space-y-1.5">
+                                <Label htmlFor={`new-section-${index}-name`}>
+                                  Nome da seção <span className="text-destructive">*</span>
+                                </Label>
+                                <Select
+                                  value={section.sectionName}
+                                  onValueChange={(value) => updateNewSection(index, "sectionName", value)}
+                                >
+                                  <SelectTrigger id={`new-section-${index}-name`}>
+                                    <SelectValue placeholder="Selecione ou digite" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {suggestedSections.map((name) => (
+                                      <SelectItem key={name} value={name}>
+                                        {name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                onClick={() => removeNewSection(index)}
+                                aria-label="Remover secção"
                               >
-                                <SelectTrigger id={`new-section-${index}-name`}>
-                                  <SelectValue placeholder="Selecione ou digite" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {suggestedSections.map((name) => (
-                                    <SelectItem key={name} value={name}>
-                                      {name}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
+                                <Trash2 className="size-4" aria-hidden />
+                              </Button>
                             </div>
 
-                            <Button
-                              type="button"
-                              variant="brown"
-                              size="icon"
-                              onClick={() => removeNewSection(index)}
-                              className="mt-8"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-
-                          {section.images.length > 0 && (
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                              {section.images.map((file, imgIndex) => (
-                                <div key={imgIndex} className="relative group">
-                                  {isVideoFile(file) ? (
-                                    <video
-                                      src={URL.createObjectURL(file)}
-                                      controls
-                                      className="w-full h-32 object-cover rounded"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={URL.createObjectURL(file)}
-                                      alt={`${section.sectionName} ${imgIndex + 1}`}
-                                      className="w-full h-32 object-cover rounded"
-                                    />
-                                  )}
-                                  <Button
-                                    type="button"
-                                    variant="brown"
-                                    size="icon"
-                                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    onClick={() => removeImageFromNewSection(index, imgIndex)}
+                            {section.images.length > 0 && (
+                              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                                {section.images.map((file, imgIndex) => (
+                                  <div
+                                    key={imgIndex}
+                                    className="relative aspect-square overflow-hidden rounded-md border border-border bg-muted/30"
                                   >
-                                    <X className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                                    {isVideoFile(file) ? (
+                                      <video
+                                        src={URL.createObjectURL(file)}
+                                        controls
+                                        className="size-full object-cover"
+                                      />
+                                    ) : (
+                                      <img
+                                        src={URL.createObjectURL(file)}
+                                        alt={`${section.sectionName} ${imgIndex + 1}`}
+                                        className="size-full object-cover"
+                                      />
+                                    )}
+                                    <Button
+                                      type="button"
+                                      variant="destructive"
+                                      size="icon"
+                                      className="absolute right-1.5 top-1.5 size-7 opacity-90 hover:opacity-100 transition-opacity"
+                                      onClick={() => removeImageFromNewSection(index, imgIndex)}
+                                      aria-label="Remover imagem"
+                                    >
+                                      <X className="size-3.5" aria-hidden />
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
 
-                          <div>
-                            <Label htmlFor={`new-section-${index}-images`} className="text-sm">
-                              Adicionar Imagens/Vídeos
-                            </Label>
-                            <Input
-                              id={`new-section-${index}-images`}
-                              type="file"
-                              accept="image/*,video/*"
-                              multiple
-                              onChange={(e) => {
-                                if (e.target.files) {
-                                  const files = Array.from(e.target.files)
-                                  addImagesToNewSection(index, files)
-                                  e.target.value = ''
-                                }
-                              }}
-                            />
+                            <div className="space-y-1.5">
+                              <Label htmlFor={`new-section-${index}-images`} className="text-sm">
+                                Adicionar imagens ou vídeos
+                              </Label>
+                              <Input
+                                id={`new-section-${index}-images`}
+                                type="file"
+                                accept="image/*,video/*"
+                                multiple
+                                onChange={(e) => {
+                                  if (e.target.files) {
+                                    const files = Array.from(e.target.files)
+                                    addImagesToNewSection(index, files)
+                                    e.target.value = ""
+                                  }
+                                }}
+                                className="cursor-pointer"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   )}
 
-                  {/* Botão para adicionar nova seção */}
                   <Button
                     type="button"
                     variant="outline"
                     onClick={addNewSection}
                     className="w-full"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Adicionar Seção
+                    <Plus className="size-4 shrink-0" aria-hidden />
+                    Adicionar secção
                   </Button>
                 </>
               )}
@@ -1503,14 +1503,14 @@ export default function PropertyForm({
         </TabsContent>
 
         <TabsContent value="files" className="space-y-6 mt-0">
-          <Card>
-            <CardHeader>
-              <CardTitle>Gestão de Arquivos</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="p-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Gestão de Arquivos</CardTitle>
               <CardDescription>
                 Faça upload e gerencie documentos, PDFs, plantas, certificados e outros arquivos da propriedade
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-0 bg-transparent">
               <FileManagement
                 propertyId={initialData?.id}
                 isEditMode={isEditMode}
@@ -1522,14 +1522,14 @@ export default function PropertyForm({
         </TabsContent>
 
         <TabsContent value="fractions" className="space-y-6 mt-0">
-          <Card>
-            <CardHeader>
-              <CardTitle>Frações do Imóvel</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Frações do Imóvel</CardTitle>
               <CardDescription>
                 Gerencie as unidades/frações disponíveis neste empreendimento (apartamentos, lojas, etc.)
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
               <PropertyFractionsTab
                 propertyId={initialData?.id}
                 isEditMode={isEditMode}
@@ -1541,14 +1541,14 @@ export default function PropertyForm({
         </TabsContent>
 
         <TabsContent value="relationships" className="space-y-6 mt-0">
-          <Card>
-            <CardHeader>
-              <CardTitle>Propriedades Relacionadas</CardTitle>
+          <Card className="border-0 bg-transparent shadow-none">
+            <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+              <CardTitle className="text-base font-semibold">Propriedades Relacionadas</CardTitle>
               <CardDescription>
                 Gerencie propriedades relacionadas para exibir como sugestões similares na página de detalhes
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-0 pt-0 pb-4 bg-transparent">
               <PropertyRelationships
                 propertyId={initialData?.id}
                 isEditMode={isEditMode}
@@ -1559,8 +1559,10 @@ export default function PropertyForm({
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
 
-      <div className="flex gap-4 justify-end">
+      <div className="sticky bottom-0 left-0 right-0 z-10 border-t border-border bg-background/95 py-3 backdrop-blur-sm">
+        <div className="flex flex-wrap items-center justify-end gap-2">
         {isEditMode ? (
           // Modo de edição - sempre mostrar botão de submit
           <>
@@ -1609,6 +1611,7 @@ export default function PropertyForm({
             </Button>
           )
         )}
+        </div>
       </div>
     </form>
   )

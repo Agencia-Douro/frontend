@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import { Checkbox } from "@/components/ui-admin/checkbox"
 import { Loader2, Plus, Sparkles, Home } from "lucide-react"
 import { toast } from "sonner"
 import { propertyRelationshipsApi, propertiesApi } from "@/services/api"
@@ -201,64 +201,65 @@ export function PropertyRelationships({
   return (
     <div className="space-y-6">
       {!isEditMode && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-700">
-            As propriedades relacionadas serão salvas após criar a propriedade
+        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3">
+          <p className="text-sm text-foreground">
+            As propriedades relacionadas serão guardadas após criar a propriedade.
           </p>
         </div>
       )}
 
       {/* Propriedades Relacionadas Atuais */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Label>Propriedades Relacionadas ({currentRelated.length})</Label>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Label className="text-sm font-medium">Propriedades relacionadas ({currentRelated.length})</Label>
           <Button type="button" size="default" variant="outline" onClick={handleOpenDialog}>
-            <Plus className="h-4 w-4 mr-2" />
-            Gerenciar Propriedades
+            <Plus className="size-4 shrink-0" aria-hidden />
+            Gerir propriedades
           </Button>
         </div>
 
         {isLoadingRelatedData ? (
-          <div className="flex items-center justify-center p-8">
-            <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="size-8 animate-spin text-muted-foreground" aria-hidden />
           </div>
         ) : currentRelated.length === 0 ? (
-          <div className="text-center p-8 bg-gray-50 rounded-lg border border-dashed">
-            <Home className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">
-              Nenhuma propriedade relacionada ainda
+          <div className="rounded-lg border border-dashed border-border bg-muted/20 py-12 text-center">
+            <Home className="mx-auto mb-3 size-12 text-muted-foreground" aria-hidden />
+            <p className="text-sm text-muted-foreground">
+              Nenhuma propriedade relacionada.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {currentRelated.map((property) => (
-              <div key={property.id} className="relative group">
-                <div className="w-full">
-                  <div className="relative w-full h-40 overflow-hidden rounded-lg">
-                    <Image
-                      src={property.image}
-                      alt={property.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="mt-2">
-                    <p className="body-14-medium text-black line-clamp-1">{property.title}</p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {property.concelho}, {property.distrito}
-                    </p>
-                    <p className="body-16-medium text-black mt-1">
-                      {formatPriceNumber(property.price)}
-                      <span className="text-grey body-14-medium">€</span>
-                    </p>
-                  </div>
+              <div
+                key={property.id}
+                className="relative overflow-hidden rounded-lg border border-border bg-muted/10"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={property.image}
+                    alt={property.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-3">
+                  <p className="line-clamp-1 text-sm font-medium text-foreground">{property.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {property.concelho}, {property.distrito}
+                  </p>
+                  <p className="mt-1 text-sm font-medium tabular-nums text-foreground">
+                    {formatPriceNumber(property.price)} €
+                  </p>
                 </div>
                 <Button
                   type="button"
                   variant="ghost"
-                  size="default"
+                  size="sm"
                   onClick={() => handleRemove(property)}
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute right-2 top-2 opacity-90 hover:opacity-100 transition-opacity"
+                  aria-label={`Remover ${property.title}`}
                 >
                   Remover
                 </Button>
@@ -268,66 +269,68 @@ export function PropertyRelationships({
         )}
       </div>
 
-      {/* Sugestões Automáticas - apenas no modo de edição */}
+      {/* Sugestões automáticas – apenas no modo de edição */}
       {isEditMode && (
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-yellow-500" />
-            <Label>Sugestões Automáticas</Label>
+            <Sparkles className="size-5 text-primary" aria-hidden />
+            <Label className="text-sm font-medium">Sugestões automáticas</Label>
           </div>
 
           {loadingSimilar ? (
-            <div className="flex items-center justify-center p-8">
-              <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="size-8 animate-spin text-muted-foreground" aria-hidden />
             </div>
           ) : similarProperties.length === 0 ? (
-            <div className="text-center p-6 bg-gray-50 rounded-lg border">
-              <p className="text-sm text-gray-500">
-                Nenhuma propriedade similar encontrada
+            <div className="rounded-lg border border-border bg-muted/10 py-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                Nenhuma propriedade similar encontrada.
               </p>
             </div>
           ) : (
             <>
-              <p className="text-sm text-gray-600">
-                Propriedades similares baseadas em tipo, localização e preço (±30%)
+              <p className="text-sm text-muted-foreground">
+                Propriedades similares por tipo, localização e preço (±30%).
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {similarProperties
                   .filter((prop) => !relatedProperties.some((rel) => rel.id === prop.id))
                   .slice(0, 5)
                   .map((property) => (
-                    <div key={property.id} className="relative">
-                      <div className="w-full">
-                        <div className="relative w-full h-40 overflow-hidden rounded-lg">
-                          <Image
-                            src={property.image}
-                            alt={property.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="mt-2">
-                          <p className="body-14-medium text-black line-clamp-1">{property.title}</p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {property.concelho}, {property.distrito}
-                          </p>
-                          <p className="body-16-medium text-black mt-1">
-                            {formatPriceNumber(property.price)}
-                            <span className="text-grey body-14-medium">€</span>
-                          </p>
-                        </div>
+                    <div
+                      key={property.id}
+                      className="overflow-hidden rounded-lg border border-border bg-muted/10"
+                    >
+                      <div className="relative aspect-[4/3] w-full overflow-hidden">
+                        <Image
+                          src={property.image}
+                          alt={property.title}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="default"
-                        onClick={() => handleAddSimilar(property)}
-                        disabled={setRelatedMutation.isPending}
-                        className="mt-2 w-full"
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Adicionar
-                      </Button>
+                      <div className="p-3">
+                        <p className="line-clamp-1 text-sm font-medium text-foreground">{property.title}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {property.concelho}, {property.distrito}
+                        </p>
+                        <p className="mt-1 text-sm font-medium tabular-nums text-foreground">
+                          {formatPriceNumber(property.price)} €
+                        </p>
+                      </div>
+                      <div className="p-3 pt-0">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddSimilar(property)}
+                          disabled={setRelatedMutation.isPending}
+                          className="w-full"
+                        >
+                          <Plus className="size-4 shrink-0" aria-hidden />
+                          Adicionar
+                        </Button>
+                      </div>
                     </div>
                   ))}
               </div>
@@ -336,19 +339,19 @@ export function PropertyRelationships({
         </div>
       )}
 
-      {/* Modal de Seleção */}
+      {/* Modal de seleção */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="!w-[95vw] !max-w-[1600px] h-[95vh] overflow-hidden flex flex-col p-6">
+        <DialogContent className="flex h-[95vh] max-h-dvh w-[95vw] max-w-[1600px] flex-col overflow-hidden border-border bg-background p-6">
           <DialogHeader>
-            <DialogTitle className="text-2xl body-18-medium">Selecionar Propriedades Relacionadas</DialogTitle>
+            <DialogTitle className="text-lg font-semibold">Selecionar propriedades relacionadas</DialogTitle>
             <DialogDescription>
-              Escolha as propriedades que deseja relacionar com este imóvel
+              Escolha as propriedades a relacionar com este imóvel.
             </DialogDescription>
           </DialogHeader>
 
           {/* Filtros */}
-          <div className="space-y-4 pb-4 border-b">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="space-y-4 border-b border-border pb-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
               <div className="space-y-2">
                 <Label htmlFor="search">Buscar</Label>
                 <Input
@@ -414,116 +417,108 @@ export function PropertyRelationships({
               </div>
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <Button variant="outline" size="default" onClick={clearFilters}>
-                Limpar Filtros
+                Limpar filtros
               </Button>
-              <p className="text-sm text-gray-600">
-                {tempSelectedIds.length} propriedade(s) selecionada(s)
+              <p className="text-sm text-muted-foreground tabular-nums">
+                {tempSelectedIds.length} selecionada(s)
               </p>
             </div>
           </div>
 
-          {/* Grid de Propriedades */}
-          <div className="flex-1 overflow-y-auto py-4 px-2">
+          <div className="min-h-0 flex-1 overflow-y-auto py-4">
             {loadingProperties ? (
-              <p className="text-center text-gray-500 py-12">A carregar propriedades...</p>
+              <p className="py-12 text-center text-sm text-muted-foreground">A carregar propriedades…</p>
             ) : propertiesResponse?.data && propertiesResponse.data.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {propertiesResponse.data
-                  .filter(p => p.id !== propertyId) // Não mostrar a propriedade atual
+                  .filter((p) => p.id !== propertyId)
                   .map((property) => (
-                    <div
+                    <button
                       key={property.id}
-                      className="relative cursor-pointer group"
+                      type="button"
+                      className="relative w-full cursor-pointer rounded-lg border border-border bg-muted/10 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       onClick={() => handleToggle(property.id)}
                     >
-                      {/* Checkbox sobreposto */}
-                      <div className="absolute top-2 right-2 z-10">
+                      <div className="absolute right-2 top-2 z-10" onClick={(e) => e.stopPropagation()}>
                         <Checkbox
                           checked={tempSelectedIds.includes(property.id)}
                           onCheckedChange={() => handleToggle(property.id)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="bg-white shadow-lg"
+                          aria-label={tempSelectedIds.includes(property.id) ? "Desmarcar" : "Selecionar"}
                         />
                       </div>
-
-                      {/* Card do Imóvel */}
-                      <div className="w-full">
-                        <div className="relative w-full h-40 overflow-hidden">
-                          <Image
-                            src={property.image}
-                            alt={property.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="mt-2 px-1">
-                          <p className="body-16-medium text-black line-clamp-1">{property.title}</p>
-                          <p className="body-14-medium text-grey mt-1">
-                            {property.concelho}, {property.distrito}
-                          </p>
-                        </div>
-                        <p className="body-20-medium text-black mt-2 px-1">
-                          {formatPriceNumber(property.price)}
-                          <span className="text-grey body-16-medium">€</span>
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg">
+                        <Image src={property.image} alt="" fill className="object-cover" />
+                      </div>
+                      <div className="p-3">
+                        <p className="line-clamp-1 text-sm font-medium text-foreground">{property.title}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {property.concelho}, {property.distrito}
+                        </p>
+                        <p className="mt-1 text-sm font-medium tabular-nums text-foreground">
+                          {formatPriceNumber(property.price)} €
                         </p>
                         {property.reference && (
-                          <p className="text-xs text-gray-500 mt-1 px-1">Ref: {property.reference}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">Ref: {property.reference}</p>
                         )}
                       </div>
-                    </div>
+                    </button>
                   ))}
               </div>
             ) : (
-              <p className="text-center text-gray-500 py-12">
-                Nenhuma propriedade encontrada com os filtros aplicados
+              <p className="py-12 text-center text-sm text-muted-foreground">
+                Nenhuma propriedade encontrada com os filtros aplicados.
               </p>
             )}
           </div>
 
-          {/* Paginação */}
-          <div className="flex justify-center gap-2 py-4 border-t">
+          <div className="flex flex-wrap items-center justify-center gap-2 border-t border-border py-4">
             <Button
-              variant="brown"
+              variant="outline"
+              size="sm"
               disabled={currentPage === 1}
               onClick={() => updatePage(currentPage - 1)}
+              aria-label="Página anterior"
             >
               Anterior
             </Button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <Button
                   key={page}
-                  variant={page === currentPage ? "brown" : "ghost"}
+                  variant={page === currentPage ? "default" : "ghost"}
+                  size="icon"
                   onClick={() => updatePage(page)}
+                  aria-label={page === currentPage ? `Página ${page} (atual)` : `Ir para página ${page}`}
                 >
                   {page}
                 </Button>
               ))}
             </div>
             <Button
-              variant="brown"
+              variant="outline"
+              size="sm"
               disabled={currentPage === totalPages}
               onClick={() => updatePage(currentPage + 1)}
+              aria-label="Página seguinte"
             >
               Próxima
             </Button>
           </div>
 
-          {/* Footer */}
-          <DialogFooter className="border-t pt-4">
+          <DialogFooter className="border-t border-border pt-4">
             <Button variant="outline" onClick={handleCancel}>
               Cancelar
             </Button>
             <Button onClick={handleConfirm} disabled={setRelatedMutation.isPending}>
               {setRelatedMutation.isPending ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Salvando...
+                  <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden />
+                  A guardar…
                 </>
               ) : (
-                `Confirmar Seleção (${tempSelectedIds.length})`
+                `Confirmar (${tempSelectedIds.length})`
               )}
             </Button>
           </DialogFooter>

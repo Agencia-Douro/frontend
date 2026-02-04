@@ -4,20 +4,21 @@ import { useState, useMemo } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { newslettersApi } from "@/services/api"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardTitle } from "@/components/ui-admin/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { Plus, Search, Trash2, Edit, X } from "lucide-react"
 import { toast } from "sonner"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 
 export default function NewslettersPage() {
   const queryClient = useQueryClient()
@@ -35,19 +36,17 @@ export default function NewslettersPage() {
     mutationFn: (id: string) => newslettersApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["newsletters"] })
-      toast.success("Newsletter deletada com sucesso!")
+      toast.success("Newsletter eliminada com sucesso.")
       setDeleteId(null)
     },
-    onError: (error: any) => {
-      toast.error(error?.message || "Erro ao deletar newsletter")
+    onError: (error: unknown) => {
+      toast.error((error as Error)?.message || "Erro ao eliminar newsletter")
     },
   })
 
   const filteredAndSortedNewsletters = useMemo(() => {
     if (!newsletters) return []
-
     let filtered = [...newsletters]
-
     if (searchInput) {
       const search = searchInput.toLowerCase()
       filtered = filtered.filter(
@@ -56,11 +55,9 @@ export default function NewslettersPage() {
           n.content.toLowerCase().includes(search)
       )
     }
-
     if (categoryFilter) {
       filtered = filtered.filter((n) => n.category === categoryFilter)
     }
-
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "-createdAt":
@@ -75,7 +72,6 @@ export default function NewslettersPage() {
           return 0
       }
     })
-
     return filtered
   }, [newsletters, searchInput, categoryFilter, sortBy])
 
@@ -87,125 +83,113 @@ export default function NewslettersPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">Gerenciar Newsletters</h1>
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">A carregar newsletters...</p>
-        </div>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+        <h1 className="mb-2 text-lg font-semibold tracking-tight text-foreground">Newsletters</h1>
+        <p className="py-12 text-center text-sm text-muted-foreground">A carregar newsletters…</p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">Gerenciar Newsletters</h1>
-        <div className="text-center py-12">
-          <p className="text-red-500">Erro ao carregar newsletters: {error.message}</p>
-        </div>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+        <h1 className="mb-2 text-lg font-semibold tracking-tight text-foreground">Newsletters</h1>
+        <p className="py-12 text-center text-sm text-destructive">
+          Erro ao carregar newsletters: {(error as Error).message}
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="container mt-10">
-      <div className="flex justify-between items-center mb-6">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="body-18-medium">Gerenciar Newsletters</h1>
-          <p className="text-muted-foreground mt-1">
-            Total de {newsletters?.length || 0} newsletter(s)
-            {filteredAndSortedNewsletters.length !== newsletters?.length &&
-              ` (${filteredAndSortedNewsletters.length} filtrada(s))`
-            }
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">Newsletters</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {newsletters?.length ?? 0} newsletter(s)
+            {filteredAndSortedNewsletters.length !== (newsletters?.length ?? 0) &&
+              ` (${filteredAndSortedNewsletters.length} filtrada(s))`}
           </p>
         </div>
         <Button asChild>
           <Link href="/admin/newsletters/create">
-            <Plus className="h-4 w-4 mr-2" />
-            Nova Newsletter
+            <Plus className="size-4 shrink-0" aria-hidden />
+            Nova newsletter
           </Link>
         </Button>
       </div>
 
-      <div className="mb-6 space-y-4">
-        <div className="flex gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar por título ou conteúdo..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Select
-            value={categoryFilter || undefined}
-            onValueChange={(value) => setCategoryFilter(value || "")}
-          >
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Todas categorias" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="mercado">Mercado</SelectItem>
-              <SelectItem value="dicas">Dicas</SelectItem>
-              <SelectItem value="noticias">Notícias</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            value={sortBy}
-            onValueChange={(value) => setSortBy(value)}
-          >
-            <SelectTrigger className="w-[200px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="-createdAt">Mais recentes</SelectItem>
-              <SelectItem value="createdAt">Mais antigos</SelectItem>
-              <SelectItem value="title">Título A-Z</SelectItem>
-              <SelectItem value="-title">Título Z-A</SelectItem>
-            </SelectContent>
-          </Select>
-          {(categoryFilter || searchInput) && (
-            <Button variant="ghost" onClick={clearFilters}>
-              <X className="h-4 w-4 mr-2" />
-              Limpar
-            </Button>
-          )}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <div className="relative min-w-0 flex-1">
+          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <Input
+            placeholder="Buscar por título ou conteúdo…"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="pl-9"
+          />
         </div>
+        <Select value={categoryFilter || undefined} onValueChange={(v) => setCategoryFilter(v || "")}>
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Todas as categorias" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="mercado">Mercado</SelectItem>
+            <SelectItem value="dicas">Dicas</SelectItem>
+            <SelectItem value="noticias">Notícias</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-[200px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="-createdAt">Mais recentes</SelectItem>
+            <SelectItem value="createdAt">Mais antigos</SelectItem>
+            <SelectItem value="title">Título A–Z</SelectItem>
+            <SelectItem value="-title">Título Z–A</SelectItem>
+          </SelectContent>
+        </Select>
+        {(categoryFilter || searchInput) && (
+          <Button variant="ghost" size="default" onClick={clearFilters}>
+            <X className="size-4 shrink-0" aria-hidden />
+            Limpar
+          </Button>
+        )}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedNewsletters.map((newsletter) => (
-          <Card key={newsletter.id} className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer p-0 flex flex-col h-full">
+          <Card
+            key={newsletter.id}
+            className="flex h-full flex-col overflow-hidden border-border bg-card p-0 transition-shadow hover:shadow-md"
+          >
             {newsletter.coverImage && (
-              <div className="w-full h-48 overflow-hidden flex-shrink-0">
+              <div className="h-48 w-full shrink-0 overflow-hidden">
                 <img
                   src={newsletter.coverImage}
-                  alt={newsletter.title}
-                  className="w-full h-full object-cover"
+                  alt=""
+                  className="size-full object-cover"
                 />
               </div>
             )}
-            <CardContent className="pb-5 flex flex-col flex-1">
-              <CardTitle className="text-lg line-clamp-2 mb-5">{newsletter.title}</CardTitle>
-              <div className="flex gap-2 mt-auto">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="flex-1"
-                  asChild
-                >
+            <CardContent className="flex flex-1 flex-col">
+              <CardTitle className="mb-4 line-clamp-2 text-base font-semibold">{newsletter.title}</CardTitle>
+              <div className="mt-auto flex gap-2">
+                <Button variant="outline" size="default" className="min-w-0 flex-1" asChild>
                   <Link href={`/admin/newsletters/${newsletter.id}/edit`}>
-                    <Edit className="h-4 w-4 mr-2" />
+                    <Edit className="size-4 shrink-0" aria-hidden />
                     Editar
                   </Link>
                 </Button>
                 <Button
-                  variant="brown"
+                  variant="destructive"
                   size="default"
                   onClick={() => setDeleteId(newsletter.id)}
+                  aria-label="Eliminar newsletter"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="size-4 shrink-0" aria-hidden />
                 </Button>
               </div>
             </CardContent>
@@ -213,33 +197,32 @@ export default function NewslettersPage() {
         ))}
       </div>
 
-      {filteredAndSortedNewsletters.length === 0 && !isLoading && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">Nenhuma newsletter encontrada</p>
+      {filteredAndSortedNewsletters.length === 0 && (
+        <div className="py-12 text-center">
+          <p className="text-sm text-muted-foreground">Nenhuma newsletter encontrada.</p>
         </div>
       )}
 
-      <Dialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="body-18-medium">Confirmar exclusão</DialogTitle>
-            <DialogDescription>
-              Tem certeza que deseja deletar esta newsletter? Esta ação não pode ser desfeita.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="brown" onClick={() => setDeleteId(null)}>
-              Cancelar
-            </Button>
+      <AlertDialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar eliminação</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem a certeza que deseja eliminar esta newsletter? Esta ação não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <Button
-              variant="ghost"
+              variant="destructive"
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+              disabled={deleteMutation.isPending}
             >
-              Deletar
+              {deleteMutation.isPending ? "A eliminar…" : "Eliminar"}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

@@ -1,11 +1,20 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import Link from "next/link"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { propertiesApi, propertyFilesApi, propertyFractionsApi, propertyRelationshipsApi } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui-admin/button"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui-admin/breadcrumb"
+import { getBreadcrumbSegments } from "@/lib/admin-nav"
+import { ChevronLeft } from "lucide-react"
 import { toast } from "sonner"
 import PropertyForm from "@/components/PropertyForm"
 import { CreatePropertyFractionDto, Property } from "@/types/property"
@@ -14,37 +23,26 @@ import { Suspense } from "react"
 function CreatePropertyContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const queryClient = useQueryClient()
-
-  // Pega o ID do rascunho da URL se existir
   const draftId = searchParams.get("draft")
+  const segments = getBreadcrumbSegments(pathname ?? "")
 
   const createMutation = useMutation({
-    mutationFn: ({ data, images }: { data: any; images: File[] }) =>
+    mutationFn: ({ data, images }: { data: Property; images: File[] }) =>
       propertiesApi.create(data, images),
     onSuccess: async (data) => {
-      // Invalidar cache de todas as propriedades
       await queryClient.invalidateQueries({ queryKey: ["properties"] })
-      // Invalidar cache específico da propriedade criada
       await queryClient.invalidateQueries({ queryKey: ["property", data.id] })
-
       toast.success("Propriedade criada com sucesso!")
       router.push(`/admin/properties/${data.id}`)
     },
-    onError: (error: any) => {
-      console.error("Error creating property:", error)
-
-      // Extrair mensagem de erro do backend
-      const errorMessage = error?.message || "Erro ao criar propriedade"
-
-      // Se houver mensagens de erro mais detalhadas do backend
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message)
-      } else if (Array.isArray(error?.response?.data?.errors)) {
-        // Se o backend retornar um array de erros
-        error.response.data.errors.forEach((err: string) => {
-          toast.error(err)
-        })
+    onError: (err: Error & { response?: { data?: { message?: string; errors?: string[] } } }) => {
+      const errorMessage = err?.message ?? "Erro ao criar propriedade"
+      if (err?.response?.data?.message) {
+        toast.error(err.response.data.message)
+      } else if (Array.isArray(err?.response?.data?.errors)) {
+        err.response.data.errors.forEach((msg: string) => toast.error(msg))
       } else {
         toast.error(errorMessage)
       }
@@ -120,12 +118,33 @@ function CreatePropertyContent() {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6">
-        <Button variant="ghost" className="mb-4" asChild>
-          <Link href="/admin/properties">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Voltar
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 md:px-6">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+        <Breadcrumb className="min-w-0 flex-1">
+          <BreadcrumbList>
+            {segments.map((seg, i) => (
+              <span key={seg.href} className="contents">
+                {i > 0 && <BreadcrumbSeparator />}
+                <BreadcrumbItem>
+                  {seg.isPage ? (
+                    <BreadcrumbPage>{seg.label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink asChild>
+                      <Link href={seg.href}>{seg.label}</Link>
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+              </span>
+            ))}
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Button variant="ghost" size="sm" asChild>
+          <Link
+            href="/admin/properties"
+            className="flex items-center gap-2 text-foreground hover:text-muted-foreground"
+          >
+            <ChevronLeft className="size-4" aria-hidden />
+            Voltar para lista
           </Link>
         </Button>
       </div>
@@ -134,7 +153,7 @@ function CreatePropertyContent() {
         draftId={draftId}
         onSubmit={handleSubmit}
         isLoading={createMutation.isPending}
-        submitButtonText="Criar Propriedade"
+        submitButtonText="Criar propriedade"
         cancelButtonText="Cancelar"
         onCancel={() => router.push("/admin/properties")}
       />
@@ -144,7 +163,14 @@ function CreatePropertyContent() {
 
 export default function CreatePropertyPage() {
   return (
-    <Suspense fallback={<div className="container mx-auto p-6">Carregando...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
+          <h1 className="mb-2 text-lg font-semibold text-foreground tracking-tight">Nova propriedade</h1>
+          <p className="py-12 text-center text-sm text-muted-foreground">A carregar...</p>
+        </div>
+      }
+    >
       <CreatePropertyContent />
     </Suspense>
   )

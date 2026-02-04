@@ -16,8 +16,8 @@ export function AdminAuthGuard({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>A carregar...</p>
+      <div className="flex min-h-dvh items-center justify-center bg-background">
+        <p className="text-muted-foreground">A carregar...</p>
       </div>
     )
   }

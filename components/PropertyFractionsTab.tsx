@@ -1,16 +1,16 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui-admin/button";
+import { Input } from "@/components/ui-admin/input";
+import { Label } from "@/components/ui-admin/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui-admin/select";
 import {
   Table,
   TableBody,
@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui-admin/checkbox";
 import {
   Plus,
   Trash2,
@@ -443,41 +443,43 @@ export function PropertyFractionsTab({
     (col) => columnVisibility[col.key]
   );
 
+  const inputClassName =
+    "flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
+
   return (
     <div className="space-y-6">
-      {/* Header com botões de ação */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-medium">Frações do Imóvel</h3>
+          <h3 className="text-base font-semibold text-foreground">Frações do imóvel</h3>
           <p className="text-sm text-muted-foreground">
-            Gerencie as unidades/frações disponíveis neste empreendimento
+            Gerir unidades/frações deste empreendimento
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             type="button"
             variant="outline"
             size="default"
             onClick={() => setShowColumnConfig(!showColumnConfig)}
           >
-            <Settings className="h-4 w-4 mr-2" />
-            {showColumnConfig ? "Ocultar Configuração" : "Configurar Colunas"}
+            <Settings className="size-4 shrink-0" aria-hidden />
+            {showColumnConfig ? "Ocultar configuração" : "Configurar colunas"}
             {showColumnConfig ? (
-              <ChevronUp className="h-4 w-4 ml-2" />
+              <ChevronUp className="size-4 shrink-0" aria-hidden />
             ) : (
-              <ChevronDown className="h-4 w-4 ml-2" />
+              <ChevronDown className="size-4 shrink-0" aria-hidden />
             )}
           </Button>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
               <Button type="button" size="default">
-                <Plus className="h-4 w-4 mr-2" />
-                Adicionar Fração
+                <Plus className="size-4 shrink-0" aria-hidden />
+                Adicionar fração
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-border bg-background">
               <DialogHeader>
-                <DialogTitle>Adicionar Nova Fração</DialogTitle>
+                <DialogTitle className="text-lg font-semibold">Adicionar fração</DialogTitle>
                 <DialogDescription>
                   Preencha os dados da fração/unidade
                 </DialogDescription>
@@ -657,9 +659,7 @@ export function PropertyFractionsTab({
                                 price: value ? parseFloat(value) : null,
                               });
                             }}
-                            className={cn(
-                              "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
-                            )}
+                            className={inputClassName}
                           />
                         </div>
                       )}
@@ -714,7 +714,7 @@ export function PropertyFractionsTab({
                                 floorPlanInputRef.current?.click()
                               }
                             >
-                              <Upload className="h-4 w-4 mr-2" />
+                              <Upload className="size-4 shrink-0" aria-hidden />
                               {floorPlanUploading
                                 ? "A enviar..."
                                 : newFraction.floorPlan
@@ -732,9 +732,9 @@ export function PropertyFractionsTab({
                                     floorPlan: null,
                                   })
                                 }
-                                title="Remover planta"
+                                aria-label="Remover planta"
                               >
-                                <X className="h-4 w-4" />
+                                <X className="size-4" aria-hidden />
                               </Button>
                             )}
                           </div>
@@ -845,9 +845,7 @@ export function PropertyFractionsTab({
                                     },
                                   })
                                 }
-                                className={cn(
-                                  "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
-                                )}
+                                className={inputClassName}
                               />
                             ) : col.dataType === "number" ||
                               col.dataType === "area" ? (
@@ -920,14 +918,13 @@ export function PropertyFractionsTab({
         </div>
       </div>
 
-      {/* Configuração de Colunas (colapsável) */}
       {showColumnConfig && (
-        <div className="border rounded-lg p-4 bg-muted/30 space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="rounded-lg border border-border bg-muted/10 p-4 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h4 className="font-medium">Configuração de Colunas</h4>
+              <h4 className="text-sm font-semibold text-foreground">Configuração de colunas</h4>
               <p className="text-sm text-muted-foreground">
-                Escolha quais colunas exibir na tabela
+                Escolha as colunas a exibir na tabela
               </p>
             </div>
             {isEditMode && propertyId && (
@@ -937,22 +934,22 @@ export function PropertyFractionsTab({
               >
                 <DialogTrigger asChild>
                   <Button type="button" variant="outline" size="default">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Adicionar Coluna
+                    <Plus className="size-4 shrink-0" aria-hidden />
+                    Adicionar coluna
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="border-border bg-background">
                   <DialogHeader>
-                    <DialogTitle>Adicionar Coluna Personalizada</DialogTitle>
+                    <DialogTitle className="text-lg font-semibold">Adicionar coluna personalizada</DialogTitle>
                     <DialogDescription>
-                      Crie uma coluna adicional para suas frações
+                      Criar uma coluna adicional para as frações
                     </DialogDescription>
                   </DialogHeader>
 
                   <div className="grid gap-4 py-4">
                     <div className="space-y-2">
                       <Label>
-                        Chave da Coluna <span className="text-red-500">*</span>
+                        Chave da Coluna <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         placeholder="Ex: garagem_tipo"
@@ -973,7 +970,7 @@ export function PropertyFractionsTab({
 
                     <div className="space-y-2">
                       <Label>
-                        Label <span className="text-red-500">*</span>
+                        Label <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         placeholder="Ex: Tipo de Garagem"
@@ -1044,14 +1041,13 @@ export function PropertyFractionsTab({
             )}
           </div>
 
-          {/* Lista de colunas padrão */}
           <div>
-            <h5 className="text-sm font-medium mb-2">Colunas Padrão</h5>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <h5 className="mb-2 text-sm font-medium text-foreground">Colunas padrão</h5>
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
               {DEFAULT_COLUMNS.map((col) => (
                 <div
                   key={col.key}
-                  className="flex items-center space-x-2 p-2 rounded border bg-background"
+                  className="flex items-center gap-2 rounded-md border border-border bg-background p-2"
                 >
                   <Checkbox
                     id={`col-${col.key}`}
@@ -1069,32 +1065,28 @@ export function PropertyFractionsTab({
             </div>
           </div>
 
-          {/* Lista de colunas personalizadas */}
           {customColumns.length > 0 && (
             <div>
-              <h5 className="text-sm font-medium mb-2">
-                Colunas Personalizadas
-              </h5>
+              <h5 className="mb-2 text-sm font-medium text-foreground">Colunas personalizadas</h5>
               <div className="space-y-2">
                 {customColumns.map((col) => (
                   <div
                     key={col.id}
-                    className="flex items-center justify-between p-2 rounded border bg-background"
+                    className="flex items-center justify-between rounded-md border border-border bg-background p-2"
                   >
                     <div className="flex items-center gap-2">
-                      <GripVertical className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm font-medium">{col.label_pt}</span>
-                      <span className="text-xs text-muted-foreground">
-                        ({col.dataType})
-                      </span>
+                      <GripVertical className="size-4 text-muted-foreground" aria-hidden />
+                      <span className="text-sm font-medium text-foreground">{col.label_pt}</span>
+                      <span className="text-xs text-muted-foreground">({col.dataType})</span>
                     </div>
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDeleteColumn(col.id)}
+                      aria-label={`Eliminar coluna ${col.label_pt}`}
                     >
-                      <Trash2 className="h-4 w-4 text-destructive" />
+                      <Trash2 className="size-4 text-destructive" aria-hidden />
                     </Button>
                   </div>
                 ))}
@@ -1111,21 +1103,16 @@ export function PropertyFractionsTab({
         </div>
       )}
 
-      {/* Tabela de Frações */}
       {isLoading ? (
-        <div className="text-center py-8 text-muted-foreground">
-          A carregar frações...
-        </div>
+        <p className="py-8 text-center text-sm text-muted-foreground">A carregar frações…</p>
       ) : allFractions.length === 0 ? (
-        <div className="text-center py-8 border rounded-lg bg-muted/30">
-          <p className="text-muted-foreground">
-            Nenhuma fração cadastrada.
-            <br />
-            Clique em &quot;Adicionar Fração&quot; para começar.
+        <div className="rounded-lg border border-dashed border-border bg-muted/20 py-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            Nenhuma fração. Clique em &quot;Adicionar fração&quot; para começar.
           </p>
         </div>
       ) : (
-        <div className="border rounded-lg overflow-x-auto">
+        <div className="overflow-x-auto rounded-lg border border-border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -1230,22 +1217,23 @@ export function PropertyFractionsTab({
                         {isPending ? (
                           <Button
                             type="button"
-                            variant="brown"
+                            variant="destructive"
                             size="icon"
                             onClick={() => handleDeletePendingFraction(index)}
+                            aria-label="Remover fração"
                           >
-                            <Trash2 className="h-4 w-4 text-destructive" />
+                            <Trash2 className="size-4" aria-hidden />
                           </Button>
                         ) : (
                           isEditMode && (
                             <Button
                               type="button"
-                              variant="brown"
+                              variant="destructive"
                               size="icon"
                               onClick={() => handleDeleteFraction(fraction.id)}
-                              title="Excluir"
+                              aria-label="Eliminar fração"
                             >
-                              <Trash2 className="h-4 w-4 text-destructive" />
+                              <Trash2 className="size-4" aria-hidden />
                             </Button>
                           )
                         )}

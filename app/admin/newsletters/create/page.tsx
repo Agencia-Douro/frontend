@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { newslettersApi, propertiesApi } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-admin/tabs"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
@@ -93,11 +93,11 @@ export default function CreateNewsletterPage() {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
       <div className="mb-6">
-        <Button variant="ghost" className="mb-4" asChild>
-          <Link href="/admin/newsletters">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/admin/newsletters" className="flex items-center gap-2 text-foreground hover:text-muted-foreground">
+            <ArrowLeft className="size-4 shrink-0" aria-hidden />
             Voltar
           </Link>
         </Button>
@@ -105,33 +105,18 @@ export default function CreateNewsletterPage() {
 
       <form onSubmit={handleSubmit}>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3">
-            <TabsTrigger
-              value="info"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Informações
-            </TabsTrigger>
-            <TabsTrigger
-              value="content"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Conteúdo
-            </TabsTrigger>
-            <TabsTrigger
-              value="properties"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Imóveis
-            </TabsTrigger>
+          <TabsList variant="line" className="mb-6 w-full justify-start">
+            <TabsTrigger variant="line" value="info">Informações</TabsTrigger>
+            <TabsTrigger variant="line" value="content">Conteúdo</TabsTrigger>
+            <TabsTrigger variant="line" value="properties">Imóveis</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="info" className="mt-6">
+          <TabsContent value="info" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Informações Básicas</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Informações básicas</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
                   <Label htmlFor="title">Título *</Label>
                   <Input
@@ -186,7 +171,7 @@ export default function CreateNewsletterPage() {
                     onChange={handleImageUpload}
                     disabled={uploadingImage}
                   />
-                  {uploadingImage && <p className="text-sm text-gray-500">Enviando imagem...</p>}
+                  {uploadingImage && <p className="text-sm text-muted-foreground">A enviar imagem…</p>}
                   {formData.coverImage && (
                     <img src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover rounded border mt-2" />
                   )}
@@ -195,12 +180,12 @@ export default function CreateNewsletterPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="content" className="mt-6">
+          <TabsContent value="content" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Conteúdo da Newsletter</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Conteúdo da newsletter</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
                   <Label htmlFor="content">Conteúdo *</Label>
                   <RichTextEditor
@@ -213,15 +198,15 @@ export default function CreateNewsletterPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="properties" className="mt-6">
+          <TabsContent value="properties" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Imóveis Relacionados</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Imóveis relacionados</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
-                  <Label>Imóveis Relacionados</Label>
-                  <p className="text-sm text-gray-500 mb-3">
+                  <Label>Imóveis relacionados</Label>
+                  <p className="mb-3 text-sm text-muted-foreground">
                     Selecione os imóveis que deseja associar a esta newsletter
                   </p>
                   <Button
@@ -240,17 +225,14 @@ export default function CreateNewsletterPage() {
           </TabsContent>
         </Tabs>
 
-        <div className="flex gap-4 mt-6 justify-end">
+        <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-border pt-6">
           {activeTab === "properties" ? (
             <>
               <Button type="button" variant="outline" asChild>
                 <Link href="/admin/newsletters">Cancelar</Link>
               </Button>
-              <Button
-                type="submit"
-                disabled={createMutation.isPending}
-              >
-                {createMutation.isPending ? "Criando..." : "Criar Newsletter"}
+              <Button type="submit" disabled={createMutation.isPending}>
+                {createMutation.isPending ? "A criar…" : "Criar newsletter"}
               </Button>
             </>
           ) : (

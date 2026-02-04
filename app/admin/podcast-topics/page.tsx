@@ -3,11 +3,21 @@
 import { useState, useEffect } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastTopicsApi, PodcastTopic, siteConfigApi } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
 import Image from "next/image"
@@ -149,9 +159,14 @@ export default function PodcastTopicsPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover este tópico?")) {
-      deleteMutation.mutate(id)
+  const [topicToDelete, setTopicToDelete] = useState<string | null>(null)
+
+  const handleDelete = (id: string) => setTopicToDelete(id)
+
+  const confirmDelete = () => {
+    if (topicToDelete) {
+      deleteMutation.mutate(topicToDelete)
+      setTopicToDelete(null)
     }
   }
 
@@ -186,21 +201,25 @@ export default function PodcastTopicsPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Podcast</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-lg font-semibold text-foreground">Podcast</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Gerencie os tópicos e a imagem da apresentadora do podcast.
           </p>
         </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Novo Tópico
           </Button>
         )}
@@ -245,9 +264,9 @@ export default function PodcastTopicsPage() {
       </Card>
 
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Tópicos Abordados</h2>
-        <p className="text-sm text-gray-500 mb-4">
-          Gerencie os tópicos exibidos na seção "O Que Abordamos" da página do podcast.
+        <h2 className="text-base font-semibold text-foreground mb-2">Tópicos Abordados</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Gerencie os tópicos exibidos na seção &quot;O Que Abordamos&quot; da página do podcast.
           As traduções para inglês e francês são geradas automaticamente.
         </p>
       </div>
@@ -257,8 +276,8 @@ export default function PodcastTopicsPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingTopic ? "Editar Tópico" : "Novo Tópico"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -298,13 +317,13 @@ export default function PodcastTopicsPage() {
                   }
                   min="0"
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   Menor número aparece primeiro. Use 0 para ordem padrão.
                 </p>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                <p className="text-sm text-blue-800">
+              <div>
+                <p className="text-sm text-muted-foreground">
                   <strong>Nota:</strong> As traduções para inglês e francês serão geradas automaticamente via API DeepL quando você salvar.
                 </p>
               </div>
@@ -325,39 +344,59 @@ export default function PodcastTopicsPage() {
       <div className="grid gap-4">
         {topics?.map((topic) => (
           <Card key={topic.id}>
-            <CardContent className="p-4">
+            <CardContent>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-lg">{topic.title_pt}</h3>
-                    <span className="text-xs bg-gray-100 px-2 py-1 rounded">Ordem: {topic.order}</span>
+                    <h3 className="font-semibold text-foreground">{topic.title_pt}</h3>
+                    <span className="text-xs bg-muted px-2 py-1 rounded">Ordem: {topic.order}</span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3">{topic.description_pt}</p>
+                  <p className="text-sm text-muted-foreground mb-3 text-pretty">{topic.description_pt}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                    <div className="bg-gray-50 p-2 rounded">
-                      <p className="font-medium text-gray-700 mb-1">🇬🇧 English:</p>
-                      <p className="text-gray-600">{topic.title_en || "Sem tradução"}</p>
-                      <p className="text-gray-500 mt-1 line-clamp-2">{topic.description_en || "Sem tradução"}</p>
+                    <div>
+                      <p className="font-medium text-foreground mb-1">🇬🇧 English:</p>
+                      <p className="text-muted-foreground">{topic.title_en || "Sem tradução"}</p>
+                      <p className="text-muted-foreground mt-1 line-clamp-2">{topic.description_en || "Sem tradução"}</p>
                     </div>
-                    <div className="bg-gray-50 p-2 rounded">
-                      <p className="font-medium text-gray-700 mb-1">🇫🇷 Français:</p>
-                      <p className="text-gray-600">{topic.title_fr || "Sem tradução"}</p>
-                      <p className="text-gray-500 mt-1 line-clamp-2">{topic.description_fr || "Sem tradução"}</p>
+                    <div>
+                      <p className="font-medium text-foreground mb-1">🇫🇷 Français:</p>
+                      <p className="text-muted-foreground">{topic.title_fr || "Sem tradução"}</p>
+                      <p className="text-muted-foreground mt-1 line-clamp-2">{topic.description_fr || "Sem tradução"}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-2 ml-4">
-                  <Button variant="outline" size="icon" onClick={() => handleEdit(topic)}>
-                    <Pencil className="h-4 w-4" />
+                  <Button variant="outline" size="icon" onClick={() => handleEdit(topic)} aria-label="Editar tópico">
+                    <Pencil className="size-4" />
                   </Button>
                   <Button
-                    variant="brown"
+                    variant="destructive"
                     size="icon"
                     onClick={() => handleDelete(topic.id)}
                     disabled={deleteMutation.isPending}
+                    aria-label="Remover tópico"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="size-4" />
                   </Button>
+                  <AlertDialog open={topicToDelete === topic.id} onOpenChange={(open) => !open && setTopicToDelete(null)}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Remover tópico</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tem certeza que deseja remover este tópico? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          onClick={confirmDelete}
+                        >
+                          Remover
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </CardContent>
@@ -365,10 +404,10 @@ export default function PodcastTopicsPage() {
         ))}
       </div>
 
-      {!topics || topics.length === 0 && (
+      {(!topics || topics.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
-            Nenhum tópico cadastrado. Clique em "Novo Tópico" para começar.
+          <CardContent className="text-center text-muted-foreground">
+            Nenhum tópico cadastrado. Clique em &quot;Novo Tópico&quot; para começar.
           </CardContent>
         </Card>
       )}

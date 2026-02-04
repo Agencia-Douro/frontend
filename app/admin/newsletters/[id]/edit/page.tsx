@@ -6,12 +6,12 @@ import Link from "next/link"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { newslettersApi } from "@/services/api"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui-admin/select"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-admin/tabs"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import PropertySelectorModal from "@/components/PropertySelectorModal"
 import { ArrowLeft } from "lucide-react"
@@ -119,26 +119,29 @@ export default function EditNewsletterPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <p>A carregar...</p>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+        <p className="text-sm text-muted-foreground">A carregar…</p>
       </div>
     )
   }
 
   if (!newsletter) {
     return (
-      <div className="container mx-auto p-6">
-        <p>Newsletter não encontrada</p>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
+        <p className="text-sm text-muted-foreground">Newsletter não encontrada.</p>
+        <Button variant="outline" size="sm" asChild className="mt-4">
+          <Link href="/admin/newsletters">Voltar à lista</Link>
+        </Button>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
       <div className="mb-6">
-        <Button variant="ghost" className="mb-4" asChild>
-          <Link href="/admin/newsletters">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/admin/newsletters" className="flex items-center gap-2 text-foreground hover:text-muted-foreground">
+            <ArrowLeft className="size-4 shrink-0" aria-hidden />
             Voltar
           </Link>
         </Button>
@@ -146,33 +149,18 @@ export default function EditNewsletterPage() {
 
       <form onSubmit={handleSubmit}>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="bg-transparent rounded-none p-0 h-auto w-full justify-start gap-3">
-            <TabsTrigger
-              value="info"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Informações
-            </TabsTrigger>
-            <TabsTrigger
-              value="content"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Conteúdo
-            </TabsTrigger>
-            <TabsTrigger
-              value="properties"
-              className="cursor-pointer rounded-md border border-gray-300 data-[state=active]:border-transparent data-[state=active]:text-white data-[state=active]:bg-brown data-[state=active]:shadow-none px-4 py-3"
-            >
-              Imóveis
-            </TabsTrigger>
+          <TabsList variant="line" className="mb-6 w-full justify-start">
+            <TabsTrigger variant="line" value="info">Informações</TabsTrigger>
+            <TabsTrigger variant="line" value="content">Conteúdo</TabsTrigger>
+            <TabsTrigger variant="line" value="properties">Imóveis</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="info" className="mt-6">
+          <TabsContent value="info" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Informações Básicas</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Informações básicas</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
                   <Label htmlFor="title">Título *</Label>
                   <Input
@@ -211,7 +199,7 @@ export default function EditNewsletterPage() {
                     onChange={handleImageUpload}
                     disabled={uploadingImage}
                   />
-                  {uploadingImage && <p className="body-14-regular text-black-muted">Enviando imagem...</p>}
+                  {uploadingImage && <p className="text-sm text-muted-foreground">A enviar imagem…</p>}
                   {formData.coverImage && (
                     <Image src={formData.coverImage} alt="Preview" className="w-full max-w-md h-48 object-cover border mt-2"
                       width={500}
@@ -223,12 +211,12 @@ export default function EditNewsletterPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="content" className="mt-6">
+          <TabsContent value="content" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Conteúdo da Newsletter</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Conteúdo da newsletter</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
                   <Label htmlFor="content">Conteúdo *</Label>
                   <RichTextEditor
@@ -242,43 +230,42 @@ export default function EditNewsletterPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="properties" className="mt-6">
+          <TabsContent value="properties" className="mt-0 space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Imóveis Relacionados</CardTitle>
+              <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
+                <CardTitle className="text-base font-semibold">Imóveis relacionados</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-4">
                   <div>
-                    <Label>Imóveis Relacionados</Label>
-                    <p className="text-sm text-gray-500 mb-3">
-                      Selecione os imóveis que deseja associar a esta newsletter
+                    <Label>Imóveis relacionados</Label>
+                    <p className="mb-3 text-sm text-muted-foreground">
+                      Selecione os imóveis a associar a esta newsletter
                     </p>
                   </div>
 
-                  {/* Cards dos imóveis selecionados */}
                   {newsletter?.properties && newsletter.properties.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 border rounded-lg bg-gray-50">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                       {newsletter.properties.map((property) => (
-                        <div key={property.id} className="bg-white rounded-lg overflow-hidden shadow-sm">
-                          <div className="relative w-full h-40">
+                        <div key={property.id} className="overflow-hidden">
+                          <div className="relative h-40 w-full">
                             <Image
                               src={property.image}
-                              alt={property.title}
+                              alt=""
                               fill
                               className="object-cover"
                             />
                           </div>
                           <div className="p-3">
-                            <p className="body-16-medium text-black line-clamp-1">{property.title}</p>
-                            <p className="body-14-medium text-grey mt-1">
+                            <p className="line-clamp-1 text-sm font-medium text-foreground">{property.title}</p>
+                            <p className="mt-1 text-xs text-muted-foreground">
                               {property.concelho}, {property.distrito}
                             </p>
-                            <p className="body-20-medium text-black mt-2">
-                              {new Intl.NumberFormat('pt-PT', {
-                                style: 'currency',
-                                currency: 'EUR',
-                                minimumFractionDigits: 0
+                            <p className="mt-2 text-sm font-medium tabular-nums text-foreground">
+                              {new Intl.NumberFormat("pt-PT", {
+                                style: "currency",
+                                currency: "EUR",
+                                minimumFractionDigits: 0,
                               }).format(parseFloat(property.price))}
                             </p>
                           </div>
@@ -304,17 +291,14 @@ export default function EditNewsletterPage() {
           </TabsContent>
         </Tabs>
 
-        <div className="flex gap-4 mt-6 justify-end">
+        <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-border pt-6">
           {activeTab === "properties" ? (
             <>
               <Button type="button" variant="outline" asChild>
                 <Link href="/admin/newsletters">Cancelar</Link>
               </Button>
-              <Button
-                type="submit"
-                disabled={updateMutation.isPending}
-              >
-                {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}
+              <Button type="submit" disabled={updateMutation.isPending}>
+                {updateMutation.isPending ? "A guardar…" : "Guardar alterações"}
               </Button>
             </>
           ) : (

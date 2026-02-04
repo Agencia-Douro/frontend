@@ -3,12 +3,22 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastTestimonialsApi, PodcastTestimonial } from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-admin/card"
+import { Switch } from "@/components/ui-admin/switch"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui-admin/alert-dialog"
 import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X } from "lucide-react"
 
@@ -101,9 +111,14 @@ export default function PodcastTestimonialsPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover este testemunho?")) {
-      deleteMutation.mutate(id)
+  const [testimonialToDelete, setTestimonialToDelete] = useState<string | null>(null)
+
+  const handleDelete = (id: string) => setTestimonialToDelete(id)
+
+  const confirmDelete = () => {
+    if (testimonialToDelete) {
+      deleteMutation.mutate(testimonialToDelete)
+      setTestimonialToDelete(null)
     }
   }
 
@@ -120,21 +135,25 @@ export default function PodcastTestimonialsPage() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-muted-foreground">
+        A carregar...
+      </div>
+    )
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Testemunhos do Podcast</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-lg font-semibold text-foreground">Testemunhos do Podcast</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Gerencie os testemunhos exibidos na página do podcast.
           </p>
         </div>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Novo Testemunho
           </Button>
         )}
@@ -145,8 +164,8 @@ export default function PodcastTestimonialsPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{editingTestimonial ? "Editar Testemunho" : "Novo Testemunho"}</CardTitle>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="h-4 w-4" />
+              <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
+                <X className="size-4" />
               </Button>
             </div>
           </CardHeader>
@@ -214,8 +233,8 @@ export default function PodcastTestimonialsPage() {
                 </div>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                <p className="text-sm text-blue-800">
+              <div>
+                <p className="text-sm text-muted-foreground">
                   <strong>Nota:</strong> As traduções para inglês e francês serão geradas automaticamente via API DeepL.
                 </p>
               </div>
@@ -236,41 +255,61 @@ export default function PodcastTestimonialsPage() {
       <div className="grid gap-4">
         {testimonials?.map((testimonial: PodcastTestimonial) => (
           <Card key={testimonial.id} className={!testimonial.isActive ? "opacity-60" : ""}>
-            <CardContent className="p-4">
+            <CardContent>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-lg">{testimonial.name}</h3>
-                    <span className="text-xs bg-gray-100 px-2 py-1 rounded">Ordem: {testimonial.order}</span>
+                    <h3 className="font-semibold text-foreground">{testimonial.name}</h3>
+                    <span className="text-xs bg-muted px-2 py-1 rounded">Ordem: {testimonial.order}</span>
                     {!testimonial.isActive && (
-                      <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Inativo</span>
+                      <span className="text-xs bg-destructive/10 text-destructive px-2 py-1 rounded">Inativo</span>
                     )}
                   </div>
-                  <p className="text-sm text-brown font-medium mb-2">{testimonial.role_pt}</p>
-                  <p className="text-sm text-gray-600 mb-3 italic">&quot;{testimonial.text_pt}&quot;</p>
+                  <p className="text-sm font-medium text-foreground mb-2">{testimonial.role_pt}</p>
+                  <p className="text-sm text-muted-foreground mb-3 italic text-pretty">&quot;{testimonial.text_pt}&quot;</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                    <div className="bg-gray-50 p-2 rounded">
+                    <div>
                       <p className="font-medium mb-1">EN:</p>
                       <p className="line-clamp-2">{testimonial.text_en || "Sem tradução"}</p>
                     </div>
-                    <div className="bg-gray-50 p-2 rounded">
+                    <div>
                       <p className="font-medium mb-1">FR:</p>
                       <p className="line-clamp-2">{testimonial.text_fr || "Sem tradução"}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-2 ml-4">
-                  <Button variant="outline" size="icon" onClick={() => handleEdit(testimonial)}>
-                    <Pencil className="h-4 w-4" />
+                  <Button variant="outline" size="icon" onClick={() => handleEdit(testimonial)} aria-label="Editar testemunho">
+                    <Pencil className="size-4" />
                   </Button>
                   <Button
-                    variant="brown"
+                    variant="destructive"
                     size="icon"
                     onClick={() => handleDelete(testimonial.id)}
                     disabled={deleteMutation.isPending}
+                    aria-label="Remover testemunho"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="size-4" />
                   </Button>
+                  <AlertDialog open={testimonialToDelete === testimonial.id} onOpenChange={(open) => !open && setTestimonialToDelete(null)}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Remover testemunho</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tem certeza que deseja remover este testemunho? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          onClick={confirmDelete}
+                        >
+                          Remover
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </CardContent>
@@ -280,7 +319,7 @@ export default function PodcastTestimonialsPage() {
 
       {(!testimonials || testimonials.length === 0) && (
         <Card>
-          <CardContent className="p-6 text-center text-gray-500">
+          <CardContent className="text-center text-muted-foreground">
             Nenhum testemunho cadastrado. Clique em &quot;Novo Testemunho&quot; para começar.
           </CardContent>
         </Card>

@@ -4,11 +4,12 @@ import { useState, useEffect } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { podcastContentApi } from "@/services/api"
 import { UpdatePodcastContentDto } from "@/types/about-us"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui-admin/button"
+import { Input } from "@/components/ui-admin/input"
+import { Label } from "@/components/ui-admin/label"
+import { Textarea } from "@/components/ui-admin/textarea"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui-admin/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-admin/tabs"
 import { toast } from "sonner"
 
 export default function PodcastContentPage() {
@@ -180,33 +181,43 @@ export default function PodcastContentPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <p>A carregar...</p>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 md:px-6">
+        <p className="text-sm text-muted-foreground">A carregar…</p>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6">
-        <h1 className="heading-tres-medium text-brown mb-2">
-          Conteúdo da Página Podcast
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
+      <div className="mb-4 shrink-0">
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">
+          Conteúdo da página Podcast
         </h1>
-        <p className="body-16-regular text-grey">
-          Edite os textos em português. As traduções para inglês e francês serão
-          feitas automaticamente via DeepL.
+        <p className="mt-1 text-sm text-muted-foreground">
+          Edite os textos em português. As traduções para inglês e francês são feitas automaticamente via DeepL.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Seção Principal */}
+      <form onSubmit={handleSubmit} className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <Tabs defaultValue="hero" className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <TabsList variant="line" className="w-full shrink-0 justify-start">
+            <TabsTrigger variant="line" value="hero">Hero</TabsTrigger>
+            <TabsTrigger variant="line" value="sobre">Sobre</TabsTrigger>
+            <TabsTrigger variant="line" value="apresentadora">Apresentadora</TabsTrigger>
+            <TabsTrigger variant="line" value="seccoes">Secções</TabsTrigger>
+            <TabsTrigger variant="line" value="episodios">Episódios</TabsTrigger>
+            <TabsTrigger variant="line" value="plataformas-cta">Plataformas e CTA</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="hero" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         <Card>
           <CardHeader>
             <CardTitle>Seção Principal (Hero)</CardTitle>
             <CardDescription>Textos da introdução do podcast</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="headerLabel">Label Superior</Label>
               <Input
                 id="headerLabel"
@@ -218,7 +229,7 @@ export default function PodcastContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="pageTitle">Título da Página</Label>
               <Input
                 id="pageTitle"
@@ -230,7 +241,7 @@ export default function PodcastContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="pageSubtitle">Subtítulo</Label>
               <Input
                 id="pageSubtitle"
@@ -242,7 +253,7 @@ export default function PodcastContentPage() {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="pageDescription">Descrição</Label>
               <Textarea
                 id="pageDescription"
@@ -256,7 +267,11 @@ export default function PodcastContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
+          <TabsContent value="sobre" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         {/* Seção About */}
         <Card>
           <CardHeader>
@@ -343,7 +358,11 @@ export default function PodcastContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
+          <TabsContent value="apresentadora" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         {/* Seção Apresentadora */}
         <Card>
           <CardHeader>
@@ -481,7 +500,11 @@ export default function PodcastContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
+          <TabsContent value="seccoes" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         {/* Seção Tópicos */}
         <Card>
           <CardHeader>
@@ -695,7 +718,11 @@ export default function PodcastContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
+          <TabsContent value="episodios" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         {/* Seção Episódios */}
         <Card>
           <CardHeader>
@@ -754,8 +781,8 @@ export default function PodcastContentPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             {[1, 2, 3, 4, 5, 6].map((num) => (
-              <div key={num} className="p-4 border rounded-lg space-y-3">
-                <h4 className="font-medium text-brown">Episódio {num}</h4>
+              <div key={num} className="space-y-3">
+                <h4 className="font-medium text-foreground">Episódio {num}</h4>
                 <div className="space-y-1">
                   <Label htmlFor={`episode${num}Url`}>Link do YouTube</Label>
                   <Input
@@ -782,7 +809,11 @@ export default function PodcastContentPage() {
             ))}
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
 
+          <TabsContent value="plataformas-cta" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
+            <div className="space-y-6 pb-6">
         {/* Seção Platforms Header */}
         <Card>
           <CardHeader>
@@ -904,14 +935,13 @@ export default function PodcastContentPage() {
             </div>
           </CardContent>
         </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
 
-        <div className="flex gap-4 justify-end">
-          <Button
-            type="submit"
-            variant="brown"
-            disabled={updateMutation.isPending}
-          >
-            {updateMutation.isPending ? "Salvando..." : "Salvar Alterações"}
+        <div className="sticky bottom-0 left-0 right-0 z-10 flex justify-end bg-background/95 py-3 backdrop-blur-sm">
+          <Button type="submit" disabled={updateMutation.isPending}>
+            {updateMutation.isPending ? "A guardar…" : "Guardar alterações"}
           </Button>
         </div>
       </form>
