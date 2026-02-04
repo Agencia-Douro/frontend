@@ -144,7 +144,7 @@ export default function PropertyDetailsPage() {
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
       {/* Barra de ações */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
         <Button variant="ghost" size="sm" asChild>
           <Link
             href="/admin/properties"
@@ -276,7 +276,7 @@ export default function PropertyDetailsPage() {
         {parseFloat(property.price).toLocaleString("pt-PT")} €
       </h2>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-12">
+      <div className="mt-8 grid gap-8 lg:grid-cols-12">
         {/* Descrição */}
         <div className="lg:col-span-7">
           <div
@@ -301,10 +301,10 @@ export default function PropertyDetailsPage() {
         </div>
 
         {/* Características + mapa */}
-        <div className="space-y-6 lg:col-span-5 lg:col-end-13">
+        <div className="space-y-8 lg:col-span-5 lg:col-end-13">
           <Card>
             <CardHeader className="p-0 pb-2">
-              <CardTitle className="text-base">Características</CardTitle>
+              <CardTitle className="text-lg">Características</CardTitle>
             </CardHeader>
             <CardContent className="space-y-0 p-0 pt-0">
               {property.totalArea != null && property.totalArea > 0 && (

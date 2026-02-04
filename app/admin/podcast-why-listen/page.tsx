@@ -143,7 +143,7 @@ export default function PodcastWhyListenPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Cards &quot;Por Que Ouvir&quot;</h1>
@@ -170,8 +170,8 @@ export default function PodcastWhyListenPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
                 <div className="space-y-2">
                   <Label htmlFor="iconKey">Chave do Ícone *</Label>
                   <Input
@@ -210,7 +210,7 @@ export default function PodcastWhyListenPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
                 <div className="space-y-2">
                   <Label htmlFor="order">Ordem de Exibição</Label>
                   <Input
@@ -264,7 +264,7 @@ export default function PodcastWhyListenPage() {
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl bg-muted p-2 rounded">{card.iconKey}</span>
                     <div>
-                      <h3 className="font-semibold text-foreground">{card.title_pt}</h3>
+                      <h3 className="text-lg font-semibold text-foreground">{card.title_pt}</h3>
                       <div className="flex gap-1">
                         <span className="text-xs bg-muted px-2 py-0.5 rounded">#{card.order}</span>
                         {!card.isActive && (

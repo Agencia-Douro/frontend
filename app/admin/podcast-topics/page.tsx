@@ -209,7 +209,7 @@ export default function PodcastTopicsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Podcast</h1>
@@ -230,7 +230,7 @@ export default function PodcastTopicsPage() {
           <CardTitle>Imagem da Apresentadora</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="apresentadora-image">Foto da Apresentadora do Podcast</Label>
               <Input
@@ -264,7 +264,7 @@ export default function PodcastTopicsPage() {
       </Card>
 
       <div>
-        <h2 className="text-base font-semibold text-foreground mb-2">Tópicos Abordados</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-2">Tópicos Abordados</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Gerencie os tópicos exibidos na seção &quot;O Que Abordamos&quot; da página do podcast.
           As traduções para inglês e francês são geradas automaticamente.
@@ -282,7 +282,7 @@ export default function PodcastTopicsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="title_pt">Título (Português) *</Label>
                 <Input
@@ -348,7 +348,7 @@ export default function PodcastTopicsPage() {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-foreground">{topic.title_pt}</h3>
+                    <h3 className="text-lg font-semibold text-foreground">{topic.title_pt}</h3>
                     <span className="text-xs bg-muted px-2 py-1 rounded">Ordem: {topic.order}</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 text-pretty">{topic.description_pt}</p>

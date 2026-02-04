@@ -175,7 +175,7 @@ export default function DesiredZonesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Zonas Mais Desejadas</h1>
@@ -200,7 +200,7 @@ export default function DesiredZonesPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="country">País *</Label>
                 <Select
@@ -292,7 +292,7 @@ export default function DesiredZonesPage() {
         </Card>
       )}
 
-      <div className="grid gap-4">
+      <div className="grid gap-y-6 gap-x-4">
         {zones?.map((zone) => (
           <Card key={zone.id}>
             <CardContent className="flex items-center justify-between">
@@ -305,7 +305,7 @@ export default function DesiredZonesPage() {
                   className="rounded-lg object-cover"
                 />
                 <div>
-                  <h3 className="font-semibold text-foreground">{zone.name}</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{zone.name}</h3>
                   <p className="text-sm text-muted-foreground">
                     {countryOptions.find(c => c.code === zone.country)?.name || zone.country || "Portugal"} · Ordem: {zone.displayOrder} · {zone.isActive ? "Ativa" : "Inativa"}
                   </p>

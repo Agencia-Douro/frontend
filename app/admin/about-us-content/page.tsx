@@ -88,7 +88,7 @@ export default function AboutUsContentPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
         <h1 className="text-lg font-semibold text-foreground">
           Conteúdo da Página Sobre Nós
@@ -99,13 +99,13 @@ export default function AboutUsContentPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Seção Principal */}
         <Card>
           <CardHeader>
             <CardTitle>Seção Principal</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-1">
               <Label htmlFor="pageTitle">Título da Página</Label>
               <Input
@@ -167,7 +167,7 @@ export default function AboutUsContentPage() {
           <CardHeader>
             <CardTitle>Seção Cultura</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-1">
               <Label htmlFor="cultureLabel">Label</Label>
               <Input
@@ -201,7 +201,7 @@ export default function AboutUsContentPage() {
           <CardHeader>
             <CardTitle>Seção Serviços</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-1">
               <Label htmlFor="servicesLabel">Label</Label>
               <Input
@@ -235,7 +235,7 @@ export default function AboutUsContentPage() {
           <CardHeader>
             <CardTitle>Seção Equipa</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-1">
               <Label htmlFor="teamLabel">Label</Label>
               <Input
@@ -283,7 +283,7 @@ export default function AboutUsContentPage() {
           <CardHeader>
             <CardTitle>Nova Seção - Television</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-1">
               <Label htmlFor="televisionLabel">Label</Label>
               <Input
@@ -321,7 +321,7 @@ export default function AboutUsContentPage() {
               />
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-border">
+            <div className="space-y-6 pt-6 border-t border-border">
               <Label className="text-base font-medium">Links do YouTube</Label>
               
               <div className="space-y-1">

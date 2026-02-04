@@ -189,7 +189,7 @@ export default function PodcastContentPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
-      <div className="mb-4 shrink-0">
+      <div className="mb-6 shrink-0">
         <h1 className="text-lg font-semibold tracking-tight text-foreground">
           Conteúdo da página Podcast
         </h1>
@@ -210,13 +210,13 @@ export default function PodcastContentPage() {
           </TabsList>
 
           <TabsContent value="hero" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Seção Principal (Hero)</CardTitle>
             <CardDescription>Textos da introdução do podcast</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="headerLabel">Label Superior</Label>
               <Input
@@ -271,15 +271,15 @@ export default function PodcastContentPage() {
           </TabsContent>
 
           <TabsContent value="sobre" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         {/* Seção About */}
         <Card>
           <CardHeader>
             <CardTitle>Seção "Sobre o Podcast"</CardTitle>
             <CardDescription>Textos da seção de apresentação do podcast</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="aboutLabel">Label</Label>
                 <Input
@@ -362,15 +362,15 @@ export default function PodcastContentPage() {
           </TabsContent>
 
           <TabsContent value="apresentadora" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         {/* Seção Apresentadora */}
         <Card>
           <CardHeader>
             <CardTitle>Seção Apresentadora</CardTitle>
             <CardDescription>Informações completas sobre a apresentadora do podcast</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="hostLabel">Label</Label>
                 <Input
@@ -473,7 +473,7 @@ export default function PodcastContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="hostLinkedInUrl">URL do LinkedIn</Label>
                 <Input
@@ -504,15 +504,15 @@ export default function PodcastContentPage() {
           </TabsContent>
 
           <TabsContent value="seccoes" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         {/* Seção Tópicos */}
         <Card>
           <CardHeader>
             <CardTitle>Seção "O Que Abordamos"</CardTitle>
             <CardDescription>Títulos da seção de tópicos</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="topicsLabel">Label</Label>
                 <Input
@@ -546,8 +546,8 @@ export default function PodcastContentPage() {
             <CardTitle>Seção Convidados (Header)</CardTitle>
             <CardDescription>Títulos da seção de convidados</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="guestsLabel">Label</Label>
                 <Input
@@ -581,8 +581,8 @@ export default function PodcastContentPage() {
             <CardTitle>Seção Galeria (Header)</CardTitle>
             <CardDescription>Títulos da seção de galeria de fotos</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="galleryLabel">Label</Label>
                 <Input
@@ -629,8 +629,8 @@ export default function PodcastContentPage() {
             <CardTitle>Seção "Por Que Ouvir" (Header)</CardTitle>
             <CardDescription>Títulos da seção de motivos para ouvir</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="whyListenLabel">Label</Label>
                 <Input
@@ -677,8 +677,8 @@ export default function PodcastContentPage() {
             <CardTitle>Seção Testemunhos (Header)</CardTitle>
             <CardDescription>Títulos da seção de testemunhos</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="testimonialsLabel">Label</Label>
                 <Input
@@ -722,15 +722,15 @@ export default function PodcastContentPage() {
           </TabsContent>
 
           <TabsContent value="episodios" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         {/* Seção Episódios */}
         <Card>
           <CardHeader>
             <CardTitle>Seção Episódios</CardTitle>
             <CardDescription>Títulos da seção de episódios em destaque</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="episodesLabel">Label</Label>
                 <Input
@@ -782,7 +782,7 @@ export default function PodcastContentPage() {
           <CardContent className="space-y-6">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <div key={num} className="space-y-3">
-                <h4 className="font-medium text-foreground">Episódio {num}</h4>
+                <h4 className="text-lg font-medium text-foreground">Episódio {num}</h4>
                 <div className="space-y-1">
                   <Label htmlFor={`episode${num}Url`}>Link do YouTube</Label>
                   <Input
@@ -813,15 +813,15 @@ export default function PodcastContentPage() {
           </TabsContent>
 
           <TabsContent value="plataformas-cta" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         {/* Seção Platforms Header */}
         <Card>
           <CardHeader>
             <CardTitle>Seção Plataformas (Header)</CardTitle>
             <CardDescription>Títulos da seção de plataformas de streaming</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="platformsLabel">Label</Label>
                 <Input
@@ -868,8 +868,8 @@ export default function PodcastContentPage() {
             <CardTitle>Seção CTA Final</CardTitle>
             <CardDescription>Textos do call-to-action final (convite para participar)</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="ctaLabel">Label</Label>
                 <Input
@@ -908,7 +908,7 @@ export default function PodcastContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
               <div className="space-y-1">
                 <Label htmlFor="ctaHint">Dica / Incentivo</Label>
                 <Input

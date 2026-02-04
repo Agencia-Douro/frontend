@@ -119,7 +119,7 @@ function CreatePropertyContent() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 md:px-6">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
         <Breadcrumb className="min-w-0 flex-1">
           <BreadcrumbList>
             {segments.map((seg, i) => (

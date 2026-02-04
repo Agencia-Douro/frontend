@@ -128,7 +128,7 @@ export default function CultureItemsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Itens de Cultura</h1>
@@ -161,10 +161,10 @@ export default function CultureItemsPage() {
               onSubmit={handleSubmit}
               className="mb-6"
             >
-              <h3 className="text-sm font-medium text-foreground mb-4">
+              <h3 className="text-lg font-medium text-foreground mb-4">
                 {editingItem ? "Editar Item" : "Novo Item"}
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="space-y-1">
                   <Label htmlFor="title">Título (PT)</Label>
                   <Input
@@ -240,7 +240,7 @@ export default function CultureItemsPage() {
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-sm font-semibold text-foreground">{item.title_pt}</h3>
+                      <h3 className="text-lg font-semibold text-foreground">{item.title_pt}</h3>
                       <span className="text-sm text-muted-foreground">
                         (Ordem: {item.order})
                       </span>

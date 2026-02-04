@@ -113,7 +113,7 @@ export default function DepoimentosPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-lg font-semibold tracking-tight text-foreground">Depoimentos</h1>
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
@@ -126,7 +126,7 @@ export default function DepoimentosPage() {
       {showForm && (
         <Card className="mb-6">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <CardTitle className="text-base font-semibold">
+            <CardTitle className="text-lg font-semibold">
               {editingDepoimento ? "Editar depoimento" : "Novo depoimento"}
             </CardTitle>
             <Button variant="ghost" size="icon" onClick={resetForm} aria-label="Fechar formulário">
@@ -134,7 +134,7 @@ export default function DepoimentosPage() {
             </Button>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome do cliente *</Label>
                 <Input
@@ -178,12 +178,12 @@ export default function DepoimentosPage() {
         </Card>
       )}
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {depoimentos?.map((d) => (
           <Card key={d.id}>
             <CardContent className="flex flex-wrap items-center justify-between gap-4">
               <div className="min-w-0 flex-1">
-                <h3 className="text-base font-semibold text-foreground">{d.clientName}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{d.clientName}</h3>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{d.text_pt}</p>
               </div>
               <div className="flex shrink-0 gap-2">

@@ -122,7 +122,7 @@ export default function SellPropertyContentPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
-      <div className="mb-4 shrink-0">
+      <div className="mb-6 shrink-0">
         <h1 className="text-lg font-semibold tracking-tight text-foreground">
           Conteúdo da página Vender imóvel
         </h1>
@@ -141,12 +141,12 @@ export default function SellPropertyContentPage() {
           </TabsList>
 
           <TabsContent value="hero" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Seção Hero</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="heroBadge">Badge (etiqueta superior)</Label>
               <Input
@@ -192,12 +192,12 @@ export default function SellPropertyContentPage() {
           </TabsContent>
 
           <TabsContent value="formulario" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Seção Formulário</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="formTitle">Título do Formulário</Label>
               <Input
@@ -229,12 +229,12 @@ export default function SellPropertyContentPage() {
           </TabsContent>
 
           <TabsContent value="estatisticas" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Seção Estatísticas / Alcance</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="statsBadge">Badge</Label>
               <Input
@@ -275,10 +275,10 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 pt-6 border-t border-border">
               {/* Reach */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Alcance Global</h4>
+                <h4 className="text-lg font-medium text-foreground">Alcance Global</h4>
                 <div className="space-y-2">
                   <Label htmlFor="statsReachLabel">Label</Label>
                   <Input
@@ -305,7 +305,7 @@ export default function SellPropertyContentPage() {
 
               {/* Clients */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Clientes</h4>
+                <h4 className="text-lg font-medium text-foreground">Clientes</h4>
                 <div className="space-y-2">
                   <Label htmlFor="statsClientsLabel">Label</Label>
                   <Input
@@ -332,7 +332,7 @@ export default function SellPropertyContentPage() {
 
               {/* Locations */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Localizações</h4>
+                <h4 className="text-lg font-medium text-foreground">Localizações</h4>
                 <div className="space-y-2">
                   <Label htmlFor="statsLocationsLabel">Label</Label>
                   <Input
@@ -359,7 +359,7 @@ export default function SellPropertyContentPage() {
 
               {/* Experience */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Experiência</h4>
+                <h4 className="text-lg font-medium text-foreground">Experiência</h4>
                 <div className="space-y-2">
                   <Label htmlFor="statsExperienceLabel">Label</Label>
                   <Input
@@ -390,12 +390,12 @@ export default function SellPropertyContentPage() {
           </TabsContent>
 
           <TabsContent value="marketing" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Seção Marketing / Canais de Promoção</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="marketingBadge">Badge</Label>
               <Input
@@ -436,10 +436,10 @@ export default function SellPropertyContentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 pt-6 border-t border-border">
               {/* Website */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Website</h4>
+                <h4 className="text-lg font-medium text-foreground">Website</h4>
                 <div className="space-y-2">
                   <Label htmlFor="marketingWebsiteTitle">Título</Label>
                   <Input
@@ -477,7 +477,7 @@ export default function SellPropertyContentPage() {
 
               {/* Newsletter */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Newsletter</h4>
+                <h4 className="text-lg font-medium text-foreground">Newsletter</h4>
                 <div className="space-y-2">
                   <Label htmlFor="marketingNewsletterTitle">Título</Label>
                   <Input
@@ -515,7 +515,7 @@ export default function SellPropertyContentPage() {
 
               {/* Agencies */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Agências Parceiras</h4>
+                <h4 className="text-lg font-medium text-foreground">Agências Parceiras</h4>
                 <div className="space-y-2">
                   <Label htmlFor="marketingAgenciesTitle">Título</Label>
                   <Input
@@ -553,7 +553,7 @@ export default function SellPropertyContentPage() {
 
               {/* Media */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-foreground">Redes Sociais</h4>
+                <h4 className="text-lg font-medium text-foreground">Redes Sociais</h4>
                 <div className="space-y-2">
                   <Label htmlFor="marketingMediaTitle">Título</Label>
                   <Input

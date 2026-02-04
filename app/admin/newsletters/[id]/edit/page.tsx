@@ -155,10 +155,10 @@ export default function EditNewsletterPage() {
             <TabsTrigger variant="line" value="properties">Imóveis</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="info" className="mt-0 space-y-6">
+          <TabsContent value="info" className="mt-0 space-y-8">
             <Card>
               <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
-                <CardTitle className="text-base font-semibold">Informações básicas</CardTitle>
+                <CardTitle className="text-lg font-semibold">Informações básicas</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
@@ -214,7 +214,7 @@ export default function EditNewsletterPage() {
           <TabsContent value="content" className="mt-0 space-y-6">
             <Card>
               <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
-                <CardTitle className="text-base font-semibold">Conteúdo da newsletter</CardTitle>
+                <CardTitle className="text-lg font-semibold">Conteúdo da newsletter</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-2">
@@ -230,10 +230,10 @@ export default function EditNewsletterPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="properties" className="mt-0 space-y-6">
+          <TabsContent value="properties" className="mt-0 space-y-8">
             <Card>
               <CardHeader className="px-0 pt-4 pb-2 bg-transparent">
-                <CardTitle className="text-base font-semibold">Imóveis relacionados</CardTitle>
+                <CardTitle className="text-lg font-semibold">Imóveis relacionados</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6 px-0 pt-0 pb-4 bg-transparent">
                 <div className="space-y-4">

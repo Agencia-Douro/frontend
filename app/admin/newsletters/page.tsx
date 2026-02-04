@@ -103,7 +103,7 @@ export default function NewslettersPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto px-4 pt-6 pb-6 md:px-6">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-lg font-semibold tracking-tight text-foreground">Newsletters</h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -159,7 +159,7 @@ export default function NewslettersPage() {
         )}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-y-6 gap-x-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedNewsletters.map((newsletter) => (
           <Card
             key={newsletter.id}
@@ -175,7 +175,7 @@ export default function NewslettersPage() {
               </div>
             )}
             <CardContent className="flex flex-1 flex-col">
-              <CardTitle className="mb-4 line-clamp-2 text-base font-semibold">{newsletter.title}</CardTitle>
+              <CardTitle className="mb-4 line-clamp-2 text-lg font-semibold">{newsletter.title}</CardTitle>
               <div className="mt-auto flex gap-2">
                 <Button variant="outline" size="default" className="min-w-0 flex-1" asChild>
                   <Link href={`/admin/newsletters/${newsletter.id}/edit`}>

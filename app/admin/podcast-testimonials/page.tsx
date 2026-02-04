@@ -143,7 +143,7 @@ export default function PodcastTestimonialsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Testemunhos do Podcast</h1>
@@ -170,8 +170,8 @@ export default function PodcastTestimonialsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nome *</Label>
                   <Input
@@ -207,7 +207,7 @@ export default function PodcastTestimonialsPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
                 <div className="space-y-2">
                   <Label htmlFor="order">Ordem de Exibição</Label>
                   <Input
@@ -259,7 +259,7 @@ export default function PodcastTestimonialsPage() {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-foreground">{testimonial.name}</h3>
+                    <h3 className="text-lg font-semibold text-foreground">{testimonial.name}</h3>
                     <span className="text-xs bg-muted px-2 py-1 rounded">Ordem: {testimonial.order}</span>
                     {!testimonial.isActive && (
                       <span className="text-xs bg-destructive/10 text-destructive px-2 py-1 rounded">Inativo</span>

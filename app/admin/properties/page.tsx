@@ -119,7 +119,7 @@ export default function PropertiesPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <div>
           <h1 className="text-lg font-semibold text-foreground tracking-tight text-balance">
             Gerenciar Propriedades
@@ -166,12 +166,12 @@ export default function PropertiesPage() {
 
       {/* Seção de Rascunhos */}
       {drafts.length > 0 && (
-        <Card className="mb-4 text-foreground">
+        <Card className="mb-6 text-foreground">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <FileEdit className="size-4 text-muted-foreground" aria-hidden />
-                <CardTitle className="text-base text-foreground">Rascunhos ({drafts.length})</CardTitle>
+                <CardTitle className="text-lg text-foreground">Rascunhos ({drafts.length})</CardTitle>
               </div>
               {drafts.length > 1 && (
                 <Button
@@ -258,7 +258,7 @@ export default function PropertiesPage() {
       )}
 
       {/* Barra de Busca e Filtros */}
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-6 flex flex-wrap gap-2">
         <div className="relative min-w-[180px] flex-1">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
           <Input
@@ -290,7 +290,7 @@ export default function PropertiesPage() {
             <SheetTitle>Filtros</SheetTitle>
           </SheetHeader>
           <div className="min-h-0 flex-1 overflow-y-auto px-6">
-            <div className="grid gap-6 py-4">
+            <div className="grid gap-6 py-6">
               {/* Tipo de Propriedade */}
               <div className="space-y-1.5">
                 <Label className="text-xs">Tipo de Imóvel</Label>
@@ -474,7 +474,7 @@ export default function PropertiesPage() {
             </Button>
           </div>
         ) : viewMode === "cards" ? (
-          <div className="grid gap-4 pb-20 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-y-6 gap-x-4 pb-20 md:grid-cols-2 lg:grid-cols-3">
             {data?.data.map((property) => (
               <AdminPropertyCard
                 key={property.id}

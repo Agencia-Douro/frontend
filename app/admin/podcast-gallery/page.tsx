@@ -227,7 +227,7 @@ export default function PodcastGalleryPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Galeria do Podcast</h1>
@@ -254,7 +254,7 @@ export default function PodcastGalleryPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Seletor de Tipo de Mídia */}
               <div className="space-y-2">
                 <Label>Tipo de Mídia</Label>

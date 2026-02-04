@@ -392,7 +392,7 @@ export default function SiteConfigPage() {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col px-4 pt-6 md:px-6">
-      <div className="mb-4 shrink-0">
+      <div className="mb-6 shrink-0">
         <h1 className="text-lg font-semibold tracking-tight text-foreground">Configurações do site</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Configure as informações gerais exibidas no site
@@ -411,12 +411,12 @@ export default function SiteConfigPage() {
 
         <TabsContent value="estatisticas" className="relative min-h-0 flex-1 overflow-auto overflow-x-hidden">
           <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
-            <div className="space-y-6 pb-6">
+            <div className="space-y-8 pb-8">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base font-semibold">Estatísticas do site</CardTitle>
+                  <CardTitle className="text-lg font-semibold">Estatísticas do site</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <CardContent className="grid grid-cols-1 gap-y-6 gap-x-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="clientesSatisfeitos">Clientes satisfeitos</Label>
                     <Input
@@ -524,9 +524,9 @@ export default function SiteConfigPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base font-semibold">Estatísticas do podcast</CardTitle>
+                  <CardTitle className="text-lg font-semibold">Estatísticas do podcast</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <CardContent className="grid grid-cols-1 gap-y-6 gap-x-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="temporadas">Temporadas</Label>
                     <Input
@@ -608,8 +608,8 @@ export default function SiteConfigPage() {
           </form>
         </TabsContent>
 
-        <TabsContent value="membros" className="mt-6 min-h-0 flex-1 overflow-auto overflow-x-hidden pb-6">
-          <div className="flex flex-col gap-6">
+        <TabsContent value="membros" className="mt-6 min-h-0 flex-1 overflow-auto overflow-x-hidden pb-8">
+          <div className="flex flex-col gap-8">
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">
                 Gerir os membros exibidos na página Sobre Nós.
@@ -635,13 +635,13 @@ export default function SiteConfigPage() {
             {showMemberForm && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base font-semibold">
+                  <CardTitle className="text-lg font-semibold">
                     {editingMember ? "Editar Membro" : "Novo Membro"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleMemberSubmit} className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                  <form onSubmit={handleMemberSubmit} className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
                       <div className="space-y-2 shrink-0">
                         <Label htmlFor="member-photo">Foto</Label>
                         <div className="flex items-center gap-4">
@@ -676,7 +676,7 @@ export default function SiteConfigPage() {
                         </div>
                       </div>
 
-                      <div className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="grid flex-1 grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
                         <div className="space-y-2">
                           <Label htmlFor="member-name">Nome</Label>
                           <Input
@@ -834,7 +834,7 @@ export default function SiteConfigPage() {
               </div>
             ) : (
               <Card>
-                <CardContent className="flex flex-col items-center justify-center gap-4 text-center">
+                <CardContent className="flex flex-col items-center justify-center gap-6 text-center">
                   <div className="flex size-14 items-center justify-center rounded-full bg-muted">
                     <User className="size-7 text-muted-foreground" aria-hidden />
                   </div>
