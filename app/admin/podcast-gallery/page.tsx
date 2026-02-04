@@ -227,7 +227,7 @@ export default function PodcastGalleryPage() {
                 <div className="flex gap-2">
                   <Button
                     type="button"
-                    variant={formData.mediaType === "image" ? "default" : "outline"}
+                    variant={formData.mediaType === "image" ? "brown" : "outline"}
                     onClick={() => setFormData({ ...formData, mediaType: "image" })}
                     className="flex-1"
                   >
@@ -236,7 +236,7 @@ export default function PodcastGalleryPage() {
                   </Button>
                   <Button
                     type="button"
-                    variant={formData.mediaType === "video" ? "default" : "outline"}
+                    variant={formData.mediaType === "video" ? "brown" : "outline"}
                     onClick={() => setFormData({ ...formData, mediaType: "video" })}
                     className="flex-1"
                   >
