@@ -72,8 +72,8 @@ export function PodcastHero({
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3 justify-center absolute left-1/2 -translate-x-1/2 bottom-12">
-                    <Button asChild variant="outline" className="px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
+                <div className="flex flex-nowrap gap-2 sm:gap-3 justify-center absolute left-0 right-0 bottom-12 px-4 overflow-x-auto">
+                    <Button asChild variant="outline" className="shrink-0 px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
                         <Link
                             href="https://open.spotify.com/show/agenciadouro"
                             target="_blank"
@@ -85,7 +85,7 @@ export function PodcastHero({
                             {ctaSpotifyLabel}
                         </Link>
                     </Button>
-                    <Button asChild variant="outline" className="px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
+                    <Button asChild variant="outline" className="shrink-0 px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
                         <Link
                             href="https://www.youtube.com/@agenciadouromediacaoimobil3889"
                             target="_blank"
@@ -97,7 +97,7 @@ export function PodcastHero({
                             {ctaYouTubeLabel}
                         </Link>
                     </Button>
-                    <Button asChild variant="gold" className="px-4 py-2.5 md:px-5 transition-colors duration-200">
+                    <Button asChild variant="gold" className="shrink-0 px-4 py-2.5 md:px-5 transition-colors duration-200">
                         <a
                             href={ctaContactMailto ?? "#contacto"}
                             aria-label={ctaContactLabel}
