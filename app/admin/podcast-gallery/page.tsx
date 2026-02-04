@@ -49,28 +49,28 @@ export default function PodcastGalleryPage() {
   })
 
   const createMutation = useMutation({
-    mutationFn: (data: { imageUrl: string; alt_pt?: string; order?: number; isActive?: boolean }) =>
+    mutationFn: (data: { mediaType?: MediaType; imageUrl?: string; videoUrl?: string; alt_pt?: string; order?: number; isActive?: boolean }) =>
       podcastGalleryApi.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["podcast-gallery"] })
-      toast.success("Imagem adicionada com sucesso!")
+      toast.success("Mídia adicionada com sucesso!")
       resetForm()
     },
     onError: (error: any) => {
-      toast.error(error?.message || "Erro ao adicionar imagem")
+      toast.error(error?.message || "Erro ao adicionar mídia")
     },
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) =>
+    mutationFn: ({ id, data }: { id: string; data: { mediaType?: MediaType; imageUrl?: string; videoUrl?: string; alt_pt?: string; order?: number; isActive?: boolean } }) =>
       podcastGalleryApi.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["podcast-gallery"] })
-      toast.success("Imagem atualizada com sucesso!")
+      toast.success("Mídia atualizada com sucesso!")
       resetForm()
     },
     onError: (error: any) => {
-      toast.error(error?.message || "Erro ao atualizar imagem")
+      toast.error(error?.message || "Erro ao atualizar mídia")
     },
   })
 
@@ -78,10 +78,10 @@ export default function PodcastGalleryPage() {
     mutationFn: (id: string) => podcastGalleryApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["podcast-gallery"] })
-      toast.success("Imagem removida com sucesso!")
+      toast.success("Mídia removida com sucesso!")
     },
     onError: (error: any) => {
-      toast.error(error?.message || "Erro ao remover imagem")
+      toast.error(error?.message || "Erro ao remover mídia")
     },
   })
 
@@ -167,7 +167,7 @@ export default function PodcastGalleryPage() {
   }
 
   const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja remover esta imagem?")) {
+    if (confirm("Tem certeza que deseja remover esta mídia?")) {
       deleteMutation.mutate(id)
     }
   }
