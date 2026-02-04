@@ -30,13 +30,13 @@ export function Apresentadora() {
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
-                    <p className="body-16-medium text-brown">{t("credential")}</p>
+                    <p className="body-16-medium text-brown">{podcastContent?.hostCredential || t("credential")}</p>
 
                     <div className="space-y-4 text-justify lg:text-left min-w-0">
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph1")}</p>
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph2")}</p>
-                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{t("paragraph3")}</p>
-                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty wrap-break-word lg:hidden">&quot;{t("quote")}&quot;</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{podcastContent?.hostParagraph1 || t("paragraph1")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{podcastContent?.hostParagraph2 || t("paragraph2")}</p>
+                        <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{podcastContent?.hostParagraph3 || t("paragraph3")}</p>
+                        <p className="body-16-medium text-black border-l-2 border-brown pl-4 italic text-pretty wrap-break-word lg:hidden">&quot;{podcastContent?.hostQuote || t("quote")}&quot;</p>
                     </div>
 
                     {/* Imagem - Mobile: 88% corta a base, LinkedIn dentro da área visível, canto inferior direito */}
@@ -52,16 +52,16 @@ export function Apresentadora() {
                                 sizes="(max-width: 1023px) 448px, 0"
                             />
                             <Link
-                                href={t("linkedInUrl")}
+                                href={podcastContent?.hostLinkedInUrl || t("linkedInUrl")}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="absolute bottom-4 right-4 z-10 inline-flex items-center justify-center gap-3 min-h-[44px] px-4 py-2.5 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182]"
-                                aria-label={t("linkedInLabel")}
+                                aria-label={podcastContent?.hostLinkedInLabel || t("linkedInLabel")}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                                     <path d={LINKEDIN_ICON} />
                                 </svg>
-                                <span>{t("linkedInLabel")}</span>
+                                <span>{podcastContent?.hostLinkedInLabel || t("linkedInLabel")}</span>
                             </Link>
                         </div>
                     </div>
@@ -83,20 +83,20 @@ export function Apresentadora() {
                             {/* Quote e LinkedIn ao fundo da área visível da imagem (16px) */}
                             <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col items-end gap-3">
                                 <Link
-                                    href={t("linkedInUrl")}
+                                    href={podcastContent?.hostLinkedInUrl || t("linkedInUrl")}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-3 px-4 py-2.5 text-white transition-colors duration-200 body-14-medium bg-[#0A66C2] hover:bg-[#004182] shrink-0"
-                                    aria-label={t("linkedInLabel")}
+                                    aria-label={podcastContent?.hostLinkedInLabel || t("linkedInLabel")}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                                         <path d={LINKEDIN_ICON} />
                                     </svg>
-                                    <span>{t("linkedInLabel")}</span>
+                                    <span>{podcastContent?.hostLinkedInLabel || t("linkedInLabel")}</span>
                                 </Link>
                                 <div className="w-full p-4 bg-black/30 backdrop-blur-md">
                                     <p className="body-16-medium text-white italic text-pretty max-w-2xl">
-                                        &quot;{t("quote")}&quot;
+                                        &quot;{podcastContent?.hostQuote || t("quote")}&quot;
                                     </p>
                                 </div>
                             </div>

@@ -131,6 +131,46 @@ export default function AdminPage() {
                                 </CardHeader>
                             </Card>
                         </Link>
+                        <Link href="/admin/podcast-guests" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Convidados</CardTitle>
+                                    <CardDescription>
+                                        Gerencie os convidados do podcast
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/admin/podcast-testimonials" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Testemunhos</CardTitle>
+                                    <CardDescription>
+                                        Gerencie os testemunhos sobre o podcast
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/admin/podcast-gallery" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Galeria de Fotos</CardTitle>
+                                    <CardDescription>
+                                        Gerencie as imagens da galeria do podcast
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/admin/podcast-why-listen" className="h-full">
+                            <Card className="hover:shadow-sm transition-shadow cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="body-16-medium">Por Que Ouvir</CardTitle>
+                                    <CardDescription>
+                                        Gerencie os cards da seção &quot;Por Que Ouvir&quot;
+                                    </CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
                     </div>
                 </div>
             </div>

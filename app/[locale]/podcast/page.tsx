@@ -3,7 +3,14 @@
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import Footer from "@/components/Sections/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
-import { siteConfigApi, podcastContentApi } from "@/services/api";
+import {
+    siteConfigApi,
+    podcastContentApi,
+    podcastGuestsApi,
+    podcastTestimonialsApi,
+    podcastGalleryApi,
+    podcastWhyListenApi,
+} from "@/services/api";
 import { useParams } from "next/navigation";
 import { Apresentadora } from "@/components/Sections/Podcast/Apresentadora";
 import { SectionDivider } from "@/components/Sections/Podcast/SectionDivider";
@@ -48,6 +55,26 @@ export default function PodcastPage() {
     const { data: podcastContent } = useQuery({
         queryKey: ["podcast-content", locale],
         queryFn: () => podcastContentApi.get(locale),
+    });
+
+    const { data: podcastGuests } = useQuery({
+        queryKey: ["podcast-guests", locale],
+        queryFn: () => podcastGuestsApi.getAll(locale),
+    });
+
+    const { data: podcastTestimonials } = useQuery({
+        queryKey: ["podcast-testimonials", locale],
+        queryFn: () => podcastTestimonialsApi.getAll(locale),
+    });
+
+    const { data: podcastGalleryImages } = useQuery({
+        queryKey: ["podcast-gallery", locale],
+        queryFn: () => podcastGalleryApi.getAll(locale),
+    });
+
+    const { data: podcastWhyListenCards } = useQuery({
+        queryKey: ["podcast-why-listen", locale],
+        queryFn: () => podcastWhyListenApi.getAll(locale),
     });
 
     const galleryImages = Array.from({ length: 9 }, (_, i) => ({
@@ -102,12 +129,12 @@ export default function PodcastPage() {
             <SectionDivider />
 
             <PodcastAboutSection
-                label={t("aboutLabel")}
-                title={t("aboutTitle")}
-                intro={t("aboutIntro")}
-                origin={t("aboutOrigin")}
-                intention={t("aboutIntention")}
-                presentation={t("aboutPresentation")}
+                label={podcastContent?.aboutLabel || t("aboutLabel")}
+                title={podcastContent?.aboutTitle || t("aboutTitle")}
+                intro={podcastContent?.aboutIntro || t("aboutIntro")}
+                origin={podcastContent?.aboutOrigin || t("aboutOrigin")}
+                intention={podcastContent?.aboutIntention || t("aboutIntention")}
+                presentation={podcastContent?.aboutPresentation || t("aboutPresentation")}
                 logoSrc={logoNorteImobiliario}
                 logoAlt="Norte Imobiliário & Business"
             />
@@ -115,16 +142,24 @@ export default function PodcastPage() {
             <Apresentadora />
 
             <PodcastGuestsSection
-                label={t("guestsLabel")}
-                title={t("guestsTitle")}
-                guests={(t.raw("guestsList") as GuestItem[]) ?? []}
+                label={podcastContent?.guestsLabel || t("guestsLabel")}
+                title={podcastContent?.guestsTitle || t("guestsTitle")}
+                guests={
+                    podcastGuests && podcastGuests.length > 0
+                        ? podcastGuests.map((g) => ({ name: g.name, role: g.role || g.role_pt, imageUrl: g.imageUrl }))
+                        : (t.raw("guestsList") as GuestItem[]) ?? []
+                }
             />
 
             <PodcastGallerySection
-                label={t("galleryLabel")}
-                title={t("galleryTitle")}
-                description={t("galleryDescription")}
-                images={galleryImages}
+                label={podcastContent?.galleryLabel || t("galleryLabel")}
+                title={podcastContent?.galleryTitle || t("galleryTitle")}
+                description={podcastContent?.galleryDescription || t("galleryDescription")}
+                images={
+                    podcastGalleryImages && podcastGalleryImages.length > 0
+                        ? podcastGalleryImages.map((img) => ({ src: img.imageUrl, alt: img.alt || t("galleryImageAlt") }))
+                        : galleryImages
+                }
                 openLightboxAriaLabel={t("galleryOpenAria")}
             />
 
@@ -134,10 +169,18 @@ export default function PodcastPage() {
             />
 
             <PodcastWhyListenSection
-                label={t("whyListenLabel")}
-                title={t("whyListenTitle")}
-                subtitle={t("whyListenSubtitle")}
-                cards={(t.raw("whyListenCards") as WhyListenCard[]) ?? []}
+                label={podcastContent?.whyListenLabel || t("whyListenLabel")}
+                title={podcastContent?.whyListenTitle || t("whyListenTitle")}
+                subtitle={podcastContent?.whyListenSubtitle || t("whyListenSubtitle")}
+                cards={
+                    podcastWhyListenCards && podcastWhyListenCards.length > 0
+                        ? podcastWhyListenCards.map((c) => ({
+                              iconKey: c.iconKey,
+                              title: c.title || c.title_pt,
+                              subtext: c.subtext || c.subtext_pt,
+                          }))
+                        : (t.raw("whyListenCards") as WhyListenCard[]) ?? []
+                }
                 logoSrc={logoNorteImobiliario}
                 logoAlt="Norte Imobiliário & Business"
             />
@@ -155,30 +198,38 @@ export default function PodcastPage() {
             <SectionDivider />
 
             <PodcastPlatformsSection
-                label={t("whereToFindUs")}
-                title={t("whereToFindUsTitle")}
-                description={t("whereToFindUsDescription")}
+                label={podcastContent?.platformsLabel || t("whereToFindUs")}
+                title={podcastContent?.platformsTitle || t("whereToFindUsTitle")}
+                description={podcastContent?.platformsDescription || t("whereToFindUsDescription")}
             />
 
             <SectionDivider />
 
             <PodcastCtaSection
-                label={t("ctaFinalLabel")}
-                title={t("ctaFinalTitle")}
-                description={t("ctaFinalDescription")}
-                hint={t("ctaFinalHint")}
-                buttonLabel={t("ctaFinalButton")}
-                buttonAriaLabel={t("ctaFinalButton")}
+                label={podcastContent?.ctaLabel || t("ctaFinalLabel")}
+                title={podcastContent?.ctaTitle || t("ctaFinalTitle")}
+                description={podcastContent?.ctaDescription || t("ctaFinalDescription")}
+                hint={podcastContent?.ctaHint || t("ctaFinalHint")}
+                buttonLabel={podcastContent?.ctaButtonLabel || t("ctaFinalButton")}
+                buttonAriaLabel={podcastContent?.ctaButtonLabel || t("ctaFinalButton")}
                 mailtoHref={`mailto:podcastnorteimobiliario@gmail.com?subject=${encodeURIComponent(t("ctaFinalMailSubject"))}`}
                 logoSrc={logoNorteImobiliario}
                 logoAlt="Norte Imobiliário & Business"
             />
 
             <PodcastTestimonialsSection
-                label={t("testimonialsLabel")}
-                title={t("testimonialsTitle")}
-                subtitle={t("testimonialsSubtitle")}
-                testimonials={(t.raw("testimonialsList") as PodcastTestimonialItem[]) ?? []}
+                label={podcastContent?.testimonialsLabel || t("testimonialsLabel")}
+                title={podcastContent?.testimonialsTitle || t("testimonialsTitle")}
+                subtitle={podcastContent?.testimonialsSubtitle || t("testimonialsSubtitle")}
+                testimonials={
+                    podcastTestimonials && podcastTestimonials.length > 0
+                        ? podcastTestimonials.map((item) => ({
+                              name: item.name,
+                              role: item.role || item.role_pt,
+                              text: item.text || item.text_pt,
+                          }))
+                        : (t.raw("testimonialsList") as PodcastTestimonialItem[]) ?? []
+                }
                 prevAriaLabel={t("testimonialsPrevAria")}
                 nextAriaLabel={t("testimonialsNextAria")}
                 logoSrc={logoNorteImobiliario}

@@ -558,7 +558,7 @@ export const imageSectionsApi = {
   },
 };
 
-/** Upload genérico de ficheiro (ex.: PDF para planta de fração) */
+/** Upload genérico de ficheiro e imagem */
 export const uploadApi = {
   uploadFile: async (
     file: File,
@@ -577,6 +577,24 @@ export const uploadApi = {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
         errorData.message || `Erro ao fazer upload do ficheiro (${response.status})`;
+      throw new Error(errorMessage);
+    }
+    return response.json();
+  },
+
+  uploadImage: async (
+    file: File,
+  ): Promise<{ url: string; filename: string; format: string; width: number; height: number }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(`${API_BASE_URL}/upload/image`, {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao fazer upload da imagem (${response.status})`;
       throw new Error(errorMessage);
     }
     return response.json();
@@ -1836,5 +1854,408 @@ export const propertyFractionsApi = {
     }
 
     return response.json();
+  },
+};
+
+// Podcast Guests API
+export interface PodcastGuest {
+  id: string;
+  name: string;
+  role_pt: string;
+  role_en?: string;
+  role_fr?: string;
+  role?: string; // Localized field returned when ?lang= is used
+  imageUrl?: string;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const podcastGuestsApi = {
+  getAll: async (locale?: string): Promise<PodcastGuest[]> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/podcast-guests${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar convidados do podcast");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<PodcastGuest> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-guests/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar convidado do podcast");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    name: string;
+    role_pt: string;
+    imageUrl?: string;
+    order?: number;
+    isActive?: boolean;
+  }): Promise<PodcastGuest> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-guests`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar convidado (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      name?: string;
+      role_pt?: string;
+      imageUrl?: string;
+      order?: number;
+      isActive?: boolean;
+    },
+  ): Promise<PodcastGuest> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-guests/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar convidado (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-guests/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar convidado (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+// Podcast Testimonials API
+export interface PodcastTestimonial {
+  id: string;
+  name: string;
+  role_pt: string;
+  role_en?: string;
+  role_fr?: string;
+  role?: string; // Localized field returned when ?lang= is used
+  text_pt: string;
+  text_en?: string;
+  text_fr?: string;
+  text?: string; // Localized field returned when ?lang= is used
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const podcastTestimonialsApi = {
+  getAll: async (locale?: string): Promise<PodcastTestimonial[]> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/podcast-testimonials${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar testemunhos do podcast");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<PodcastTestimonial> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-testimonials/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar testemunho do podcast");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    name: string;
+    role_pt: string;
+    text_pt: string;
+    order?: number;
+    isActive?: boolean;
+  }): Promise<PodcastTestimonial> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-testimonials`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar testemunho (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      name?: string;
+      role_pt?: string;
+      text_pt?: string;
+      order?: number;
+      isActive?: boolean;
+    },
+  ): Promise<PodcastTestimonial> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-testimonials/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar testemunho (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-testimonials/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar testemunho (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+// Podcast Gallery API
+export interface PodcastGalleryImage {
+  id: string;
+  imageUrl: string;
+  alt_pt?: string;
+  alt_en?: string;
+  alt_fr?: string;
+  alt?: string; // Localized field returned when ?lang= is used
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const podcastGalleryApi = {
+  getAll: async (locale?: string): Promise<PodcastGalleryImage[]> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/podcast-gallery${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar galeria do podcast");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<PodcastGalleryImage> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-gallery/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar imagem da galeria");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    imageUrl: string;
+    alt_pt?: string;
+    order?: number;
+    isActive?: boolean;
+  }): Promise<PodcastGalleryImage> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-gallery`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao adicionar imagem (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      imageUrl?: string;
+      alt_pt?: string;
+      order?: number;
+      isActive?: boolean;
+    },
+  ): Promise<PodcastGalleryImage> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-gallery/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar imagem (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-gallery/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar imagem (${response.status})`;
+      throw new Error(errorMessage);
+    }
+  },
+};
+
+// Podcast Why Listen Cards API
+export interface PodcastWhyListenCard {
+  id: string;
+  iconKey: string;
+  title_pt: string;
+  title_en?: string;
+  title_fr?: string;
+  title?: string; // Localized field returned when ?lang= is used
+  subtext_pt: string;
+  subtext_en?: string;
+  subtext_fr?: string;
+  subtext?: string; // Localized field returned when ?lang= is used
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const podcastWhyListenApi = {
+  getAll: async (locale?: string): Promise<PodcastWhyListenCard[]> => {
+    const params = locale ? `?lang=${locale}` : "";
+    const response = await fetch(`${API_BASE_URL}/podcast-why-listen${params}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar cards do podcast");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<PodcastWhyListenCard> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-why-listen/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar card do podcast");
+    }
+
+    return response.json();
+  },
+
+  create: async (data: {
+    iconKey: string;
+    title_pt: string;
+    subtext_pt: string;
+    order?: number;
+    isActive?: boolean;
+  }): Promise<PodcastWhyListenCard> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-why-listen`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao criar card (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  update: async (
+    id: string,
+    data: {
+      iconKey?: string;
+      title_pt?: string;
+      subtext_pt?: string;
+      order?: number;
+      isActive?: boolean;
+    },
+  ): Promise<PodcastWhyListenCard> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-why-listen/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao atualizar card (${response.status})`;
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/podcast-why-listen/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao deletar card (${response.status})`;
+      throw new Error(errorMessage);
+    }
   },
 };

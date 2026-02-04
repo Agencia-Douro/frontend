@@ -148,6 +148,46 @@ export interface PodcastContent {
   hostLabel: string;
   hostName: string;
   hostDescription: string;
+  // Host expanded fields
+  hostCredential: string;
+  hostParagraph1: string;
+  hostParagraph2: string;
+  hostParagraph3: string;
+  hostQuote: string;
+  hostLinkedInUrl: string;
+  hostLinkedInLabel: string;
+  // About Section
+  aboutLabel: string;
+  aboutTitle: string;
+  aboutIntro: string;
+  aboutOrigin: string;
+  aboutIntention: string;
+  aboutPresentation: string;
+  // Guests Header
+  guestsLabel: string;
+  guestsTitle: string;
+  // Gallery Header
+  galleryLabel: string;
+  galleryTitle: string;
+  galleryDescription: string;
+  // WhyListen Header
+  whyListenLabel: string;
+  whyListenTitle: string;
+  whyListenSubtitle: string;
+  // Testimonials Header
+  testimonialsLabel: string;
+  testimonialsTitle: string;
+  testimonialsSubtitle: string;
+  // CTA Final
+  ctaLabel: string;
+  ctaTitle: string;
+  ctaDescription: string;
+  ctaHint: string;
+  ctaButtonLabel: string;
+  // Platforms Header
+  platformsLabel: string;
+  platformsTitle: string;
+  platformsDescription: string;
   episodes: PodcastContentEpisode[];
   createdAt: string;
   updatedAt: string;
@@ -178,6 +218,46 @@ export interface UpdatePodcastContentDto {
   hostLabel_pt?: string;
   hostName?: string;
   hostDescription_pt?: string;
+  // Host expanded fields
+  hostCredential_pt?: string;
+  hostParagraph1_pt?: string;
+  hostParagraph2_pt?: string;
+  hostParagraph3_pt?: string;
+  hostQuote_pt?: string;
+  hostLinkedInUrl?: string;
+  hostLinkedInLabel_pt?: string;
+  // About Section
+  aboutLabel_pt?: string;
+  aboutTitle_pt?: string;
+  aboutIntro_pt?: string;
+  aboutOrigin_pt?: string;
+  aboutIntention_pt?: string;
+  aboutPresentation_pt?: string;
+  // Guests Header
+  guestsLabel_pt?: string;
+  guestsTitle_pt?: string;
+  // Gallery Header
+  galleryLabel_pt?: string;
+  galleryTitle_pt?: string;
+  galleryDescription_pt?: string;
+  // WhyListen Header
+  whyListenLabel_pt?: string;
+  whyListenTitle_pt?: string;
+  whyListenSubtitle_pt?: string;
+  // Testimonials Header
+  testimonialsLabel_pt?: string;
+  testimonialsTitle_pt?: string;
+  testimonialsSubtitle_pt?: string;
+  // CTA Final
+  ctaLabel_pt?: string;
+  ctaTitle_pt?: string;
+  ctaDescription_pt?: string;
+  ctaHint_pt?: string;
+  ctaButtonLabel_pt?: string;
+  // Platforms Header
+  platformsLabel_pt?: string;
+  platformsTitle_pt?: string;
+  platformsDescription_pt?: string;
 }
 
 // Sell Property Content interfaces

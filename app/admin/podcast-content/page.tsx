@@ -19,8 +19,17 @@ export default function PodcastContentPage() {
     pageTitle_pt: "",
     pageSubtitle_pt: "",
     pageDescription_pt: "",
+    // About Section
+    aboutLabel_pt: "",
+    aboutTitle_pt: "",
+    aboutIntro_pt: "",
+    aboutOrigin_pt: "",
+    aboutIntention_pt: "",
+    aboutPresentation_pt: "",
+    // Topics
     topicsLabel_pt: "",
     topicsTitle_pt: "",
+    // Episodes
     episodesLabel_pt: "",
     episodesTitle_pt: "",
     episodesDescription_pt: "",
@@ -36,9 +45,42 @@ export default function PodcastContentPage() {
     episode5Title_pt: "",
     episode6Url: "",
     episode6Title_pt: "",
+    // Host
     hostLabel_pt: "",
     hostName: "",
     hostDescription_pt: "",
+    hostCredential_pt: "",
+    hostParagraph1_pt: "",
+    hostParagraph2_pt: "",
+    hostParagraph3_pt: "",
+    hostQuote_pt: "",
+    hostLinkedInUrl: "",
+    hostLinkedInLabel_pt: "",
+    // Guests Header
+    guestsLabel_pt: "",
+    guestsTitle_pt: "",
+    // Gallery Header
+    galleryLabel_pt: "",
+    galleryTitle_pt: "",
+    galleryDescription_pt: "",
+    // WhyListen Header
+    whyListenLabel_pt: "",
+    whyListenTitle_pt: "",
+    whyListenSubtitle_pt: "",
+    // Testimonials Header
+    testimonialsLabel_pt: "",
+    testimonialsTitle_pt: "",
+    testimonialsSubtitle_pt: "",
+    // CTA Final
+    ctaLabel_pt: "",
+    ctaTitle_pt: "",
+    ctaDescription_pt: "",
+    ctaHint_pt: "",
+    ctaButtonLabel_pt: "",
+    // Platforms Header
+    platformsLabel_pt: "",
+    platformsTitle_pt: "",
+    platformsDescription_pt: "",
   })
 
   const { data: content, isLoading } = useQuery({
@@ -48,31 +90,74 @@ export default function PodcastContentPage() {
 
   useEffect(() => {
     if (content) {
+      const c = content as any
       setFormData({
-        headerLabel_pt: (content as any).headerLabel_pt || "",
-        pageTitle_pt: (content as any).pageTitle_pt || "",
-        pageSubtitle_pt: (content as any).pageSubtitle_pt || "",
-        pageDescription_pt: (content as any).pageDescription_pt || "",
-        topicsLabel_pt: (content as any).topicsLabel_pt || "",
-        topicsTitle_pt: (content as any).topicsTitle_pt || "",
-        episodesLabel_pt: (content as any).episodesLabel_pt || "",
-        episodesTitle_pt: (content as any).episodesTitle_pt || "",
-        episodesDescription_pt: (content as any).episodesDescription_pt || "",
-        episode1Url: (content as any).episode1Url || "",
-        episode1Title_pt: (content as any).episode1Title_pt || "",
-        episode2Url: (content as any).episode2Url || "",
-        episode2Title_pt: (content as any).episode2Title_pt || "",
-        episode3Url: (content as any).episode3Url || "",
-        episode3Title_pt: (content as any).episode3Title_pt || "",
-        episode4Url: (content as any).episode4Url || "",
-        episode4Title_pt: (content as any).episode4Title_pt || "",
-        episode5Url: (content as any).episode5Url || "",
-        episode5Title_pt: (content as any).episode5Title_pt || "",
-        episode6Url: (content as any).episode6Url || "",
-        episode6Title_pt: (content as any).episode6Title_pt || "",
-        hostLabel_pt: (content as any).hostLabel_pt || "",
-        hostName: (content as any).hostName || "",
-        hostDescription_pt: (content as any).hostDescription_pt || "",
+        headerLabel_pt: c.headerLabel_pt || "",
+        pageTitle_pt: c.pageTitle_pt || "",
+        pageSubtitle_pt: c.pageSubtitle_pt || "",
+        pageDescription_pt: c.pageDescription_pt || "",
+        // About Section
+        aboutLabel_pt: c.aboutLabel_pt || "",
+        aboutTitle_pt: c.aboutTitle_pt || "",
+        aboutIntro_pt: c.aboutIntro_pt || "",
+        aboutOrigin_pt: c.aboutOrigin_pt || "",
+        aboutIntention_pt: c.aboutIntention_pt || "",
+        aboutPresentation_pt: c.aboutPresentation_pt || "",
+        // Topics
+        topicsLabel_pt: c.topicsLabel_pt || "",
+        topicsTitle_pt: c.topicsTitle_pt || "",
+        // Episodes
+        episodesLabel_pt: c.episodesLabel_pt || "",
+        episodesTitle_pt: c.episodesTitle_pt || "",
+        episodesDescription_pt: c.episodesDescription_pt || "",
+        episode1Url: c.episode1Url || "",
+        episode1Title_pt: c.episode1Title_pt || "",
+        episode2Url: c.episode2Url || "",
+        episode2Title_pt: c.episode2Title_pt || "",
+        episode3Url: c.episode3Url || "",
+        episode3Title_pt: c.episode3Title_pt || "",
+        episode4Url: c.episode4Url || "",
+        episode4Title_pt: c.episode4Title_pt || "",
+        episode5Url: c.episode5Url || "",
+        episode5Title_pt: c.episode5Title_pt || "",
+        episode6Url: c.episode6Url || "",
+        episode6Title_pt: c.episode6Title_pt || "",
+        // Host
+        hostLabel_pt: c.hostLabel_pt || "",
+        hostName: c.hostName || "",
+        hostDescription_pt: c.hostDescription_pt || "",
+        hostCredential_pt: c.hostCredential_pt || "",
+        hostParagraph1_pt: c.hostParagraph1_pt || "",
+        hostParagraph2_pt: c.hostParagraph2_pt || "",
+        hostParagraph3_pt: c.hostParagraph3_pt || "",
+        hostQuote_pt: c.hostQuote_pt || "",
+        hostLinkedInUrl: c.hostLinkedInUrl || "",
+        hostLinkedInLabel_pt: c.hostLinkedInLabel_pt || "",
+        // Guests Header
+        guestsLabel_pt: c.guestsLabel_pt || "",
+        guestsTitle_pt: c.guestsTitle_pt || "",
+        // Gallery Header
+        galleryLabel_pt: c.galleryLabel_pt || "",
+        galleryTitle_pt: c.galleryTitle_pt || "",
+        galleryDescription_pt: c.galleryDescription_pt || "",
+        // WhyListen Header
+        whyListenLabel_pt: c.whyListenLabel_pt || "",
+        whyListenTitle_pt: c.whyListenTitle_pt || "",
+        whyListenSubtitle_pt: c.whyListenSubtitle_pt || "",
+        // Testimonials Header
+        testimonialsLabel_pt: c.testimonialsLabel_pt || "",
+        testimonialsTitle_pt: c.testimonialsTitle_pt || "",
+        testimonialsSubtitle_pt: c.testimonialsSubtitle_pt || "",
+        // CTA Final
+        ctaLabel_pt: c.ctaLabel_pt || "",
+        ctaTitle_pt: c.ctaTitle_pt || "",
+        ctaDescription_pt: c.ctaDescription_pt || "",
+        ctaHint_pt: c.ctaHint_pt || "",
+        ctaButtonLabel_pt: c.ctaButtonLabel_pt || "",
+        // Platforms Header
+        platformsLabel_pt: c.platformsLabel_pt || "",
+        platformsTitle_pt: c.platformsTitle_pt || "",
+        platformsDescription_pt: c.platformsDescription_pt || "",
       })
     }
   }, [content])
@@ -117,7 +202,7 @@ export default function PodcastContentPage() {
         {/* Seção Principal */}
         <Card>
           <CardHeader>
-            <CardTitle>Seção Principal</CardTitle>
+            <CardTitle>Seção Principal (Hero)</CardTitle>
             <CardDescription>Textos da introdução do podcast</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -172,6 +257,231 @@ export default function PodcastContentPage() {
           </CardContent>
         </Card>
 
+        {/* Seção About */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção "Sobre o Podcast"</CardTitle>
+            <CardDescription>Textos da seção de apresentação do podcast</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="aboutLabel">Label</Label>
+                <Input
+                  id="aboutLabel"
+                  value={formData.aboutLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, aboutLabel_pt: e.target.value })
+                  }
+                  placeholder="Sobre o Podcast"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="aboutTitle">Título</Label>
+                <Input
+                  id="aboutTitle"
+                  value={formData.aboutTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, aboutTitle_pt: e.target.value })
+                  }
+                  placeholder="Norte Imobiliário & Business"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="aboutIntro">Introdução</Label>
+              <Textarea
+                id="aboutIntro"
+                value={formData.aboutIntro_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, aboutIntro_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Texto de introdução sobre o podcast..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="aboutOrigin">Origem / História</Label>
+              <Textarea
+                id="aboutOrigin"
+                value={formData.aboutOrigin_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, aboutOrigin_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Como surgiu o podcast..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="aboutIntention">Intenção / Objetivo</Label>
+              <Textarea
+                id="aboutIntention"
+                value={formData.aboutIntention_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, aboutIntention_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="O objetivo do podcast é..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="aboutPresentation">Apresentação</Label>
+              <Textarea
+                id="aboutPresentation"
+                value={formData.aboutPresentation_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, aboutPresentation_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Apresentação geral..."
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Apresentadora */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção Apresentadora</CardTitle>
+            <CardDescription>Informações completas sobre a apresentadora do podcast</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="hostLabel">Label</Label>
+                <Input
+                  id="hostLabel"
+                  value={formData.hostLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, hostLabel_pt: e.target.value })
+                  }
+                  placeholder="Apresentadora"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="hostName">Nome</Label>
+                <Input
+                  id="hostName"
+                  value={formData.hostName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, hostName: e.target.value })
+                  }
+                  placeholder="Vânia Fernandes"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostCredential">Credencial / Título Profissional</Label>
+              <Input
+                id="hostCredential"
+                value={formData.hostCredential_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostCredential_pt: e.target.value })
+                }
+                placeholder="CEO & Fundadora da Agência do Douro"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostDescription">Descrição (Legacy)</Label>
+              <Textarea
+                id="hostDescription"
+                value={formData.hostDescription_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostDescription_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Vânia Fernandes é uma profissional reconhecida..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostParagraph1">Parágrafo 1</Label>
+              <Textarea
+                id="hostParagraph1"
+                value={formData.hostParagraph1_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostParagraph1_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Primeiro parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostParagraph2">Parágrafo 2</Label>
+              <Textarea
+                id="hostParagraph2"
+                value={formData.hostParagraph2_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostParagraph2_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Segundo parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostParagraph3">Parágrafo 3</Label>
+              <Textarea
+                id="hostParagraph3"
+                value={formData.hostParagraph3_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostParagraph3_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Terceiro parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="hostQuote">Citação / Quote</Label>
+              <Textarea
+                id="hostQuote"
+                value={formData.hostQuote_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, hostQuote_pt: e.target.value })
+                }
+                rows={2}
+                placeholder="Uma frase marcante da apresentadora..."
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="hostLinkedInUrl">URL do LinkedIn</Label>
+                <Input
+                  id="hostLinkedInUrl"
+                  value={formData.hostLinkedInUrl}
+                  onChange={(e) =>
+                    setFormData({ ...formData, hostLinkedInUrl: e.target.value })
+                  }
+                  placeholder="https://www.linkedin.com/in/..."
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="hostLinkedInLabel">Texto do Botão LinkedIn</Label>
+                <Input
+                  id="hostLinkedInLabel"
+                  value={formData.hostLinkedInLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, hostLinkedInLabel_pt: e.target.value })
+                  }
+                  placeholder="Conectar no LinkedIn"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Seção Tópicos */}
         <Card>
           <CardHeader>
@@ -179,27 +489,208 @@ export default function PodcastContentPage() {
             <CardDescription>Títulos da seção de tópicos</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <Label htmlFor="topicsLabel">Label</Label>
-              <Input
-                id="topicsLabel"
-                value={formData.topicsLabel_pt}
-                onChange={(e) =>
-                  setFormData({ ...formData, topicsLabel_pt: e.target.value })
-                }
-                placeholder="Temas & Insights"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="topicsLabel">Label</Label>
+                <Input
+                  id="topicsLabel"
+                  value={formData.topicsLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, topicsLabel_pt: e.target.value })
+                  }
+                  placeholder="Temas & Insights"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="topicsTitle">Título</Label>
+                <Input
+                  id="topicsTitle"
+                  value={formData.topicsTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, topicsTitle_pt: e.target.value })
+                  }
+                  placeholder="O Que Abordamos"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Convidados Header */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção Convidados (Header)</CardTitle>
+            <CardDescription>Títulos da seção de convidados</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="guestsLabel">Label</Label>
+                <Input
+                  id="guestsLabel"
+                  value={formData.guestsLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, guestsLabel_pt: e.target.value })
+                  }
+                  placeholder="Convidados Especiais"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="guestsTitle">Título</Label>
+                <Input
+                  id="guestsTitle"
+                  value={formData.guestsTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, guestsTitle_pt: e.target.value })
+                  }
+                  placeholder="Quem Já Passou Por Aqui"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Galeria Header */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção Galeria (Header)</CardTitle>
+            <CardDescription>Títulos da seção de galeria de fotos</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="galleryLabel">Label</Label>
+                <Input
+                  id="galleryLabel"
+                  value={formData.galleryLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, galleryLabel_pt: e.target.value })
+                  }
+                  placeholder="Galeria"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="galleryTitle">Título</Label>
+                <Input
+                  id="galleryTitle"
+                  value={formData.galleryTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, galleryTitle_pt: e.target.value })
+                  }
+                  placeholder="Bastidores do Podcast"
+                />
+              </div>
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="topicsTitle">Título</Label>
-              <Input
-                id="topicsTitle"
-                value={formData.topicsTitle_pt}
+              <Label htmlFor="galleryDescription">Descrição</Label>
+              <Textarea
+                id="galleryDescription"
+                value={formData.galleryDescription_pt}
                 onChange={(e) =>
-                  setFormData({ ...formData, topicsTitle_pt: e.target.value })
+                  setFormData({ ...formData, galleryDescription_pt: e.target.value })
                 }
-                placeholder="O Que Abordamos"
+                rows={2}
+                placeholder="Momentos especiais das gravações..."
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Why Listen Header */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção "Por Que Ouvir" (Header)</CardTitle>
+            <CardDescription>Títulos da seção de motivos para ouvir</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="whyListenLabel">Label</Label>
+                <Input
+                  id="whyListenLabel"
+                  value={formData.whyListenLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, whyListenLabel_pt: e.target.value })
+                  }
+                  placeholder="Por Que Ouvir"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="whyListenTitle">Título</Label>
+                <Input
+                  id="whyListenTitle"
+                  value={formData.whyListenTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, whyListenTitle_pt: e.target.value })
+                  }
+                  placeholder="Razões Para Acompanhar"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="whyListenSubtitle">Subtítulo</Label>
+              <Textarea
+                id="whyListenSubtitle"
+                value={formData.whyListenSubtitle_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, whyListenSubtitle_pt: e.target.value })
+                }
+                rows={2}
+                placeholder="Descubra o que torna o nosso podcast único..."
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Testimonials Header */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção Testemunhos (Header)</CardTitle>
+            <CardDescription>Títulos da seção de testemunhos</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="testimonialsLabel">Label</Label>
+                <Input
+                  id="testimonialsLabel"
+                  value={formData.testimonialsLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, testimonialsLabel_pt: e.target.value })
+                  }
+                  placeholder="Testemunhos"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="testimonialsTitle">Título</Label>
+                <Input
+                  id="testimonialsTitle"
+                  value={formData.testimonialsTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, testimonialsTitle_pt: e.target.value })
+                  }
+                  placeholder="O Que Dizem Sobre Nós"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="testimonialsSubtitle">Subtítulo</Label>
+              <Textarea
+                id="testimonialsSubtitle"
+                value={formData.testimonialsSubtitle_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, testimonialsSubtitle_pt: e.target.value })
+                }
+                rows={2}
+                placeholder="Opiniões de quem acompanha o podcast..."
               />
             </div>
           </CardContent>
@@ -212,28 +703,30 @@ export default function PodcastContentPage() {
             <CardDescription>Títulos da seção de episódios em destaque</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <Label htmlFor="episodesLabel">Label</Label>
-              <Input
-                id="episodesLabel"
-                value={formData.episodesLabel_pt}
-                onChange={(e) =>
-                  setFormData({ ...formData, episodesLabel_pt: e.target.value })
-                }
-                placeholder="Assista Agora"
-              />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="episodesLabel">Label</Label>
+                <Input
+                  id="episodesLabel"
+                  value={formData.episodesLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, episodesLabel_pt: e.target.value })
+                  }
+                  placeholder="Assista Agora"
+                />
+              </div>
 
-            <div className="space-y-1">
-              <Label htmlFor="episodesTitle">Título</Label>
-              <Input
-                id="episodesTitle"
-                value={formData.episodesTitle_pt}
-                onChange={(e) =>
-                  setFormData({ ...formData, episodesTitle_pt: e.target.value })
-                }
-                placeholder="Episódios em Destaque"
-              />
+              <div className="space-y-1">
+                <Label htmlFor="episodesTitle">Título</Label>
+                <Input
+                  id="episodesTitle"
+                  value={formData.episodesTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, episodesTitle_pt: e.target.value })
+                  }
+                  placeholder="Episódios em Destaque"
+                />
+              </div>
             </div>
 
             <div className="space-y-1">
@@ -290,48 +783,124 @@ export default function PodcastContentPage() {
           </CardContent>
         </Card>
 
-        {/* Seção Apresentadora */}
+        {/* Seção Platforms Header */}
         <Card>
           <CardHeader>
-            <CardTitle>Seção Apresentadora</CardTitle>
-            <CardDescription>Informações sobre a apresentadora do podcast</CardDescription>
+            <CardTitle>Seção Plataformas (Header)</CardTitle>
+            <CardDescription>Títulos da seção de plataformas de streaming</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <Label htmlFor="hostLabel">Label</Label>
-              <Input
-                id="hostLabel"
-                value={formData.hostLabel_pt}
-                onChange={(e) =>
-                  setFormData({ ...formData, hostLabel_pt: e.target.value })
-                }
-                placeholder="Apresentadora"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="platformsLabel">Label</Label>
+                <Input
+                  id="platformsLabel"
+                  value={formData.platformsLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, platformsLabel_pt: e.target.value })
+                  }
+                  placeholder="Onde Nos Encontrar"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="platformsTitle">Título</Label>
+                <Input
+                  id="platformsTitle"
+                  value={formData.platformsTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, platformsTitle_pt: e.target.value })
+                  }
+                  placeholder="Disponível Nas Principais Plataformas"
+                />
+              </div>
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="hostName">Nome</Label>
-              <Input
-                id="hostName"
-                value={formData.hostName}
-                onChange={(e) =>
-                  setFormData({ ...formData, hostName: e.target.value })
-                }
-                placeholder="Vânia Fernandes"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="hostDescription">Descrição</Label>
+              <Label htmlFor="platformsDescription">Descrição</Label>
               <Textarea
-                id="hostDescription"
-                value={formData.hostDescription_pt}
+                id="platformsDescription"
+                value={formData.platformsDescription_pt}
                 onChange={(e) =>
-                  setFormData({ ...formData, hostDescription_pt: e.target.value })
+                  setFormData({ ...formData, platformsDescription_pt: e.target.value })
                 }
-                rows={4}
-                placeholder="Vânia Fernandes é uma profissional reconhecida..."
+                rows={2}
+                placeholder="Ouça no Spotify, YouTube, Apple Podcasts..."
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção CTA Final */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção CTA Final</CardTitle>
+            <CardDescription>Textos do call-to-action final (convite para participar)</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="ctaLabel">Label</Label>
+                <Input
+                  id="ctaLabel"
+                  value={formData.ctaLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, ctaLabel_pt: e.target.value })
+                  }
+                  placeholder="Participe"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="ctaTitle">Título</Label>
+                <Input
+                  id="ctaTitle"
+                  value={formData.ctaTitle_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, ctaTitle_pt: e.target.value })
+                  }
+                  placeholder="Quer Ser o Próximo Convidado?"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="ctaDescription">Descrição</Label>
+              <Textarea
+                id="ctaDescription"
+                value={formData.ctaDescription_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, ctaDescription_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Se você tem uma história inspiradora..."
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="ctaHint">Dica / Incentivo</Label>
+                <Input
+                  id="ctaHint"
+                  value={formData.ctaHint_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, ctaHint_pt: e.target.value })
+                  }
+                  placeholder="Entre em contacto connosco!"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="ctaButtonLabel">Texto do Botão</Label>
+                <Input
+                  id="ctaButtonLabel"
+                  value={formData.ctaButtonLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, ctaButtonLabel_pt: e.target.value })
+                  }
+                  placeholder="Enviar Proposta"
+                />
+              </div>
             </div>
           </CardContent>
         </Card>

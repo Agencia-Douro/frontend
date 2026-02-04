@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
+
 export interface GuestItem {
     name: string;
     role: string;
-    imageSrc?: string | { src: string };
+    imageUrl?: string;
 }
 
 interface PodcastGuestsSectionProps {
@@ -28,7 +30,19 @@ export function PodcastGuestsSection({
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 sm:gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-10 max-w-4xl mx-auto justify-items-center">
                 {guests.map((guest, index) => (
                     <div key={index} className="flex flex-col items-center text-center">
-                        <div className="size-32 rounded-full bg-brown/20 shrink-0" aria-hidden />
+                        {guest.imageUrl ? (
+                            <div className="relative size-32 rounded-full overflow-hidden shrink-0">
+                                <Image
+                                    src={guest.imageUrl}
+                                    alt={guest.name}
+                                    fill
+                                    className="object-cover"
+                                    unoptimized
+                                />
+                            </div>
+                        ) : (
+                            <div className="size-32 rounded-full bg-brown/20 shrink-0" aria-hidden />
+                        )}
                         <h3 className="body-16-medium md:body-18-medium text-black mt-3 text-pretty">{guest.name}</h3>
                         <p className="body-14-regular text-black-muted mt-1 text-pretty">{guest.role}</p>
                     </div>
