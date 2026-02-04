@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     if (!email || !nome || !telefone || !mensagem) {
       return NextResponse.json(
         { error: "Todos os campos obrigatórios devem ser preenchidos" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       console.error("HUBSPOT_API_TOKEN não configurado");
       return NextResponse.json(
         { error: "Configuração do servidor incompleta" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -43,13 +43,13 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           properties: {
             email: email,
-            firstname: nome,
+            firstname: `${nome} (Site Agência Douro)`,
             phone: telefone,
             message: mensagem,
             hs_marketable_status: aceitaMarketing ? "true" : "false",
           },
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       console.error("Erro do HubSpot:", errorData);
       return NextResponse.json(
         { error: "Erro ao enviar contato" },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     console.error("Erro ao processar contato:", error);
     return NextResponse.json(
       { error: "Erro interno do servidor" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
