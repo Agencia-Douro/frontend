@@ -599,6 +599,24 @@ export const uploadApi = {
     }
     return response.json();
   },
+
+  uploadVideo: async (
+    file: File,
+  ): Promise<{ url: string; filename: string; originalName: string; size: number }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(`${API_BASE_URL}/upload/video`, {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        errorData.message || `Erro ao fazer upload do vídeo (${response.status})`;
+      throw new Error(errorMessage);
+    }
+    return response.json();
+  },
 };
 
 export const propertyFilesApi = {

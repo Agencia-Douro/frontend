@@ -12,28 +12,14 @@ import { toast } from "sonner"
 import { Pencil, Trash2, Plus, X, Upload, Loader2, Play, ImageIcon, Video } from "lucide-react"
 import Image from "next/image"
 
-// Helper para extrair ID do YouTube
-function getYouTubeVideoId(url: string): string | null {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-  const match = url.match(regExp)
-  return match && match[2].length === 11 ? match[2] : null
-}
-
-// Helper para gerar thumbnail do YouTube
-function getYouTubeThumbnail(url: string): string {
-  const videoId = getYouTubeVideoId(url)
-  if (videoId) {
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-  }
-  return ""
-}
-
 export default function PodcastGalleryPage() {
   const queryClient = useQueryClient()
   const [showForm, setShowForm] = useState(false)
   const [editingImage, setEditingImage] = useState<PodcastGalleryImage | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploadingVideo, setUploadingVideo] = useState(false)
+  const imageInputRef = useRef<HTMLInputElement>(null)
+  const videoInputRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState({
     mediaType: "image" as MediaType,
     imageUrl: "",
@@ -94,19 +80,13 @@ export default function PodcastGalleryPage() {
     }
 
     if (formData.mediaType === "video" && !formData.videoUrl) {
-      toast.error("A URL do vídeo é obrigatória")
+      toast.error("O vídeo é obrigatório")
       return
-    }
-
-    // Para vídeos, gerar thumbnail automaticamente se não houver imagem
-    let imageUrl = formData.imageUrl
-    if (formData.mediaType === "video" && !imageUrl && formData.videoUrl) {
-      imageUrl = getYouTubeThumbnail(formData.videoUrl)
     }
 
     const data = {
       mediaType: formData.mediaType,
-      imageUrl: imageUrl || undefined,
+      imageUrl: formData.imageUrl || undefined,
       videoUrl: formData.mediaType === "video" ? formData.videoUrl : undefined,
       alt_pt: formData.alt_pt || undefined,
       order: formData.order,
@@ -129,8 +109,8 @@ export default function PodcastGalleryPage() {
       return
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("A imagem deve ter no máximo 5MB")
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("A imagem deve ter no máximo 10MB")
       return
     }
 
@@ -146,10 +126,43 @@ export default function PodcastGalleryPage() {
     }
   }
 
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (!file.type.startsWith("video/")) {
+      toast.error("Por favor, selecione um arquivo de vídeo")
+      return
+    }
+
+    if (file.size > 500 * 1024 * 1024) {
+      toast.error("O vídeo deve ter no máximo 500MB")
+      return
+    }
+
+    setUploadingVideo(true)
+    try {
+      const result = await uploadApi.uploadVideo(file)
+      setFormData({ ...formData, videoUrl: result.url })
+      toast.success("Vídeo enviado com sucesso!")
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao fazer upload do vídeo")
+    } finally {
+      setUploadingVideo(false)
+    }
+  }
+
   const handleRemoveImage = () => {
     setFormData({ ...formData, imageUrl: "" })
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+    if (imageInputRef.current) {
+      imageInputRef.current.value = ""
+    }
+  }
+
+  const handleRemoveVideo = () => {
+    setFormData({ ...formData, videoUrl: "" })
+    if (videoInputRef.current) {
+      videoInputRef.current.value = ""
     }
   }
 
@@ -183,8 +196,11 @@ export default function PodcastGalleryPage() {
       order: 0,
       isActive: true,
     })
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+    if (imageInputRef.current) {
+      imageInputRef.current.value = ""
+    }
+    if (videoInputRef.current) {
+      videoInputRef.current.value = ""
     }
   }
 
@@ -249,33 +265,54 @@ export default function PodcastGalleryPage() {
               {/* Campo para Vídeo */}
               {formData.mediaType === "video" && (
                 <div className="space-y-2">
-                  <Label htmlFor="videoUrl">URL do Vídeo (YouTube) *</Label>
-                  <Input
-                    id="videoUrl"
-                    value={formData.videoUrl}
-                    onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                    placeholder="https://www.youtube.com/watch?v=..."
-                  />
-                  {formData.videoUrl && getYouTubeVideoId(formData.videoUrl) && (
-                    <div className="relative border rounded-lg overflow-hidden">
-                      <Image
-                        src={getYouTubeThumbnail(formData.videoUrl)}
-                        alt="Thumbnail do vídeo"
-                        width={400}
-                        height={225}
-                        className="w-full h-48 object-cover"
-                        unoptimized
+                  <Label>Vídeo *</Label>
+                  {!formData.videoUrl ? (
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                      <input
+                        ref={videoInputRef}
+                        type="file"
+                        accept="video/mp4,video/webm,video/quicktime,video/x-msvideo"
+                        onChange={handleVideoUpload}
+                        className="hidden"
+                        id="gallery-video-upload"
+                        disabled={uploadingVideo}
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <div className="bg-red-600 rounded-full p-3">
-                          <Play className="h-6 w-6 text-white fill-white" />
-                        </div>
-                      </div>
+                      <label
+                        htmlFor="gallery-video-upload"
+                        className="cursor-pointer flex flex-col items-center gap-2"
+                      >
+                        {uploadingVideo ? (
+                          <>
+                            <Loader2 className="h-10 w-10 text-gray-400 animate-spin" />
+                            <span className="text-sm text-gray-500">Enviando vídeo...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Video className="h-10 w-10 text-gray-400" />
+                            <span className="text-sm text-gray-500">Clique para selecionar um vídeo</span>
+                            <span className="text-xs text-gray-400">MP4, WebM, MOV ou AVI (máx. 500MB)</span>
+                          </>
+                        )}
+                      </label>
+                    </div>
+                  ) : (
+                    <div className="relative border rounded-lg overflow-hidden">
+                      <video
+                        src={formData.videoUrl}
+                        className="w-full h-48 object-cover bg-black"
+                        controls
+                      />
+                      <Button
+                        type="button"
+                        variant="brown"
+                        size="icon"
+                        className="absolute top-2 right-2"
+                        onClick={handleRemoveVideo}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
                     </div>
                   )}
-                  <p className="text-xs text-gray-500">
-                    Cole a URL do vídeo do YouTube. A thumbnail será gerada automaticamente.
-                  </p>
                 </div>
               )}
 
@@ -286,7 +323,7 @@ export default function PodcastGalleryPage() {
                   {!formData.imageUrl ? (
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
                       <input
-                        ref={fileInputRef}
+                        ref={imageInputRef}
                         type="file"
                         accept="image/*"
                         onChange={handleImageUpload}
@@ -307,7 +344,7 @@ export default function PodcastGalleryPage() {
                           <>
                             <Upload className="h-10 w-10 text-gray-400" />
                             <span className="text-sm text-gray-500">Clique para selecionar uma imagem</span>
-                            <span className="text-xs text-gray-400">PNG, JPG ou WEBP (máx. 5MB)</span>
+                            <span className="text-xs text-gray-400">PNG, JPG ou WEBP (máx. 10MB)</span>
                           </>
                         )}
                       </label>
@@ -336,23 +373,23 @@ export default function PodcastGalleryPage() {
                 </div>
               )}
 
-              {/* Thumbnail personalizada para vídeos (opcional) */}
+              {/* Thumbnail para vídeos (opcional) */}
               {formData.mediaType === "video" && (
                 <div className="space-y-2">
-                  <Label>Thumbnail Personalizada (Opcional)</Label>
+                  <Label>Thumbnail do Vídeo (Opcional)</Label>
                   {!formData.imageUrl ? (
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
                       <input
-                        ref={fileInputRef}
+                        ref={imageInputRef}
                         type="file"
                         accept="image/*"
                         onChange={handleImageUpload}
                         className="hidden"
-                        id="gallery-image-upload"
+                        id="gallery-thumbnail-upload"
                         disabled={uploadingImage}
                       />
                       <label
-                        htmlFor="gallery-image-upload"
+                        htmlFor="gallery-thumbnail-upload"
                         className="cursor-pointer flex flex-col items-center gap-2"
                       >
                         {uploadingImage ? (
@@ -363,7 +400,7 @@ export default function PodcastGalleryPage() {
                         ) : (
                           <>
                             <Upload className="h-6 w-6 text-gray-400" />
-                            <span className="text-xs text-gray-500">Clique para usar uma thumbnail personalizada</span>
+                            <span className="text-xs text-gray-500">Clique para adicionar uma thumbnail</span>
                           </>
                         )}
                       </label>
@@ -372,7 +409,7 @@ export default function PodcastGalleryPage() {
                     <div className="relative border rounded-lg overflow-hidden">
                       <Image
                         src={formData.imageUrl}
-                        alt="Thumbnail personalizada"
+                        alt="Thumbnail"
                         width={200}
                         height={112}
                         className="w-full h-24 object-cover"
@@ -398,7 +435,7 @@ export default function PodcastGalleryPage() {
                   id="alt_pt"
                   value={formData.alt_pt}
                   onChange={(e) => setFormData({ ...formData, alt_pt: e.target.value })}
-                  placeholder="Descrição da imagem para acessibilidade"
+                  placeholder="Descrição da mídia para acessibilidade"
                 />
               </div>
 
@@ -444,30 +481,46 @@ export default function PodcastGalleryPage() {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {images?.map((image: PodcastGalleryImage) => {
           const isVideo = image.mediaType === "video"
-          const thumbnailUrl = image.imageUrl || (isVideo && image.videoUrl ? getYouTubeThumbnail(image.videoUrl) : "")
 
           return (
             <Card key={image.id} className={!image.isActive ? "opacity-60" : ""}>
               <CardContent className="p-2">
-                <div className="relative aspect-video mb-2 rounded overflow-hidden">
-                  {thumbnailUrl ? (
+                <div className="relative aspect-video mb-2 rounded overflow-hidden bg-gray-100">
+                  {isVideo ? (
+                    image.imageUrl ? (
+                      <>
+                        <Image
+                          src={image.imageUrl}
+                          alt={image.alt_pt || "Video thumbnail"}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <div className="bg-red-600 rounded-full p-2">
+                            <Play className="h-4 w-4 text-white fill-white" />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                        <div className="text-center">
+                          <Video className="h-8 w-8 text-gray-400 mx-auto" />
+                          <span className="text-xs text-gray-400 mt-1 block">Vídeo</span>
+                        </div>
+                      </div>
+                    )
+                  ) : image.imageUrl ? (
                     <Image
-                      src={thumbnailUrl}
-                      alt={image.alt_pt || "Gallery item"}
+                      src={image.imageUrl}
+                      alt={image.alt_pt || "Gallery image"}
                       fill
                       className="object-cover"
                       unoptimized
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                      {isVideo ? <Video className="h-8 w-8 text-gray-400" /> : <ImageIcon className="h-8 w-8 text-gray-400" />}
-                    </div>
-                  )}
-                  {isVideo && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                      <div className="bg-red-600 rounded-full p-2">
-                        <Play className="h-4 w-4 text-white fill-white" />
-                      </div>
+                    <div className="w-full h-full flex items-center justify-center">
+                      <ImageIcon className="h-8 w-8 text-gray-400" />
                     </div>
                   )}
                 </div>

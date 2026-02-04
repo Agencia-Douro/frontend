@@ -23,22 +23,6 @@ function getImageSrc(src: string | StaticImageData): string {
     return (src as StaticImageData).src;
 }
 
-// Helper para extrair ID do YouTube
-function getYouTubeVideoId(url: string): string | null {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-}
-
-// Helper para gerar thumbnail do YouTube
-function getYouTubeThumbnail(url: string): string {
-    const videoId = getYouTubeVideoId(url);
-    if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    }
-    return "";
-}
-
 interface VideoModalProps {
     videoUrl: string;
     isOpen: boolean;
@@ -46,9 +30,7 @@ interface VideoModalProps {
 }
 
 function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
-    const videoId = getYouTubeVideoId(videoUrl);
-
-    if (!isOpen || !videoId) return null;
+    if (!isOpen || !videoUrl) return null;
 
     return (
         <div
@@ -79,14 +61,14 @@ function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
                 className="relative w-full max-w-4xl aspect-video mx-4"
                 onClick={(e) => e.stopPropagation()}
             >
-                <iframe
-                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                />
+                <video
+                    src={videoUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full bg-black"
+                >
+                    Seu navegador não suporta a reprodução de vídeos.
+                </video>
             </div>
         </div>
     );
@@ -153,7 +135,7 @@ export function PodcastGallerySection({
             <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4 min-h-[200px] sm:min-h-[280px] lg:min-h-0 lg:grid-rows-3 lg:h-[520px] xl:h-[600px]">
                 {displayImages.map((item, index) => {
                     const isVideo = item.mediaType === "video";
-                    const thumbnailSrc = item.src || (isVideo && item.videoUrl ? getYouTubeThumbnail(item.videoUrl) : "");
+                    const thumbnailSrc = item.src ? getImageSrc(item.src) : "";
 
                     return (
                         <button
@@ -167,7 +149,7 @@ export function PodcastGallerySection({
                                     : `${openLightboxAriaLabel}: ${item.alt}`
                             }
                         >
-                            {thumbnailSrc && (
+                            {thumbnailSrc ? (
                                 <Image
                                     src={thumbnailSrc}
                                     alt={item.alt}
@@ -175,7 +157,18 @@ export function PodcastGallerySection({
                                     className="size-full object-cover object-center"
                                     sizes="(max-width: 1024px) 33vw, 33vw"
                                 />
-                            )}
+                            ) : isVideo ? (
+                                <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="w-12 h-12 text-gray-500"
+                                    >
+                                        <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v12h16V6H4zm5 2l6 4-6 4V8z" />
+                                    </svg>
+                                </div>
+                            ) : null}
                             {isVideo && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
                                     <div className="bg-red-600 rounded-full p-3 sm:p-4 group-hover:scale-110 transition-transform">
