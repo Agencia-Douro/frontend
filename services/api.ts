@@ -2061,9 +2061,13 @@ export const podcastTestimonialsApi = {
 };
 
 // Podcast Gallery API
+export type MediaType = "image" | "video";
+
 export interface PodcastGalleryImage {
   id: string;
+  mediaType: MediaType;
   imageUrl: string;
+  videoUrl?: string;
   alt_pt?: string;
   alt_en?: string;
   alt_fr?: string;
@@ -2097,7 +2101,9 @@ export const podcastGalleryApi = {
   },
 
   create: async (data: {
-    imageUrl: string;
+    mediaType?: MediaType;
+    imageUrl?: string;
+    videoUrl?: string;
     alt_pt?: string;
     order?: number;
     isActive?: boolean;
@@ -2111,7 +2117,7 @@ export const podcastGalleryApi = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage =
-        errorData.message || `Erro ao adicionar imagem (${response.status})`;
+        errorData.message || `Erro ao adicionar mídia (${response.status})`;
       throw new Error(errorMessage);
     }
 
@@ -2121,7 +2127,9 @@ export const podcastGalleryApi = {
   update: async (
     id: string,
     data: {
+      mediaType?: MediaType;
       imageUrl?: string;
+      videoUrl?: string;
       alt_pt?: string;
       order?: number;
       isActive?: boolean;

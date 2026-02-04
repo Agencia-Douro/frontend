@@ -157,7 +157,12 @@ export default function PodcastPage() {
                 description={podcastContent?.galleryDescription || t("galleryDescription")}
                 images={
                     podcastGalleryImages && podcastGalleryImages.length > 0
-                        ? podcastGalleryImages.map((img) => ({ src: img.imageUrl, alt: img.alt || t("galleryImageAlt") }))
+                        ? podcastGalleryImages.map((img) => ({
+                              src: img.imageUrl,
+                              alt: img.alt || t("galleryImageAlt"),
+                              mediaType: img.mediaType || "image",
+                              videoUrl: img.videoUrl,
+                          }))
                         : galleryImages
                 }
                 openLightboxAriaLabel={t("galleryOpenAria")}
