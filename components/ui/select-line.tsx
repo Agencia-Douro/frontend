@@ -41,9 +41,6 @@ function SelectContent({
   align = "start",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
-  const itemCount = React.Children.count(children)
-  const gridCols = itemCount < 3 ? "md:grid-cols-2" : "md:grid-cols-3"
-  
   return (
     <SelectPrimitive.Portal>
         <SelectPrimitive.Content
@@ -57,7 +54,7 @@ function SelectContent({
             position={position} align={align} {...props}>
             <SelectScrollUpButton />
             <SelectPrimitive.Viewport
-                className={cn("p-1 grid", gridCols, "grid-cols-2 gap-1", position === "popper" && "h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width] scroll-my-1")}>
+                className={cn("p-1 grid grid-cols-1 gap-1", position === "popper" && "h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width] scroll-my-1")}>
                 {children}
             </SelectPrimitive.Viewport>
             <SelectScrollDownButton />
