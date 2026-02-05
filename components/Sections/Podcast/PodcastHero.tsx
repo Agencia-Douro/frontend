@@ -72,7 +72,7 @@ export function PodcastHero({
                     </div>
                 </div>
 
-                <div className="flex flex-nowrap gap-2 sm:gap-3 justify-center absolute left-0 right-0 bottom-12 px-4 overflow-x-auto">
+                <div className="flex flex-wrap gap-2 sm:gap-3 justify-center absolute left-0 right-0 bottom-12 px-4">
                     <Button asChild variant="outline" className="shrink-0 px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
                         <Link
                             href="https://open.spotify.com/show/agenciadouro"
