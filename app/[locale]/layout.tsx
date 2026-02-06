@@ -47,6 +47,11 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
   return (
     <html lang="pt-BR" className={`${prata.variable} ${inter.variable}`}>
       <body className="antialiased bg-muted isolate">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "typeof window !== 'undefined' && (history.scrollRestoration = 'manual');",
+          }}
+        />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
             <Header />
