@@ -70,7 +70,10 @@ export default function Footer() {
                         </div>
                         <div className="h-px bg-brown/10 w-full"></div>
                         <div className="text-brown flex flex-col md:flex-row justify-between">
-                            <p>{t("copyright")}</p>
+                            <div className="flex flex-col gap-1">
+                                <p>{t("copyright")}</p>
+                                <Link href="https://ausses.pt" target="_blank" className="underline hover:text-black-muted">Desenvolvido pela Ausses</Link>
+                            </div>
                             <div className="button-14-medium flex md:flex-row flex-col md:gap-2 gap-3 md:mt-0 mt-4 text-brown hover:text-black-muted">
                                 <Link href="/termos-condicoes">{t("termsAndConditions")}</Link>
                                 <span className="hidden md:block">∙</span>
