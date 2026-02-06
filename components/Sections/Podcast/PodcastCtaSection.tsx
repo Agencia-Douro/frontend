@@ -51,9 +51,11 @@ export function PodcastCtaSection({
                 <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty">
                     {description}
                 </p>
-                <p className="body-14-regular text-black-muted text-pretty">
-                    {hint}
-                </p>
+                {hint ? (
+                    <p className="body-14-regular text-black-muted text-pretty">
+                        {hint}
+                    </p>
+                ) : null}
                 <div className="pt-2">
                     <Button asChild variant="brown" className="w-fit px-6 py-3 transition-colors duration-200">
                         <a href={mailtoHref} aria-label={buttonAriaLabel}>
