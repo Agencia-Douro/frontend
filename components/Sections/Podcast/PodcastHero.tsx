@@ -75,7 +75,7 @@ export function PodcastHero({
                 <div className="flex flex-wrap gap-2 sm:gap-3 justify-center absolute left-0 right-0 bottom-12 px-4">
                     <Button asChild variant="outline" className="shrink-0 px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
                         <Link
-                            href="https://open.spotify.com/show/agenciadouro"
+                            href="https://open.spotify.com/show/3K8jsTPPNt59OKWyubhA71"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={ctaSpotifyLabel}>
@@ -87,7 +87,7 @@ export function PodcastHero({
                     </Button>
                     <Button asChild variant="outline" className="shrink-0 px-4 py-2.5 md:px-5 border-gold text-gold hover:bg-gold hover:text-white hover:border-gold transition-colors duration-200">
                         <Link
-                            href="https://www.youtube.com/@agenciadouromediacaoimobil3889"
+                            href="https://www.youtube.com/@norteimobiliariobusiness/videos"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={ctaYouTubeLabel}>
