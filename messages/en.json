@@ -414,6 +414,13 @@
       "observations": "OBSERVATIONS"
     }
   },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved. Check the address or use the links below.",
+    "backHome": "Back to home",
+    "viewProperties": "View properties",
+    "exploreSite": "Explore the site"
+  },
   "Header": {
     "home": "Home",
     "properties": "Properties",

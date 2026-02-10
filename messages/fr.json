@@ -414,6 +414,13 @@
       "observations": "OBSERVATIONS"
     }
   },
+  "NotFound": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas ou a été déplacée. Vérifiez l'adresse ou utilisez les liens ci-dessous.",
+    "backHome": "Retour à l'accueil",
+    "viewProperties": "Voir les biens",
+    "exploreSite": "Explorer le site"
+  },
   "Header": {
     "home": "Accueil",
     "properties": "Propriétés",

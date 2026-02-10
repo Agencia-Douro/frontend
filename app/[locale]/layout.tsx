@@ -1,26 +1,12 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl"
 import { getMessages } from "next-intl/server"
-import type { Metadata } from "next";
-import { Prata, Inter } from "next/font/google";
-import "../globals.css";
-import { QueryProvider } from "@/providers/query-provider";
-import Header from "@/components/Sections/Header/Header";
-import { Toaster } from "@/components/ui/sonner";
-import { AvaliadorOnlineButton } from "@/components/AvaliadorOnlineButton/AvaliadorOnlineButton";
-import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2";
-import { notFound } from "next/navigation";
-import { routing } from "../../i18n/routing";
-
-const prata = Prata({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-prata",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
+import type { Metadata } from "next"
+import { QueryProvider } from "@/providers/query-provider"
+import Header from "@/components/Sections/Header/Header"
+import { Toaster } from "@/components/ui/sonner"
+import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2"
+import { notFound } from "next/navigation"
+import { routing } from "../../i18n/routing"
 
 export const metadata: Metadata = {
   title: "Página Inicial - Agência Douro",
@@ -45,25 +31,22 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
   const messages = await getMessages();
 
   return (
-    <html lang="pt-BR" className={`${prata.variable} ${inter.variable}`}>
-      <body className="antialiased bg-muted isolate">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "typeof window !== 'undefined' && (history.scrollRestoration = 'manual');",
-          }}
-        />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <QueryProvider>
-            <Header />
-            <main className="w-full overflow-x-hidden">
-              {children}
-            </main>
-            <Toaster />
-            <SocialMediaButtonV2 />
-          </QueryProvider>
-
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: "typeof window !== 'undefined' && (history.scrollRestoration = 'manual');",
+        }}
+      />
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <QueryProvider>
+          <Header />
+          <main className="w-full overflow-x-hidden">
+            {children}
+          </main>
+          <Toaster />
+          <SocialMediaButtonV2 />
+        </QueryProvider>
+      </NextIntlClientProvider>
+    </>
+  )
 }

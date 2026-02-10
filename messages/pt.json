@@ -414,6 +414,13 @@
       "observations": "OBSERVAÇÕES"
     }
   },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "description": "A página que procura não existe ou foi movida. Verifique o endereço ou use os links abaixo.",
+    "backHome": "Voltar ao início",
+    "viewProperties": "Ver imóveis",
+    "exploreSite": "Explore o site"
+  },
   "Header": {
     "home": "Início",
     "properties": "Imóveis",
