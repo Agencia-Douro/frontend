@@ -1,23 +1,23 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Folha from "@/components/Folha"
-import { routing } from "@/i18n/routing"
 import Logo from "@/public/Logo.png"
 import { cn } from "@/lib/utils"
+import { getTranslations } from "next-intl/server"
 
 const usefulLinks = [
-  { href: "home", label: "Início" },
-  { href: "imoveis", label: "Imóveis" },
-  { href: "imoveis-luxo", label: "Imóveis de luxo" },
-  { href: "sobre-nos", label: "Sobre nós" },
-  { href: "podcast", label: "Podcast" },
-  { href: "vender-imovel", label: "Vender imóvel" },
+  { href: "/", key: "home" as const },
+  { href: "/imoveis", key: "properties" as const },
+  { href: "/imoveis-luxo", key: "luxuryProperties" as const },
+  { href: "/sobre-nos", key: "aboutUs" as const },
+  { href: "/podcast", key: "podcast" as const },
+  { href: "/vender-imovel", key: "sellMyProperty" as const },
 ] as const
 
-export default function NotFound() {
-  const locale = routing.defaultLocale
-  const base = `/${locale}`
+export default async function NotFound() {
+  const t = await getTranslations("NotFound")
+  const tHeader = await getTranslations("Header")
 
   return (
     <section
@@ -31,7 +31,7 @@ export default function NotFound() {
       <div className="container relative z-10 py-12 md:py-10 lg:py-16 xl:py-20 text-center px-4">
         <div className="flex justify-center mb-6 md:mb-8">
           <Link
-            href={base}
+            href="/"
             className="inline-flex focus-visible:outline focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
           >
             <Image
@@ -48,40 +48,39 @@ export default function NotFound() {
             404
           </p>
           <h1 id="not-found-title" className="text-balance heading-tres-medium text-brown">
-            Página não encontrada
+            {t("title")}
           </h1>
           <p className="text-pretty body-18-regular text-black-muted">
-            A página que procura não existe ou foi movida. Verifique o endereço
-            ou use os links abaixo.
+            {t("description")}
           </p>
           <div className="h-px w-full max-w-xs mx-auto bg-linear-to-r from-gold/0 via-gold to-gold/0 my-8" />
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button variant="gold" asChild>
-              <Link href={base}>Voltar ao início</Link>
+              <Link href="/">{t("backHome")}</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href={`${base}/imoveis`}>Ver imóveis</Link>
+              <Link href="/imoveis">{t("viewProperties")}</Link>
             </Button>
           </div>
           <nav
             className="pt-8 border-t border-gold/20"
-            aria-label="Explore o site"
+            aria-label={t("exploreSite")}
           >
             <p className="body-14-medium text-black-muted mb-4">
-              Explore o site
+              {t("exploreSite")}
             </p>
             <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-              {usefulLinks.map(({ href, label }) => (
-                <li key={href}>
+              {usefulLinks.map(({ href, key }) => (
+                <li key={key}>
                   <Link
-                    href={href === "home" ? base : `${base}/${href}`}
+                    href={href}
                     className={cn(
                       "body-14-medium text-brown hover:text-gold",
                       "focus-visible:outline focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded",
                       "transition-colors duration-200"
                     )}
                   >
-                    {label}
+                    {tHeader(key)}
                   </Link>
                 </li>
               ))}

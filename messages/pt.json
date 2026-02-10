@@ -545,6 +545,7 @@
   },
   "PropertyDetails": {
     "back": "Voltar",
+    "floor": "Andar",
     "loading": "A carregar...",
     "propertyNotFound": "Imóvel não encontrado",
     "businessType": "Tipo de negócio:",
@@ -581,7 +582,7 @@
     "responsibleBroker": "Corretor Responsável",
     "contact": "Contactar",
     "favorite": "FAVORITO",
-    "propertyLink": "Link do Imóvel",
+    "propertyLink": "Partilhar",
     "linkCopiedShort": "Link Copiado!",
     "savePDF": "Guardar PDF",
     "name": "Nome",

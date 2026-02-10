@@ -402,12 +402,24 @@ export default function ImovelDetailsClient() {
                         </a>
                     </div>
 
-                    <div className="lg:col-span-5 lg:col-end-13">
-                        <Button variant="gold" className="w-full body-16-medium px-6 py-3" onClick={handleDownloadPDF}>
+                    <div className="lg:col-span-5 lg:col-end-13 flex gap-3">
+                        <Button variant="gold" className="flex-1 body-16-medium px-6 py-3" onClick={handleDownloadPDF}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M11.2001 11.8401H13.7601C14.1136 11.8401 14.4001 11.5536 14.4001 11.2001V7.3601C14.4001 6.29971 13.5405 5.4401 12.4801 5.4401H3.5201C2.45971 5.4401 1.6001 6.29971 1.6001 7.3601V11.2001C1.6001 11.5536 1.88664 11.8401 2.2401 11.8401H4.8001M12.1601 7.6801H12.1659M11.2001 5.4401V2.5601C11.2001 2.0299 10.7703 1.6001 10.2401 1.6001H5.7601C5.2299 1.6001 4.8001 2.0299 4.8001 2.5601V5.4401M11.2001 10.5601V13.1201C11.2001 13.827 10.627 14.4001 9.9201 14.4001H6.0801C5.37317 14.4001 4.8001 13.827 4.8001 13.1201V10.5601H11.2001Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             {t("savePDF")}
+                        </Button>
+                        <Button variant="gold" className="flex-1 body-16-medium px-6 py-3" onClick={handleCopyLink}>
+                            {linkCopied ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                </svg>
+                            )}
+                            {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
                         </Button>
                     </div>
                 </div>
@@ -529,19 +541,6 @@ export default function ImovelDetailsClient() {
                                         )}
                                         {t("favorite")}
                                     </Button>
-                                    <Button variant="gold" className="grow body-16-medium" onClick={handleCopyLink}>
-                                        {linkCopied ? (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        ) : (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                                            </svg>
-                                        )}
-                                        {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
-                                    </Button>
-
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -740,18 +739,6 @@ export default function ImovelDetailsClient() {
                                             </svg>
                                         )}
                                         {t("favorite")}
-                                    </Button>
-                                    <Button variant="gold" className="w-full body-16-medium" onClick={handleCopyLink}>
-                                        {linkCopied ? (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        ) : (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                                            </svg>
-                                        )}
-                                        {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
                                     </Button>
                                 </div>
                                 <form className="space-y-4 mt-4 p-4 border border-brown/10" onSubmit={handleSubmitContact}>

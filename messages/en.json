@@ -545,6 +545,7 @@
   },
   "PropertyDetails": {
     "back": "Back",
+    "floor": "Floor",
     "loading": "Loading...",
     "propertyNotFound": "Property not found",
     "businessType": "Business type:",
@@ -581,7 +582,7 @@
     "responsibleBroker": "Responsible Broker",
     "contact": "Contact",
     "favorite": "FAVORITE",
-    "propertyLink": "Property Link",
+    "propertyLink": "Share",
     "linkCopiedShort": "Link Copied!",
     "savePDF": "Save PDF",
     "name": "Name",

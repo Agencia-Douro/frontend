@@ -545,6 +545,7 @@
   },
   "PropertyDetails": {
     "back": "Retour",
+    "floor": "Étage",
     "loading": "Chargement...",
     "propertyNotFound": "Propriété introuvable",
     "businessType": "Type de transaction :",
@@ -581,7 +582,7 @@
     "responsibleBroker": "Agent responsable",
     "contact": "Contacter",
     "favorite": "FAVORI",
-    "propertyLink": "Lien de la propriété",
+    "propertyLink": "Partager",
     "linkCopiedShort": "Lien copié !",
     "savePDF": "Enregistrer PDF",
     "name": "Nom",
