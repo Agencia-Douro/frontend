@@ -109,6 +109,7 @@ function ImoveisContent() {
 
     return (
         <section className="h-[calc(100vh-64px)] xl:h-[calc(100vh-72px)] overflow-hidden">
+            <h1 className="sr-only">{t("seoTitle")}</h1>
             <div className="container flex flex-col lg:flex-row lg:divide-x divide-[#EAE6DF] h-full overflow-hidden">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                 <div className="border-r border-[#EAE6DF] bg-deaf w-full flex flex-col overflow-hidden min-h-0">

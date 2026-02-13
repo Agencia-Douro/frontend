@@ -5,7 +5,7 @@
 export const siteConfig = {
   name: "Agência Douro",
   legalName: "Agência Douro - Mediação Imobiliária",
-  url: "https://agenciadouro.pt",
+  url: "https://www.agenciadouro.pt",
   telephone: "+351919766324",
   email: "geral@agenciadouro.pt",
   address: {
@@ -19,5 +19,11 @@ export const siteConfig = {
   addressOneLine:
     "Rua de Alfredo Cunha 155 rés do chão loja 07, 4450-031, Matosinhos, Porto",
   /** Redes sociais (para sameAs no Schema) */
-  sameAs: [] as string[],
+  sameAs: [
+    "https://www.instagram.com/agenciadouro",
+    "https://www.facebook.com/agenciadouro",
+    "https://www.linkedin.com/company/agência-douro",
+    "https://www.tiktok.com/@douroimobiliaria",
+    "https://www.youtube.com/@agenciadouromediacaoimobil3889",
+  ],
 } as const

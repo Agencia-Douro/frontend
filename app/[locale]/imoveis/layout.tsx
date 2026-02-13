@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/SEO/Breadcrumbs";
 
 export const metadata: Metadata = {
-    title: "Imóveis - Agência Douro",
-    description: "Explore nossa seleção de imóveis para venda e aluguel em Portugal. Casas, apartamentos, escritórios e terrenos em diversas localidades. Encontre o imóvel perfeito para si.",
-    keywords: "imóveis, casas, apartamentos, venda, aluguel, Portugal, imobiliária, Agência Douro, propriedades",
-    openGraph: {
-        title: "Imóveis - Agência Douro",
-        description: "Explore nossa seleção de imóveis para venda e aluguel em Portugal.",
-        type: "website",
-    },
+    title: "Comprar Imóveis em Portugal",
+    description:
+        "Encontre o seu imóvel ideal em Portugal com a Agência Douro. Casas, apartamentos, escritórios e terrenos para venda e arrendamento em diversas localidades.",
+    keywords:
+        "imóveis, casas, apartamentos, venda, aluguel, Portugal, imobiliária, Agência Douro, propriedades",
 };
 
-export default function ImoveisLayout({
+export default async function ImoveisLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: Promise<{ locale: string }>;
 }) {
-    return children;
+    const { locale } = await params;
+    return (
+        <>
+            <Breadcrumbs locale={locale} items={[{ name: "Imóveis", path: "/imoveis" }]} />
+            {children}
+        </>
+    );
 }
-

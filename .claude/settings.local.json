@@ -16,7 +16,8 @@
       "Bash(curl:*)",
       "WebFetch(domain:www.sothebysrealtypt.com)",
       "Bash(head:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

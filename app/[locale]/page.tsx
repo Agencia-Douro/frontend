@@ -10,29 +10,11 @@ import Image from "next/image";
 import Logo from "@/public/Logo.png";
 
 export const metadata: Metadata = {
-  title: "Agência Douro - Imóveis de Luxo em Portugal",
-  description: "Casas, apartamentos, escritórios, terrenos para venda e aluguel. Temos várias opções em diversas localidades. Fale com um de nossos representantes e agende uma visita.",
-  keywords: "imóveis, casas, apartamentos, venda, aluguel, Portugal, imobiliária, Agência Douro",
-  metadataBase: new URL("https://agenciadouro.pt"),
-  openGraph: {
-    title: "Agência Douro - Imóveis de Luxo em Portugal",
-    description: "Casas, apartamentos, escritórios, terrenos para venda e aluguel. Temos várias opções em diversas localidades.",
-    type: "website",
-    images: [
-      {
-        url: "/hero/hero1.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Agência Douro - Imóveis de Luxo em Portugal",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Agência Douro - Imóveis de Luxo em Portugal",
-    description: "Casas, apartamentos, escritórios, terrenos para venda e aluguel. Temos várias opções em diversas localidades.",
-    images: ["/hero/hero1.jpg"],
-  },
+  title: "Encontre a sua casa ideal em Portugal",
+  description:
+    "Encontre a sua casa ideal em Portugal com a Agência Douro. Compre, arrende ou venda o seu imóvel com os melhores profissionais do mercado imobiliário.",
+  keywords:
+    "imóveis, casas, apartamentos, venda, aluguel, Portugal, imobiliária, Agência Douro",
 };
 
 export default function Home() {
