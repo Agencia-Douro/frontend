@@ -266,7 +266,7 @@ export default function InstitucionalPage() {
             </section>
 
             {/* Quinta Seção - Equipa */}
-            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
+            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6" id="equipa">
                 <div>
                     <span className="button-14-medium text-brown">{aboutUsContent?.teamLabel || "Conheça a Nossa Equipa"}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || "A Nossa Equipa"}</h2>
