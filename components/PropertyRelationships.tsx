@@ -84,7 +84,7 @@ export function PropertyRelationships({
       const loadPendingProperties = async () => {
         try {
           const promises = pendingRelated.map(id => propertiesApi.getById(id))
-          const properties = await Promise.all(promises)
+          const properties = (await Promise.all(promises)).filter((p): p is Property => p !== null)
           setLocalPendingRelated(properties)
         } catch (error) {
           console.error("Erro ao carregar propriedades pendentes:", error)
@@ -141,7 +141,7 @@ export function PropertyRelationships({
       // Modo de criação - atualizar localmente
       try {
         const promises = tempSelectedIds.map(id => propertiesApi.getById(id))
-        const properties = await Promise.all(promises)
+        const properties = (await Promise.all(promises)).filter((p): p is Property => p !== null)
         setLocalPendingRelated(properties)
         toast.success("Propriedades relacionadas atualizadas!")
       } catch (error) {
