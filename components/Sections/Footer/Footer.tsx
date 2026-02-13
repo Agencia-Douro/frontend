@@ -63,7 +63,7 @@ export default function Footer() {
                             </ul>
                         </div>
                     </div>
-                    <Folha className="rotate-340 absolute left-[55%] md:left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-brown z-0 pointer-events-none" aria-hidden="true" />
+                    <Folha className="rotate-360 absolute left-[55%] md:left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-brown z-0 pointer-events-none" aria-hidden="true" />
                     <div className="flex flex-col gap-4">
                         <div className="flex justify-end itens-center md:items-end gap-4">
                             <FooterIcons />

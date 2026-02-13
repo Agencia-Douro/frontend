@@ -4,15 +4,14 @@ import { useRef, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { propertiesApi, contactApi } from "@/services/api"
+import type { Property } from "@/types/property"
 import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input-line"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogPortal, DialogTitle } from "@/components/ui/dialog"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { XIcon } from "lucide-react"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
@@ -23,8 +22,8 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 import Footer from "@/components/Sections/Footer/Footer"
 import { useTranslations } from "next-intl"
-import { Link } from "@/i18n/navigation"
 import { formatPriceNumber } from "@/lib/currency"
+import { XIcon } from "lucide-react"
 
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
@@ -72,7 +71,11 @@ const MediaItem = ({
     );
 };
 
-export default function ImovelDetailsClient() {
+type ImovelDetailsClientProps = {
+    initialProperty?: Property | null
+}
+
+export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsClientProps = {}) {
     const params = useParams()
     const id = params.id as string
     const locale = params.locale as string
@@ -102,9 +105,10 @@ export default function ImovelDetailsClient() {
         queryKey: ["property", id, locale],
         queryFn: () => propertiesApi.getById(id, locale),
         enabled: !!id,
+        initialData: initialProperty ?? undefined,
     })
 
-    if (isLoading) {
+    if (isLoading && !property) {
         return (
             <>
                 <section className="bg-deaf grid place-content-center h-[calc(100vh-64px)] lg:h-[calc(100vh-72px)]">
@@ -232,11 +236,11 @@ export default function ImovelDetailsClient() {
                         <div className="hidden md:block w-px h-3 bg-brown/20"></div>
                         <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
                             <p className="body-16-medium text-brown capitalize whitespace-nowrap">{transactionTypeMap[property.transactionType] || property.transactionType}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                             </svg>
                             <p className="body-16-medium text-brown capitalize whitespace-nowrap">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                             </svg>
                             <p className="body-16-medium text-brown whitespace-nowrap">{property.distrito}</p>
@@ -412,12 +416,30 @@ export default function ImovelDetailsClient() {
                             </svg>
                             {t("savePDF")}
                         </Button>
-                        <Button variant="gold" className="flex-1 min-w-0 body-16-medium px-6 py-3" onClick={() => setShowShareModal(true)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
-                            </svg>
-                            {t("propertyLink")}
-                        </Button>
+                        <Dialog>
+                            <DialogTrigger>
+                                <Button variant="gold" className="flex-1 body-16-medium px-6 py-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                    </svg>
+                                    {t("propertyLink")}
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-md">
+                                <Button variant="gold" className="flex-1 body-16-medium px-6 py-3">
+                                    {linkCopied ? (
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M6.33343 9.66676L9.66676 6.3334M11.4464 9.85577L13.302 8.00012C14.7661 6.536 14.7661 4.16224 13.302 2.69816C11.838 1.23408 9.46422 1.23408 8.00011 2.69816L6.14442 4.55384M9.85575 11.4464L8.00011 13.302C6.53602 14.7661 4.16226 14.7661 2.69817 13.302C1.23407 11.8379 1.23407 9.46416 2.69817 8.00012L4.55384 6.14442" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round" />
+                                        </svg>
+                                    )}
+                                    {linkCopied ? t("linkCopiedShort") : t("propertyLink")}
+                                </Button>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
 
@@ -848,7 +870,7 @@ export default function ImovelDetailsClient() {
                                 className="flex items-center justify-between p-4 border border-brown/10 rounded-lg hover:bg-deaf/50 transition-colors"
                             >
                                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                                    <div className="flex-shrink-0">
+                                    <div className="shrink-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brown">
                                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                             <polyline points="14 2 14 8 20 8"></polyline>
@@ -898,17 +920,17 @@ export default function ImovelDetailsClient() {
             <Dialog open={showShareModal} onOpenChange={setShowShareModal}>
                 <DialogPortal>
                     <DialogOverlay className="md:bg-black/50 bg-transparent" />
-                    <DialogPrimitive.Content
+                    <DialogContent
                         className="fixed z-2000 bg-deaf inset-0 flex flex-col md:inset-auto md:top-1/2 md:left-1/2 md:translate-x-[-50%] md:translate-y-[-50%] md:max-w-md md:w-full md:max-h-[90vh] md:shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 md:data-[state=closed]:zoom-out-95 md:data-[state=open]:zoom-in-95 duration-200"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between p-4 md:p-6 border-b border-brown/10">
                             <DialogTitle className="text-brown body-18-medium">{t("shareAd")}</DialogTitle>
                             <DialogDescription className="sr-only">{t("shareAd")}</DialogDescription>
-                            <DialogPrimitive.Close className="cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+                            <DialogClose className="cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
                                 <XIcon className="size-5" />
                                 <span className="sr-only">Close</span>
-                            </DialogPrimitive.Close>
+                            </DialogClose>
                         </div>
 
                         {/* Content */}
@@ -956,7 +978,7 @@ export default function ImovelDetailsClient() {
                                 </div>
                             </div>
                         </div>
-                    </DialogPrimitive.Content>
+                    </DialogContent>
                 </DialogPortal>
             </Dialog>
 

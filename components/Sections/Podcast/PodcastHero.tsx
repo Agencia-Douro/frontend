@@ -66,7 +66,7 @@ export function PodcastHero({
                             <p className="body-14-medium text-white/90 uppercase tracking-wider mb-4">
                                 {headerLabel}
                             </p>
-                            <h1 className="text-white leading-tight heading-quatro-medium md:heading-tres-regular xl:heading-dois-regular text-balance drop-shadow-lg mb-6">{title}</h1>
+                             {/* <h1 className="text-white leading-tight heading-quatro-medium md:heading-tres-regular xl:heading-dois-regular text-balance drop-shadow-lg mb-6">{title}</h1> */}
                             <p className="text-white/95 text-3xl md:text-4xl xl:text-5xl max-w-3xl leading-relaxed text-pretty drop-shadow-md mb-8 md:mb-10 font-normal">{intro}</p>
                         </div>
                     </div>

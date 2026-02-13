@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaButtonV2"
 import { notFound } from "next/navigation"
 import { routing } from "../../i18n/routing"
+import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Página Inicial - Agência Douro",
@@ -30,8 +31,33 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
 
   const messages = await getMessages();
 
+  const realEstateAgentSchema = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    telephone: siteConfig.telephone,
+    email: siteConfig.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.address.streetAddress,
+      addressLocality: siteConfig.address.addressLocality,
+      addressRegion: siteConfig.address.addressRegion,
+      postalCode: siteConfig.address.postalCode,
+      addressCountry: siteConfig.address.addressCountry,
+    },
+    areaServed: { "@type": "Country", name: "Portugal" },
+    ...(siteConfig.sameAs.length > 0 && { sameAs: siteConfig.sameAs }),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(realEstateAgentSchema),
+        }}
+      />
       <script
         dangerouslySetInnerHTML={{
           __html: "typeof window !== 'undefined' && (history.scrollRestoration = 'manual');",

@@ -1,6 +1,9 @@
 import { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { propertiesApi } from "@/services/api"
 import ImovelDetailsClient from "./ImovelDetailsClient"
+import { siteConfig } from "@/lib/site"
+import { routing } from "@/i18n/routing"
 
 type Props = {
     params: Promise<{
@@ -47,9 +50,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             ? property.image
             : `${process.env.NEXT_PUBLIC_API_URL || 'https://agenciadouro.pt'}${property.image}`
 
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url
+        const canonicalUrl = `${baseUrl}/${locale}/imoveis/${id}`
+        const languages: Record<string, string> = {}
+        for (const loc of routing.locales) {
+            languages[loc] = `${baseUrl}/${loc}/imoveis/${id}`
+        }
+
         return {
+            metadataBase: new URL(baseUrl),
             title,
             description,
+            alternates: {
+                canonical: canonicalUrl,
+                languages,
+            },
             openGraph: {
                 title,
                 description,
@@ -80,6 +95,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 }
 
-export default function ImovelDetails() {
-    return <ImovelDetailsClient />
+export default async function ImovelDetails({ params }: Props) {
+    const { id, locale } = await params
+    let initialProperty: Awaited<ReturnType<typeof propertiesApi.getById>> | null = null
+    try {
+        initialProperty = await propertiesApi.getById(id, locale)
+    } catch {
+        notFound()
+    }
+    if (!initialProperty) notFound()
+    return <ImovelDetailsClient initialProperty={initialProperty} />
 }
