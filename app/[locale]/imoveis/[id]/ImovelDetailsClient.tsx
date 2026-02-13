@@ -72,7 +72,9 @@ const MediaItem = ({
     );
 };
 
-export default function ImovelDetailsClient() {
+type Property = Awaited<ReturnType<typeof propertiesApi.getById>>
+
+export default function ImovelDetailsClient({ initialProperty }: { initialProperty: Property }) {
     const params = useParams()
     const id = params.id as string
     const locale = params.locale as string
@@ -101,6 +103,7 @@ export default function ImovelDetailsClient() {
     const { data: property, isLoading, error } = useQuery({
         queryKey: ["property", id, locale],
         queryFn: () => propertiesApi.getById(id, locale),
+        initialData: initialProperty,
         enabled: !!id,
     })
 
