@@ -56,6 +56,16 @@ export default function PodcastContentPage() {
     hostQuote_pt: "",
     hostLinkedInUrl: "",
     hostLinkedInLabel_pt: "",
+    // Director
+    directorLabel_pt: "",
+    directorName: "",
+    directorCredential_pt: "",
+    directorParagraph1_pt: "",
+    directorParagraph2_pt: "",
+    directorParagraph3_pt: "",
+    directorQuote_pt: "",
+    directorLinkedInUrl: "",
+    directorLinkedInLabel_pt: "",
     // Guests Header
     guestsLabel_pt: "",
     guestsTitle_pt: "",
@@ -133,6 +143,16 @@ export default function PodcastContentPage() {
         hostQuote_pt: c.hostQuote_pt || "",
         hostLinkedInUrl: c.hostLinkedInUrl || "",
         hostLinkedInLabel_pt: c.hostLinkedInLabel_pt || "",
+        // Director
+        directorLabel_pt: c.directorLabel_pt || "",
+        directorName: c.directorName || "",
+        directorCredential_pt: c.directorCredential_pt || "",
+        directorParagraph1_pt: c.directorParagraph1_pt || "",
+        directorParagraph2_pt: c.directorParagraph2_pt || "",
+        directorParagraph3_pt: c.directorParagraph3_pt || "",
+        directorQuote_pt: c.directorQuote_pt || "",
+        directorLinkedInUrl: c.directorLinkedInUrl || "",
+        directorLinkedInLabel_pt: c.directorLinkedInLabel_pt || "",
         // Guests Header
         guestsLabel_pt: c.guestsLabel_pt || "",
         guestsTitle_pt: c.guestsTitle_pt || "",
@@ -474,6 +494,131 @@ export default function PodcastContentPage() {
                   value={formData.hostLinkedInLabel_pt}
                   onChange={(e) =>
                     setFormData({ ...formData, hostLinkedInLabel_pt: e.target.value })
+                  }
+                  placeholder="Conectar no LinkedIn"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seção Diretor de Produção */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seção Diretor de Produção</CardTitle>
+            <CardDescription>Informações completas sobre o diretor de produção do podcast</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="directorLabel">Label</Label>
+                <Input
+                  id="directorLabel"
+                  value={formData.directorLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, directorLabel_pt: e.target.value })
+                  }
+                  placeholder="Diretor de Produção"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="directorName">Nome</Label>
+                <Input
+                  id="directorName"
+                  value={formData.directorName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, directorName: e.target.value })
+                  }
+                  placeholder="Nome do Diretor"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="directorCredential">Credencial / Título Profissional</Label>
+              <Input
+                id="directorCredential"
+                value={formData.directorCredential_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, directorCredential_pt: e.target.value })
+                }
+                placeholder="Título profissional do diretor"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="directorParagraph1">Parágrafo 1</Label>
+              <Textarea
+                id="directorParagraph1"
+                value={formData.directorParagraph1_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, directorParagraph1_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Primeiro parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="directorParagraph2">Parágrafo 2</Label>
+              <Textarea
+                id="directorParagraph2"
+                value={formData.directorParagraph2_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, directorParagraph2_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Segundo parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="directorParagraph3">Parágrafo 3</Label>
+              <Textarea
+                id="directorParagraph3"
+                value={formData.directorParagraph3_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, directorParagraph3_pt: e.target.value })
+                }
+                rows={3}
+                placeholder="Terceiro parágrafo da biografia..."
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="directorQuote">Citação / Quote</Label>
+              <Textarea
+                id="directorQuote"
+                value={formData.directorQuote_pt}
+                onChange={(e) =>
+                  setFormData({ ...formData, directorQuote_pt: e.target.value })
+                }
+                rows={2}
+                placeholder="Uma frase marcante do diretor..."
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="directorLinkedInUrl">URL do LinkedIn</Label>
+                <Input
+                  id="directorLinkedInUrl"
+                  value={formData.directorLinkedInUrl}
+                  onChange={(e) =>
+                    setFormData({ ...formData, directorLinkedInUrl: e.target.value })
+                  }
+                  placeholder="https://www.linkedin.com/in/..."
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="directorLinkedInLabel">Texto do Botão LinkedIn</Label>
+                <Input
+                  id="directorLinkedInLabel"
+                  value={formData.directorLinkedInLabel_pt}
+                  onChange={(e) =>
+                    setFormData({ ...formData, directorLinkedInLabel_pt: e.target.value })
                   }
                   placeholder="Conectar no LinkedIn"
                 />

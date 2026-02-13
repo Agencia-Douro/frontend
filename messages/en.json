@@ -297,6 +297,18 @@
       },
       "imageAlt": "Vânia Fernandes - Real Estate Consultant & Host"
     },
+    "diretorProducao": {
+      "label": "Production Director",
+      "name": "Production Director",
+      "credential": "Audiovisual producer & Content strategist",
+      "paragraph1": "With over 10 years of experience in audiovisual production and digital communication, he is responsible for the entire creative and technical direction of the podcast. From pre-production to post-production, he ensures that every episode meets the quality standard the project demands.",
+      "paragraph2": "His work goes beyond sound and image capture — it involves topic research, content preparation, guest coordination and building a narrative that makes each conversation relevant and engaging for listeners.",
+      "paragraph3": "He believes a great podcast is born from the combination of valuable content and flawless technical execution. Every detail matters: from framing to final editing, everything is designed to deliver the best experience to the listener.",
+      "quote": "Our goal is for every episode to be a reference — in content and in production quality.",
+      "linkedInLabel": "LinkedIn",
+      "linkedInUrl": "https://www.linkedin.com/",
+      "imageAlt": "Podcast Production Director"
+    },
     "galleryLabel": "Gallery",
     "galleryTitle": "Our Studio",
     "galleryDescription": "Recorded in a professional studio in the heart of Porto, we guarantee maximum audio and video quality in every episode. An environment designed for inspiring and productive conversations.",

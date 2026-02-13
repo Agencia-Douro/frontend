@@ -156,6 +156,16 @@ export interface PodcastContent {
   hostQuote: string;
   hostLinkedInUrl: string;
   hostLinkedInLabel: string;
+  // Director fields
+  directorLabel: string;
+  directorName: string;
+  directorCredential: string;
+  directorParagraph1: string;
+  directorParagraph2: string;
+  directorParagraph3: string;
+  directorQuote: string;
+  directorLinkedInUrl: string;
+  directorLinkedInLabel: string;
   // About Section
   aboutLabel: string;
   aboutTitle: string;
@@ -226,6 +236,16 @@ export interface UpdatePodcastContentDto {
   hostQuote_pt?: string;
   hostLinkedInUrl?: string;
   hostLinkedInLabel_pt?: string;
+  // Director fields
+  directorLabel_pt?: string;
+  directorName?: string;
+  directorCredential_pt?: string;
+  directorParagraph1_pt?: string;
+  directorParagraph2_pt?: string;
+  directorParagraph3_pt?: string;
+  directorQuote_pt?: string;
+  directorLinkedInUrl?: string;
+  directorLinkedInLabel_pt?: string;
   // About Section
   aboutLabel_pt?: string;
   aboutTitle_pt?: string;

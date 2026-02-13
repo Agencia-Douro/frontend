@@ -915,6 +915,7 @@ export interface SiteConfig {
   eurosEmTransacoes?: number;
   seguidoresInstagram?: number;
   apresentadoraImage?: string;
+  diretorImage?: string;
   podcastImagem?: string;
 }
 
@@ -933,6 +934,7 @@ export const siteConfigApi = {
     data: SiteConfig,
     apresentadoraImageFile?: File,
     podcastImagemFile?: File,
+    diretorImageFile?: File,
   ): Promise<SiteConfig> => {
     const formData = new FormData();
 
@@ -970,6 +972,9 @@ export const siteConfigApi = {
     // Adicionar imagens se fornecidas
     if (apresentadoraImageFile) {
       formData.append("apresentadoraImage", apresentadoraImageFile);
+    }
+    if (diretorImageFile) {
+      formData.append("diretorImage", diretorImageFile);
     }
     if (podcastImagemFile) {
       formData.append("podcastImagem", podcastImagemFile);

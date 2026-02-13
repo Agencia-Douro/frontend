@@ -33,6 +33,7 @@ import hero2 from "@/public/hero/hero2.jpg";
 import hero3 from "@/public/hero/hero3.jpg";
 import vaniaPodcast from "@/public/vania-podcast.png";
 import { useTranslations } from "next-intl";
+import { DiretorProducao } from "@/components/Sections/Podcast/Diretor";
 
 const GALLERY_IMAGES: PodcastGalleryImage[] = [
     { src: hero1, alt: "" },
@@ -141,6 +142,8 @@ export default function PodcastPage() {
 
             <Apresentadora />
 
+            <DiretorProducao />
+
             <PodcastGuestsSection
                 label={podcastContent?.guestsLabel || t("guestsLabel")}
                 title={podcastContent?.guestsTitle || t("guestsTitle")}
@@ -158,11 +161,11 @@ export default function PodcastPage() {
                 images={
                     podcastGalleryImages && podcastGalleryImages.length > 0
                         ? podcastGalleryImages.map((img) => ({
-                              src: img.imageUrl,
-                              alt: img.alt || t("galleryImageAlt"),
-                              mediaType: img.mediaType || "image",
-                              videoUrl: img.videoUrl,
-                          }))
+                            src: img.imageUrl,
+                            alt: img.alt || t("galleryImageAlt"),
+                            mediaType: img.mediaType || "image",
+                            videoUrl: img.videoUrl,
+                        }))
                         : galleryImages
                 }
                 openLightboxAriaLabel={t("galleryOpenAria")}
@@ -180,10 +183,10 @@ export default function PodcastPage() {
                 cards={
                     podcastWhyListenCards && podcastWhyListenCards.length > 0
                         ? podcastWhyListenCards.map((c) => ({
-                              iconKey: c.iconKey,
-                              title: c.title || c.title_pt,
-                              subtext: c.subtext || c.subtext_pt,
-                          }))
+                            iconKey: c.iconKey,
+                            title: c.title || c.title_pt,
+                            subtext: c.subtext || c.subtext_pt,
+                        }))
                         : (t.raw("whyListenCards") as WhyListenCard[]) ?? []
                 }
                 logoSrc={logoNorteImobiliario}
@@ -227,10 +230,10 @@ export default function PodcastPage() {
                 testimonials={
                     podcastTestimonials && podcastTestimonials.length > 0
                         ? podcastTestimonials.map((item) => ({
-                              name: item.name,
-                              role: item.role || item.role_pt,
-                              text: item.text || item.text_pt,
-                          }))
+                            name: item.name,
+                            role: item.role || item.role_pt,
+                            text: item.text || item.text_pt,
+                        }))
                         : (t.raw("testimonialsList") as PodcastTestimonialItem[]) ?? []
                 }
                 prevAriaLabel={t("testimonialsPrevAria")}

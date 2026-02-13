@@ -23,6 +23,8 @@ export default function PodcastTopicsPage() {
   })
   const [apresentadoraImageFile, setApresentadoraImageFile] = useState<File | null>(null)
   const [apresentadoraImagePreview, setApresentadoraImagePreview] = useState<string | null>(null)
+  const [diretorImageFile, setDiretorImageFile] = useState<File | null>(null)
+  const [diretorImagePreview, setDiretorImagePreview] = useState<string | null>(null)
 
   const { data: topics, isLoading } = useQuery({
     queryKey: ["podcast-topics"],
@@ -37,6 +39,9 @@ export default function PodcastTopicsPage() {
   useEffect(() => {
     if (config?.apresentadoraImage) {
       setApresentadoraImagePreview(config.apresentadoraImage)
+    }
+    if (config?.diretorImage) {
+      setDiretorImagePreview(config.diretorImage)
     }
   }, [config])
 
@@ -113,6 +118,41 @@ export default function PodcastTopicsPage() {
     },
   })
 
+  const updateDiretorMutation = useMutation({
+    mutationFn: (imageFile: File) => {
+      if (!config) throw new Error("Configuração não carregada")
+
+      const validatedConfig = {
+        clientesSatisfeitos: Number(config.clientesSatisfeitos) || 0,
+        rating: Number(config.rating) || 0,
+        anosExperiencia: Number(config.anosExperiencia) || 0,
+        imoveisVendidos: Number(config.imoveisVendidos) || 0,
+        episodiosPublicados: config.episodiosPublicados !== undefined && config.episodiosPublicados !== null
+          ? Number(config.episodiosPublicados)
+          : undefined,
+        temporadas: config.temporadas !== undefined && config.temporadas !== null
+          ? Number(config.temporadas)
+          : undefined,
+        especialistasConvidados: config.especialistasConvidados !== undefined && config.especialistasConvidados !== null
+          ? Number(config.especialistasConvidados)
+          : undefined,
+        eurosEmTransacoes: config.eurosEmTransacoes !== undefined && config.eurosEmTransacoes !== null
+          ? Number(config.eurosEmTransacoes)
+          : undefined,
+      }
+
+      return siteConfigApi.update(validatedConfig, undefined, undefined, imageFile)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["site-config"] })
+      toast.success("Imagem do diretor atualizada com sucesso!")
+      setDiretorImageFile(null)
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Erro ao atualizar imagem do diretor")
+    },
+  })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -185,6 +225,26 @@ export default function PodcastTopicsPage() {
     updateApresentadoraMutation.mutate(apresentadoraImageFile)
   }
 
+  const handleDiretorImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setDiretorImageFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setDiretorImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleSaveDiretorImage = () => {
+    if (!diretorImageFile) {
+      toast.error("Selecione uma imagem primeiro")
+      return
+    }
+    updateDiretorMutation.mutate(diretorImageFile)
+  }
+
   if (isLoading) {
     return <div className="p-6">Carregando...</div>
   }
@@ -238,6 +298,44 @@ export default function PodcastTopicsPage() {
                 disabled={updateApresentadoraMutation.isPending}
               >
                 {updateApresentadoraMutation.isPending ? "Salvando..." : "Salvar Imagem"}
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Imagem do Diretor de Produção</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="diretor-image">Foto do Diretor de Produção do Podcast</Label>
+              <Input
+                id="diretor-image"
+                type="file"
+                accept="image/*"
+                onChange={handleDiretorImageChange}
+              />
+            </div>
+            {diretorImagePreview && (
+              <div className="mt-2">
+                <Image
+                  src={diretorImagePreview}
+                  alt="Preview Diretor"
+                  width={200}
+                  height={250}
+                  className="rounded-lg object-cover"
+                />
+              </div>
+            )}
+            {diretorImageFile && (
+              <Button
+                onClick={handleSaveDiretorImage}
+                disabled={updateDiretorMutation.isPending}
+              >
+                {updateDiretorMutation.isPending ? "Salvando..." : "Salvar Imagem"}
               </Button>
             )}
           </div>
