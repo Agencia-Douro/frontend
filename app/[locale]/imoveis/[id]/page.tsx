@@ -16,7 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id, locale } = await params
 
     try {
-        const property = await propertiesApi.getById(id, locale)
+    const property = await propertiesApi.getById(id, locale)
+
+    if (!property) {
+      return {
+        title: "Imóvel não encontrado | Agência Douro",
+        description: "O imóvel que procura não foi encontrado.",
+      }
+    }
 
         const transactionTypeMap: Record<string, string> = {
             comprar: "Comprar",
@@ -57,52 +64,52 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             languages[loc] = `${baseUrl}/${loc}/imoveis/${id}`
         }
 
-        return {
-            metadataBase: new URL(baseUrl),
-            title,
-            description,
-            alternates: {
-                canonical: canonicalUrl,
-                languages,
-            },
-            openGraph: {
-                title,
-                description,
-                type: 'website',
-                locale: locale === 'pt' ? 'pt_PT' : 'en_US',
-                images: [
-                    {
-                        url: imageUrl,
-                        width: 1200,
-                        height: 630,
-                        alt: property.title,
-                    }
-                ],
-                siteName: 'Agência Douro',
-            },
-            twitter: {
-                card: 'summary_large_image',
-                title,
-                description,
-                images: [imageUrl],
-            },
-        }
-    } catch (error) {
-        return {
-            title: 'Imóvel não encontrado | Agência Douro',
-            description: 'O imóvel que procura não foi encontrado.',
-        }
+    return {
+      metadataBase: new URL(baseUrl),
+      title,
+      description,
+      alternates: {
+        canonical: canonicalUrl,
+        languages,
+      },
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        locale: locale === "pt" ? "pt_PT" : "en_US",
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: property.title,
+          },
+        ],
+        siteName: "Agência Douro",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [imageUrl],
+      },
     }
+  } catch {
+    return {
+      title: "Imóvel não encontrado | Agência Douro",
+      description: "O imóvel que procura não foi encontrado.",
+    }
+  }
 }
 
 export default async function ImovelDetails({ params }: Props) {
     const { id, locale } = await params
-    let initialProperty: Awaited<ReturnType<typeof propertiesApi.getById>> | null = null
+  let initialProperty: Awaited<ReturnType<typeof propertiesApi.getById>> | null = null
     try {
-        initialProperty = await propertiesApi.getById(id, locale)
-    } catch {
-        notFound()
-    }
-    if (!initialProperty) notFound()
-    return <ImovelDetailsClient initialProperty={initialProperty} />
+    initialProperty = await propertiesApi.getById(id, locale)
+  } catch {
+    notFound()
+  }
+  if (!initialProperty) notFound()
+  return <ImovelDetailsClient initialProperty={initialProperty} />
 }

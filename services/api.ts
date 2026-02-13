@@ -30,8 +30,38 @@ import {
   UpdateSellPropertyContentDto,
 } from "@/types/about-us";
 
+/**
+ * Erros especializados para melhor tratamento em SSR/SEO.
+ * - NotFoundError: recurso inexistente (ex.: imóvel removido) → pode virar 404/410.
+ * - ExternalApiError: falha de API externa (5xx, timeout, etc.) → páginas estratégicas devem renderizar fallback 200.
+ */
+export class NotFoundError extends Error {
+  constructor(message: string = "Recurso não encontrado") {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
+
+export class ExternalApiError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "ExternalApiError";
+    this.status = status;
+  }
+}
+
 const API_BASE_URL = "https://agenciadouro.pt/api";
 //const API_BASE_URL = "http://localhost:3008";
+
+async function safeJson<T>(response: Response): Promise<T | null> {
+  try {
+    return (await response.json()) as T;
+  } catch {
+    return null;
+  }
+}
 
 export interface PropertyFilters {
   minPrice?: number;
@@ -67,6 +97,8 @@ export interface PropertyFilters {
   limit?: number;
   lang?: string;
 }
+
+export type { Property } from "@/types/property";
 
 export const propertiesApi = {
   search: async (
@@ -106,32 +138,44 @@ export const propertiesApi = {
     }
 
     const queryString = params.toString();
-    const url = `${API_BASE_URL}/properties${
-      queryString ? `?${queryString}` : ""
-    }`;
+    const url = `${API_BASE_URL}/properties${queryString ? `?${queryString}` : ""}`;
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar propriedades");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar propriedades (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();
   },
 
-  getById: async (id: string, lang?: string): Promise<Property> => {
+  /**
+   * Retorna null quando a API responde 404, permitindo que o caller use notFound()
+   * sem gerar 5xx em SSR. Outros erros viram ExternalApiError.
+   */
+  getById: async (id: string, lang?: string): Promise<Property | null> => {
     const params = new URLSearchParams();
     if (lang) {
       params.append("lang", lang);
     }
 
     const queryString = params.toString();
-    const url = `${API_BASE_URL}/properties/${id}${
-      queryString ? `?${queryString}` : ""
-    }`;
+    const url = `${API_BASE_URL}/properties/${id}${queryString ? `?${queryString}` : ""}`;
     const response = await fetch(url);
 
+    if (response.status === 404) {
+      return null;
+    }
+
     if (!response.ok) {
-      throw new Error("Erro ao buscar propriedade");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar propriedade (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();
@@ -924,7 +968,11 @@ export const siteConfigApi = {
     const response = await fetch(`${API_BASE_URL}/site-config`);
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar configurações do site");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar configurações do site (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();
@@ -1635,7 +1683,11 @@ export const podcastContentApi = {
     const response = await fetch(`${API_BASE_URL}/podcast-content${params}`);
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar conteúdo do podcast");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar conteúdo do podcast (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();
@@ -2107,7 +2159,11 @@ export const podcastGalleryApi = {
     const response = await fetch(`${API_BASE_URL}/podcast-gallery${params}`);
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar galeria do podcast");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar galeria do podcast (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();
@@ -2212,7 +2268,11 @@ export const podcastWhyListenApi = {
     const response = await fetch(`${API_BASE_URL}/podcast-why-listen${params}`);
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar cards do podcast");
+      const data = await safeJson<{ message?: string }>(response);
+      throw new ExternalApiError(
+        data?.message || `Erro ao buscar cards do podcast (${response.status})`,
+        response.status,
+      );
     }
 
     return response.json();

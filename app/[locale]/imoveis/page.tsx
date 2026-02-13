@@ -81,7 +81,7 @@ function ImoveisContent() {
     const handlePageChange = (newPage: number) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", newPage.toString());
-        router.push(`/imoveis?${params.toString()}`);
+        router.push(`/${locale}/imoveis?${params.toString()}`);
     };
 
     const handleSortChange = (value: string) => {
@@ -97,7 +97,7 @@ function ImoveisContent() {
 
         params.set("sortBy", sortMap[value] || "-createdAt");
         params.delete("page"); // Reset para página 1 ao mudar ordenação
-        router.push(`/imoveis?${params.toString()}`);
+        router.push(`/${locale}/imoveis?${params.toString()}`);
     };
 
     const getSortLabel = (sortBy: string) => {
