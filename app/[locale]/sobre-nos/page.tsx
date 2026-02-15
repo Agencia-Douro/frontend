@@ -95,7 +95,7 @@ export default function InstitucionalPage() {
             <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 relative">
                 {contentLoading ? (
                     <div className="text-center py-12">
-                        <p className="body-16-regular text-brown">A carregar...</p>
+                        <p className="body-16-regular text-brown">{t("loading")}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -137,12 +137,12 @@ export default function InstitucionalPage() {
             {/* Terceira Seção - Cultura */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-brown">{aboutUsContent?.cultureLabel || "Nossa Identidade"}</span>
-                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.cultureTitle || "A Nossa Cultura"}</h2>
+                    <span className="button-14-medium text-brown">{aboutUsContent?.cultureLabel || t("ourIdentity")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.cultureTitle || t("ourCulture")}</h2>
                 </div>
                 {cultureLoading ? (
                     <div className="text-center py-8">
-                        <p className="body-16-regular text-brown">A carregar itens de cultura...</p>
+                        <p className="body-16-regular text-brown">{t("loadingCulture")}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
@@ -221,8 +221,8 @@ export default function InstitucionalPage() {
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div>
-                        <span className="button-14-medium text-brown">{aboutUsContent?.servicesLabel || "O Que Oferecemos"}</span>
-                        <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || "Os Nossos Serviços"}</h2>
+                        <span className="button-14-medium text-brown">{aboutUsContent?.servicesLabel || t("whatWeOffer")}</span>
+                        <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || t("ourServices")}</h2>
                     </div>
                     <Button
                             asChild
@@ -235,7 +235,7 @@ export default function InstitucionalPage() {
                 </div>
                 {servicesLoading ? (
                     <div className="text-center py-8">
-                        <p className="body-16-regular text-brown">A carregar serviços...</p>
+                        <p className="body-16-regular text-brown">{t("loadingServices")}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
@@ -268,8 +268,8 @@ export default function InstitucionalPage() {
             {/* Quinta Seção - Equipa */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6" id="equipa">
                 <div>
-                    <span className="button-14-medium text-brown">{aboutUsContent?.teamLabel || "Conheça a Nossa Equipa"}</span>
-                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || "A Nossa Equipa"}</h2>
+                    <span className="button-14-medium text-brown">{aboutUsContent?.teamLabel || t("meetOurTeam")}</span>
+                    <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || t("ourTeam")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl mt-4 leading-relaxed">
                         {aboutUsContent?.teamDescription || ""}
                     </p>

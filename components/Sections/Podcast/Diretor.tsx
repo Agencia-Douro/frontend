@@ -68,7 +68,6 @@ export function DiretorProducao() {
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
                     <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.directorLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.directorName || t("name")}</h2>
-                    <p className="body-16-medium text-brown">{podcastContent?.directorCredential || t("credential")}</p>
 
                     <div className="space-y-4 text-justify lg:text-left min-w-0">
                         <p className="text-black-muted md:body-18-regular body-16-regular leading-relaxed text-pretty wrap-break-word">{podcastContent?.directorParagraph1 || t("paragraph1")}</p>

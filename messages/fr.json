@@ -141,7 +141,7 @@
     "propertiesSold": "Propriétés vendues",
     "satisfiedClients": "Clients satisfaits",
     "eurosInTransactions": "Euros en transactions",
-    "legal": "(appel à la réseau mobile national)",
+    "legal": "(appel au réseau mobile national)",
     "instagramFollowers": "Abonnés Instagram",
     "ourIdentity": "Notre identité",
     "ourCulture": "Notre culture",
@@ -196,7 +196,10 @@
     "ourTeam": "Notre équipe",
     "teamDescription": "Notre équipe est composée de professionnels hautement qualifiés et expérimentés, dédiés à fournir le meilleur service et à transformer vos rêves en réalité.",
     "viewMore": "Voir plus",
-    "viewLess": "Voir moins"
+    "viewLess": "Voir moins",
+    "loading": "Chargement...",
+    "loadingCulture": "Chargement des éléments culturels...",
+    "loadingServices": "Chargement des services..."
   },
   "Podcast": {
     "exclusiveContent": "Contenu exclusif",
@@ -532,9 +535,9 @@
           "stat": "+50 000 visiteurs/mois"
         },
         "newsletter": {
-          "title": "Newsletter",
+          "title": "Télévision",
           "description": "Envoi à notre base de clients qualifiés",
-          "stat": "+10 000 abonnés"
+          "stat": "Nous sommes sur Record TV"
         },
         "agencies": {
           "title": "Agences partenaires",

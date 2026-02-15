@@ -78,18 +78,18 @@
     "emailPlaceholder": "contacto@agenciadouro.pt",
     "message": "Mensagem",
     "messagePlaceholder": "Envie-nos uma mensagem!",
-    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
+    "marketingConsent": "Autorizo a Agência Douro a conservar estes dados",
     "send": "Enviar",
     "emailDescription": "Envie-nos a sua dúvida ou questão para o nosso email.",
     "contact": "Contacto",
-    "contactDescription": "Pode também falar conosco através do telefone.",
+    "contactDescription": "Pode também falar connosco através do telefone.",
     "socialMedia": "Redes Sociais",
     "socialMediaDescription": "Somos bastante ativos nas redes, siga-nos!",
     "address": "Morada",
     "addressDescription": "Venha fazer-nos uma visita, ficamos por cá à sua espera."
   },
   "Footer": {
-    "home": "Ínicio",
+    "home": "Início",
     "properties": "Imóveis",
     "aboutUs": "Sobre Nós",
     "contact": "Contacto",
@@ -196,7 +196,10 @@
     "ourTeam": "A Nossa Equipa",
     "teamDescription": "A nossa equipa é composta por profissionais altamente qualificados e experientes, dedicados a proporcionar o melhor serviço e a transformar os seus sonhos em realidade.",
     "viewMore": "Ver mais",
-    "viewLess": "Ver menos"
+    "viewLess": "Ver menos",
+    "loading": "A carregar...",
+    "loadingCulture": "A carregar itens de cultura...",
+    "loadingServices": "A carregar serviços..."
   },
   "Podcast": {
     "exclusiveContent": "Conteúdo Exclusivo",
@@ -413,7 +416,7 @@
         "rent": "Arrendar"
       }
     },
-    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
+    "marketingConsent": "Autorizo a Agência Douro a conservar estes dados",
     "submitButton": "Solicitar Avaliação",
     "toast": {
       "sending": "Enviando avaliação...",

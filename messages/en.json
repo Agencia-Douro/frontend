@@ -196,7 +196,10 @@
     "ourTeam": "Our Team",
     "teamDescription": "Our team consists of highly qualified and experienced professionals, dedicated to providing the best service and turning your dreams into reality.",
     "viewMore": "View more",
-    "viewLess": "View less"
+    "viewLess": "View less",
+    "loading": "Loading...",
+    "loadingCulture": "Loading culture items...",
+    "loadingServices": "Loading services..."
   },
   "Podcast": {
     "exclusiveContent": "Exclusive Content",
@@ -389,7 +392,7 @@
       }
     },
     "title": "Online Valuer",
-    "subtitle": "Fill out the form below to receive a  evaluation of your property",
+    "subtitle": "Fill out the form below to receive an evaluation of your property",
     "personalData": {
       "title": "Personal Data",
       "name": "Name",
@@ -440,7 +443,7 @@
     "properties": "Properties",
     "buy": "Buy",
     "rent": "Rent",
-    "avaliar": "Valuer Online",
+    "avaliar": "Online Valuer",
     "developments": "Developments",
     "businessTransfer": "Business Transfer",
     "luxuryProperties": "Luxury Properties",
@@ -532,9 +535,9 @@
           "stat": "+50,000 visitors/month"
         },
         "newsletter": {
-          "title": "Newsletter",
+          "title": "Television",
           "description": "Sent to our qualified client base",
-          "stat": "+10,000 subscribers"
+          "stat": "We are on Record TV"
         },
         "agencies": {
           "title": "Partner Agencies",
