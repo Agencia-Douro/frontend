@@ -100,7 +100,7 @@ export default function InstitucionalPage() {
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                         <div className="lg:col-span-7 lg:space-y-6 space-y-4">
-                            <div><span className="body-14-medium text-brown uppercase tracking-wider">{t("whoWeAre")}</span></div>
+                            <div><span className="body-14-medium text-gold uppercase tracking-wider">{t("whoWeAre")}</span></div>
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">
                                 {aboutUsContent?.pageTitle || ""}
                             </h1>
@@ -120,6 +120,7 @@ export default function InstitucionalPage() {
                                 alt="Agência do Douro"
                                 width={400}
                                 height={400}
+                                sizes="400px"
                                 className="w-full max-w-[400px] h-auto"
                             />
                         </div>
@@ -137,7 +138,7 @@ export default function InstitucionalPage() {
             {/* Terceira Seção - Cultura */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-brown">{aboutUsContent?.cultureLabel || t("ourIdentity")}</span>
+                    <span className="button-14-medium text-gold">{aboutUsContent?.cultureLabel || t("ourIdentity")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.cultureTitle || t("ourCulture")}</h2>
                 </div>
                 {cultureLoading ? (
@@ -146,11 +147,11 @@ export default function InstitucionalPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        {cultureItems.map((item: any) => (
+                        {cultureItems.map((item) => (
                             <CulturaCard
                                 key={item.id}
-                                title={item.title}
-                                description={item.description}
+                                title={item.title ?? item.title_pt}
+                                description={item.description ?? item.description_pt}
                             />
                         ))}
                     </div>
@@ -161,7 +162,7 @@ export default function InstitucionalPage() {
             {aboutUsContent?.televisionLabel && aboutUsContent?.televisionTitle && (
                 <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                     <div>
-                        <span className="button-14-medium text-brown">{aboutUsContent?.televisionLabel || ""}</span>
+                        <span className="button-14-medium text-gold">{aboutUsContent?.televisionLabel || ""}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.televisionTitle || ""}</h2>
                         {aboutUsContent?.televisionDescription && (
                             <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl mt-4 leading-relaxed">
@@ -171,10 +172,10 @@ export default function InstitucionalPage() {
                     </div>
                     
                     {/* YouTube Videos */}
-                    {(aboutUsContent as any)?.youtubeLink1 || (aboutUsContent as any)?.youtubeLink2 || (aboutUsContent as any)?.youtubeLink3 ? (
+                    {aboutUsContent?.youtubeLink1 || aboutUsContent?.youtubeLink2 || aboutUsContent?.youtubeLink3 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                            {[(aboutUsContent as any)?.youtubeLink1, (aboutUsContent as any)?.youtubeLink2, (aboutUsContent as any)?.youtubeLink3]
-                                .filter(link => link)
+                            {[aboutUsContent?.youtubeLink1, aboutUsContent?.youtubeLink2, aboutUsContent?.youtubeLink3]
+                                .filter((link): link is string => Boolean(link))
                                 .map((link, index) => {
                                     // Extrair videoId do YouTube
                                     const getYouTubeVideoId = (url: string): string | null => {
@@ -199,7 +200,7 @@ export default function InstitucionalPage() {
                                                     alt={`YouTube video ${index + 1}`}
                                                     fill
                                                     className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                                    unoptimized
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                 />
                                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                                                     <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -221,7 +222,7 @@ export default function InstitucionalPage() {
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div>
-                        <span className="button-14-medium text-brown">{aboutUsContent?.servicesLabel || t("whatWeOffer")}</span>
+                        <span className="button-14-medium text-gold">{aboutUsContent?.servicesLabel || t("whatWeOffer")}</span>
                         <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.servicesTitle || t("ourServices")}</h2>
                     </div>
                     <Button
@@ -239,12 +240,12 @@ export default function InstitucionalPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8 lg:mt-10 xl:mt-12">
-                        {serviceItems.map((item: any) => (
+                        {serviceItems.map((item) => (
                             <ServicoCard
                                 key={item.id}
                                 icon={ShoppingBag}
-                                title={item.title}
-                                description={item.description}
+                                title={item.title ?? item.title_pt}
+                                description={item.description ?? item.description_pt}
                             />
                         ))}
                     </div>
@@ -268,7 +269,7 @@ export default function InstitucionalPage() {
             {/* Quinta Seção - Equipa */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6" id="equipa">
                 <div>
-                    <span className="button-14-medium text-brown">{aboutUsContent?.teamLabel || t("meetOurTeam")}</span>
+                    <span className="button-14-medium text-gold">{aboutUsContent?.teamLabel || t("meetOurTeam")}</span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">{aboutUsContent?.teamTitle || t("ourTeam")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full max-w-3xl mt-4 leading-relaxed">
                         {aboutUsContent?.teamDescription || ""}
@@ -314,7 +315,7 @@ export default function InstitucionalPage() {
             </section>
 
             {/* Seção Newsletter */}
-            <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24">
+            <section id="newsletter" className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 scroll-mt-20">
                 <div className="lg:space-y-6 space-y-4">
                     <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-balance md:whitespace-nowrap text-black">{tNewsletter("title")}</h2>
                     <p className="text-black-muted md:body-18-regular body-16-regular w-full">{tNewsletter("description")}</p>

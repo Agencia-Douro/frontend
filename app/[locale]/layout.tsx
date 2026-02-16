@@ -1,6 +1,7 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl"
 import { getMessages } from "next-intl/server"
 import type { Metadata } from "next"
+import Script from "next/script"
 import { QueryProvider } from "@/providers/query-provider"
 import Header from "@/components/Sections/Header/Header"
 import { Toaster } from "@/components/ui/sonner"
@@ -136,9 +137,11 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
           __html: JSON.stringify(schemas),
         }}
       />
-      <script
+      <Script
+        id="scroll-restoration"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: "typeof window !== 'undefined' && (history.scrollRestoration = 'manual');",
+          __html: "history.scrollRestoration='manual';",
         }}
       />
       <NextIntlClientProvider locale={locale} messages={messages}>

@@ -33,10 +33,6 @@ export const AvaliadorOnlineButton = () => {
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
 
-    // Não mostrar o botão nas páginas de admin
-    if (pathname?.startsWith('/admin')) {
-        return null
-    }
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
@@ -50,6 +46,10 @@ export const AvaliadorOnlineButton = () => {
         tipologia: "",
         observacoes: "",
     })
+
+    if (pathname?.startsWith('/admin')) {
+        return null
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -87,8 +87,9 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                 observacoes: "",
             })
             setIsOpen(false)
-        } catch (error: any) {
-            toast.error(error.message || t("toast.error"), { id: toastId })
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : t("toast.error")
+            toast.error(message, { id: toastId })
         }
     }
 

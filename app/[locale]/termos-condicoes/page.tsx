@@ -15,9 +15,9 @@ export default async function TermosECondicoesPage() {
     
     return (
         <>
-            <div className="bg-[#F4F0E9] pt-10">
-                <section className="container">
-                    <div className="py-6 md:py-10 lg:py-12 xl:py-16">
+            <div className="bg-[#F4F0E9]">
+                <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40">
+                    <div className="pb-6 md:pb-10 lg:pb-12 xl:pb-16">
                         <div className="lg:space-y-6 space-y-4 mb-8 md:mb-10 lg:mb-12">
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black">{t("title")}</h1>
                             <p className="text-black-muted md:body-18-regular body-16-regular w-full">{t("description")}</p>

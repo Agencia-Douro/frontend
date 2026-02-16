@@ -29,10 +29,6 @@ export default function AvaliadorOnlinePage() {
     const tPropertyTypes = useTranslations("PropertyTypes")
     const pathname = usePathname()
 
-    // Não mostrar o botão nas páginas de admin
-    if (pathname?.startsWith('/admin')) {
-        return null
-    }
     const [formData, setFormData] = useState({
         nome: "",
         telefone: "",
@@ -46,6 +42,10 @@ export default function AvaliadorOnlinePage() {
         tipologia: "",
         observacoes: "",
     })
+
+    if (pathname?.startsWith('/admin')) {
+        return null
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -82,19 +82,20 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
                 tipologia: "",
                 observacoes: "",
             })
-        } catch (error: any) {
-            toast.error(error.message || t("toast.error"), { id: toastId })
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : t("toast.error")
+            toast.error(message, { id: toastId })
         }
     }
 
     return (
         <>
             <section className="relative">
-                <div className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40 pb-8 md:pb-12 lg:pb-16">
+                <div className="container pt-20 md:pt-20 lg:pt-24 xl:pt-32 pb-8 md:pb-12 lg:pb-16">
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-8 md:mb-10 lg:mb-12">
-                            <span className="body-14-medium text-black uppercase tracking-wider">{t("button.desktop.line1")}</span>
+                            <span className="body-14-medium text-gold uppercase tracking-wider">{t("button.desktop.line1")}</span>
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4 mb-6">
                                 {t("title")}
                             </h1>

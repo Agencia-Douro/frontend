@@ -25,9 +25,10 @@ export default function ImoveisDestacados() {
             <div className="hidden xl:block absolute left-8 top-1/2 -translate-y-1/2 -z-10">
                 <Image
                     src={Logo}
-                    alt="Agência do Douro"
+                    alt=""
                     width={200}
                     height={200}
+                    sizes="200px"
                     className="w-[200px] h-auto opacity-30"
                 />
             </div>
@@ -36,9 +37,10 @@ export default function ImoveisDestacados() {
             <div className="hidden xl:block absolute right-8 top-1/2 -translate-y-1/2 -z-10">
                 <Image
                     src={Logo}
-                    alt="Agência do Douro"
+                    alt=""
                     width={200}
                     height={200}
+                    sizes="200px"
                     className="w-[200px] h-auto opacity-30"
                 />
             </div>

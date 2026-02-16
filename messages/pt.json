@@ -173,23 +173,23 @@
       },
       "realEstatePromotion": {
         "title": "Promoção Imobiliária",
-        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+        "description": "Desenvolvemos estratégias de marketing personalizadas para maximizar a visibilidade e valorização do seu imóvel no mercado."
       },
       "projectManagement": {
         "title": "Gestão de projetos imobiliários",
-        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+        "description": "Acompanhamos e coordenamos todas as fases do seu projeto imobiliário, desde o planeamento até à entrega final."
       },
       "realEstateInvestments": {
         "title": "Investimentos imobiliários",
-        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+        "description": "Identificamos as melhores oportunidades de investimento imobiliário, com análises de mercado rigorosas e retorno otimizado."
       },
       "goldenVisa": {
         "title": "Visto Gold",
-        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+        "description": "Orientamos investidores internacionais em todo o processo de obtenção do Visto Gold através de investimento imobiliário em Portugal."
       },
       "mortgagePartners": {
         "title": "Parceiros de crédito imobiliário",
-        "description": "Ajudamos você a encontrar as melhores opções de financiamento, adequadas às suas necessidades e perfil financeiro."
+        "description": "Trabalhamos com uma rede de parceiros bancários de confiança para garantir as melhores condições de financiamento para si."
       }
     },
     "meetOurTeam": "Conheça a Nossa Equipa",
@@ -320,7 +320,10 @@
     "galleryDescription": "Gravado num estúdio profissional no centro de Matosinhos no Porto, garantimos a máxima qualidade de áudio e vídeo em todos os episódios. Um ambiente pensado para conversas inspiradoras e produtivas.",
     "galleryOpenAria": "Ver imagem em tamanho maior",
     "galleryCloseAria": "Fechar",
-    "galleryImageAlt": "Estúdio do podcast"
+    "galleryImageAlt": "Estúdio do podcast",
+    "closeVideo": "Fechar vídeo",
+    "videoNotSupported": "O seu navegador não suporta a reprodução de vídeos.",
+    "playVideo": "Reproduzir vídeo"
   },
   "Sidebar": {
     "buy": "Comprar",
@@ -536,7 +539,7 @@
         },
         "newsletter": {
           "title": "Televisão",
-          "description": "Envio para a nossa base de clientes qualificados",
+          "description": "Presença nos principais canais de televisão nacionais",
           "stat": "Estamos na Record"
         },
         "agencies": {
@@ -615,7 +618,7 @@
     "phonePlaceholder": "+351 919 766 323",
     "emailPlaceholder": "contacto@agenciadouro.pt",
     "messagePlaceholder": "Envie-nos uma mensagem!",
-    "marketingConsent": "Autorizo a Agência Douro a conserver estes dados",
+    "marketingConsent": "Autorizo a Agência Douro a conservar estes dados",
     "send": "Enviar",
     "totalArea": "Área Total",
     "builtArea": "Área Construída",
@@ -653,7 +656,21 @@
     "fractionsTitle": "Frações",
     "fractionsDescription": "Unidades e frações disponíveis neste empreendimento",
     "fractionsLoading": "A carregar frações...",
-    "callNow": "Ligue agora"
+    "callNow": "Ligue agora",
+    "whatsappGreeting": "Olá! Tenho interesse no imóvel:",
+    "whatsappGreetingAgent": "Olá {name}! Tenho interesse no imóvel:",
+    "whatsappPrice": "Preço",
+    "whatsappReference": "Referência",
+    "whatsappLink": "Link",
+    "propertyInfoHeader": "--- Informações do Imóvel ---",
+    "propertyInfoType": "Tipo",
+    "propertyInfoLocation": "Localização",
+    "propertyInfoPrice": "Preço",
+    "propertyInfoReference": "Referência",
+    "seoNotFound": "Imóvel não encontrado",
+    "seoNotFoundDescription": "O imóvel que procura não foi encontrado.",
+    "seoBedrooms": "{count} quartos",
+    "seoBathrooms": "{count} casas de banho"
   },
   "TermosECondicoes": {
     "title": "Termos e Condições",

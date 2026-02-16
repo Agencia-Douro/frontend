@@ -101,7 +101,7 @@ export function PodcastTestimonialsSection({
             )}
             <div className="container relative z-10">
                 <header className="mb-8 md:mb-10 lg:mb-12 text-center max-w-3xl mx-auto space-y-2">
-                    <span className="button-14-medium text-brown uppercase tracking-wider block">
+                    <span className="button-14-medium text-gold uppercase tracking-wider block">
                         {label}
                     </span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
@@ -120,7 +120,7 @@ export function PodcastTestimonialsSection({
                                 className="font-heading text-5xl md:text-6xl text-brown/25 leading-none select-none block -mb-2"
                                 aria-hidden
                             >
-                                "
+                                &ldquo;
                             </span>
                             <blockquote className="text-black-muted body-16-regular md:body-18-regular leading-relaxed text-pretty pl-0">
                                 {current.text}
@@ -129,7 +129,7 @@ export function PodcastTestimonialsSection({
                                 className="font-heading text-5xl md:text-6xl text-brown/25 leading-none select-none block text-right -mt-4"
                                 aria-hidden
                             >
-                                "
+                                &rdquo;
                             </span>
                         </div>
                         <div className="flex items-center gap-3 w-full">

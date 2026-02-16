@@ -6,7 +6,7 @@ interface ServicoCardProps {
     description: string;
 }
 
-export function ServicoCard({ icon: Icon, title, description }: ServicoCardProps) {
+export function ServicoCard({ title, description }: ServicoCardProps) {
     return (
         <div className="flex gap-6">
             <div className="flex flex-col gap-3">

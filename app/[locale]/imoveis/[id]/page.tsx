@@ -5,6 +5,7 @@ import ImovelDetailsClient from "./ImovelDetailsClient"
 import { siteConfig } from "@/lib/site"
 import { routing } from "@/i18n/routing"
 import { Breadcrumbs } from "@/components/SEO/Breadcrumbs"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     params: Promise<{
@@ -18,40 +19,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     try {
     const property = await propertiesApi.getById(id, locale)
+    const t = await getTranslations({ locale, namespace: "PropertyDetails" })
 
     if (!property) {
       return {
-        title: "Imóvel não encontrado",
-        description: "O imóvel que procura não foi encontrado.",
+        title: t("seoNotFound"),
+        description: t("seoNotFoundDescription"),
       }
     }
 
-        const transactionTypeMap: Record<string, string> = {
-            comprar: "Comprar",
-            arrendar: "Arrendar",
-            trespasse: "Trespasse",
-        }
-
-        const propertyTypeMap: Record<string, string> = {
-            apartamento: "Apartamento",
-            moradia: "Moradia",
-            terreno: "Terreno",
-            escritório: "Escritório",
-            loja: "Loja",
-            armazém: "Armazém",
-            prédio: "Prédio",
-            quinta: "Quinta",
-            garagem: "Garagem",
-            cave: "Cave",
-        }
-
-        const transactionType = transactionTypeMap[property.transactionType] || property.transactionType
-        const propertyType = propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType
-        const price = parseFloat(property.price).toLocaleString('pt-PT')
+        const transactionType = t(`transactionTypes.${property.transactionType}`) || property.transactionType
+        const propertyType = t(`propertyTypes.${property.propertyType.toLowerCase()}`) || property.propertyType
+        const localeMap: Record<string, string> = { pt: "pt-PT", en: "en-GB", fr: "fr-FR" }
+        const numLocale = localeMap[locale] || "pt-PT"
+        const price = parseFloat(property.price).toLocaleString(numLocale)
         const totalArea = property.totalArea ?? 0
 
         const title = `${property.title} - ${price} €`
-        const description = `${transactionType} ${propertyType} em ${property.concelho}, ${property.distrito}. ${property.bedrooms > 0 ? `${property.bedrooms} quartos` : ''}${property.bathrooms > 0 ? `, ${property.bathrooms} casas de banho` : ''}${totalArea > 0 ? `, ${totalArea}m²` : ''}. Referência: ${property.reference}`
+        const bedroomsText = property.bedrooms > 0 ? t("seoBedrooms", { count: property.bedrooms }) : ''
+        const bathroomsText = property.bathrooms > 0 ? `, ${t("seoBathrooms", { count: property.bathrooms })}` : ''
+        const areaText = totalArea > 0 ? `, ${totalArea}m²` : ''
+        const description = `${transactionType} ${propertyType} — ${property.concelho}, ${property.distrito}. ${bedroomsText}${bathroomsText}${areaText}. ${t("propertyInfoReference")}: ${property.reference}`
 
         // Get absolute URL for og:image
         const imageUrl = property.image?.startsWith('http')
@@ -96,15 +84,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     }
   } catch {
+    const tFallback = await getTranslations({ locale, namespace: "PropertyDetails" })
     return {
-      title: "Imóvel não encontrado | Agência Douro",
-      description: "O imóvel que procura não foi encontrado.",
+      title: `${tFallback("seoNotFound")} | Agência Douro`,
+      description: tFallback("seoNotFoundDescription"),
     }
   }
 }
 
 export default async function ImovelDetails({ params }: Props) {
     const { id, locale } = await params
+  const tPage = await getTranslations({ locale, namespace: "Footer" })
   let initialProperty: Awaited<ReturnType<typeof propertiesApi.getById>> | null = null
     try {
     initialProperty = await propertiesApi.getById(id, locale)
@@ -161,7 +151,7 @@ export default async function ImovelDetails({ params }: Props) {
       <Breadcrumbs
         locale={locale}
         items={[
-          { name: "Imóveis", path: "/imoveis" },
+          { name: tPage("properties"), path: "/imoveis" },
           { name: initialProperty.title },
         ]}
       />

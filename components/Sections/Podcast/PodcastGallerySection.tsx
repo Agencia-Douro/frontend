@@ -2,9 +2,13 @@
 
 import { useState, useCallback } from "react";
 import Image from "next/image";
-import Lightbox from "yet-another-react-lightbox";
+import dynamic from "next/dynamic";
 import type { StaticImageData } from "next/image";
+import { useTranslations } from "next-intl";
+
 import "yet-another-react-lightbox/styles.css";
+
+const Lightbox = dynamic(() => import("yet-another-react-lightbox"), { ssr: false });
 
 export type MediaType = "image" | "video";
 
@@ -16,7 +20,7 @@ export interface PodcastGalleryItem {
 }
 
 // Mantém compatibilidade com interface antiga
-export interface PodcastGalleryImage extends PodcastGalleryItem {}
+export type PodcastGalleryImage = PodcastGalleryItem;
 
 function getImageSrc(src: string | StaticImageData): string {
     if (typeof src === "string") return src;
@@ -30,6 +34,7 @@ interface VideoModalProps {
 }
 
 function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
+    const t = useTranslations("Podcast");
     if (!isOpen || !videoUrl) return null;
 
     return (
@@ -40,7 +45,7 @@ function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
             <button
                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
                 onClick={onClose}
-                aria-label="Fechar vídeo"
+                aria-label={t("closeVideo")}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +72,7 @@ function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
                     autoPlay
                     className="w-full h-full bg-black"
                 >
-                    Seu navegador não suporta a reprodução de vídeos.
+                    {t("videoNotSupported")}
                 </video>
             </div>
         </div>
@@ -88,8 +93,8 @@ export function PodcastGallerySection({
     title,
     description,
     images,
-    openLightboxAriaLabel = "Ver imagem em tamanho maior",
 }: PodcastGallerySectionProps) {
+    const t = useTranslations("Podcast");
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -120,9 +125,9 @@ export function PodcastGallerySection({
     );
 
     return (
-        <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
+        <section className="container pt-8 md:pt-10 lg:pt-12 xl:pt-16 pb-0">
             <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-center max-w-3xl mx-auto">
-                <span className="button-14-medium text-brown uppercase tracking-wider block">
+                <span className="button-14-medium text-gold uppercase tracking-wider block">
                     {label}
                 </span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
@@ -145,8 +150,8 @@ export function PodcastGallerySection({
                             onClick={() => handleItemClick(item, index)}
                             aria-label={
                                 isVideo
-                                    ? `Reproduzir vídeo: ${item.alt}`
-                                    : `${openLightboxAriaLabel}: ${item.alt}`
+                                    ? `${t("playVideo")}: ${item.alt}`
+                                    : `${t("galleryOpenAria")}: ${item.alt}`
                             }
                         >
                             {thumbnailSrc ? (

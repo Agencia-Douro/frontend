@@ -173,23 +173,23 @@
       },
       "realEstatePromotion": {
         "title": "Real Estate Promotion",
-        "description": "We help you find the best financing options, suited to your needs and financial profile."
+        "description": "We develop tailored marketing strategies to maximise your property's visibility and value in the market."
       },
       "projectManagement": {
         "title": "Real Estate Project Management",
-        "description": "We help you find the best financing options, suited to your needs and financial profile."
+        "description": "We oversee and coordinate every phase of your real estate project, from planning through to final delivery."
       },
       "realEstateInvestments": {
         "title": "Real Estate Investments",
-        "description": "We help you find the best financing options, suited to your needs and financial profile."
+        "description": "We identify the best real estate investment opportunities through rigorous market analysis and optimised returns."
       },
       "goldenVisa": {
         "title": "Golden Visa",
-        "description": "We help you find the best financing options, suited to your needs and financial profile."
+        "description": "We guide international investors through the entire Golden Visa process via real estate investment in Portugal."
       },
       "mortgagePartners": {
         "title": "Mortgage Partners",
-        "description": "We help you find the best financing options, suited to your needs and financial profile."
+        "description": "We work with a trusted network of banking partners to secure the best financing conditions for you."
       }
     },
     "meetOurTeam": "Meet Our Team",
@@ -320,7 +320,10 @@
     "galleryImageAlt": "Podcast studio",
     "whereToFindUs": "Where to Find Us",
     "whereToFindUsTitle": "Listen on Your Favorite Platforms",
-    "whereToFindUsDescription": "Follow us on the main streaming platforms so you never miss an episode. Available wherever you are."
+    "whereToFindUsDescription": "Follow us on the main streaming platforms so you never miss an episode. Available wherever you are.",
+    "closeVideo": "Close video",
+    "videoNotSupported": "Your browser does not support video playback.",
+    "playVideo": "Play video"
   },
   "Sidebar": {
     "buy": "Buy",
@@ -536,7 +539,7 @@
         },
         "newsletter": {
           "title": "Television",
-          "description": "Sent to our qualified client base",
+          "description": "Exposure on major national TV channels",
           "stat": "We are on Record TV"
         },
         "agencies": {
@@ -567,7 +570,7 @@
     "propertyNotFound": "Property not found",
     "businessType": "Business type:",
     "transactionTypes": {
-      "comprar": "Sell",
+      "comprar": "For Sale",
       "arrendar": "Rent",
       "trespasse": "Business Transfer"
     },
@@ -653,7 +656,21 @@
     "fractionsTitle": "Fractions",
     "fractionsDescription": "Units and fractions available in this development",
     "fractionsLoading": "Loading fractions...",
-    "callNow": "Call now"
+    "callNow": "Call now",
+    "whatsappGreeting": "Hello! I'm interested in the property:",
+    "whatsappGreetingAgent": "Hello {name}! I'm interested in the property:",
+    "whatsappPrice": "Price",
+    "whatsappReference": "Reference",
+    "whatsappLink": "Link",
+    "propertyInfoHeader": "--- Property Information ---",
+    "propertyInfoType": "Type",
+    "propertyInfoLocation": "Location",
+    "propertyInfoPrice": "Price",
+    "propertyInfoReference": "Reference",
+    "seoNotFound": "Property not found",
+    "seoNotFoundDescription": "The property you are looking for was not found.",
+    "seoBedrooms": "{count} bedrooms",
+    "seoBathrooms": "{count} bathrooms"
   },
   "TermosECondicoes": {
     "title": "Terms and Conditions",

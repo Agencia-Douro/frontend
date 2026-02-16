@@ -28,7 +28,7 @@ export function Apresentadora() {
         <section className="container pt-8 md:pt-10 lg:pt-12 xl:pt-16 overflow-x-hidden">
             <div className="flex flex-col gap-6 md:gap-8 lg:flex-row lg:justify-between lg:gap-12 xl:gap-16 lg:items-stretch min-h-0">
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
-                    <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
+                    <span className="body-14-medium text-gold uppercase tracking-wider">{podcastContent?.hostLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.hostName || "Vânia Fernandes"}</h2>
 
                     <div className="space-y-4 text-justify lg:text-left min-w-0">
@@ -47,7 +47,6 @@ export function Apresentadora() {
                                 fill
                                 className="object-cover object-top"
                                 priority
-                                unoptimized={!!siteConfig?.apresentadoraImage}
                                 sizes="(max-width: 1023px) 448px, 0"
                             />
                             <Link
@@ -76,7 +75,6 @@ export function Apresentadora() {
                                 fill
                                 className="object-cover object-top"
                                 priority
-                                unoptimized={!!siteConfig?.apresentadoraImage}
                                 sizes="(min-width: 1024px) 50vw, 0"
                             />
                             {/* Quote e LinkedIn ao fundo da área visível da imagem (16px) */}

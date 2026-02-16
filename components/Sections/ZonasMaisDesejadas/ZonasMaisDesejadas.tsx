@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { desiredZonesApi } from "@/services/api";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 type Country = "portugal" | "dubai" | "reino-unido";
 
@@ -49,19 +49,17 @@ export default function ZonasMaisDesejadas() {
         return countries.length > 0 ? countries : ["portugal"] as Country[];
     }, [allZonas]);
 
-    // Filtrar zonas pelo país selecionado
+    // Derivar o país efetivo: se o selecionado não estiver disponível, usar o primeiro
+    const effectiveCountry = availableCountries.includes(selectedCountry)
+        ? selectedCountry
+        : availableCountries[0];
+
+    // Filtrar zonas pelo país efetivo
     const zonas = useMemo(() => {
         if (!allZonas) return [];
-        const countryCode = countryCodeMap[selectedCountry];
+        const countryCode = countryCodeMap[effectiveCountry];
         return allZonas.filter(z => z.country === countryCode || (countryCode === "PT" && !z.country));
-    }, [allZonas, selectedCountry]);
-
-    // Se o país selecionado não tiver zonas, selecionar o primeiro disponível
-    useEffect(() => {
-        if (!availableCountries.includes(selectedCountry) && availableCountries.length > 0) {
-            setSelectedCountry(availableCountries[0]);
-        }
-    }, [availableCountries, selectedCountry]);
+    }, [allZonas, effectiveCountry]);
 
     // Verificar se deve mostrar as tabs (mais de um país com zonas)
     const showTabs = availableCountries.length > 1;
@@ -98,7 +96,7 @@ export default function ZonasMaisDesejadas() {
                             <Button
                                 key={country}
                                 type="button"
-                                variant={selectedCountry === country ? "gold" : "ghost"}
+                                variant={effectiveCountry === country ? "gold" : "ghost"}
                                 className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
                                 onClick={() => setSelectedCountry(country)}
                             >

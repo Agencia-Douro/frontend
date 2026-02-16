@@ -81,11 +81,12 @@ export default function Header() {
                     <div className="w-full flex flex-col justify-center">
                         <Link href="/" className="inline-flex" onClick={() => setMobileMenuOpen(false)}>
                             <Image
-                                className={`xl:h-10 xl:w-22 h-8 w-[71px] transition-all duration-300 ${isTransparent ? 'xl:brightness-0 xl:invert' : ''}`}
+                                className={`xl:h-10 h-8 w-auto transition-all duration-300 ${isTransparent ? 'xl:brightness-0 xl:invert' : ''}`}
                                 src={Logo}
                                 alt={t("logoAlt")}
                                 width={88}
                                 height={40}
+                                sizes="88px"
                             />
                         </Link>
                     </div>

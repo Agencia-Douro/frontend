@@ -173,23 +173,23 @@
       },
       "realEstatePromotion": {
         "title": "Promotion immobilière",
-        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+        "description": "Nous développons des stratégies marketing sur mesure pour maximiser la visibilité et la valeur de votre bien sur le marché."
       },
       "projectManagement": {
         "title": "Gestion de projets immobiliers",
-        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+        "description": "Nous accompagnons et coordonnons toutes les phases de votre projet immobilier, de la planification à la livraison finale."
       },
       "realEstateInvestments": {
         "title": "Investissements immobiliers",
-        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+        "description": "Nous identifions les meilleures opportunités d'investissement immobilier grâce à des analyses de marché rigoureuses et un rendement optimisé."
       },
       "goldenVisa": {
         "title": "Visa Gold",
-        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+        "description": "Nous guidons les investisseurs internationaux dans l'ensemble du processus d'obtention du Visa Gold par l'investissement immobilier au Portugal."
       },
       "mortgagePartners": {
         "title": "Partenaires de crédit immobilier",
-        "description": "Nous vous aidons à trouver les meilleures options de financement, adaptées à vos besoins et à votre profil financier."
+        "description": "Nous travaillons avec un réseau de partenaires bancaires de confiance pour vous garantir les meilleures conditions de financement."
       }
     },
     "meetOurTeam": "Rencontrez notre équipe",
@@ -320,7 +320,10 @@
     "galleryImageAlt": "Studio du podcast",
     "whereToFindUs": "Où Nous Trouver",
     "whereToFindUsTitle": "Écoutez sur Vos Plateformes Préférées",
-    "whereToFindUsDescription": "Suivez-nous sur les principales plateformes de streaming pour ne jamais manquer un épisode. Disponible où que vous soyez."
+    "whereToFindUsDescription": "Suivez-nous sur les principales plateformes de streaming pour ne jamais manquer un épisode. Disponible où que vous soyez.",
+    "closeVideo": "Fermer la vidéo",
+    "videoNotSupported": "Votre navigateur ne prend pas en charge la lecture de vidéos.",
+    "playVideo": "Lire la vidéo"
   },
   "Sidebar": {
     "buy": "Acheter",
@@ -536,7 +539,7 @@
         },
         "newsletter": {
           "title": "Télévision",
-          "description": "Envoi à notre base de clients qualifiés",
+          "description": "Présence sur les principales chaînes de télévision nationales",
           "stat": "Nous sommes sur Record TV"
         },
         "agencies": {
@@ -628,7 +631,6 @@
     "garage": "Garage",
     "space": "Place",
     "spaces": "Places",
-    "floor": "Étage",
     "constructionYear": "Année de construction",
     "state": "État",
     "energyClass": "Classe énergétique",
@@ -654,7 +656,21 @@
     "fractionsTitle": "Fractions",
     "fractionsDescription": "Unités et fractions disponibles dans ce programme",
     "fractionsLoading": "Chargement des fractions...",
-    "callNow": "Appelez maintenant"
+    "callNow": "Appelez maintenant",
+    "whatsappGreeting": "Bonjour ! Je suis intéressé(e) par le bien :",
+    "whatsappGreetingAgent": "Bonjour {name} ! Je suis intéressé(e) par le bien :",
+    "whatsappPrice": "Prix",
+    "whatsappReference": "Référence",
+    "whatsappLink": "Lien",
+    "propertyInfoHeader": "--- Informations du bien ---",
+    "propertyInfoType": "Type",
+    "propertyInfoLocation": "Localisation",
+    "propertyInfoPrice": "Prix",
+    "propertyInfoReference": "Référence",
+    "seoNotFound": "Bien introuvable",
+    "seoNotFoundDescription": "Le bien que vous recherchez est introuvable.",
+    "seoBedrooms": "{count} chambres",
+    "seoBathrooms": "{count} salles de bain"
   },
   "TermosECondicoes": {
     "title": "Termes et Conditions",

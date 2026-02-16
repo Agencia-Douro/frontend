@@ -21,7 +21,7 @@ interface CardsProps {
     locale: string
 }
 
-export default function Cards({ properties, className, locale }: CardsProps) {
+export default function Cards({ properties, className }: CardsProps) {
     const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
     const [startIndex, setStartIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -35,27 +35,21 @@ export default function Cards({ properties, className, locale }: CardsProps) {
 
     useEffect(() => {
         const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            const currentMaxIndex = hasMoreThanThree
+                ? mobile
+                    ? properties.length - 1
+                    : properties.length - 3
+                : 0;
+            setStartIndex(prev => prev > currentMaxIndex ? currentMaxIndex : prev);
         };
 
         checkMobile();
         window.addEventListener('resize', checkMobile);
 
         return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-
-    // Ajustar startIndex quando mudar de mobile para desktop ou vice-versa
-    useEffect(() => {
-        const currentMaxIndex = hasMoreThanThree
-            ? isMobile
-                ? properties.length - 1
-                : properties.length - 3
-            : 0;
-
-        if (startIndex > currentMaxIndex) {
-            setStartIndex(currentMaxIndex);
-        }
-    }, [isMobile, properties.length, hasMoreThanThree, startIndex]);
+    }, [hasMoreThanThree, properties.length]);
 
     if (properties.length === 0) {
         return (
@@ -184,6 +178,7 @@ export default function Cards({ properties, className, locale }: CardsProps) {
                                                         src={property.image}
                                                         alt={`${t("propertyIn")} ${property.concelho}`}
                                                         fill
+                                                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                                                         className="object-cover" />
                                                 )
                                             )}
@@ -302,6 +297,7 @@ export default function Cards({ properties, className, locale }: CardsProps) {
                                             src={selectedProperty.image}
                                             alt={`${t("propertyIn")} ${selectedProperty.concelho}`}
                                             fill
+                                            sizes="(max-width: 768px) 90vw, 600px"
                                             className="object-cover rounded-md"
                                         />
                                     )

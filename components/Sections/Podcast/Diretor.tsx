@@ -37,7 +37,6 @@ export function DiretorProducao() {
                                 fill
                                 className="object-cover object-top"
                                 priority
-                                unoptimized={!!siteConfig?.diretorImage}
                                 sizes="(min-width: 1024px) 50vw, 0"
                             />
                             {/* Quote e LinkedIn ao fundo da área visível da imagem (16px) */}
@@ -66,7 +65,7 @@ export function DiretorProducao() {
 
                 {/* Texto - Desktop: aparece segundo (direita) */}
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 text-left flex flex-col min-w-0 min-h-0">
-                    <span className="body-14-medium text-brown uppercase tracking-wider">{podcastContent?.directorLabel || t("label")}</span>
+                    <span className="body-14-medium text-gold uppercase tracking-wider">{podcastContent?.directorLabel || t("label")}</span>
                     <h2 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-black">{podcastContent?.directorName || t("name")}</h2>
 
                     <div className="space-y-4 text-justify lg:text-left min-w-0">
@@ -85,7 +84,6 @@ export function DiretorProducao() {
                                 fill
                                 className="object-cover object-top"
                                 priority
-                                unoptimized={!!siteConfig?.diretorImage}
                                 sizes="(max-width: 1023px) 448px, 0"
                             />
                             <Link

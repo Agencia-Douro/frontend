@@ -22,7 +22,7 @@ export function PodcastGuestsSection({
     return (
         <section className="container pt-4 pb-8 md:pt-6 md:pb-10 lg:pt-8 lg:pb-12 xl:pt-10 xl:pb-16">
             <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-center max-w-3xl mx-auto">
-                <span className="button-14-medium text-brown block">{label}</span>
+                <span className="button-14-medium text-gold block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}
                 </h2>
@@ -37,7 +37,7 @@ export function PodcastGuestsSection({
                                     alt={guest.name}
                                     fill
                                     className="object-cover"
-                                    unoptimized
+                                    sizes="128px"
                                 />
                             </div>
                         ) : (

@@ -25,6 +25,8 @@ export interface CultureItem {
   id: string;
   title_pt: string;
   description_pt: string;
+  title?: string;
+  description?: string;
   order: number;
   createdAt: string;
   updatedAt: string;
@@ -34,6 +36,8 @@ export interface ServiceItem {
   id: string;
   title_pt: string;
   description_pt: string;
+  title?: string;
+  description?: string;
   order: number;
   createdAt: string;
   updatedAt: string;

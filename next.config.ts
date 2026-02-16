@@ -4,8 +4,13 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+    poweredByHeader: false,
     turbopack: {},
     images: {
+        formats: ["image/avif", "image/webp"],
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        minimumCacheTTL: 31536000,
         remotePatterns: [
         {
             protocol: "https",
@@ -31,10 +36,46 @@ const nextConfig: NextConfig = {
         },
         {
             protocol: "https",
+            hostname: "www.agenciadouro.pt",
+            pathname: "/**",
+        },
+        {
+            protocol: "https",
             hostname: "img.youtube.com",
             pathname: "/vi/**",
         },
         ],
+    },
+    async headers() {
+        return [
+            {
+                source: "/:all*(svg|jpg|jpeg|png|webp|avif|ico|gif)",
+                headers: [
+                    {
+                        key: "Cache-Control",
+                        value: "public, max-age=31536000, immutable",
+                    },
+                ],
+            },
+            {
+                source: "/_next/static/:path*",
+                headers: [
+                    {
+                        key: "Cache-Control",
+                        value: "public, max-age=31536000, immutable",
+                    },
+                ],
+            },
+            {
+                source: "/:all*(woff|woff2|ttf|otf|eot)",
+                headers: [
+                    {
+                        key: "Cache-Control",
+                        value: "public, max-age=31536000, immutable",
+                    },
+                ],
+            },
+        ];
     },
     async rewrites() {
         return [

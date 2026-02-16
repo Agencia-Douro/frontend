@@ -69,7 +69,7 @@ export default function VenderImovelPage() {
                     <Folha className="lg:top-42 xl:top-48 right-0 text-brown/20 rotate-338" />
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-8 md:mb-10 lg:mb-12">
-                            <span className="body-14-medium text-brown uppercase tracking-wider">
+                            <span className="body-14-medium text-gold uppercase tracking-wider">
                                 {content?.heroBadge || t("hero.badge")}
                             </span>
                             <h1 className="heading-tres-regular md:heading-dois-regular xl:heading-um-regular text-balance text-black mt-4 mb-6">
@@ -184,7 +184,7 @@ export default function VenderImovelPage() {
             {/* Marketing Channels Section */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-brown">
+                    <span className="button-14-medium text-gold">
                         {content?.marketingBadge || t("marketing.badge")}
                     </span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">
@@ -257,7 +257,7 @@ export default function VenderImovelPage() {
             {/* Statistics Section - Our Reach */}
             <section className="container pt-12 md:pt-16 lg:pt-20 xl:pt-24 space-y-6">
                 <div>
-                    <span className="button-14-medium text-brown">
+                    <span className="button-14-medium text-gold">
                         {content?.statsBadge || t("stats.badge")}
                     </span>
                     <h2 className="body-20-medium md:heading-quatro-medium text-black mt-2">

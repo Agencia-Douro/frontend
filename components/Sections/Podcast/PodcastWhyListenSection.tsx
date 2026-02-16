@@ -42,7 +42,7 @@ export function PodcastWhyListenSection({
     subtitle,
     cards,
     logoSrc,
-    logoAlt = "Norte Imobiliário & Business",
+    // logoAlt is part of the interface but not used directly
 }: PodcastWhyListenSectionProps) {
     return (
         <section className="relative overflow-hidden py-8 md:py-10 lg:py-12 xl:py-16">
@@ -70,7 +70,7 @@ export function PodcastWhyListenSection({
             )}
             <div className="container relative z-10">
                 <header className="mb-6 md:mb-8 lg:mb-10 space-y-2 text-left md:text-center max-w-3xl md:mx-auto">
-                <span className="button-14-medium text-brown block">{label}</span>
+                <span className="button-14-medium text-gold block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}
                 </h2>

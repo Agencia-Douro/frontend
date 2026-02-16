@@ -77,7 +77,7 @@ export const SocialMediaButton = () => {
     ]
 
     return (
-        <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+        <div className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-[calc(1.5rem+env(safe-area-inset-right))] z-40 flex flex-col items-end gap-3">
             {/* Bubble com todos os ícones */}
             <div
                 className={`bg-white rounded-full shadow-lg p-3 transition-all duration-300 ease-out ${isOpen
@@ -105,7 +105,7 @@ export const SocialMediaButton = () => {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="cursor-pointer bg-deaf will-change-transform text-white p-3 rounded-full shadow-md transition-all duration-300 hover:scale-105"
-                aria-label="Redes Sociais"
+                aria-label="Social Media"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                     <path d="M8.60609 25.3333L2.66669 30V5.33333C2.66669 4.59696 3.26365 4 4.00002 4H28C28.7364 4 29.3334 4.59696 29.3334 5.33333V24C29.3334 24.7364 28.7364 25.3333 28 25.3333H8.60609ZM14.6667 18.6667V21.3333H17.3334V18.6667H14.6667ZM11.4231 11.7513L14.0384 12.2744C14.2208 11.3576 15.0298 10.6667 16 10.6667C17.1046 10.6667 18 11.5621 18 12.6667C18 13.7712 17.1046 14.6667 16 14.6667H14.6667V17.3333H16C18.5774 17.3333 20.6667 15.244 20.6667 12.6667C20.6667 10.0893 18.5774 8 16 8C13.736 8 11.8485 9.61225 11.4231 11.7513Z" fill="#1A1A1A" />

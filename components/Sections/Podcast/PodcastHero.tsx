@@ -4,8 +4,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import type { StaticImageData } from "next/image";
-
-const HERO_IMAGE = "/podcast.png";
+import podcastHeroImg from "@/public/podcast.jpg";
 
 interface PodcastHeroProps {
     headerLabel: string;
@@ -27,14 +26,11 @@ interface PodcastHeroProps {
 
 export function PodcastHero({
     headerLabel,
-    title,
     intro,
     ctaSpotifyLabel,
     ctaYouTubeLabel,
     ctaContactLabel,
     ctaContactMailto,
-    logoAlt,
-    logo,
     episodesCount = "",
     seasonsCount = "",
     guestsCount = "",
@@ -48,12 +44,12 @@ export function PodcastHero({
                 {/* Imagem de fundo */}
                 <div className="absolute inset-0 overflow-hidden">
                     <Image
-                        src={HERO_IMAGE}
+                        src={podcastHeroImg}
                         alt=""
                         fill
+                        placeholder="blur"
                         className="object-cover object-center"
                         priority
-                        unoptimized
                         sizes="100vw"
                     />
                     <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" aria-hidden />
@@ -123,7 +119,7 @@ export function PodcastHero({
                                     <div className="heading-tres-regular md:heading-dois-regular text-brown tabular-nums truncate max-w-full">
                                         {episodesCount}+
                                     </div>
-                                    <p className="body-16-medium text-brown/90 break-words">{episodesLabel}</p>
+                                    <p className="body-16-medium text-brown/90 wrap-break-word">{episodesLabel}</p>
                                 </div>
                             </div>
                         )}
@@ -136,7 +132,7 @@ export function PodcastHero({
                                 <div className="heading-tres-regular md:heading-dois-regular text-brown tabular-nums">
                                     {seasonsCount}+
                                 </div>
-                                <p className="body-16-medium text-brown/90 break-words">{seasonsLabel}</p>
+                                <p className="body-16-medium text-brown/90 wrap-break-word">{seasonsLabel}</p>
                             </div>
                         </div>
                         <div className="flex gap-3 md:gap-4 w-full min-w-0 max-w-xs md:col-span-1">
@@ -148,7 +144,7 @@ export function PodcastHero({
                                 <div className="heading-tres-regular md:heading-dois-regular text-brown tabular-nums">
                                     {guestsCount}+
                                 </div>
-                                <p className="body-16-medium text-brown/90 break-words">{guestsLabel}</p>
+                                <p className="body-16-medium text-brown/90 wrap-break-word">{guestsLabel}</p>
                             </div>
                         </div>
                     </div>

@@ -36,6 +36,7 @@ export default function Home() {
           alt="Agência do Douro"
           width={350}
           height={350}
+          sizes="(max-width: 1024px) 350px, 500px"
           className="w-full max-w-[350px] h-auto lg:max-w-[500px]"
         />
       </section>

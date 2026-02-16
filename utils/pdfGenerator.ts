@@ -3,15 +3,6 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas-pro";
 
 // --- CONFIGURAÇÃO DE DESIGN ---
-const COLORS = {
-  brown: "#553B1E",
-  gold: "#DCB053",
-  bg_light: "#FAFAFA",
-  grey_dark: "#333333",
-  grey_light: "#888888",
-  black: "#000000",
-  white: "#FFFFFF",
-};
 
 // Função auxiliar para converter imagem para base64
 const imageToBase64 = async (url: string): Promise<string> => {
@@ -46,8 +37,9 @@ const preloadImages = async (element: HTMLElement): Promise<void> => {
   await Promise.all(promises);
 };
 
-export const generatePropertyPDF = async (property: Property, ref: any) => {
+export const generatePropertyPDF = async (property: Property, ref: { current: HTMLDivElement | null }) => {
   const inputData = ref.current;
+  if (!inputData) return;
 
   try {
     // Pré-carregar e converter imagens para base64

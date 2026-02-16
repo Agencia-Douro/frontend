@@ -441,3 +441,12 @@ html, body {
 .yarl__root {
     backdrop-filter: blur(var(--blur-md));
 }
+
+@keyframes progressFill {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.hero-progress-bar {
+    animation: progressFill 8s linear forwards;
+}

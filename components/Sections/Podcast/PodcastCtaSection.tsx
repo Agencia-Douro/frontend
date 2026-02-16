@@ -44,7 +44,7 @@ export function PodcastCtaSection({
                 </div>
             )}
             <div className="max-w-3xl space-y-4 md:space-y-5 lg:space-y-6 relative z-10">
-                <span className="button-14-medium text-brown block">{label}</span>
+                <span className="button-14-medium text-gold block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}
                 </h2>

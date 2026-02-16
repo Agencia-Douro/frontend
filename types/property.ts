@@ -114,7 +114,7 @@ export interface PropertyFraction {
   // Status e ordem
   reservationStatus: "available" | "reserved" | "sold";
   displayOrder: number;
-  customData: Record<string, any> | null;
+  customData: Record<string, string | number | boolean | null> | null;
   createdAt: string;
   updatedAt: string;
 }

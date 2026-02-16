@@ -153,10 +153,10 @@ export function Hero() {
                 src={image}
                 alt={`Hero ${index + 1}`}
                 fill
+                sizes="100vw"
                 className="object-cover"
                 priority={index === 0}
-                quality={90}
-                unoptimized
+                quality={85}
               />
               <div className="absolute inset-0 bg-black/45" />
             </motion.div>
@@ -164,21 +164,6 @@ export function Hero() {
 
 
           {/* Indicadores do carousel */}
-          <style dangerouslySetInnerHTML={{
-            __html: `
-            @keyframes progressFill {
-              from {
-                width: 0%;
-              }
-              to {
-                width: 100%;
-              }
-            }
-            .hero-progress-bar {
-              animation: progressFill 8s linear forwards;
-            }
-          `
-          }} />
           <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 items-center">
             {heroImages.map((_, index) => (
               <button

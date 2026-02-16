@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Switch } from "./ui/switch"
@@ -23,8 +23,6 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     const tPropertyTypes = useTranslations("PropertyTypes");
     const router = useRouter()
     const searchParams = useSearchParams()
-    const isFirstRender = useRef(true)
-
     // Determine initial selection based on URL params
     const getInitialSelection = () => {
         if (searchParams.get("isEmpreendimento") === "true") {
@@ -87,15 +85,15 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
         }
     }, [isOpen]);
 
-    // Reset concelho when distrito changes
-    useEffect(() => {
-        if (distrito && concelho) {
-            const validMunicipios = DISTRITO_MUNICIPIOS[distrito] || []
+    const handleDistritoChange = (value: string) => {
+        setDistrito(value)
+        if (value && concelho) {
+            const validMunicipios = DISTRITO_MUNICIPIOS[value] || []
             if (!validMunicipios.includes(concelho)) {
                 setConcelho("")
             }
         }
-    }, [distrito, concelho])
+    }
 
     const toggleBedroom = (value: number) => {
         setBedrooms((prev) =>
@@ -180,7 +178,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                     onClick={onClose}
                 />
             )}
-            <aside className={`min-w-[300px] max-w-[300px] border-x border-[#EAE6DF] h-[calc(100vh-73px)] bg-deaf hidden xl:block`}>
+            <aside className={`min-w-[300px] max-w-[300px] border-x border-[#EAE6DF] h-[calc(100dvh-73px)] bg-deaf hidden xl:block`}>
                 <div className="flex flex-col h-full">
                     <div className="flex flex-col flex-1 overflow-y-auto remove-scrollbar">
                         <div className="p-4 border-b border-[#EAE6DF]">
@@ -447,7 +445,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                 <Select
                                                     key={`distrito-${resetKey}`}
                                                     value={distrito || undefined}
-                                                    onValueChange={setDistrito}
+                                                    onValueChange={handleDistritoChange}
                                                 >
                                                     <SelectTrigger id="distrito" name="distrito">
                                                         <SelectValue placeholder={t("selectDistrict")} />
@@ -866,7 +864,7 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                     <Select
                                                         key={`distrito-mobile-${resetKey}`}
                                                         value={distrito || undefined}
-                                                        onValueChange={setDistrito}
+                                                        onValueChange={handleDistritoChange}
                                                     >
                                                         <SelectTrigger id="distrito-mobile" name="distrito-mobile">
                                                             <SelectValue placeholder={t("selectDistrict")} />

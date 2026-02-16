@@ -21,17 +21,17 @@ interface CardProps {
 export default function Card({ href, titulo, localizacao, preco, image, status, locale }: CardProps) {
     return (
         <Link href={locale ? `/${locale}/${href}` : href} className="w-full h-full flex flex-col">
-            <div className="relative">
+            <div className="relative h-40">
                 {isVideoUrl(image) ? (
                     <video
                         src={image}
-                        className="h-40 w-full object-cover"
+                        className="absolute inset-0 size-full object-cover"
                         muted
                         loop
                         playsInline
                     />
                 ) : (
-                    <Image src={image} alt="Imóvel" width={294} height={160} className="h-40 w-full object-cover" />
+                    <Image src={image} alt={titulo} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 )}
                 {status === "reserved" && (
                     <div className="bg-white text-black body-14-medium absolute bottom-2 right-2 py-1 px-1.5 z-10">
@@ -39,9 +39,9 @@ export default function Card({ href, titulo, localizacao, preco, image, status, 
                     </div>
                 )}
             </div>
-            <div className="mt-2 flex-1">
-                <p className="body-16-medium text-black">{titulo}</p>
-                <p className="body-14-medium text-grey mt-1">{localizacao}</p>
+            <div className="mt-2 flex-1 min-w-0">
+                <p className="body-16-medium text-black line-clamp-1">{titulo}</p>
+                <p className="body-14-medium text-grey mt-1 truncate">{localizacao}</p>
             </div>
             <p className="body-20-medium text-black mt-2">{formatPriceNumber(preco)}
                 <span className="text-grey body-16-medium">€</span></p>

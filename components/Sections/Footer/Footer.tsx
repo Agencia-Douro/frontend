@@ -52,7 +52,7 @@ export default function Footer() {
                             </ul>
                             <ul className="space-y-4">
                                 <li><Link href="/sobre-nos" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("aboutUs")}</Link></li>
-                                <li><Link href="/newsletter" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("newsletter")}</Link></li>
+                                <li><Link href="/sobre-nos#newsletter" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("newsletter")}</Link></li>
                                 <li><Link href="/podcast" className="body-14-medium text-brown hover:text-brown-muted transition-colors button-14-medium">{t("podcast")}</Link></li>
                             </ul>
                             <ul className="space-y-4">

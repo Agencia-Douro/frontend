@@ -92,6 +92,7 @@ export default function NewsletterDetailsPage() {
                                     src={newsletter.coverImage}
                                     alt={newsletter.title}
                                     fill
+                                    sizes="(max-width: 1024px) 100vw, 33vw"
                                     className="object-cover"
                                 />
                             </div>
@@ -124,15 +125,16 @@ export default function NewsletterDetailsPage() {
                     <div className="clear-both"></div>
                 </div>
             </section>
-            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8 mt-4" />
+            <Image src={Divider} alt="" width={1000} height={32} className="w-full h-auto mt-4" />
             {newsletter.properties && newsletter.properties.length > 0 && (
                 <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center container">
                     <Image
-                        className="mb-6 lg:mb-8 h-16"
+                        className="mb-6 lg:mb-8 h-16 w-auto"
                         src={Logo}
                         alt={t("logoAlt")}
                         width={213}
                         height={96}
+                        sizes="213px"
                     />
                     <h2 className="heading-tres-regular text mb-5 sm:mb-10">{t("relatedProperties")}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
@@ -146,7 +148,8 @@ export default function NewsletterDetailsPage() {
                                         src={property.image}
                                         alt={property.title}
                                         fill
-                                        className="w-full object-cover"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="object-cover"
                                     />
                                 </div>
                                 <div className="p-4">
@@ -165,7 +168,7 @@ export default function NewsletterDetailsPage() {
                     </div>
                 </div>
             )}
-            <Image src={Divider} alt="divider" width={1000} height={32} className="w-full object-cover h-8" />
+            <Image src={Divider} alt="" width={1000} height={32} className="w-full h-auto" />
             <FaleConnosco />
             <Footer />
         </>

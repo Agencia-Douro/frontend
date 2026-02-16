@@ -17,10 +17,12 @@ import { toast } from "sonner"
 import useFavorites from "@/hooks/useFavorites"
 import ImoveisRelacionados from "@/components/Sections/ImoveisRelacionados/ImoveisRelacionado"
 import PropertyFractionsSection from "@/components/Sections/Imovel/PropertyFractionsSection"
-import { generatePropertyPDF } from "@/utils/pdfGenerator"
-import ImagensImoveis, { getImageIndex } from "@/components/Sections/ImagensImoveis"
+import dynamic from "next/dynamic"
+import { getImageIndex } from "@/lib/image-utils"
 import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
+
+const ImagensImoveis = dynamic(() => import("@/components/Sections/ImagensImoveis"), { ssr: false })
 import Footer from "@/components/Sections/Footer/Footer"
 import { useTranslations } from "next-intl"
 import { formatPriceNumber } from "@/lib/currency"
@@ -44,7 +46,6 @@ const MediaItem = ({
     onClick?: () => void;
 }) => {
     const isVideo = isVideoUrl(src);
-    console.log('MediaItem:', { src, isVideo });
 
     if (isVideo) {
         return (
@@ -60,12 +61,11 @@ const MediaItem = ({
 
     return (
         <Image
-            width={1000}
-            height={1000}
+            fill
             src={src}
             alt={alt}
-            className={`${className} ${onClick ? 'cursor-pointer' : ''}`}
-            unoptimized={isVideoUrl(src)}
+            className={`object-cover ${onClick ? 'cursor-pointer' : ''}`}
+            sizes="(max-width: 768px) 100vw, 50vw"
             onClick={onClick}
         />
     );
@@ -164,6 +164,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
     const handleDownloadPDF = async () => {
         try {
             toast.loading(t("generatingPDF"))
+            const { generatePropertyPDF } = await import("@/utils/pdfGenerator")
             await generatePropertyPDF(property, pdfRef)
             toast.dismiss()
             toast.success(t("pdfGenerated"))
@@ -181,7 +182,9 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
 
         try {
             // Adicionar informações do imóvel à mensagem
-            const propertyInfo = `\n\n--- Informações do Imóvel ---\nReferência: ${property.reference || property.id}\nTipo: ${property.propertyType}\nLocalização: ${property.concelho}, ${property.distrito}\nPreço: ${parseFloat(property.price.toString()).toLocaleString("pt-PT")} €\nLink: ${window.location.href}`
+            const localeMap: Record<string, string> = { pt: "pt-PT", en: "en-GB", fr: "fr-FR" }
+            const numLocale = localeMap[locale] || "pt-PT"
+            const propertyInfo = `\n\n--- ${t("propertyInfoHeader")} ---\n${t("propertyInfoReference")}: ${property.reference || property.id}\n${t("propertyInfoType")}: ${property.propertyType}\n${t("propertyInfoLocation")}: ${property.concelho}, ${property.distrito}\n${t("propertyInfoPrice")}: ${parseFloat(property.price.toString()).toLocaleString(numLocale)} €\nLink: ${window.location.href}`
 
             await contactApi.send({
                 ...formData,
@@ -196,8 +199,9 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                 mensagem: "",
                 aceitaMarketing: false,
             })
-        } catch (error: any) {
-            toast.error(error.message || t("errorSendingMessage"), { id: toastId })
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : t("errorSendingMessage")
+            toast.error(message, { id: toastId })
         }
     }
 
@@ -268,7 +272,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                         <>
                             {/* Grid de 4 mídias - visible only on md and up */}
                             <div className="hidden md:grid md:grid-cols-2 md:grid-rows-2 h-96 lg:grid-cols-12 w-full gap-4">
-                                <div className="bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden cursor-pointer" onClick={() => {
+                                <div className="relative bg-brown/10 row-span-2 lg:col-span-6 lg:row-span-2 overflow-hidden cursor-pointer" onClick={() => {
                                     setLightboxIndex(0);
                                     setLightboxOpen(true);
                                 }}>
@@ -284,7 +288,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block cursor-pointer" onClick={() => {
+                                <div className="relative bg-brown/10 lg:col-span-3 md:row-span-1 lg:row-span-2 overflow-hidden hidden lg:block cursor-pointer" onClick={() => {
                                     if (allImages[0]) {
                                         setLightboxIndex(getImageIndex(property, allImages[0].url));
                                         setLightboxOpen(true);
@@ -304,7 +308,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
+                                <div className="relative bg-brown/10 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
                                     if (allImages[1]) {
                                         setLightboxIndex(getImageIndex(property, allImages[1].url));
                                         setLightboxOpen(true);
@@ -324,7 +328,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                         />
                                     )}
                                 </div>
-                                <div className="bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
+                                <div className="relative bg-brown/10 col-start-2 lg:col-span-3 overflow-hidden cursor-pointer" onClick={() => {
                                     if (allImages[2]) {
                                         setLightboxIndex(getImageIndex(property, allImages[2].url));
                                         setLightboxOpen(true);
@@ -347,7 +351,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                             </div>
 
                             {/* Mídia principal - visible only on mobile */}
-                            <div className="md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden cursor-pointer" onClick={() => {
+                            <div className="relative md:hidden w-full max-h-96 aspect-video border border-brown/10 overflow-hidden cursor-pointer" onClick={() => {
                                 setLightboxIndex(0);
                                 setLightboxOpen(true);
                             }}>
@@ -383,11 +387,11 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                     <div className="lg:col-span-6 flex flex-col md:flex-row gap-4">
                         <a
                             href={`https://wa.me/351919766324?text=${encodeURIComponent(
-                                `Olá! Tenho interesse no imóvel:\n\n` +
+                                `${t("whatsappGreeting")}\n\n` +
                                 `${property.title}\n` +
-                                `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
-                                `Referência: ${property.reference}\n` +
-                                `Link: ${window.location.href}`
+                                `${t("whatsappPrice")}: ${formatPriceNumber(property.price)} €\n` +
+                                `${t("whatsappReference")}: ${property.reference}\n` +
+                                `${t("whatsappLink")}: ${window.location.href}`
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -501,11 +505,11 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                         </div>
                                         <a
                                             href={`https://wa.me/351${property.teamMember.phone}?text=${encodeURIComponent(
-                                                `Olá ${property.teamMember.name}! Tenho interesse no imóvel:\n\n` +
+                                                `${t("whatsappGreetingAgent", { name: property.teamMember.name })}\n\n` +
                                                 `${property.title}\n` +
-                                                `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
-                                                `Referência: ${property.reference}\n` +
-                                                `Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
+                                                `${t("whatsappPrice")}: ${formatPriceNumber(property.price)} €\n` +
+                                                `${t("whatsappReference")}: ${property.reference}\n` +
+                                                `${t("whatsappLink")}: ${typeof window !== 'undefined' ? window.location.href : ''}`
                                             )}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -700,11 +704,11 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                         </div>
                                         <a
                                             href={`https://wa.me/351${property.teamMember.phone}?text=${encodeURIComponent(
-                                                `Olá ${property.teamMember.name}! Tenho interesse no imóvel:\n\n` +
+                                                `${t("whatsappGreetingAgent", { name: property.teamMember.name })}\n\n` +
                                                 `${property.title}\n` +
-                                                `Preço: ${parseFloat(property.price).toLocaleString('pt-PT')} €\n` +
-                                                `Referência: ${property.reference}\n` +
-                                                `Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
+                                                `${t("whatsappPrice")}: ${formatPriceNumber(property.price)} €\n` +
+                                                `${t("whatsappReference")}: ${property.reference}\n` +
+                                                `${t("whatsappLink")}: ${typeof window !== 'undefined' ? window.location.href : ''}`
                                             )}`}
                                             target="_blank"
                                             rel="noopener noreferrer"

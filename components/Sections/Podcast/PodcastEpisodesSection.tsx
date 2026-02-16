@@ -27,7 +27,7 @@ export function PodcastEpisodesSection({
     return (
         <section className="container py-8 md:py-10 lg:py-12 xl:py-16">
             <header className="mb-6 md:mb-8 lg:mb-10 xl:mb-12 space-y-2 md:space-y-3">
-                <span className="button-14-medium text-brown block">{label}</span>
+                <span className="button-14-medium text-gold block">{label}</span>
                 <h2 className="body-20-medium md:heading-quatro-medium text-black text-balance">
                     {title}
                 </h2>
