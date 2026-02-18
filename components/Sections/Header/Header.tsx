@@ -267,7 +267,7 @@ export default function Header() {
                                                                 transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                                                                 className="overflow-hidden"
                                                             >
-                                                                <div className="flex flex-col gap-2 pl-5 pt-4 border-l border-gold/30 ml-4">
+                                                                <div className="flex flex-col gap-2 pl-5 pt-4 ml-4">
                                                                     {item.submenu.map((sub) => (
                                                                         <Link
                                                                             key={sub.href}
