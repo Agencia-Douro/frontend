@@ -15,6 +15,7 @@ export default function Header() {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
     const savedScrollY = useRef(0);
     const t = useTranslations("Header");
 
@@ -31,6 +32,7 @@ export default function Header() {
     // Bloquear scroll quando menu mobile está aberto e restaurar posição ao fechar
     useEffect(() => {
         if (mobileMenuOpen) {
+            setOpenSubmenu(null);
             savedScrollY.current = window.scrollY;
             document.body.style.position = 'fixed';
             document.body.style.top = `-${savedScrollY.current}px`;
@@ -188,8 +190,26 @@ export default function Header() {
                                 >
                                     {[
                                         { href: "/", label: t("home") },
-                                        { href: "/imoveis", label: t("properties") },
-                                        { href: "/imoveis-luxo", label: t("luxuryProperties") },
+                                        {
+                                            href: "/imoveis",
+                                            label: t("properties"),
+                                            submenu: [
+                                                { href: "/imoveis?transactionType=comprar", label: t("buy") },
+                                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                                { href: "/imoveis?transactionType=arrendar", label: t("rent") },
+                                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
+                                            ],
+                                        },
+                                        {
+                                            href: "/imoveis-luxo",
+                                            label: t("luxuryProperties"),
+                                            submenu: [
+                                                { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
+                                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
+                                                { href: "/imoveis?transactionType=arrendar", label: t("rent") },
+                                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
+                                            ],
+                                        },
                                         { href: "/sobre-nos", label: t("aboutUs") },
                                         { href: "/podcast", label: t("podcast") },
                                         { href: "/vender-imovel", label: t("sellMyProperty") },
@@ -215,19 +235,72 @@ export default function Header() {
                                             }}
                                             className="w-full"
                                         >
-                                            <Link
-                                                href={item.href}
-                                                className="heading-cinco-regular font-heading text-brown hover:text-gold transition-colors px-2 block relative group text-left"
-                                                onClick={() => setMobileMenuOpen(false)}
-                                            >
-                                                <span className="relative z-10">{item.label}</span>
-                                                <motion.span
-                                                    className="absolute bottom-0 left-0 h-[2px] bg-gold origin-left"
-                                                    initial={{ scaleX: 0 }}
-                                                    whileHover={{ scaleX: 1 }}
-                                                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                                />
-                                            </Link>
+                                            {item.submenu ? (
+                                                <>
+                                                    <button
+                                                        className="heading-cinco-regular font-heading text-brown hover:text-gold transition-colors px-2 flex items-center gap-2 relative group text-left w-full cursor-pointer"
+                                                        onClick={() => setOpenSubmenu(openSubmenu === item.href ? null : item.href)}
+                                                    >
+                                                        <span className="relative z-10">{item.label}</span>
+                                                        <motion.svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="16"
+                                                            height="16"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            animate={{ rotate: openSubmenu === item.href ? 180 : 0 }}
+                                                            transition={{ duration: 0.3 }}
+                                                        >
+                                                            <path d="m6 9 6 6 6-6" />
+                                                        </motion.svg>
+                                                    </button>
+                                                    <AnimatePresence>
+                                                        {openSubmenu === item.href && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                                                                className="overflow-hidden"
+                                                            >
+                                                                <div className="flex flex-col gap-2 pl-5 pt-4 border-l border-gold/30 ml-4">
+                                                                    {item.submenu.map((sub) => (
+                                                                        <Link
+                                                                            key={sub.href}
+                                                                            href={sub.href}
+                                                                            className="text-brown/60 hover:text-gold transition-colors py-1 px-2 block text-left font-body text-base heading-tres-medium"
+                                                                            onClick={() => {
+                                                                                setOpenSubmenu(null);
+                                                                                setMobileMenuOpen(false);
+                                                                            }}
+                                                                        >
+                                                                            {sub.label}
+                                                                        </Link>
+                                                                    ))}
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </>
+                                            ) : (
+                                                <Link
+                                                    href={item.href}
+                                                    className="heading-cinco-regular font-heading text-brown hover:text-gold transition-colors px-2 block relative group text-left"
+                                                    onClick={() => setMobileMenuOpen(false)}
+                                                >
+                                                    <span className="relative z-10">{item.label}</span>
+                                                    <motion.span
+                                                        className="absolute bottom-0 left-0 h-[2px] bg-gold origin-left"
+                                                        initial={{ scaleX: 0 }}
+                                                        whileHover={{ scaleX: 1 }}
+                                                        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                                                    />
+                                                </Link>
+                                            )}
                                         </motion.div>
                                     ))}
                                 </motion.div>
