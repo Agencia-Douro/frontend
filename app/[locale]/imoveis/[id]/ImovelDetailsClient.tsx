@@ -391,7 +391,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                 `${property.title}\n` +
                                 `${t("whatsappPrice")}: ${formatPriceNumber(property.price)} €\n` +
                                 `${t("whatsappReference")}: ${property.reference}\n` +
-                                `${t("whatsappLink")}: ${window.location.href}`
+                                `${t("whatsappLink")}: ${typeof window !== 'undefined' ? window.location.href : ''}`
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -932,7 +932,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                 <p className="body-16-medium text-brown mb-3">{t("shareByMessage")}</p>
                                 <a
                                     href={`https://wa.me/?text=${encodeURIComponent(
-                                        `${property.title}\n${formatPriceNumber(property.price)} €\n${window.location.href}`
+                                        `${property.title}\n${formatPriceNumber(property.price)} €\n${typeof window !== 'undefined' ? window.location.href : ''}`
                                     )}`}
                                     target="_blank"
                                     rel="noopener noreferrer"

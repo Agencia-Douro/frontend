@@ -17,13 +17,20 @@
       "WebFetch(domain:www.sothebysrealtypt.com)",
       "Bash(head:*)",
       "Bash(git diff:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:www.agenciadouro.pt)",
+      "WebFetch(domain:opengraph.xyz)",
+      "WebFetch(domain:agenciadouro.pt)",
+      "Bash(python3 -c \" import sys, re content = sys.stdin.read\\(\\) # Look for error-related strings in the Next.js data chunks chunks = re.findall\\(r''self\\\\.__next_f\\\\.push\\\\\\(\\\\[1,\"\"\\(.*?\\)\"\"\\\\]\\\\\\)'', content\\) for c in chunks[:5]: if ''error'' in c.lower\\(\\) or ''Error'' in c: print\\(c[:500]\\) \")",
+      "Bash(python3 -c \" import sys, re, json content = sys.stdin.read\\(\\) # Find all RSC data chunks chunks = re.findall\\(r''self\\\\.__next_f\\\\.push\\\\\\(\\\\[1,\"\"\\(.*?\\)\"\"\\\\]\\\\\\)'', content\\) all_data = '''' for c in chunks: all_data += c # Look for error indicators if ''NEXT_NOT_FOUND'' in all_data: print\\(''NEXT_NOT_FOUND triggered''\\) if ''error'' in all_data.lower\\(\\): # find context idx = all_data.lower\\(\\).find\\(''error''\\) print\\(''Error context:'', all_data[max\\(0,idx-50\\):idx+200]\\) \")",
+      "Bash(python3 -c \" import sys, re content = sys.stdin.read\\(\\) chunks = re.findall\\(r''self\\\\.__next_f\\\\.push\\\\\\(\\\\[1,\"\"\\(.*?\\)\"\"\\\\]\\\\\\)'', content\\) all_data = ''''.join\\(chunks\\) # Look for notFound, the error boundary data idx = all_data.find\\(''notFou''\\) if idx >= 0: print\\(''notFound context:'', all_data[idx:idx+300]\\) # look for the actual error idx2 = all_data.find\\(''\"\"error\"\"''\\) while idx2 >= 0 and idx2 < len\\(all_data\\): snippet = all_data[idx2:idx2+100] if ''undefined'' not in snippet: print\\(''non-null error:'', snippet\\) idx2 = all_data.find\\(''\"\"error\"\"'', idx2+1\\) if idx2 > 10000: break \")",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "shadcn"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
