@@ -41,12 +41,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const areaText = totalArea > 0 ? `, ${totalArea}m²` : ''
         const description = `${transactionType} ${propertyType} — ${property.concelho}, ${property.distrito}. ${bedroomsText}${bathroomsText}${areaText}. ${t("propertyInfoReference")}: ${property.reference}`
 
-        // Get absolute URL for og:image
-        const imageUrl = property.image?.startsWith('http')
-            ? property.image
-            : `${process.env.NEXT_PUBLIC_API_URL || 'https://agenciadouro.pt'}${property.image}`
-
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url
+
+        // Get absolute URL for og:image — always use the canonical www domain
+        const rawImage = property.image || ''
+        const imageUrl = rawImage.startsWith('http')
+            ? rawImage.replace('https://agenciadouro.pt', 'https://www.agenciadouro.pt')
+            : rawImage
+                ? `${baseUrl}${rawImage}`
+                : `${baseUrl}/hero/hero1.jpg`
         const canonicalUrl = `${baseUrl}/${locale}/imoveis/${id}`
         const languages: Record<string, string> = {}
         for (const loc of routing.locales) {
@@ -64,8 +67,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       openGraph: {
         title,
         description,
+        url: canonicalUrl,
         type: "website",
-        locale: locale === "pt" ? "pt_PT" : "en_US",
+        locale: locale === "pt" ? "pt_PT" : locale === "fr" ? "fr_FR" : "en_GB",
         images: [
           {
             url: imageUrl,
