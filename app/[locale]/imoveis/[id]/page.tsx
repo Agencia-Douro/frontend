@@ -43,17 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url
 
-        // Get absolute URL for og:image — always use the canonical www domain
-        const rawImage = property.image || ''
-        const sourceImageUrl = rawImage.startsWith('http')
-            ? rawImage.replace('https://agenciadouro.pt', 'https://www.agenciadouro.pt')
-            : rawImage
-                ? `${baseUrl}${rawImage}`
-                : null
-        // Proxy through /api/og-image to convert WebP → JPEG for Facebook/WhatsApp compatibility
-        const imageUrl = sourceImageUrl
-            ? `${baseUrl}/internal-api/og-image?url=${encodeURIComponent(sourceImageUrl)}`
-            : `${baseUrl}/hero/hero1.jpg`
         const canonicalUrl = `${baseUrl}/${locale}/imoveis/${id}`
         const languages: Record<string, string> = {}
         for (const loc of routing.locales) {
@@ -74,19 +63,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url: canonicalUrl,
         type: "website",
         locale: locale === "pt" ? "pt_PT" : locale === "fr" ? "fr_FR" : "en_GB",
-        images: [
-          {
-            url: imageUrl,
-            alt: property.title,
-          },
-        ],
         siteName: "Agência Douro",
       },
       twitter: {
         card: "summary_large_image",
         title,
         description,
-        images: [imageUrl],
       },
     }
   } catch {
