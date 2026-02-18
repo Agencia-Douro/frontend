@@ -16,7 +16,8 @@ export const SocialMediaButtonV2 = () => {
             href="https://wa.me/351919766324"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-[calc(1rem+env(safe-area-inset-right))] md:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] md:right-[calc(1.5rem+env(safe-area-inset-right))] z-40 bg-[#25D366] hover:bg-[#20BD5A] will-change-transform text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+            className="fixed right-[calc(1rem+env(safe-area-inset-right))] md:right-[calc(1.5rem+env(safe-area-inset-right))] md:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] z-40 bg-[#25D366] hover:bg-[#20BD5A] will-change-transform text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+            style={{ bottom: "calc(1rem + 50px + env(safe-area-inset-bottom))" }}
             aria-label="WhatsApp"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none" className="md:w-8 md:h-8">
