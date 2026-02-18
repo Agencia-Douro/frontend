@@ -51,9 +51,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `${siteConfig.url}/${locale}`,
       languages,
     },
-    other: {
-      "fb:app_id": "810888341595184",
-    },
     robots: {
       index: true,
       follow: true,

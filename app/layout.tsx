@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="pt" className={`${prata.variable} ${inter.variable}`}>
       <head>
+        <meta property="fb:app_id" content="810888341595184" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://img.youtube.com" />
