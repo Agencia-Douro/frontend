@@ -45,11 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
         // Get absolute URL for og:image — always use the canonical www domain
         const rawImage = property.image || ''
-        const imageUrl = rawImage.startsWith('http')
+        const sourceImageUrl = rawImage.startsWith('http')
             ? rawImage.replace('https://agenciadouro.pt', 'https://www.agenciadouro.pt')
             : rawImage
                 ? `${baseUrl}${rawImage}`
-                : `${baseUrl}/hero/hero1.jpg`
+                : null
+        // Proxy through /api/og-image to convert WebP → JPEG for Facebook/WhatsApp compatibility
+        const imageUrl = sourceImageUrl
+            ? `${baseUrl}/internal-api/og-image?url=${encodeURIComponent(sourceImageUrl)}`
+            : `${baseUrl}/hero/hero1.jpg`
         const canonicalUrl = `${baseUrl}/${locale}/imoveis/${id}`
         const languages: Record<string, string> = {}
         for (const loc of routing.locales) {
