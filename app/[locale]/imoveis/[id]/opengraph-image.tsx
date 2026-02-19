@@ -25,15 +25,15 @@ export default async function Image({ params }: Props) {
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
         let jpeg = await sharp(buf)
-          .resize(1200, 630, { fit: "cover", withoutEnlargement: true })
+          .resize(1200, 630, { fit: "cover" })
           .jpeg({ quality: 70 })
           .toBuffer()
 
         // garante < 550 KB
         if (jpeg.length > 550 * 1024) {
           jpeg = await sharp(buf)
-            .resize(900, 473, { fit: "cover", withoutEnlargement: true })
-            .jpeg({ quality: 60 })
+            .resize(1200, 630, { fit: "cover" })
+            .jpeg({ quality: 50 })
             .toBuffer()
         }
 
