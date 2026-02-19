@@ -26,14 +26,17 @@ export default async function Image({ params }: Props) {
       try {
         // Convert WebP → JPEG via sharp so Facebook always gets a compatible format
         const sharp = (await import("sharp")).default
-        const res = await fetch(rawUrl)
+        const res = await fetch(rawUrl, { signal: AbortSignal.timeout(8000) })
         if (res.ok) {
           const buf = Buffer.from(await res.arrayBuffer())
           const jpeg = await sharp(buf).jpeg({ quality: 85 }).toBuffer()
           imgSrc = `data:image/jpeg;base64,${jpeg.toString("base64")}`
+        } else {
+          // fetch failed (non-2xx) — let ImageResponse try the URL directly
+          imgSrc = rawUrl
         }
       } catch {
-        // sharp unavailable — let ImageResponse fetch the URL directly
+        // sharp unavailable or fetch error — let ImageResponse fetch the URL directly
         imgSrc = rawUrl
       }
     }
