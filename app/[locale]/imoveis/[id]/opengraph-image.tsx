@@ -1,67 +1,32 @@
 import { ImageResponse } from "next/og"
-import { propertiesApi } from "@/services/api"
 
 export const runtime = "nodejs"
-export const alt = "Property"
+export const alt = "Agência Douro"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-type Props = {
-  params: Promise<{ id: string; locale: string }>
-}
-
-export default async function Image({ params }: Props) {
-  const { id, locale } = await params
-  let imgSrc: string | null = null
-
-  try {
-    const property = await propertiesApi.getById(id, locale)
-
-    if (property?.image) {
-      const url = property.image.startsWith("http")
-        ? property.image
-        : `https://agenciadouro.pt/api${property.image}`
-
-      const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
-      if (res.ok) {
-        const buf = Buffer.from(await res.arrayBuffer())
-        const sharp = (await import("sharp")).default
-        const jpeg = await sharp(buf).jpeg({ quality: 85 }).toBuffer()
-        imgSrc = `data:image/jpeg;base64,${jpeg.toString("base64")}`
-      }
-    }
-  } catch {
-    // fall through to branded fallback
-  }
+export default async function Image() {
+  const logoRes = await fetch("https://www.agenciadouro.pt/Logo.png")
+  const logoBase64 = logoRes.ok
+    ? `data:image/png;base64,${Buffer.from(await logoRes.arrayBuffer()).toString("base64")}`
+    : null
 
   return new ImageResponse(
     <div
       style={{
         display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         width: "100%",
         height: "100%",
         backgroundColor: "#f5f0e8",
       }}
     >
-      {imgSrc ? (
+      {logoBase64 ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imgSrc}
-          alt=""
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        <img src={logoBase64} alt="Agência Douro" style={{ maxWidth: 600 }} />
       ) : (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            fontSize: 48,
-            color: "#8B7355",
-            fontFamily: "serif",
-          }}
-        >
+        <div style={{ fontSize: 64, color: "#8B7355", fontFamily: "serif" }}>
           Agência Douro
         </div>
       )}
