@@ -18,12 +18,13 @@ export default async function Image({ params }: Props) {
     const property = await propertiesApi.getById(id, locale)
 
     if (property?.image) {
-      const url = (property.image.startsWith("http")
-        ? property.image
-        : `https://www.agenciadouro.pt${property.image}`
-      ).replace("https://agenciadouro.pt/api/", "https://www.agenciadouro.pt/api/")
+      // Vai directo ao backend (porta 3008) sem passar pelo nginx
+      // property.image = "https://agenciadouro.pt/api/uploads/images/..."
+      const internalUrl = property.image
+        .replace("https://agenciadouro.pt/api/", "http://127.0.0.1:3008/")
+        .replace("https://www.agenciadouro.pt/api/", "http://127.0.0.1:3008/")
 
-      const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
+      const res = await fetch(internalUrl, { signal: AbortSignal.timeout(8000) })
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
         imgSrc = `data:image/webp;base64,${buf.toString("base64")}`
