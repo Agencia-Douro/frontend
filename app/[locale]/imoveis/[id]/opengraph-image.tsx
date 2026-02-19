@@ -18,16 +18,15 @@ export default async function Image({ params }: Props) {
     const property = await propertiesApi.getById(id, locale)
 
     if (property?.image) {
-      const url = property.image.startsWith("http")
+      const url = (property.image.startsWith("http")
         ? property.image
         : `https://www.agenciadouro.pt${property.image}`
+      ).replace("https://agenciadouro.pt/api/", "https://www.agenciadouro.pt/api/")
 
       const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
-        const sharp = (await import("sharp")).default
-        const jpeg = await sharp(buf).jpeg({ quality: 85 }).toBuffer()
-        imgSrc = `data:image/jpeg;base64,${jpeg.toString("base64")}`
+        imgSrc = `data:image/webp;base64,${buf.toString("base64")}`
       }
     }
   } catch {
