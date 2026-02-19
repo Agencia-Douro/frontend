@@ -26,7 +26,10 @@ export default async function Image({ params }: Props) {
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
         const sharp = (await import("sharp")).default
-        const jpeg = await sharp(buf).jpeg({ quality: 85 }).toBuffer()
+        const jpeg = await sharp(buf)
+          .resize(1200, 630, { fit: "cover" })
+          .jpeg({ quality: 70 })
+          .toBuffer()
         imgSrc = `data:image/jpeg;base64,${jpeg.toString("base64")}`
       }
     }
