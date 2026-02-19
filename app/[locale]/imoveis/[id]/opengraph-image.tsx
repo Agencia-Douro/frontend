@@ -37,7 +37,7 @@ export default async function Image({ params }: Props) {
             .toBuffer()
         }
 
-        return new Response(jpeg, { headers: { "Content-Type": "image/jpeg" } })
+        return new Response(new Uint8Array(jpeg), { headers: { "Content-Type": "image/jpeg" } })
       }
     }
   } catch {
@@ -51,5 +51,5 @@ export default async function Image({ params }: Props) {
     .jpeg({ quality: 70 })
     .toBuffer()
 
-  return new Response(fallback, { headers: { "Content-Type": "image/jpeg" } })
+  return new Response(new Uint8Array(fallback), { headers: { "Content-Type": "image/jpeg" } })
 }
