@@ -11,7 +11,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale } = await params
   const url = `https://www.agenciadouro.pt/${locale}/imoveis/${id}`
   const property = await propertiesApi.getById(id, locale).catch(() => null)
-  const image = "https://karelly.s3.eu-north-1.amazonaws.com/Captura+de+ecra%CC%83+2026-02-03%2C+a%CC%80s+09.56.49.png"
+  const fallback = "https://img4.idealista.pt/blur/WEB_DETAIL-XL-L/0/id.pro.pt.image.master/ff/da/d4/307306083.webp"
+  const rawImage = property?.image ?? fallback
+  const image = `https://agenciadouro.pt/api/properties/og-image?url=${encodeURIComponent(rawImage)}`
   const title = property?.title ?? "Imóvel | Agência Douro"
   const description = property?.description ?? "Agência Douro — Mediação Imobiliária no Alto Douro."
 
