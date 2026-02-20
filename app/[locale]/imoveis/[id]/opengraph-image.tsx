@@ -15,7 +15,7 @@ type Props = {
 export default async function Image({ params }: Props) {
   const { id, locale } = await params
   const property = await propertiesApi.getById(id, locale).catch(() => null)
-  const imageUrl = property?.image ?? FALLBACK
+  const imageUrl = FALLBACK
 
   return new ImageResponse(
     <div
