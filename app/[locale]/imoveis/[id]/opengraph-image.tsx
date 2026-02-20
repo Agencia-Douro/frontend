@@ -16,7 +16,7 @@ export default async function Image({ params }: Props) {
   const sharp = (await import("sharp")).default
 
   const property = await propertiesApi.getById(id, locale).catch(() => null)
-  const imageUrl = property?.image ?? FALLBACK
+  const imageUrl = FALLBACK
 
   const res = await fetch(imageUrl, { signal: AbortSignal.timeout(8000) }).catch(() => null)
   const src = res?.ok ? res : await fetch(FALLBACK)
