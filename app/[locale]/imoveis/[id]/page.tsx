@@ -2,148 +2,33 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { propertiesApi } from "@/services/api"
 import ImovelDetailsClient from "./ImovelDetailsClient"
-import { siteConfig } from "@/lib/site"
-import { routing } from "@/i18n/routing"
-import { Breadcrumbs } from "@/components/SEO/Breadcrumbs"
-import { getTranslations } from "next-intl/server"
 
 type Props = {
-    params: Promise<{
-        id: string
-        locale: string
-    }>
+  params: Promise<{ id: string; locale: string }>
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id, locale } = await params
-
-    try {
-    const property = await propertiesApi.getById(id, locale)
-    const t = await getTranslations({ locale, namespace: "PropertyDetails" })
-
-    if (!property) {
-      return {
-        title: t("seoNotFound"),
-        description: t("seoNotFoundDescription"),
-      }
-    }
-
-        const transactionType = t(`transactionTypes.${property.transactionType}`) || property.transactionType
-        const propertyType = t(`propertyTypes.${property.propertyType.toLowerCase()}`) || property.propertyType
-        const localeMap: Record<string, string> = { pt: "pt-PT", en: "en-GB", fr: "fr-FR" }
-        const numLocale = localeMap[locale] || "pt-PT"
-        const price = parseFloat(property.price).toLocaleString(numLocale)
-        const totalArea = property.totalArea ?? 0
-
-        const title = `${property.title} - ${price} €`
-        const bedroomsText = property.bedrooms > 0 ? t("seoBedrooms", { count: property.bedrooms }) : ''
-        const bathroomsText = property.bathrooms > 0 ? `, ${t("seoBathrooms", { count: property.bathrooms })}` : ''
-        const areaText = totalArea > 0 ? `, ${totalArea}m²` : ''
-        const description = `${transactionType} ${propertyType} — ${property.concelho}, ${property.distrito}. ${bedroomsText}${bathroomsText}${areaText}. ${t("propertyInfoReference")}: ${property.reference}`
-
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url
-
-        const canonicalUrl = `${baseUrl}/${locale}/imoveis/${id}`
-        const languages: Record<string, string> = {}
-        for (const loc of routing.locales) {
-            languages[loc] = `${baseUrl}/${loc}/imoveis/${id}`
-        }
-
-    return {
-      metadataBase: new URL(baseUrl),
-      title,
-      description,
-      alternates: {
-        canonical: canonicalUrl,
-        languages,
-      },
-      openGraph: {
-        title,
-        description,
-        url: canonicalUrl,
-        type: "website",
-        locale: locale === "pt" ? "pt_PT" : locale === "fr" ? "fr_FR" : "en_GB",
-        siteName: "Agência Douro",
-      },
-      twitter: {
-        card: "summary_large_image",
-        title,
-        description,
-      },
-    }
-  } catch {
-    const tFallback = await getTranslations({ locale, namespace: "PropertyDetails" })
-    return {
-      title: `${tFallback("seoNotFound")} | Agência Douro`,
-      description: tFallback("seoNotFoundDescription"),
-    }
-  }
+export const metadata: Metadata = {
+  title: "Imóvel | Agência Douro",
+  description: "Agência Douro — Mediação Imobiliária no Alto Douro.",
+  openGraph: {
+    title: "Imóvel | Agência Douro",
+    description: "Agência Douro — Mediação Imobiliária no Alto Douro.",
+    images: [
+      "https://img4.idealista.pt/blur/WEB_DETAIL-XL-L/0/id.pro.pt.image.master/ff/da/d4/307306083.webp",
+    ],
+  },
 }
 
 export default async function ImovelDetails({ params }: Props) {
-    const { id, locale } = await params
-  const tPage = await getTranslations({ locale, namespace: "Footer" })
-  let initialProperty: Awaited<ReturnType<typeof propertiesApi.getById>> | null = null
-    try {
+  const { id, locale } = await params
+
+  let initialProperty
+  try {
     initialProperty = await propertiesApi.getById(id, locale)
   } catch {
     notFound()
   }
   if (!initialProperty) notFound()
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url
-  const imageUrl = initialProperty.image?.startsWith('http')
-    ? initialProperty.image
-    : `${process.env.NEXT_PUBLIC_API_URL || siteConfig.url}${initialProperty.image}`
-
-  const propertySchema = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: initialProperty.title,
-    description: initialProperty.description,
-    url: `${baseUrl}/${locale}/imoveis/${id}`,
-    image: imageUrl,
-    datePosted: initialProperty.createdAt,
-    ...(initialProperty.price && {
-      offers: {
-        "@type": "Offer",
-        price: initialProperty.price,
-        priceCurrency: "EUR",
-        availability: "https://schema.org/InStock",
-      },
-    }),
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: initialProperty.concelho,
-      addressRegion: initialProperty.distrito,
-      addressCountry: "PT",
-    },
-    ...(initialProperty.totalArea && {
-      floorSize: {
-        "@type": "QuantitativeValue",
-        value: initialProperty.totalArea,
-        unitCode: "MTK",
-      },
-    }),
-    ...(initialProperty.bedrooms > 0 && {
-      numberOfRooms: initialProperty.bedrooms,
-    }),
-  }
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(propertySchema) }}
-      />
-      <Breadcrumbs
-        locale={locale}
-        items={[
-          { name: tPage("properties"), path: "/imoveis" },
-          { name: initialProperty.title },
-        ]}
-      />
-      <ImovelDetailsClient initialProperty={initialProperty} />
-    </>
-  )
+  return <ImovelDetailsClient initialProperty={initialProperty} />
 }
