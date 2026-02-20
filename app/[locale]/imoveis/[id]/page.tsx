@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: "Imóvel | Agência Douro",
     description: "Agência Douro — Mediação Imobiliária no Alto Douro.",
     openGraph: {
+      type: "website",
       title: "Imóvel | Agência Douro",
       description: "Agência Douro — Mediação Imobiliária no Alto Douro.",
       url,
