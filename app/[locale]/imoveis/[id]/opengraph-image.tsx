@@ -26,18 +26,23 @@ export default async function Image({ params }: Props) {
         const buf = Buffer.from(await res.arrayBuffer())
         let jpeg = await sharp(buf)
           .resize(1200, 630, { fit: "cover" })
-          .jpeg({ quality: 70 })
+          .jpeg({ quality: 60 })
           .toBuffer()
 
-        // garante < 550 KB
-        if (jpeg.length > 550 * 1024) {
+        // garante < 200 KB para WhatsApp
+        if (jpeg.length > 200 * 1024) {
           jpeg = await sharp(buf)
             .resize(1200, 630, { fit: "cover" })
-            .jpeg({ quality: 50 })
+            .jpeg({ quality: 40 })
             .toBuffer()
         }
 
-        return new Response(new Uint8Array(jpeg), { headers: { "Content-Type": "image/jpeg" } })
+        return new Response(new Uint8Array(jpeg), {
+          headers: {
+            "Content-Type": "image/jpeg",
+            "Cache-Control": "public, max-age=3600, s-maxage=3600",
+          },
+        })
       }
     }
   } catch {
@@ -51,5 +56,10 @@ export default async function Image({ params }: Props) {
     .jpeg({ quality: 70 })
     .toBuffer()
 
-  return new Response(new Uint8Array(fallback), { headers: { "Content-Type": "image/jpeg" } })
+  return new Response(new Uint8Array(fallback), {
+    headers: {
+      "Content-Type": "image/jpeg",
+      "Cache-Control": "public, max-age=3600, s-maxage=3600",
+    },
+  })
 }
