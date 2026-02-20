@@ -27,7 +27,7 @@ export default async function Image({ params }: Props) {
         const buf = Buffer.from(await res.arrayBuffer())
         const jpeg = await sharp(buf)
           .resize(1200, 630, { fit: "cover" })
-          .jpeg({ quality: 35, progressive: true, mozjpeg: true })
+          .jpeg({ quality: 35 })
           .toBuffer()
 
         return new Response(new Uint8Array(jpeg), {
