@@ -1,6 +1,7 @@
 import { propertiesApi } from "@/services/api"
 
 export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
 export const alt = "Property"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/jpeg"
@@ -24,18 +25,10 @@ export default async function Image({ params }: Props) {
       const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
-        let jpeg = await sharp(buf)
+        const jpeg = await sharp(buf)
           .resize(1200, 630, { fit: "cover" })
-          .jpeg({ quality: 60 })
+          .jpeg({ quality: 35, progressive: true, mozjpeg: true })
           .toBuffer()
-
-        // garante < 200 KB para WhatsApp
-        if (jpeg.length > 200 * 1024) {
-          jpeg = await sharp(buf)
-            .resize(1200, 630, { fit: "cover" })
-            .jpeg({ quality: 40 })
-            .toBuffer()
-        }
 
         return new Response(new Uint8Array(jpeg), {
           headers: {
