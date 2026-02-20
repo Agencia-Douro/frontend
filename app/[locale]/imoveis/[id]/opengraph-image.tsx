@@ -4,7 +4,7 @@ export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 export const alt = "Property"
 export const size = { width: 1200, height: 630 }
-export const contentType = "image/jpeg"
+export const contentType = "image/webp"
 
 type Props = {
   params: Promise<{ id: string; locale: string }>
@@ -25,14 +25,14 @@ export default async function Image({ params }: Props) {
       const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
       if (res.ok) {
         const buf = Buffer.from(await res.arrayBuffer())
-        const jpeg = await sharp(buf)
+        const webp = await sharp(buf)
           .resize(1200, 630, { fit: "cover" })
-          .jpeg({ quality: 35 })
+          .webp({ quality: 20 })
           .toBuffer()
 
-        return new Response(new Uint8Array(jpeg), {
+        return new Response(new Uint8Array(webp), {
           headers: {
-            "Content-Type": "image/jpeg",
+            "Content-Type": "image/webp",
             "Cache-Control": "public, max-age=3600, s-maxage=3600",
           },
         })
@@ -42,16 +42,16 @@ export default async function Image({ params }: Props) {
     // fall through to branded fallback
   }
 
-  // Fallback: fundo da marca em JPEG
+  // Fallback: fundo da marca em WebP
   const fallback = await sharp({
     create: { width: 1200, height: 630, channels: 3, background: { r: 245, g: 240, b: 232 } },
   })
-    .jpeg({ quality: 70 })
+    .webp({ quality: 70 })
     .toBuffer()
 
   return new Response(new Uint8Array(fallback), {
     headers: {
-      "Content-Type": "image/jpeg",
+      "Content-Type": "image/webp",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
     },
   })

@@ -26,7 +26,8 @@
       "Bash(python3 -c \" import sys, re content = sys.stdin.read\\(\\) chunks = re.findall\\(r''self\\\\.__next_f\\\\.push\\\\\\(\\\\[1,\"\"\\(.*?\\)\"\"\\\\]\\\\\\)'', content\\) all_data = ''''.join\\(chunks\\) # Look for notFound, the error boundary data idx = all_data.find\\(''notFou''\\) if idx >= 0: print\\(''notFound context:'', all_data[idx:idx+300]\\) # look for the actual error idx2 = all_data.find\\(''\"\"error\"\"''\\) while idx2 >= 0 and idx2 < len\\(all_data\\): snippet = all_data[idx2:idx2+100] if ''undefined'' not in snippet: print\\(''non-null error:'', snippet\\) idx2 = all_data.find\\(''\"\"error\"\"'', idx2+1\\) if idx2 > 10000: break \")",
       "Bash(grep:*)",
       "Bash(python3:*)",
-      "Bash(tr:*)"
+      "Bash(tr:*)",
+      "WebFetch(domain:medium.com)"
     ],
     "deny": [],
     "ask": []
