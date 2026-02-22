@@ -17,6 +17,10 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
 
+  // Canonical: raiz para idioma padrão, /fr /en para outros idiomas
+  const canonicalUrl =
+    locale === routing.defaultLocale ? siteConfig.url : `${siteConfig.url}/${locale}`
+
   const languages: Record<string, string> = {}
   for (const l of routing.locales) {
     languages[l] = `${siteConfig.url}/${l}`
@@ -48,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     alternates: {
-      canonical: `${siteConfig.url}/${locale}`,
+      canonical: canonicalUrl, // Corrigido aqui
       languages,
     },
     robots: {
@@ -65,8 +69,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function RootLayout({ children, params }: Readonly<{ children: React.ReactNode, params: Promise<{ locale: string }> }>) {
-  const { locale } = await params;
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
+  const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
