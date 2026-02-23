@@ -1,4 +1,5 @@
 import { Prata, Inter } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 
 const prata = Prata({
@@ -25,6 +26,21 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://img.youtube.com" />
       </head>
       <body className="antialiased bg-muted isolate">{children}</body>
+
+      {/* Google tag (gtag.js) — GA4 + Google Ads */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
+        strategy="afterInteractive"
+      />
+      <Script id="google-tags" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-S2LLVJRF5Y');
+          gtag('config', 'AW-17325904134');
+        `}
+      </Script>
     </html>
   )
 }
