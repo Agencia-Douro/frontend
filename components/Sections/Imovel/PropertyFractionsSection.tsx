@@ -21,7 +21,8 @@ const DEFAULT_COLUMNS = [
   { key: "fractionType", label: "Tipologia" },
   { key: "floor", label: "Piso" },
   { key: "unit", label: "Fração" },
-  { key: "grossArea", label: "Área Bruta" },
+  { key: "grossArea", label: "Área Total" },
+  { key: "privateGrossArea", label: "Área Bruta Privativa" },
   { key: "outdoorArea", label: "Área Ext." },
   { key: "parkingSpaces", label: "Lugares de Garagem" },
   { key: "price", label: "Preço" },
@@ -125,6 +126,7 @@ export default function PropertyFractionsSection({
                   className={cn(
                     "text-brown body-14-medium",
                     col.key === "grossArea" ||
+                      col.key === "privateGrossArea" ||
                       col.key === "outdoorArea" ||
                       col.key === "price"
                       ? "text-right"
@@ -172,6 +174,9 @@ export default function PropertyFractionsSection({
                 </TableCell>
                 <TableCell className="text-right body-14-regular text-brown">
                   {formatArea(fraction.grossArea)}
+                </TableCell>
+                <TableCell className="text-right body-14-regular text-brown">
+                  {formatArea(fraction.privateGrossArea)}
                 </TableCell>
                 <TableCell className="text-right body-14-regular text-brown">
                   {formatArea(fraction.outdoorArea)}

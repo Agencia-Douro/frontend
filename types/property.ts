@@ -106,6 +106,7 @@ export interface PropertyFraction {
   unit_fr: string | null;
   // Campos numéricos
   grossArea: number | null;
+  privateGrossArea: number | null;
   outdoorArea: number | null;
   parkingSpaces: number;
   price: number | null;

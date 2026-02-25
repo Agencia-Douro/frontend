@@ -39,6 +39,7 @@ import {
   GripVertical,
   Upload,
   X,
+  Pencil,
 } from "lucide-react";
 import {
   PropertyFraction,
@@ -91,7 +92,8 @@ const DEFAULT_COLUMNS = [
   { key: "fractionType", label: "Tipologia", visible: true },
   { key: "floor", label: "Piso", visible: true },
   { key: "unit", label: "Fração", visible: true },
-  { key: "grossArea", label: "Área Bruta", visible: true },
+  { key: "grossArea", label: "Área Total", visible: true },
+  { key: "privateGrossArea", label: "Área Bruta Privativa", visible: true },
   { key: "outdoorArea", label: "Área Ext.", visible: true },
   { key: "parkingSpaces", label: "Lugares de Garagem", visible: true },
   { key: "price", label: "Preço", visible: true },
@@ -123,6 +125,35 @@ export function PropertyFractionsTab({
   const [isAddColumnDialogOpen, setIsAddColumnDialogOpen] = useState(false);
   const [floorPlanUploading, setFloorPlanUploading] = useState(false);
   const floorPlanInputRef = useRef<HTMLInputElement>(null);
+  const editFloorPlanInputRef = useRef<HTMLInputElement>(null);
+
+  // Estado para edição de fração
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingFractionId, setEditingFractionId] = useState<string | null>(null);
+  const [editFloorPlanUploading, setEditFloorPlanUploading] = useState(false);
+  const [editFraction, setEditFraction] = useState<CreatePropertyFractionDto>({
+    nature_pt: null,
+    nature_en: null,
+    nature_fr: null,
+    fractionType_pt: null,
+    fractionType_en: null,
+    fractionType_fr: null,
+    floor_pt: null,
+    floor_en: null,
+    floor_fr: null,
+    unit_pt: null,
+    unit_en: null,
+    unit_fr: null,
+    grossArea: null,
+    privateGrossArea: null,
+    outdoorArea: null,
+    parkingSpaces: 0,
+    price: null,
+    floorPlan: null,
+    reservationStatus: "available",
+    displayOrder: 0,
+    customData: null,
+  });
 
   // Estado para visibilidade das colunas padrão (local)
   const [columnVisibility, setColumnVisibility] = useState<
@@ -162,6 +193,7 @@ export function PropertyFractionsTab({
     unit_en: null,
     unit_fr: null,
     grossArea: null,
+    privateGrossArea: null,
     outdoorArea: null,
     parkingSpaces: 0,
     price: null,
@@ -261,6 +293,7 @@ export function PropertyFractionsTab({
       unit_en: null,
       unit_fr: null,
       grossArea: null,
+      privateGrossArea: null,
       outdoorArea: null,
       parkingSpaces: 0,
       price: null,
@@ -398,6 +431,73 @@ export function PropertyFractionsTab({
     const updated = pendingFractions.filter((_, i) => i !== index);
     onPendingFractionsChange?.(updated);
     toast.success("Fração removida");
+  };
+
+  const handleOpenEditDialog = (fraction: (typeof allFractions)[number]) => {
+    setEditingFractionId(fraction.id);
+    setEditFraction({
+      nature_pt: fraction.nature_pt ?? null,
+      nature_en: fraction.nature_en ?? null,
+      nature_fr: fraction.nature_fr ?? null,
+      fractionType_pt: fraction.fractionType_pt ?? null,
+      fractionType_en: fraction.fractionType_en ?? null,
+      fractionType_fr: fraction.fractionType_fr ?? null,
+      floor_pt: fraction.floor_pt ?? null,
+      floor_en: fraction.floor_en ?? null,
+      floor_fr: fraction.floor_fr ?? null,
+      unit_pt: fraction.unit_pt ?? null,
+      unit_en: fraction.unit_en ?? null,
+      unit_fr: fraction.unit_fr ?? null,
+      grossArea: fraction.grossArea != null ? Number(fraction.grossArea) : null,
+      privateGrossArea: fraction.privateGrossArea != null ? Number(fraction.privateGrossArea) : null,
+      outdoorArea: fraction.outdoorArea != null ? Number(fraction.outdoorArea) : null,
+      parkingSpaces: Number(fraction.parkingSpaces) || 0,
+      price: fraction.price != null ? Number(fraction.price) : null,
+      floorPlan: fraction.floorPlan ?? null,
+      reservationStatus: fraction.reservationStatus as "available" | "reserved" | "sold",
+      displayOrder: fraction.displayOrder ?? 0,
+      customData: fraction.customData ?? null,
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleSaveEditFraction = async () => {
+    if (!editingFractionId) return;
+
+    if (editingFractionId.startsWith("pending-")) {
+      const index = parseInt(editingFractionId.replace("pending-", ""), 10);
+      const updated = pendingFractions.map((f, i) => (i === index ? editFraction : f));
+      onPendingFractionsChange?.(updated);
+      toast.success("Fração atualizada");
+      setIsEditDialogOpen(false);
+    } else {
+      await handleUpdateFraction(editingFractionId, editFraction);
+      setIsEditDialogOpen(false);
+    }
+  };
+
+  const handleEditNatureChange = (value: string) => {
+    const option = NATURE_OPTIONS.find((o) => o.pt === value);
+    if (option) {
+      setEditFraction({
+        ...editFraction,
+        nature_pt: option.pt,
+        nature_en: option.en,
+        nature_fr: option.fr,
+      });
+    }
+  };
+
+  const handleEditFractionTypeChange = (value: string) => {
+    const option = FRACTION_TYPE_OPTIONS.find((o) => o.pt === value);
+    if (option) {
+      setEditFraction({
+        ...editFraction,
+        fractionType_pt: option.pt,
+        fractionType_en: option.en,
+        fractionType_fr: option.fr,
+      });
+    }
   };
 
   const toggleColumnVisibility = (key: string) => {
@@ -573,11 +673,12 @@ export function PropertyFractionsTab({
 
                 {/* Áreas */}
                 {(columnVisibility["grossArea"] ||
+                  columnVisibility["privateGrossArea"] ||
                   columnVisibility["outdoorArea"]) && (
                     <div className="grid grid-cols-2 gap-4">
                       {columnVisibility["grossArea"] && (
                         <div className="space-y-2">
-                          <Label>Área Bruta (m²)</Label>
+                          <Label>Área Total (m²)</Label>
                           <Input
                             type="number"
                             min="0"
@@ -588,6 +689,26 @@ export function PropertyFractionsTab({
                               setNewFraction({
                                 ...newFraction,
                                 grossArea: e.target.value
+                                  ? parseFloat(e.target.value)
+                                  : null,
+                              })
+                            }
+                          />
+                        </div>
+                      )}
+                      {columnVisibility["privateGrossArea"] && (
+                        <div className="space-y-2">
+                          <Label>Área Bruta Privativa (m²)</Label>
+                          <Input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 80"
+                            value={newFraction.privateGrossArea ?? ""}
+                            onChange={(e) =>
+                              setNewFraction({
+                                ...newFraction,
+                                privateGrossArea: e.target.value
                                   ? parseFloat(e.target.value)
                                   : null,
                               })
@@ -920,6 +1041,414 @@ export function PropertyFractionsTab({
         </div>
       </div>
 
+      {/* Dialog de Edição de Fração */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Editar Fração</DialogTitle>
+            <DialogDescription>
+              Altere os dados da fração/unidade
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4">
+            {(columnVisibility["nature"] || columnVisibility["fractionType"]) && (
+              <div className="grid grid-cols-2 gap-4">
+                {columnVisibility["nature"] && (
+                  <div className="space-y-2">
+                    <Label>Natureza</Label>
+                    <Select
+                      value={editFraction.nature_pt || undefined}
+                      onValueChange={handleEditNatureChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {NATURE_OPTIONS.map((option) => (
+                          <SelectItem key={option.pt} value={option.pt}>
+                            {option.pt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+                {columnVisibility["fractionType"] && (
+                  <div className="space-y-2">
+                    <Label>Tipologia</Label>
+                    <Select
+                      value={editFraction.fractionType_pt || undefined}
+                      onValueChange={handleEditFractionTypeChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {FRACTION_TYPE_OPTIONS.map((option) => (
+                          <SelectItem key={option.pt} value={option.pt}>
+                            {option.pt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(columnVisibility["floor"] || columnVisibility["unit"]) && (
+              <div className="grid grid-cols-2 gap-4">
+                {columnVisibility["floor"] && (
+                  <div className="space-y-2">
+                    <Label>Piso</Label>
+                    <Input
+                      placeholder="Ex: R/C, 1º, 2º..."
+                      value={editFraction.floor_pt || ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          floor_pt: e.target.value || null,
+                          floor_en: e.target.value || null,
+                          floor_fr: e.target.value || null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+                {columnVisibility["unit"] && (
+                  <div className="space-y-2">
+                    <Label>Fração/Unidade</Label>
+                    <Input
+                      placeholder="Ex: A, B, 101..."
+                      value={editFraction.unit_pt || ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          unit_pt: e.target.value || null,
+                          unit_en: e.target.value || null,
+                          unit_fr: e.target.value || null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(columnVisibility["grossArea"] || columnVisibility["privateGrossArea"] || columnVisibility["outdoorArea"]) && (
+              <div className="grid grid-cols-2 gap-4">
+                {columnVisibility["grossArea"] && (
+                  <div className="space-y-2">
+                    <Label>Área Total (m²)</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="Ex: 100"
+                      value={editFraction.grossArea ?? ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          grossArea: e.target.value ? parseFloat(e.target.value) : null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+                {columnVisibility["privateGrossArea"] && (
+                  <div className="space-y-2">
+                    <Label>Área Bruta Privativa (m²)</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="Ex: 80"
+                      value={editFraction.privateGrossArea ?? ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          privateGrossArea: e.target.value ? parseFloat(e.target.value) : null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+                {columnVisibility["outdoorArea"] && (
+                  <div className="space-y-2">
+                    <Label>Área Exterior (m²)</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="Ex: 20"
+                      value={editFraction.outdoorArea ?? ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          outdoorArea: e.target.value ? parseFloat(e.target.value) : null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(columnVisibility["parkingSpaces"] || columnVisibility["price"]) && (
+              <div className="grid grid-cols-2 gap-4">
+                {columnVisibility["parkingSpaces"] && (
+                  <div className="space-y-2">
+                    <Label>Lugares de Garagem</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      placeholder="Ex: 1"
+                      value={editFraction.parkingSpaces || ""}
+                      onChange={(e) =>
+                        setEditFraction({
+                          ...editFraction,
+                          parkingSpaces: parseInt(e.target.value) || 0,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+                {columnVisibility["price"] && (
+                  <div className="space-y-2">
+                    <Label>Preço (€)</Label>
+                    <CurrencyInput
+                      id="edit-fraction-price"
+                      name="price"
+                      placeholder="250.000 €"
+                      value={editFraction.price ?? ""}
+                      decimalsLimit={0}
+                      groupSeparator="."
+                      decimalSeparator=","
+                      suffix=" €"
+                      onValueChange={(value) => {
+                        setEditFraction({
+                          ...editFraction,
+                          price: value ? parseFloat(value) : null,
+                        });
+                      }}
+                      className={cn(
+                        "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
+                      )}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(columnVisibility["floorPlan"] || columnVisibility["reservationStatus"]) && (
+              <div className="grid grid-cols-2 gap-4">
+                {columnVisibility["floorPlan"] && (
+                  <div className="space-y-2">
+                    <Label>Planta (PDF ou imagem)</Label>
+                    <input
+                      ref={editFloorPlanInputRef}
+                      type="file"
+                      accept=".pdf,application/pdf,image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setEditFloorPlanUploading(true);
+                        try {
+                          const result = await uploadApi.uploadFile(
+                            file,
+                            isEditMode ? propertyId : undefined,
+                          );
+                          setEditFraction({ ...editFraction, floorPlan: result.url });
+                          toast.success("Planta enviada com sucesso");
+                        } catch (err) {
+                          toast.error(
+                            err instanceof Error ? err.message : "Erro ao enviar planta",
+                          );
+                        } finally {
+                          setEditFloorPlanUploading(false);
+                          e.target.value = "";
+                        }
+                      }}
+                    />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="default"
+                        disabled={editFloorPlanUploading}
+                        onClick={() => editFloorPlanInputRef.current?.click()}
+                      >
+                        <Upload className="h-4 w-4 mr-2" />
+                        {editFloorPlanUploading
+                          ? "A enviar..."
+                          : editFraction.floorPlan
+                            ? "Substituir ficheiro"
+                            : "Escolher ficheiro"}
+                      </Button>
+                      {editFraction.floorPlan && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setEditFraction({ ...editFraction, floorPlan: null })}
+                          title="Remover planta"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    {editFraction.floorPlan && !editFloorPlanUploading && (
+                      <p className="text-xs text-muted-foreground truncate">
+                        Planta anexada.{" "}
+                        <a
+                          href={editFraction.floorPlan}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          Abrir
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                )}
+                {columnVisibility["reservationStatus"] && (
+                  <div className="space-y-2">
+                    <Label>Status de Reserva</Label>
+                    <Select
+                      value={editFraction.reservationStatus}
+                      onValueChange={(value) =>
+                        setEditFraction({
+                          ...editFraction,
+                          reservationStatus: value as "available" | "reserved" | "sold",
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {RESERVATION_STATUS_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {customColumns.length > 0 && (
+              <div className="space-y-4 border-t pt-4">
+                <h4 className="text-sm font-medium">Dados personalizados</h4>
+                <div className="grid gap-4">
+                  {customColumns.map((col) => {
+                    const value = editFraction.customData?.[col.columnKey] ?? "";
+                    return (
+                      <div key={col.id} className="space-y-2">
+                        <Label>{col.label_pt}</Label>
+                        {col.dataType === "select" && col.selectOptions?.length ? (
+                          <Select
+                            value={value !== "" && value != null ? String(value) : undefined}
+                            onValueChange={(v) =>
+                              setEditFraction({
+                                ...editFraction,
+                                customData: { ...(editFraction.customData || {}), [col.columnKey]: v },
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {col.selectOptions.map((opt) => (
+                                <SelectItem key={opt} value={opt}>
+                                  {opt}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        ) : col.dataType === "currency" ? (
+                          <CurrencyInput
+                            value={value !== "" ? String(value) : ""}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            suffix=" €"
+                            onValueChange={(v) =>
+                              setEditFraction({
+                                ...editFraction,
+                                customData: {
+                                  ...(editFraction.customData || {}),
+                                  [col.columnKey]: v ? parseFloat(v) : null,
+                                },
+                              })
+                            }
+                            className={cn(
+                              "text-black-muted w-full shadow-pretty placeholder:text-grey bg-white px-2 py-1.5 body-14-medium outline-none disabled:cursor-not-allowed disabled:opacity-50 h-9"
+                            )}
+                          />
+                        ) : col.dataType === "number" || col.dataType === "area" ? (
+                          <Input
+                            type="number"
+                            min={0}
+                            step={col.dataType === "area" ? "0.01" : "1"}
+                            placeholder={col.dataType === "area" ? "m²" : undefined}
+                            value={value !== "" ? String(value) : ""}
+                            onChange={(e) =>
+                              setEditFraction({
+                                ...editFraction,
+                                customData: {
+                                  ...(editFraction.customData || {}),
+                                  [col.columnKey]: e.target.value !== "" ? parseFloat(e.target.value) : null,
+                                },
+                              })
+                            }
+                          />
+                        ) : (
+                          <Input
+                            value={value !== "" ? String(value) : ""}
+                            onChange={(e) =>
+                              setEditFraction({
+                                ...editFraction,
+                                customData: {
+                                  ...(editFraction.customData || {}),
+                                  [col.columnKey]: e.target.value || null,
+                                },
+                              })
+                            }
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setIsEditDialogOpen(false);
+                setEditFloorPlanUploading(false);
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button type="button" onClick={handleSaveEditFraction}>
+              Guardar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Configuração de Colunas (colapsável) */}
       {showColumnConfig && (
         <div className="border rounded-lg p-4 bg-muted/30 space-y-4">
@@ -1134,6 +1663,7 @@ export function PropertyFractionsTab({
                     key={col.key}
                     className={cn(
                       col.key === "grossArea" ||
+                        col.key === "privateGrossArea" ||
                         col.key === "outdoorArea" ||
                         col.key === "price"
                         ? "text-right"
@@ -1183,6 +1713,11 @@ export function PropertyFractionsTab({
                         {formatArea(fraction.grossArea)}
                       </TableCell>
                     )}
+                    {columnVisibility["privateGrossArea"] && (
+                      <TableCell className="text-right">
+                        {formatArea(fraction.privateGrossArea)}
+                      </TableCell>
+                    )}
                     {columnVisibility["outdoorArea"] && (
                       <TableCell className="text-right">
                         {formatArea(fraction.outdoorArea)}
@@ -1228,25 +1763,48 @@ export function PropertyFractionsTab({
                     <TableCell className="text-center">
                       <div className="flex items-center justify-center gap-1">
                         {isPending ? (
-                          <Button
-                            type="button"
-                            variant="brown"
-                            size="icon"
-                            onClick={() => handleDeletePendingFraction(index)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
-                        ) : (
-                          isEditMode && (
+                          <>
                             <Button
                               type="button"
                               variant="brown"
                               size="icon"
-                              onClick={() => handleDeleteFraction(fraction.id)}
+                              onClick={() => handleOpenEditDialog(fraction)}
+                              title="Editar"
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="brown"
+                              size="icon"
+                              onClick={() => handleDeletePendingFraction(index)}
                               title="Excluir"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
+                          </>
+                        ) : (
+                          isEditMode && (
+                            <>
+                              <Button
+                                type="button"
+                                variant="brown"
+                                size="icon"
+                                onClick={() => handleOpenEditDialog(fraction)}
+                                title="Editar"
+                              >
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="brown"
+                                size="icon"
+                                onClick={() => handleDeleteFraction(fraction.id)}
+                                title="Excluir"
+                              >
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </>
                           )
                         )}
                       </div>
