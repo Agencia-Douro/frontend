@@ -88,6 +88,7 @@ export interface PropertiesResponse {
 export interface PropertyFraction {
   id: string;
   propertyId: string;
+  name: string | null;
   // Campos multilíngues - Natureza
   nature_pt: string | null;
   nature_en: string | null;

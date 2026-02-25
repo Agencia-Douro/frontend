@@ -88,6 +88,7 @@ const RESERVATION_STATUS_OPTIONS = [
 
 // Colunas padrão da tabela
 const DEFAULT_COLUMNS = [
+  { key: "name", label: "Nome", visible: true },
   { key: "nature", label: "Natureza", visible: true },
   { key: "fractionType", label: "Tipologia", visible: true },
   { key: "floor", label: "Piso", visible: true },
@@ -132,6 +133,7 @@ export function PropertyFractionsTab({
   const [editingFractionId, setEditingFractionId] = useState<string | null>(null);
   const [editFloorPlanUploading, setEditFloorPlanUploading] = useState(false);
   const [editFraction, setEditFraction] = useState<CreatePropertyFractionDto>({
+    name: null,
     nature_pt: null,
     nature_en: null,
     nature_fr: null,
@@ -180,6 +182,7 @@ export function PropertyFractionsTab({
 
   // Estado para nova fração
   const [newFraction, setNewFraction] = useState<CreatePropertyFractionDto>({
+    name: null,
     nature_pt: null,
     nature_en: null,
     nature_fr: null,
@@ -280,6 +283,7 @@ export function PropertyFractionsTab({
 
   const resetNewFraction = () => {
     setNewFraction({
+      name: null,
       nature_pt: null,
       nature_en: null,
       nature_fr: null,
@@ -436,6 +440,7 @@ export function PropertyFractionsTab({
   const handleOpenEditDialog = (fraction: (typeof allFractions)[number]) => {
     setEditingFractionId(fraction.id);
     setEditFraction({
+      name: fraction.name ?? null,
       nature_pt: fraction.nature_pt ?? null,
       nature_en: fraction.nature_en ?? null,
       nature_fr: fraction.nature_fr ?? null,
@@ -584,6 +589,23 @@ export function PropertyFractionsTab({
               </DialogHeader>
 
               <div className="grid gap-4 py-4">
+                {/* Nome */}
+                {columnVisibility["name"] && (
+                  <div className="space-y-2">
+                    <Label>Nome</Label>
+                    <Input
+                      placeholder="Ex: Fração A, Lote 3, Apt 101..."
+                      value={newFraction.name || ""}
+                      onChange={(e) =>
+                        setNewFraction({
+                          ...newFraction,
+                          name: e.target.value || null,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+
                 {/* Natureza e Tipologia – só mostramos se a coluna estiver visível */}
                 {(columnVisibility["nature"] ||
                   columnVisibility["fractionType"]) && (
@@ -1052,6 +1074,23 @@ export function PropertyFractionsTab({
           </DialogHeader>
 
           <div className="grid gap-4 py-4">
+            {/* Nome */}
+            {columnVisibility["name"] && (
+              <div className="space-y-2">
+                <Label>Nome</Label>
+                <Input
+                  placeholder="Ex: Fração A, Lote 3, Apt 101..."
+                  value={editFraction.name || ""}
+                  onChange={(e) =>
+                    setEditFraction({
+                      ...editFraction,
+                      name: e.target.value || null,
+                    })
+                  }
+                />
+              </div>
+            )}
+
             {(columnVisibility["nature"] || columnVisibility["fractionType"]) && (
               <div className="grid grid-cols-2 gap-4">
                 {columnVisibility["nature"] && (
@@ -1696,6 +1735,9 @@ export function PropertyFractionsTab({
 
                 return (
                   <TableRow key={fraction.id}>
+                    {columnVisibility["name"] && (
+                      <TableCell>{fraction.name || "-"}</TableCell>
+                    )}
                     {columnVisibility["nature"] && (
                       <TableCell>{fraction.nature_pt || "-"}</TableCell>
                     )}
