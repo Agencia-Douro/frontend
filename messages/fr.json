@@ -569,6 +569,12 @@
     "loading": "Chargement...",
     "propertyNotFound": "Propriété introuvable",
     "businessType": "Type de transaction :",
+    "propertyStates": {
+      "new": "Neuf",
+      "used": "Usagé",
+      "renovated": "Rénové",
+      "underConstruction": "En construction"
+    },
     "transactionTypes": {
       "comprar": "À vendre",
       "arrendar": "Location",

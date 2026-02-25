@@ -19,6 +19,13 @@ import Caracteristica from "@/components/Sections/Imovel/Caracteristica"
 import { Trash2, Pencil, Star } from "lucide-react"
 import Image from "next/image"
 
+const PROPERTY_STATE_LABELS: Record<string, string> = {
+    novo: "Novo",
+    usado: "Usado",
+    renovado: "Renovado",
+    "em-construcao": "Em Construção",
+};
+
 // Helper function to check if URL is a video
 const isVideoUrl = (url: string): boolean => {
     const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v'];
@@ -325,7 +332,7 @@ export default function PropertyDetailsPage() {
                                 <Caracteristica titulo="Ano de construção" valor={property.constructionYear.toString()} />
                             )}
                             {property.propertyState && (
-                                <Caracteristica titulo="Estado" valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
+                                <Caracteristica titulo="Estado" valor={PROPERTY_STATE_LABELS[property.propertyState] ?? property.propertyState} />
                             )}
                             {property.energyClass && (
                                 <Caracteristica titulo="Classe Energética" valor={property.energyClass.toUpperCase()} />

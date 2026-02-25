@@ -42,7 +42,7 @@ export interface Property {
   propertyType: string;
   isEmpreendimento: boolean;
   isFeatured: boolean;
-  propertyState: "novo" | "usado" | "renovado" | null;
+  propertyState: "novo" | "usado" | "renovado" | "em-construcao" | null;
   energyClass: string | null;
   price: string;
   totalArea: number | null;
