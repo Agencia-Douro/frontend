@@ -1162,6 +1162,14 @@ export const teamMembersApi = {
   },
 };
 
+export interface CountryConfig {
+  code: string;
+  label: string;
+  displayOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface DesiredZone {
   id: string;
   name: string;
@@ -1387,6 +1395,50 @@ export const desiredZonesApi = {
         errorData.message ||
         `Erro ao deletar zona desejada (${response.status})`;
       throw new Error(errorMessage);
+    }
+  },
+};
+
+export const countryConfigsApi = {
+  getAll: async (): Promise<CountryConfig[]> => {
+    const response = await fetch(`${API_BASE_URL}/country-configs`);
+    if (!response.ok) throw new Error("Erro ao buscar países");
+    return response.json();
+  },
+
+  create: async (data: { code: string; label: string; displayOrder?: number }): Promise<CountryConfig> => {
+    const response = await fetch(`${API_BASE_URL}/country-configs`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || `Erro ao criar país (${response.status})`);
+    }
+    return response.json();
+  },
+
+  update: async (code: string, data: { label?: string; displayOrder?: number }): Promise<CountryConfig> => {
+    const response = await fetch(`${API_BASE_URL}/country-configs/${code}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || `Erro ao atualizar país (${response.status})`);
+    }
+    return response.json();
+  },
+
+  delete: async (code: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/country-configs/${code}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || `Erro ao remover país (${response.status})`);
     }
   },
 };

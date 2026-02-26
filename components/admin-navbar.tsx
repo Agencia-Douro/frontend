@@ -77,6 +77,14 @@ export function AdminNavbar() {
               Zonas
             </Link>
             <Link
+              href="/admin/country-configs"
+              className={`body-16-medium transition-colors ${
+                pathname?.includes("/admin/country-configs") ? "text-gold" : "text-brown hover:text-gold"
+              }`}
+            >
+              Países
+            </Link>
+            <Link
               href="/admin/site-config"
               className={`body-16-medium transition-colors ${
                 pathname?.includes("/admin/site-config") ? "text-gold" : "text-brown hover:text-gold"
@@ -137,6 +145,13 @@ export function AdminNavbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Zonas
+          </Link>
+          <Link
+            href="/admin/country-configs"
+            className="body-16-medium text-brown hover:text-gold transition-colors px-2"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Países
           </Link>
           <Link
             href="/admin/site-config"

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { desiredZonesApi, DesiredZone } from "@/services/api"
+import { desiredZonesApi, countryConfigsApi, DesiredZone } from "@/services/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,18 +24,17 @@ export default function DesiredZonesPage() {
     country: "PT",
   })
 
-  // Mapeamento de códigos de países para nomes
-  const countryOptions = [
-    { code: "PT", name: "Portugal" },
-    { code: "AE", name: "Dubai" },
-    { code: "GB", name: "Reino Unido" },
-  ]
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   const { data: zones, isLoading } = useQuery({
     queryKey: ["desired-zones"],
     queryFn: () => desiredZonesApi.getAll(),
+  })
+
+  const { data: countryOptions = [] } = useQuery({
+    queryKey: ["country-configs"],
+    queryFn: () => countryConfigsApi.getAll(),
   })
 
   const createMutation = useMutation({
@@ -190,7 +189,7 @@ export default function DesiredZonesPage() {
                   <SelectContent>
                     {countryOptions.map((country) => (
                       <SelectItem key={country.code} value={country.code}>
-                        {country.name}
+                        {country.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -283,7 +282,7 @@ export default function DesiredZonesPage() {
                 <div>
                   <h3 className="font-semibold text-lg">{zone.name}</h3>
                   <p className="text-sm text-gray-500">
-                    {countryOptions.find(c => c.code === zone.country)?.name || zone.country || "Portugal"} | Ordem: {zone.displayOrder} | {zone.isActive ? "Ativa" : "Inativa"}
+                    {countryOptions.find(c => c.code === zone.country)?.label || zone.country || "PT"} | Ordem: {zone.displayOrder} | {zone.isActive ? "Ativa" : "Inativa"}
                   </p>
                 </div>
               </div>

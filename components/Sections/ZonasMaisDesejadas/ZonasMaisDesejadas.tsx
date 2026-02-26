@@ -5,63 +5,45 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
-import { desiredZonesApi } from "@/services/api";
+import { desiredZonesApi, countryConfigsApi } from "@/services/api";
 import { useState, useMemo } from "react";
-
-type Country = "portugal" | "dubai" | "reino-unido";
-
-// Mapear as tabs para os códigos ISO dos países
-const countryCodeMap: Record<Country, string> = {
-    "portugal": "PT",
-    "dubai": "AE",
-    "reino-unido": "GB",
-};
-
-const countryLabels: Record<Country, string> = {
-    "portugal": "Portugal",
-    "dubai": "Dubai",
-    "reino-unido": "Reino Unido",
-};
 
 export default function ZonasMaisDesejadas() {
     const t = useTranslations("ZonasMaisDesejadas");
-    const [selectedCountry, setSelectedCountry] = useState<Country>("portugal");
+    const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
-    // Buscar todas as zonas ativas (sem filtro de país) para saber quais países têm zonas
-    const { data: allZonas, isLoading } = useQuery({
+    const { data: allZonas, isLoading: isLoadingZones } = useQuery({
         queryKey: ["desired-zones-active-all"],
         queryFn: () => desiredZonesApi.getActive(),
     });
 
-    // Calcular quais países têm zonas disponíveis
+    const { data: countryConfigs, isLoading: isLoadingCountries } = useQuery({
+        queryKey: ["country-configs"],
+        queryFn: () => countryConfigsApi.getAll(),
+    });
+
+    const isLoading = isLoadingZones || isLoadingCountries;
+
+    // Países configurados que têm pelo menos uma zona ativa
     const availableCountries = useMemo(() => {
-        if (!allZonas) return ["portugal"] as Country[];
-        
-        const countries: Country[] = [];
-        const hasPortugal = allZonas.some(z => z.country === "PT" || !z.country);
-        const hasDubai = allZonas.some(z => z.country === "AE");
-        const hasUK = allZonas.some(z => z.country === "GB");
-        
-        if (hasPortugal) countries.push("portugal");
-        if (hasDubai) countries.push("dubai");
-        if (hasUK) countries.push("reino-unido");
-        
-        return countries.length > 0 ? countries : ["portugal"] as Country[];
-    }, [allZonas]);
+        if (!allZonas || !countryConfigs) return [];
+        const codesWithZones = new Set(allZonas.map(z => z.country || "PT"));
+        return countryConfigs.filter(c => codesWithZones.has(c.code));
+    }, [allZonas, countryConfigs]);
 
-    // Derivar o país efetivo: se o selecionado não estiver disponível, usar o primeiro
-    const effectiveCountry = availableCountries.includes(selectedCountry)
-        ? selectedCountry
-        : availableCountries[0];
+    // País efetivo: o selecionado se ainda disponível, senão o primeiro
+    const effectiveCountryCode = useMemo(() => {
+        if (availableCountries.length === 0) return null;
+        const found = availableCountries.find(c => c.code === selectedCountry);
+        return found ? found.code : availableCountries[0].code;
+    }, [availableCountries, selectedCountry]);
 
-    // Filtrar zonas pelo país efetivo
+    // Zonas do país efetivo
     const zonas = useMemo(() => {
-        if (!allZonas) return [];
-        const countryCode = countryCodeMap[effectiveCountry];
-        return allZonas.filter(z => z.country === countryCode || (countryCode === "PT" && !z.country));
-    }, [allZonas, effectiveCountry]);
+        if (!allZonas || !effectiveCountryCode) return [];
+        return allZonas.filter(z => (z.country || "PT") === effectiveCountryCode);
+    }, [allZonas, effectiveCountryCode]);
 
-    // Verificar se deve mostrar as tabs (mais de um país com zonas)
     const showTabs = availableCountries.length > 1;
 
     if (isLoading) {
@@ -87,20 +69,20 @@ export default function ZonasMaisDesejadas() {
                 <h2 className="heading-quatro-regular md:heading-tres-regular xl:heading-dois-regular text-black">{t("title")}</h2>
                 <p className="body-16-regular lg:body-18-regular text-black-muted w-full md:w-[490px] text-balance hidden md:block">{t("description")}</p>
             </div>
-            
+
             {/* Tabs de países - só mostrar se houver mais de um país com zonas */}
             {showTabs && (
                 <div className="flex justify-center items-center w-full mt-6 md:mt-8 lg:mt-10">
                     <div className="flex flex-row gap-0 overflow-x-auto">
                         {availableCountries.map((country) => (
                             <Button
-                                key={country}
+                                key={country.code}
                                 type="button"
-                                variant={effectiveCountry === country ? "gold" : "ghost"}
+                                variant={effectiveCountryCode === country.code ? "gold" : "ghost"}
                                 className="px-3 md:px-4.5 md:w-min whitespace-nowrap body-14-medium"
-                                onClick={() => setSelectedCountry(country)}
+                                onClick={() => setSelectedCountry(country.code)}
                             >
-                                {countryLabels[country]}
+                                {country.label}
                             </Button>
                         ))}
                     </div>
