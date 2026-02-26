@@ -110,6 +110,91 @@ export default function PropertyFractionsSection({
     return null
   }
 
+  const columnHasValue = (key: string): boolean => {
+    return fractions.some((fraction) => {
+      switch (key) {
+        case "nature":
+        case "fractionType":
+        case "floor":
+        case "unit":
+          return getFractionLabel(fraction, key as "nature" | "fractionType" | "floor" | "unit", locale) !== "-"
+        case "grossArea":
+          return fraction.grossArea !== null
+        case "privateGrossArea":
+          return fraction.privateGrossArea !== null
+        case "outdoorArea":
+          return fraction.outdoorArea !== null
+        case "parkingSpaces":
+          return fraction.parkingSpaces !== null && fraction.parkingSpaces !== undefined
+        case "price":
+          return fraction.price !== null
+        case "reservationStatus":
+          return true
+        case "floorPlan":
+          return !!fraction.floorPlan
+        default:
+          return false
+      }
+    })
+  }
+
+  const activeColumns = DEFAULT_COLUMNS.filter((col) => columnHasValue(col.key))
+
+  const renderCell = (key: string, fraction: PropertyFraction) => {
+    switch (key) {
+      case "nature":
+      case "fractionType":
+      case "floor":
+      case "unit":
+        return getFractionLabel(fraction, key as "nature" | "fractionType" | "floor" | "unit", locale)
+      case "grossArea":
+        return formatArea(fraction.grossArea)
+      case "privateGrossArea":
+        return formatArea(fraction.privateGrossArea)
+      case "outdoorArea":
+        return formatArea(fraction.outdoorArea)
+      case "parkingSpaces":
+        return fraction.parkingSpaces
+      case "price":
+        return formatCurrency(fraction.price)
+      case "reservationStatus":
+        return getStatusLabel(fraction.reservationStatus)
+      case "floorPlan":
+        return fraction.floorPlan ? (
+          <a
+            href={fraction.floorPlan}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-gold hover:underline"
+          >
+            <FileText className="h-4 w-4" />
+          </a>
+        ) : "-"
+      default:
+        return "-"
+    }
+  }
+
+  const getHeadClassName = (key: string) =>
+    cn(
+      "text-brown body-14-medium",
+      key === "grossArea" || key === "privateGrossArea" || key === "outdoorArea" || key === "price"
+        ? "text-right"
+        : key === "parkingSpaces" || key === "floorPlan" || key === "reservationStatus"
+          ? "text-center"
+          : ""
+    )
+
+  const getCellClassName = (key: string) =>
+    cn(
+      "body-14-regular text-brown",
+      key === "grossArea" || key === "privateGrossArea" || key === "outdoorArea" || key === "price"
+        ? "text-right"
+        : key === "parkingSpaces" || key === "floorPlan" || key === "reservationStatus"
+          ? "text-center"
+          : ""
+    )
+
   return (
     <section className="container py-8 border-t border-brown/10">
       <div className="mb-6">
@@ -120,23 +205,8 @@ export default function PropertyFractionsSection({
         <Table className="min-w-max [&_th]:whitespace-nowrap [&_td]:whitespace-nowrap">
           <TableHeader>
             <TableRow className="border-brown/10 bg-brown/5">
-              {DEFAULT_COLUMNS.map((col) => (
-                <TableHead
-                  key={col.key}
-                  className={cn(
-                    "text-brown body-14-medium",
-                    col.key === "grossArea" ||
-                      col.key === "privateGrossArea" ||
-                      col.key === "outdoorArea" ||
-                      col.key === "price"
-                      ? "text-right"
-                      : col.key === "parkingSpaces" ||
-                        col.key === "floorPlan" ||
-                        col.key === "reservationStatus"
-                        ? "text-center"
-                        : ""
-                  )}
-                >
+              {activeColumns.map((col) => (
+                <TableHead key={col.key} className={getHeadClassName(col.key)}>
                   {col.key === "parkingSpaces" ? (
                     <>
                       <span className="md:hidden">Garagem</span>
@@ -160,55 +230,13 @@ export default function PropertyFractionsSection({
           <TableBody>
             {fractions.map((fraction) => (
               <TableRow key={fraction.id} className="border-brown/10">
-                <TableCell className="body-14-regular text-brown">
-                  {getFractionLabel(fraction, "nature", locale)}
-                </TableCell>
-                <TableCell className="body-14-regular text-brown">
-                  {getFractionLabel(fraction, "fractionType", locale)}
-                </TableCell>
-                <TableCell className="body-14-regular text-brown">
-                  {getFractionLabel(fraction, "floor", locale)}
-                </TableCell>
-                <TableCell className="body-14-regular text-brown">
-                  {getFractionLabel(fraction, "unit", locale)}
-                </TableCell>
-                <TableCell className="text-right body-14-regular text-brown">
-                  {formatArea(fraction.grossArea)}
-                </TableCell>
-                <TableCell className="text-right body-14-regular text-brown">
-                  {formatArea(fraction.privateGrossArea)}
-                </TableCell>
-                <TableCell className="text-right body-14-regular text-brown">
-                  {formatArea(fraction.outdoorArea)}
-                </TableCell>
-                <TableCell className="text-center body-14-regular text-brown">
-                  {fraction.parkingSpaces}
-                </TableCell>
-                <TableCell className="text-right body-14-regular text-brown">
-                  {formatCurrency(fraction.price)}
-                </TableCell>
-                <TableCell className="text-center body-14-regular text-brown">
-                  {getStatusLabel(fraction.reservationStatus)}
-                </TableCell>
-                <TableCell className="text-center">
-                  {fraction.floorPlan ? (
-                    <a
-                      href={fraction.floorPlan}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-gold hover:underline"
-                    >
-                      <FileText className="h-4 w-4" />
-                    </a>
-                  ) : (
-                    "-"
-                  )}
-                </TableCell>
+                {activeColumns.map((col) => (
+                  <TableCell key={col.key} className={getCellClassName(col.key)}>
+                    {renderCell(col.key, fraction)}
+                  </TableCell>
+                ))}
                 {customColumns.map((col) => (
-                  <TableCell
-                    key={col.id}
-                    className="body-14-regular text-brown"
-                  >
+                  <TableCell key={col.id} className="body-14-regular text-brown">
                     {fraction.customData?.[col.columnKey] ?? "-"}
                   </TableCell>
                 ))}
