@@ -569,6 +569,12 @@
     "loading": "A carregar...",
     "propertyNotFound": "Imóvel não encontrado",
     "businessType": "Tipo de negócio:",
+    "propertyStates": {
+      "new": "Novo",
+      "used": "Usado",
+      "renovated": "Renovado",
+      "underConstruction": "Em Construção"
+    },
     "transactionTypes": {
       "comprar": "A venda",
       "arrendar": "Arrendamento",

@@ -648,7 +648,10 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                             <Caracteristica titulo={t("constructionYear")} valor={property.constructionYear.toString()} />
                         )}
                         {property.propertyState && (
-                            <Caracteristica titulo={t("state")} valor={property.propertyState.charAt(0).toUpperCase() + property.propertyState.slice(1)} />
+                            <Caracteristica
+                                titulo={t("state")}
+                                valor={t(`propertyStates.${({ novo: "new", usado: "used", renovado: "renovated", "em-construcao": "underConstruction" })[property.propertyState] ?? "new"}`)}
+                            />
                         )}
                         {property.energyClass && (
                             <Caracteristica titulo={t("energyClass")} valor={property.energyClass.toUpperCase()} />

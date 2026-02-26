@@ -789,6 +789,7 @@ export default function PropertyForm({
                       <SelectItem value="novo">Novo</SelectItem>
                       <SelectItem value="usado">Usado</SelectItem>
                       <SelectItem value="renovado">Renovado</SelectItem>
+                      <SelectItem value="em-construcao">Em Construção</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

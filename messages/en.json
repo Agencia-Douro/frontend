@@ -569,6 +569,12 @@
     "loading": "Loading...",
     "propertyNotFound": "Property not found",
     "businessType": "Business type:",
+    "propertyStates": {
+      "new": "New",
+      "used": "Used",
+      "renovated": "Renovated",
+      "underConstruction": "Under Construction"
+    },
     "transactionTypes": {
       "comprar": "For Sale",
       "arrendar": "Rent",
