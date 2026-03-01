@@ -248,7 +248,11 @@ export default function PropertyFractionsSection({
     return "minmax(0, 1fr)"
   }
   const gridCols = displayColumns
-    .map((col) => (col.type === "default" ? getColGridSize(col.key) : "minmax(0, 1fr)"))
+    .map((col) =>
+      col.type === "default"
+        ? getColGridSize(col.key)
+        : "minmax(min-content, 1fr)"
+    )
     .join(" ")
 
   const callNowButton = (
