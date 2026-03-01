@@ -1,19 +1,11 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
+import { useRef, useState, useEffect, Fragment } from "react"
 import { propertyFractionsApi } from "@/services/api"
 import { PropertyFraction } from "@/types/property"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { FileText, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
-
 const PHONE_NUMBER = "+351919766324"
 
 const DEFAULT_COLUMNS = [
@@ -44,9 +36,25 @@ function getFractionLabel(
   const suffix = locale === "en" ? "_en" : locale === "fr" ? "_fr" : "_pt"
   const key = `${field}${suffix}` as keyof PropertyFraction
   const value = fraction[key]
-  if (typeof value === "string" && value) return value
+  const str = typeof value === "string" ? value.trim() : ""
+  if (str) return str
   const ptKey = `${field}_pt` as keyof PropertyFraction
-  return (fraction[ptKey] as string) || "-"
+  const ptVal = fraction[ptKey]
+  const ptStr = typeof ptVal === "string" ? ptVal.trim() : ""
+  return ptStr || "-"
+}
+
+const EMPTY_PLACEHOLDERS = ["", "-", "n/a", "null"]
+
+function hasNatureValue(fraction: PropertyFraction): boolean {
+  const values = [
+    (fraction.nature_pt as string)?.trim() ?? "",
+    (fraction.nature_en as string)?.trim() ?? "",
+    (fraction.nature_fr as string)?.trim() ?? "",
+  ]
+  return values.some(
+    (v) => v.length > 0 && !EMPTY_PLACEHOLDERS.includes(v.toLowerCase())
+  )
 }
 
 interface PropertyFractionsSectionProps {
@@ -77,6 +85,20 @@ export default function PropertyFractionsSection({
     queryFn: () => propertyFractionsApi.getColumns(propertyId),
     enabled: !!propertyId && (fractions?.length ?? 0) > 0,
   })
+
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false)
+  const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const check = () => setHasHorizontalOverflow(el.scrollWidth > el.clientWidth)
+    check()
+    const ro = new ResizeObserver(check)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [fractions, customColumns])
 
   const formatCurrency = (value: number | null) => {
     if (value === null) return "-"
@@ -114,10 +136,11 @@ export default function PropertyFractionsSection({
     return fractions.some((fraction) => {
       switch (key) {
         case "nature":
+          return hasNatureValue(fraction)
         case "fractionType":
         case "floor":
         case "unit":
-          return getFractionLabel(fraction, key as "nature" | "fractionType" | "floor" | "unit", locale) !== "-"
+          return getFractionLabel(fraction, key as "fractionType" | "floor" | "unit", locale) !== "-"
         case "grossArea":
           return fraction.grossArea !== null
         case "privateGrossArea":
@@ -139,6 +162,13 @@ export default function PropertyFractionsSection({
   }
 
   const activeColumns = DEFAULT_COLUMNS.filter((col) => columnHasValue(col.key))
+  const columnsBeforePlanta = activeColumns.filter((col) => col.key !== "floorPlan")
+  const plantaColumn = activeColumns.filter((col) => col.key === "floorPlan")
+  const displayColumns: Array<{ type: "default"; key: string } | { type: "custom"; id: string; columnKey: string; label_pt: string }> = [
+    ...columnsBeforePlanta.map((col) => ({ type: "default" as const, key: col.key })),
+    ...customColumns.map((col) => ({ type: "custom" as const, id: col.id, columnKey: col.columnKey, label_pt: col.label_pt })),
+    ...plantaColumn.map((col) => ({ type: "default" as const, key: col.key })),
+  ]
 
   const renderCell = (key: string, fraction: PropertyFraction) => {
     switch (key) {
@@ -195,64 +225,137 @@ export default function PropertyFractionsSection({
           : ""
     )
 
+  const getHeadDisplayLabel = (key: string) => {
+    if (key === "parkingSpaces") return "Garagem"
+    if (key === "privateGrossArea") return "Área Bru."
+    if (key === "outdoorArea") return "Área Ext."
+    return DEFAULT_COLUMNS.find((c) => c.key === key)?.label ?? key
+  }
+
+  const MIN_CONTENT_COLUMN_KEYS = ["floor", "unit"]
+  const MIN_WIDTH_COLUMN_KEYS = [
+    "fractionType",
+    "grossArea",
+    "privateGrossArea",
+    "outdoorArea",
+    "parkingSpaces",
+    "reservationStatus",
+    "floorPlan",
+  ]
+  const getColGridSize = (key: string) => {
+    if (MIN_CONTENT_COLUMN_KEYS.includes(key)) return "minmax(3.5rem, min-content)"
+    if (MIN_WIDTH_COLUMN_KEYS.includes(key)) return "minmax(min-content, 0.4fr)"
+    return "minmax(0, 1fr)"
+  }
+  const gridCols = displayColumns
+    .map((col) => (col.type === "default" ? getColGridSize(col.key) : "minmax(0, 1fr)"))
+    .join(" ")
+
+  const callNowButton = (
+    <a
+      href={`tel:${PHONE_NUMBER}`}
+      className="inline-flex items-center justify-center gap-1.5 h-9 px-4 text-sm font-medium bg-gold text-white hover:bg-gold-muted transition-colors shrink-0"
+      aria-label={callNowLabel}
+    >
+      <Phone className="h-4 w-4 shrink-0" />
+      <span>{callNowLabel}</span>
+    </a>
+  )
+
   return (
     <section className="container py-8 border-t border-brown/10">
-      <div className="mb-6">
-        <h2 className="heading-quatro-medium text-brown">{title}</h2>
-        <p className="body-14-regular text-brown/70 mt-1">{description}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+          <h2 className="heading-quatro-medium text-brown">{title}</h2>
+          <p className="body-14-regular text-brown/70 mt-1 text-pretty">{description}</p>
+        </div>
+        {callNowButton}
       </div>
-      <div className="border border-brown/10 rounded-lg overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-        <Table className="min-w-max [&_th]:whitespace-nowrap [&_td]:whitespace-nowrap">
-          <TableHeader>
-            <TableRow className="border-brown/10 bg-brown/5">
-              {activeColumns.map((col) => (
-                <TableHead key={col.key} className={getHeadClassName(col.key)}>
-                  {col.key === "parkingSpaces" ? (
-                    <>
-                      <span className="md:hidden">Garagem</span>
-                      <span className="hidden md:inline">Lugares de Garagem</span>
-                    </>
-                  ) : (
-                    col.label
-                  )}
-                </TableHead>
-              ))}
-              {customColumns.map((col) => (
-                <TableHead key={col.id} className="text-brown body-14-medium">
+
+      {/* Tabela: scroll horizontal quando necessário */}
+      {hasHorizontalOverflow && (
+        <p className="body-14-regular text-brown/70 mb-2">
+          Faça scroll na horizontal para ver o resto da tabela
+        </p>
+      )}
+      <div ref={scrollRef} className="w-full overflow-x-auto">
+        <div
+          className="min-w-max grid"
+          style={{ gridTemplateColumns: gridCols }}
+          onMouseLeave={() => setHoveredRowIndex(null)}
+        >
+          {/* Header (th) */}
+          {displayColumns.map((col) =>
+            col.type === "default" ? (
+              <div
+                key={`head-${col.key}`}
+                className={cn(
+                  "h-12 px-4 flex items-center text-brown body-14-medium min-w-0 border-b border-brown/20 bg-brown/5",
+                  getHeadClassName(col.key)
+                )}
+              >
+                <span className="block min-w-0 whitespace-nowrap">
+                  {getHeadDisplayLabel(col.key)}
+                </span>
+              </div>
+            ) : (
+              <div
+                key={`head-${col.id}`}
+                className="h-12 px-4 flex items-center text-brown body-14-medium min-w-0 border-b border-brown/20 bg-brown/5"
+              >
+                <span className="block min-w-0 whitespace-nowrap">
                   {col.label_pt}
-                </TableHead>
-              ))}
-              <TableHead className="text-center text-brown body-14-medium">
-                {callNowLabel}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {fractions.map((fraction) => (
-              <TableRow key={fraction.id} className="border-brown/10">
-                {activeColumns.map((col) => (
-                  <TableCell key={col.key} className={getCellClassName(col.key)}>
-                    {renderCell(col.key, fraction)}
-                  </TableCell>
-                ))}
-                {customColumns.map((col) => (
-                  <TableCell key={col.id} className="body-14-regular text-brown">
-                    {fraction.customData?.[col.columnKey] ?? "-"}
-                  </TableCell>
-                ))}
-                <TableCell className="text-center whitespace-nowrap">
-                  <a
-                    href={`tel:${PHONE_NUMBER}`}
-                    className="inline-flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium bg-gold text-white hover:bg-gold-muted transition-colors whitespace-nowrap shrink-0"
-                  >
-                    <Phone className="h-3.5 w-3.5 shrink-0" />
-                    <span className="shrink-0">{callNowLabel}</span>
-                  </a>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                </span>
+              </div>
+            )
+          )}
+          {/* Body (td) */}
+          {fractions.map((fraction, rowIndex) => {
+            const isLastRow = rowIndex === fractions.length - 1
+            return (
+              <Fragment key={fraction.id}>
+                {displayColumns.map((col) => {
+                  if (col.type === "default") {
+                    const cellContent = renderCell(col.key, fraction)
+                    return (
+                      <div
+                        key={`${fraction.id}-${col.key}`}
+                        className={cn(
+                          "p-4 flex items-center body-14-regular text-brown min-w-0 overflow-hidden border-b border-brown/20 transition-colors",
+                          hoveredRowIndex === rowIndex && "bg-brown/5",
+                          isLastRow && "border-b-0",
+                          getCellClassName(col.key)
+                        )}
+                        onMouseEnter={() => setHoveredRowIndex(rowIndex)}
+                      >
+                        {typeof cellContent === "string" ? (
+                          <span className="block min-w-0 whitespace-nowrap">{cellContent}</span>
+                        ) : (
+                          cellContent
+                        )}
+                      </div>
+                    )
+                  }
+                  return (
+                    <div
+                      key={`${fraction.id}-${col.id}`}
+                      className={cn(
+                        "p-4 flex items-center body-14-regular text-brown min-w-0 overflow-hidden border-b border-brown/20 transition-colors",
+                        hoveredRowIndex === rowIndex && "bg-brown/5",
+                        isLastRow && "border-b-0"
+                      )}
+                      onMouseEnter={() => setHoveredRowIndex(rowIndex)}
+                    >
+                      <span className="block min-w-0 whitespace-nowrap">
+                        {fraction.customData?.[col.columnKey] ?? "-"}
+                      </span>
+                    </div>
+                  )
+                })}
+              </Fragment>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
