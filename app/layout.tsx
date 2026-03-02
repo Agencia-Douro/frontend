@@ -24,6 +24,16 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
+        {/* Consentmanager CMP */}
+        <Script
+          id="consentmanager"
+          src="https://cdn.consentmanager.net/delivery/autoblocking/59253cc252fe5.js"
+          data-cmp-ab="1"
+          data-cmp-host="a.delivery.consentmanager.net"
+          data-cmp-cdn="cdn.consentmanager.net"
+          data-cmp-codesrc="16"
+          strategy="beforeInteractive"
+        />
       </head>
       <body className="antialiased bg-muted isolate">
         {children}
