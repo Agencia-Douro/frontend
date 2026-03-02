@@ -25,22 +25,23 @@ export default function RootLayout({
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
       </head>
-      <body className="antialiased bg-muted isolate">{children}</body>
-
-      {/* Google tag (gtag.js) — GA4 + Google Ads */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
-        strategy="afterInteractive"
-      />
-      <Script id="google-tags" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-S2LLVJRF5Y');
-          gtag('config', 'AW-17325904134');
-        `}
-      </Script>
+      <body className="antialiased bg-muted isolate">
+        {children}
+        {/* Google tag (gtag.js) — GA4 + Google Ads */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tags" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-S2LLVJRF5Y');
+            gtag('config', 'AW-17325904134');
+          `}
+        </Script>
+      </body>
     </html>
   )
 }
