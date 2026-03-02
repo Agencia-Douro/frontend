@@ -237,7 +237,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                             </svg>{t("back")}
                         </button>
                         <div className="hidden md:block w-px h-3 bg-brown/20"></div>
-                        <div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto">
+                        <div className="flex flex-wrap items-center gap-x-0.5 gap-y-1">
                             <p className="body-16-medium text-brown capitalize whitespace-nowrap">{transactionTypeMap[property.transactionType] || property.transactionType}</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
@@ -371,7 +371,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                     );
                 })()}
                 <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 min-w-0">
-                    <div className="flex items-center gap-4 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto overflow-auto remove-scrollbar">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto">
                         <span className="whitespace-nowrap">{property.concelho}, {property.distrito}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
                         <span className="capitalize whitespace-nowrap">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</span>
