@@ -27,7 +27,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-muted isolate">
         {children}
-        {/* Google tag (gtag.js) — GA4 + Google Ads */}
+        {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
           strategy="afterInteractive"
@@ -38,7 +38,6 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-S2LLVJRF5Y');
-            gtag('config', 'AW-17325904134');
           `}
         </Script>
       </body>
