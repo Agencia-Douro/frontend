@@ -27,6 +27,17 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-muted isolate">
         {children}
+        {/* Google Consent Mode v2 */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              'analytics_storage': 'granted',
+              'ad_storage': 'denied'
+            });
+          `}
+        </Script>
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
