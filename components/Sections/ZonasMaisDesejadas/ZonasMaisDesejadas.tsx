@@ -104,7 +104,7 @@ export default function ZonasMaisDesejadas() {
                                 <div className="md:translate-y-16 md:group-hover:translate-y-0 flex items-end h-full justify-between p-4 transition-all duration-150 ease-out">
                                     <p className="text-white body-20-medium">{zona.name}</p>
                                     <Button variant="gold" asChild className="w-min">
-                                        <Link href={`/imoveis?distrito=${zona.name}`}>{t("viewAll")}</Link>
+                                        <Link href={`/imoveis?${effectiveCountryCode !== "PT" ? "city" : "distrito"}=${zona.name}`}>{t("viewAll")}</Link>
                                     </Button>
                                 </div>
                             </div>

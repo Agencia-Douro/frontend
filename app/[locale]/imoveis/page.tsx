@@ -37,6 +37,8 @@ function ImoveisContent() {
         country: searchParams.get("country") || undefined,
         distrito: searchParams.get("distrito") || undefined,
         concelho: searchParams.get("concelho") || undefined,
+        city: searchParams.get("city") || undefined,
+        region: searchParams.get("region") || undefined,
         minPrice: searchParams.get("minPrice")
             ? Number(searchParams.get("minPrice"))
             : undefined,
