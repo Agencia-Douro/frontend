@@ -176,7 +176,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                                 ) : (
                                                     <Image
                                                         src={property.image}
-                                                        alt={`${t("propertyIn")} ${property.concelho}`}
+                                                        alt={`${t("propertyIn")} ${property.country && property.country !== "PT" ? property.city : property.concelho}`}
                                                         fill
                                                         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                                                         className="object-cover" />
@@ -188,7 +188,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                         </div>
                                         <div className="flex flex-col gap-2 py-3 px-4">
                                             <div className="flex justify-between text-black body-18-medium">
-                                                <p>{property.concelho}</p>
+                                                <p>{property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : property.concelho}</p>
                                                 <p>{formatPrice(property.price)}</p>
                                             </div>
                                             <div className="grid grid-cols-2 gap-2.5">

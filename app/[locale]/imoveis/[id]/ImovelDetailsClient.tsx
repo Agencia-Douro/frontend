@@ -184,7 +184,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
             // Adicionar informações do imóvel à mensagem
             const localeMap: Record<string, string> = { pt: "pt-PT", en: "en-GB", fr: "fr-FR" }
             const numLocale = localeMap[locale] || "pt-PT"
-            const propertyInfo = `\n\n--- ${t("propertyInfoHeader")} ---\n${t("propertyInfoReference")}: ${property.reference || property.id}\n${t("propertyInfoType")}: ${property.propertyType}\n${t("propertyInfoLocation")}: ${property.concelho}, ${property.distrito}\n${t("propertyInfoPrice")}: ${parseFloat(property.price.toString()).toLocaleString(numLocale)} €\nLink: ${window.location.href}`
+            const propertyInfo = `\n\n--- ${t("propertyInfoHeader")} ---\n${t("propertyInfoReference")}: ${property.reference || property.id}\n${t("propertyInfoType")}: ${property.propertyType}\n${t("propertyInfoLocation")}: ${property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}\n${t("propertyInfoPrice")}: ${parseFloat(property.price.toString()).toLocaleString(numLocale)} €\nLink: ${window.location.href}`
 
             await contactApi.send({
                 ...formData,
@@ -246,7 +246,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brown/20 shrink-0">
                                 <path d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z" fill="currentColor" />
                             </svg>
-                            <p className="body-16-medium text-brown whitespace-nowrap">{property.distrito}</p>
+                            <p className="body-16-medium text-brown whitespace-nowrap">{property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}</p>
                         </div>
                     </div>
                     <ImagensImoveis
@@ -372,7 +372,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                 })()}
                 <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 min-w-0">
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto">
-                        <span className="whitespace-nowrap">{property.concelho}, {property.distrito}</span>
+                        <span className="whitespace-nowrap">{property.country && property.country !== "PT" ? `${property.city}, ${property.region}`: `${property.concelho}, ${property.distrito}`}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
                         <span className="capitalize whitespace-nowrap">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>

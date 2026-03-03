@@ -272,7 +272,7 @@ export default function EditNewsletterPage() {
                           <div className="p-3">
                             <p className="body-16-medium text-black line-clamp-1">{property.title}</p>
                             <p className="body-14-medium text-grey mt-1">
-                              {property.concelho}, {property.distrito}
+                              {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                             </p>
                             <p className="body-20-medium text-black mt-2">
                               {new Intl.NumberFormat('pt-PT', {

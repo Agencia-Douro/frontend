@@ -77,7 +77,7 @@ export default function ImoveisRelacionados({ currentPropertyId, currentPrice, p
                         key={property.id}
                         href={`/imoveis/${property.id}`}
                         titulo={property.title}
-                        localizacao={`${property.concelho}, ${property.distrito}`}
+                        localizacao={property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                         preco={property.price.toString()}
                         image={property.image}
                         status={property.status}

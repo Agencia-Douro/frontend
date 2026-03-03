@@ -245,7 +245,7 @@ export function PropertyRelationships({
                   <div className="mt-2">
                     <p className="body-14-medium text-black line-clamp-1">{property.title}</p>
                     <p className="text-xs text-gray-500 mt-1">
-                      {property.concelho}, {property.distrito}
+                      {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                     </p>
                     <p className="body-16-medium text-black mt-1">
                       {formatPriceNumber(property.price)}
@@ -309,7 +309,7 @@ export function PropertyRelationships({
                         <div className="mt-2">
                           <p className="body-14-medium text-black line-clamp-1">{property.title}</p>
                           <p className="text-xs text-gray-500 mt-1">
-                            {property.concelho}, {property.distrito}
+                            {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                           </p>
                           <p className="body-16-medium text-black mt-1">
                             {formatPriceNumber(property.price)}
@@ -461,7 +461,7 @@ export function PropertyRelationships({
                         <div className="mt-2 px-1">
                           <p className="body-16-medium text-black line-clamp-1">{property.title}</p>
                           <p className="body-14-medium text-grey mt-1">
-                            {property.concelho}, {property.distrito}
+                            {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                           </p>
                         </div>
                         <p className="body-20-medium text-black mt-2 px-1">

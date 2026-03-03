@@ -168,7 +168,7 @@ function ImoveisContent() {
                                                     image={property.image}
                                                     href={`/imoveis/${property.id}`}
                                                     titulo={property.title}
-                                                    localizacao={`${property.concelho}, ${property.distrito}`}
+                                                    localizacao={property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
                                                     preco={property.price}
                                                     status={property.status}
                                                 />))}
