@@ -483,7 +483,9 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                             <iframe
                                 className="hidden lg:block mt-6 h-75 border-0"
                                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                    `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
+                                    property.country && property.country !== "PT"
+                                        ? `${property.city}, ${property.region}, ${property.country}`
+                                        : `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
                                 )}`}
                                 width="100%"
                                 allowFullScreen
@@ -606,7 +608,9 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                 <iframe
                                     className="my-6 h-75 border-0"
                                     src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                        `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
+                                        property.country && property.country !== "PT"
+                                        ? `${property.city}, ${property.region}, ${property.country}`
+                                        : `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
                                     )}`}
                                     width="100%"
                                     allowFullScreen
