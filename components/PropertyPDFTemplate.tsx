@@ -64,7 +64,7 @@ export default function PropertyPDFTemplate({ property }: PropertyPDFTemplatePro
               {parseFloat(property.price.toString()).toLocaleString('pt-PT')} €
             </h2>
             <span className="text-sm text-brown/60">
-              {transactionTypeMap[property.transactionType]} • {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`} • #{property.reference}
+              {transactionTypeMap[property.transactionType]} • {property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`} • #{property.reference}
             </span>
           </div>
         </div>

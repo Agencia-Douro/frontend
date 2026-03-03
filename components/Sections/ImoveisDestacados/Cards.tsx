@@ -188,7 +188,7 @@ export default function Cards({ properties, className }: CardsProps) {
                                         </div>
                                         <div className="flex flex-col gap-2 py-3 px-4">
                                             <div className="flex justify-between text-black body-18-medium">
-                                                <p>{property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : property.concelho}</p>
+                                                <p>{property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : property.concelho}</p>
                                                 <p>{formatPrice(property.price)}</p>
                                             </div>
                                             <div className="grid grid-cols-2 gap-2.5">

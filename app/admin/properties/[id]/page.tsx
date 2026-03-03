@@ -273,7 +273,7 @@ export default function PropertyDetailsPage() {
                     {/* Informações do imóvel */}
                     <div className="pt-4 flex justify-between items-center">
                         <div className="flex items-center gap-4 body-16-medium text-brown">
-                            <span>{property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}</span>
+                            <span>{property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}</span>
                             <div className="h-3 w-px bg-brown/30"></div>
                             <span className="capitalize">{property.propertyType}</span>
                             <div className="h-3 w-px bg-brown/30"></div>
@@ -340,7 +340,7 @@ export default function PropertyDetailsPage() {
                             <iframe
                                 className="mt-6 h-75 border-0"
                                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
-                                    property.country && property.country !== "PT" ? `${property.city}, ${property.region}, ${property.country}` : `${property.concelho}, ${property.distrito}, Portugal`
+                                    property.country && property.country !== "PT" ? `${property.region}, ${property.city}, ${property.country}` : `${property.concelho}, ${property.distrito}, Portugal`
                                 )}`}
                                 width="100%"
                                 allowFullScreen

@@ -317,7 +317,7 @@ export function Hero() {
                                 <div className="flex-1 min-w-0 py-0.5">
                                   <h4 className="body-14-medium text-black truncate group-hover:text-brown transition-colors">{property.title}</h4>
                                   <p className="text-xs text-grey truncate mt-0.5">
-                                    {property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
+                                    {property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}
                                   </p>
                                   <div className="flex items-center gap-2 mt-2">
                                     <span className="body-14-medium text-gold">

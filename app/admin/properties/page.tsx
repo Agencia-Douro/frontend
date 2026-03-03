@@ -419,7 +419,7 @@ export default function PropertiesPage() {
           <ImovelCard
             href={`properties/${property.id}`}
             image={property.image}
-            localizacao={property.country && property.country !== "PT" ? `${property.city}, ${property.region}` : `${property.concelho}, ${property.distrito}`}
+            localizacao={property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}
             preco={property.price}
             titulo={property.title}
             status={property.status}
