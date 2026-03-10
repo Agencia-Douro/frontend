@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 interface ContactData {
   email: string;
@@ -18,7 +19,7 @@ interface HubSpotContact {
 
 async function searchContactByEmail(
   email: string,
-  token: string
+  token: string,
 ): Promise<HubSpotContact | null> {
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
@@ -42,7 +43,7 @@ async function searchContactByEmail(
         ],
         properties: ["email", "firstname", "phone", "message"],
       }),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -55,7 +56,7 @@ async function searchContactByEmail(
 
 async function createContact(
   contactData: ContactData,
-  token: string
+  token: string,
 ): Promise<Response> {
   const { email, nome, telefone, mensagem, aceitaMarketing } = contactData;
   const timestamp = new Date().toLocaleString("pt-PT");
@@ -82,7 +83,7 @@ async function updateContact(
   contactId: string,
   contactData: ContactData,
   existingMessage: string | undefined,
-  token: string
+  token: string,
 ): Promise<Response> {
   const { telefone, mensagem, aceitaMarketing } = contactData;
   const timestamp = new Date().toLocaleString("pt-PT");
@@ -118,7 +119,7 @@ export async function POST(request: NextRequest) {
     if (!email || !nome || !telefone || !mensagem) {
       return NextResponse.json(
         { error: "Todos os campos obrigatórios devem ser preenchidos" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -129,7 +130,7 @@ export async function POST(request: NextRequest) {
       console.error("HUBSPOT_API_TOKEN não configurado");
       return NextResponse.json(
         { error: "Configuração do servidor incompleta" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -144,13 +145,13 @@ export async function POST(request: NextRequest) {
         existingContact.id,
         { email, nome, telefone, mensagem, aceitaMarketing },
         existingContact.properties.message,
-        hubspotToken
+        hubspotToken,
       );
     } else {
       // Create new contact
       response = await createContact(
         { email, nome, telefone, mensagem, aceitaMarketing },
-        hubspotToken
+        hubspotToken,
       );
     }
 
@@ -159,11 +160,46 @@ export async function POST(request: NextRequest) {
       console.error("Erro do HubSpot:", errorData);
       return NextResponse.json(
         { error: "Erro ao enviar contato" },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
     const data = await response.json();
+
+    // Enviar email de notificação
+    try {
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.EMAIL_FROM,
+          pass: process.env.EMAIL_APP_PASSWORD,
+        },
+      });
+
+      const timestamp = new Date().toLocaleString("pt-PT");
+      await transporter.sendMail({
+        from: `"Agência Douro" <${process.env.EMAIL_FROM}>`,
+        to: process.env.EMAIL_TO,
+        subject: `Novo contacto do site - ${nome}`,
+        html: `
+          <h2>Novo contacto recebido</h2>
+          <p><strong>Data:</strong> ${timestamp}</p>
+          <p><strong>Nome:</strong> ${nome}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Telefone:</strong> ${telefone}</p>
+          <p><strong>Mensagem:</strong></p>
+          <p>${mensagem.replace(/\n/g, "<br>")}</p>
+          <p><strong>Aceita marketing:</strong> ${aceitaMarketing ? "Sim" : "Não"}</p>
+          <hr>
+          <p><em>${existingContact ? "Contacto atualizado no HubSpot" : "Novo contacto criado no HubSpot"}</em></p>
+        `,
+      });
+    } catch (emailError) {
+      console.error("Erro ao enviar email:", emailError);
+      // Não falha o request se o email falhar
+    }
 
     return NextResponse.json({
       message: "Contato enviado com sucesso",
@@ -174,7 +210,7 @@ export async function POST(request: NextRequest) {
     console.error("Erro ao processar contato:", error);
     return NextResponse.json(
       { error: "Erro interno do servidor" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
