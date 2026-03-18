@@ -227,6 +227,9 @@ export const propertiesApi = {
 
     // Campos opcionais - Localização
     if (data.address) formData.append("address", data.address);
+    if (data.country) formData.append("country", data.country);
+    if (data.region) formData.append("region", data.region);
+    if (data.city) formData.append("city", data.city);
 
     // Campos opcionais - Outros
     if (data.paymentConditions)
