@@ -18,7 +18,6 @@ import { toast } from "sonner"
 import { TIPOS_IMOVEL } from "@/app/shared/distritos"
 import { contactApi } from "@/services/api"
 import { useTranslations } from "next-intl"
-import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos"
 import Image from "next/image"
@@ -248,7 +247,6 @@ ${imovelData.observacoes ? `${t("emailMessage.observations")}:\n${imovelData.obs
 
             <div className="h-16 md:h-24 lg:h-32 xl:h-40"></div>
 
-            <Footer />
         </>
     )
 } 

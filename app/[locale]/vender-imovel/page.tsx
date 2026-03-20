@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea-line"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import Footer from "@/components/Sections/Footer/Footer"
 import Folha from "@/components/Folha"
 import { contactApi, sellPropertyContentApi } from "@/services/api"
 import { ExternalLink } from "lucide-react"
@@ -313,7 +312,6 @@ export default function VenderImovelPage() {
 
             <div className="h-16 md:h-24 lg:h-32 xl:h-40"></div>
 
-            <Footer />
         </>
     )
 }

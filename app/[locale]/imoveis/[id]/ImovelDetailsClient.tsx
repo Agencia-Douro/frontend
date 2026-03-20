@@ -23,7 +23,6 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 
 const ImagensImoveis = dynamic(() => import("@/components/Sections/ImagensImoveis"), { ssr: false })
-import Footer from "@/components/Sections/Footer/Footer"
 import { useTranslations } from "next-intl"
 import { formatPriceNumber } from "@/lib/currency"
 
@@ -978,7 +977,6 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                 </DialogPortal>
             </Dialog>
 
-            <Footer />
         </>
     );
 }

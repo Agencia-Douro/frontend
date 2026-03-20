@@ -1,7 +1,6 @@
 "use client";
 
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
-import Footer from "@/components/Sections/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
 import {
     siteConfigApi,
@@ -243,7 +242,6 @@ export default function PodcastPage() {
             />
 
             <FaleConnosco />
-            <Footer />
         </>
     );
 }

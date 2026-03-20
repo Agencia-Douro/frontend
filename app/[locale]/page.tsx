@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Footer from "@/components/Sections/Footer/Footer";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
 import ImoveisDestacados from "@/components/Sections/ImoveisDestacados/ImoveisDestacados";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
@@ -45,7 +44,6 @@ export default function Home() {
       <div className="h-px w-full bg-linear-to-r from-gold/0 via-gold to-gold/0 mt-12 md:mt-8 lg:mt-12 xl:mt-16"></div>
       <Testemunhos />
       <FaleConnosco />
-      <Footer />
     </>
   );
 }

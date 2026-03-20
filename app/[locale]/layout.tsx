@@ -9,6 +9,9 @@ import { SocialMediaButtonV2 } from "@/components/SocialMediaButton/SocialMediaB
 import { notFound } from "next/navigation"
 import { routing } from "../../i18n/routing"
 import { siteConfig } from "@/lib/site"
+import { ConditionalFooter } from "@/components/ConditionalFooter"
+import { LanguagePopup } from "@/components/LanguagePopup"
+import { LanguageBannerOffsetProvider } from "@/components/LanguageBannerOffsetProvider"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -153,12 +156,16 @@ export default async function RootLayout({
       />
       <NextIntlClientProvider locale={locale} messages={messages}>
         <QueryProvider>
-          <Header />
+          <LanguageBannerOffsetProvider>
+            <LanguagePopup />
+            <Header />
+          </LanguageBannerOffsetProvider>
           <main className="w-full overflow-x-hidden">
             {children}
           </main>
           <Toaster />
           <SocialMediaButtonV2 />
+          <ConditionalFooter />
         </QueryProvider>
       </NextIntlClientProvider>
     </>

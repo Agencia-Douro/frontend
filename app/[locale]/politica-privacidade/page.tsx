@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Footer from "@/components/Sections/Footer/Footer";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -125,7 +124,6 @@ export default async function PoliticaPrivacidadePage() {
                     </div>
                 </section>
             </div>
-            <Footer />
         </>
     );
 }

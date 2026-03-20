@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
-import Footer from "@/components/Sections/Footer/Footer";
 import { ShoppingBag } from "lucide-react";
 import Testemunhos from "@/components/Sections/Testemunhos/Testemunhos";
 import { StatCard } from "@/components/Sections/SobreNos/StatCard";
@@ -393,7 +392,6 @@ export default function InstitucionalPage() {
 
             <Testemunhos />
             <FaleConnosco />
-            <Footer />
         </>
     );
 }

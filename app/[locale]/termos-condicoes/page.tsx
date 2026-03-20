@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Footer from "@/components/Sections/Footer/Footer";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,7 +14,7 @@ export default async function TermosECondicoesPage() {
     
     return (
         <>
-            <div className="bg-[#F4F0E9]">
+            <div className="bg-muted">
                 <section className="container pt-24 md:pt-28 lg:pt-32 xl:pt-40">
                     <div className="pb-6 md:pb-10 lg:pb-12 xl:pb-16">
                         <div className="lg:space-y-6 space-y-4 mb-8 md:mb-10 lg:mb-12">
@@ -100,7 +99,6 @@ export default async function TermosECondicoesPage() {
                     </div>
                 </section>
             </div>
-            <Footer />
         </>
     );
 }

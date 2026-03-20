@@ -10,9 +10,13 @@ import LanguageSwitcher from "@/components/Sections/Header/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import Logo from "@/public/Logo.png";
 import { useTranslations } from "next-intl";
+import { useLanguageBannerOffset } from "@/components/LanguageBannerOffsetProvider";
+
+const MOBILE_HEADER_BAR_PX = 64;
 
 export default function Header() {
     const pathname = usePathname();
+    const { bannerHeightPx } = useLanguageBannerOffset();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -22,9 +26,10 @@ export default function Header() {
     // Detectar scroll
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 1);
+            setIsScrolled(window.scrollY > 0.5);
         };
 
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -76,8 +81,16 @@ export default function Header() {
     const borderColor = isTransparent ? "border-[#EAE6DF] xl:border-white/20" : "border-[#EAE6DF]";
     const textColor = isTransparent ? "text-brown xl:text-white" : "text-brown";
 
+    const mobileMenuTopPx = bannerHeightPx + MOBILE_HEADER_BAR_PX;
+    const headerOffsetStyle = useSticky
+        ? { marginTop: bannerHeightPx }
+        : { top: bannerHeightPx };
+
     return (
-        <header className={`border-b ${borderColor} ${positionClass} top-0 left-0 right-0 w-full max-w-full ${headerBg} z-50 transition-all duration-300`}>
+        <header
+            style={headerOffsetStyle}
+            className={`border-b ${borderColor} ${positionClass} left-0 right-0 w-full max-w-full ${headerBg} z-50 transition-all duration-300`}
+        >
             <div className="container">
                 <div className="flex items-center xl:h-18 h-16 gap-6">
                     <div className="w-full flex flex-col justify-center">
@@ -155,7 +168,8 @@ export default function Header() {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                className="xl:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-999 top-16"
+                                className="xl:hidden fixed inset-x-0 bottom-0 bg-black/20 backdrop-blur-sm z-999"
+                                style={{ top: mobileMenuTopPx }}
                                 onClick={() => setMobileMenuOpen(false)}
                             />
                             {/* Menu */}
@@ -167,7 +181,11 @@ export default function Header() {
                                     duration: 0.6,
                                     ease: [0.25, 0.1, 0.25, 1],
                                 }}
-                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 h-[calc(100dvh-64px)] fixed top-16 bg-muted w-full left-0 z-1000 overflow-y-auto pb-24"
+                                className="xl:hidden p-4 border-t border-[#EAE6DF] flex flex-col items-start justify-between py-8 pl-6 gap-3 fixed bg-muted w-full left-0 z-1000 overflow-y-auto pb-24"
+                                style={{
+                                    top: mobileMenuTopPx,
+                                    height: `calc(100dvh - ${mobileMenuTopPx}px)`,
+                                }}
                             >
                                 <motion.div
                                     initial="closed"

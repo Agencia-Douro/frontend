@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { newslettersApi } from "@/services/api";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-import Footer from "@/components/Sections/Footer/Footer";
 import Logo from "@/public/Logo.svg";
 import Divider from "@/public/divider.png";
 import { FaleConnosco } from "@/components/Sections/FaleConnosco/FaleConnosco";
@@ -13,60 +12,60 @@ import Folha from "@/components/Folha";
 import { useTranslations } from "next-intl";
 
 export default function NewsletterDetailsPage() {
-  const t = useTranslations("NewsletterDetails");
-  const params = useParams();
-  const id = params.id as string;
+    const t = useTranslations("NewsletterDetails");
+    const params = useParams();
+    const id = params.id as string;
 
-  const { data: newsletter, isLoading, error } = useQuery({
-    queryKey: ["newsletter", id],
-    queryFn: () => newslettersApi.getById(id),
-    enabled: !!id,
-  });
+    const { data: newsletter, isLoading, error } = useQuery({
+        queryKey: ["newsletter", id],
+        queryFn: () => newslettersApi.getById(id),
+        enabled: !!id,
+    });
 
-  const getCategoryLabel = (category: string) => {
-    const categoryMap: Record<string, string> = {
-      mercado: t("categories.market"),
-      dicas: t("categories.tips"),
-      noticias: t("categories.news"),
+    const getCategoryLabel = (category: string) => {
+        const categoryMap: Record<string, string> = {
+            mercado: t("categories.market"),
+            dicas: t("categories.tips"),
+            noticias: t("categories.news"),
+        };
+        return categoryMap[category] || category;
     };
-    return categoryMap[category] || category;
-  };
 
-  if (isLoading) {
-    return (
-      <>
-        <section className="bg-deaf overflow-x-hidden">
-          <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
-            <div className="max-w-3xl mx-auto">
-              <p className="text-center text-brown">{t("loading")}</p>
-            </div>
-          </div>
-        </section>
-      </>
-    );
-  }
+    if (isLoading) {
+        return (
+            <>
+                <section className="bg-deaf overflow-x-hidden">
+                    <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
+                        <div className="max-w-3xl mx-auto">
+                            <p className="text-center text-brown">{t("loading")}</p>
+                        </div>
+                    </div>
+                </section>
+            </>
+        );
+    }
 
-  if (error || !newsletter) {
-    return (
-      <>
-        <section className="bg-deaf overflow-x-hidden">
-          <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
-            <div className="max-w-3xl mx-auto">
-              <p className="text-center text-red">{t("notFound")}</p>
-              <div className="text-center mt-6">
+    if (error || !newsletter) {
+        return (
+            <>
+                <section className="bg-deaf overflow-x-hidden">
+                    <div className="container pb-8 sm:pb-16 pt-10 sm:pt-20">
+                        <div className="max-w-3xl mx-auto">
+                            <p className="text-center text-red">{t("notFound")}</p>
+                            <div className="text-center mt-6">
                 <Link
                   href="/newsletter"
                   className="body-16-medium text-brown hover:text-gold transition-colors"
                 >
-                  {t("backToNewsletters")}
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </>
-    );
-  }
+                                    {t("backToNewsletters")}
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </>
+        );
+    }
 
   const formattedDate = new Date(newsletter.createdAt).toLocaleDateString(
     "pt-PT",
@@ -77,10 +76,10 @@ export default function NewsletterDetailsPage() {
     }
   );
 
-  return (
-    <>
-      <Folha className="top-[2000px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
-      <Folha className="top-[1900px] left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
+    return (
+        <>
+            <Folha className="top-[2000px] left-[1500px] rotate-310 opacity-30 hidden lg:block text-brown" />
+            <Folha className="top-[1900px] left-0 rotate-30 opacity-30 hidden lg:block text-brown" />
       <section className="bg-muted pt-24 relative">
         <div className="container">
         {/* Breadcrumb */}
@@ -104,7 +103,7 @@ export default function NewsletterDetailsPage() {
               d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z"
               fill="currentColor"
             />
-          </svg>
+                    </svg>
           <span className="body-16-medium text-brown uppercase">
             {getCategoryLabel(newsletter.category)}
           </span>
@@ -121,7 +120,7 @@ export default function NewsletterDetailsPage() {
               d="M10 10L7.5 7.5L8.75003 6.25L12.5 10L8.75003 13.75L7.5 12.5L10 10Z"
               fill="currentColor"
             />
-          </svg>
+                    </svg>
           <span className="body-16-medium text-brown">
             {newsletter.title}
           </span>
@@ -133,20 +132,20 @@ export default function NewsletterDetailsPage() {
         </h1>
 
         {/* Imagem a ocupar a largura total do container */}
-        {newsletter.coverImage && (
+                    {newsletter.coverImage && (
           <div className="w-full mt-10 overflow-hidden border-0">
             <div className="relative w-full aspect-video min-h-[200px] md:min-h-[320px] border-0">
-              <Image
-                src={newsletter.coverImage}
-                alt={newsletter.title}
-                fill
+                                <Image
+                                    src={newsletter.coverImage}
+                                    alt={newsletter.title}
+                                    fill
                 sizes="(max-width: 1312px) 100vw, 1312px"
                 className="object-cover border-0"
                 priority
-              />
-            </div>
-          </div>
-        )}
+                                />
+                            </div>
+                        </div>
+                    )}
 
         {/* Row: Publicado a / Tempo de leitura (16px) | Socials sem WhatsApp (justify-between) */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10">
@@ -193,17 +192,17 @@ export default function NewsletterDetailsPage() {
               </svg>
             </a>
           </div>
-        </div>
+                    </div>
 
         {/* Texto da newsletter */}
         <article className="mt-12 md:mb-5 mb-10">
-          <div
+                        <div
             className="tiptap-newsletter max-w-none text-pretty"
-            dangerouslySetInnerHTML={{ __html: newsletter.content }}
-          />
-        </article>
-      </div>
-      </section>
+                            dangerouslySetInnerHTML={{ __html: newsletter.content }}
+                        />
+                    </article>
+                </div>
+            </section>
       <Image
         src={Divider}
         alt=""
@@ -211,56 +210,55 @@ export default function NewsletterDetailsPage() {
         height={32}
         className="w-full h-auto mt-4"
       />
-      {newsletter.properties && newsletter.properties.length > 0 && (
-        <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center container">
-          <Image
-            className="mb-6 lg:mb-8 h-16 w-auto"
-            src={Logo}
-            alt={t("logoAlt")}
-            width={213}
-            height={96}
-            sizes="213px"
-          />
+            {newsletter.properties && newsletter.properties.length > 0 && (
+                <div className="mt-8 sm:mt-16 mb-8 sm:mb-16 flex flex-col items-center container">
+                    <Image
+                        className="mb-6 lg:mb-8 h-16 w-auto"
+                        src={Logo}
+                        alt={t("logoAlt")}
+                        width={213}
+                        height={96}
+                        sizes="213px"
+                    />
           <h2 className="heading-tres-regular text mb-5 sm:mb-10">
             {t("relatedProperties")}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-            {newsletter.properties.map((property) => (
-              <Link
-                key={property.id}
-                href={`/imoveis/${property.id}`}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                        {newsletter.properties.map((property) => (
+                            <Link
+                                key={property.id}
+                                href={`/imoveis/${property.id}`}
                 className="w-full"
               >
-                <div className="relative w-full h-48 sm:h-56 md:h-64">
-                  <Image
-                    src={property.image}
-                    alt={property.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <p className="body-16-medium text-black">{property.title}</p>
+                                <div className="relative w-full h-48 sm:h-56 md:h-64">
+                                    <Image
+                                        src={property.image}
+                                        alt={property.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="p-4">
+                                    <p className="body-16-medium text-black">{property.title}</p>
                   <p className="body-14-medium text-grey mt-1">
                     {property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}
                   </p>
-                  <p className="body-20-medium text-black mt-2">
+                                    <p className="body-20-medium text-black mt-2">
                     {new Intl.NumberFormat("pt-PT", {
                       style: "currency",
                       currency: "EUR",
                       minimumFractionDigits: 0,
-                    }).format(parseFloat(property.price))}
-                  </p>
+                                        }).format(parseFloat(property.price))}
+                                    </p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-      <Image src={Divider} alt="" width={1000} height={32} className="w-full h-auto" />
-      <FaleConnosco />
-      <Footer />
-    </>
-  );
+            )}
+            <Image src={Divider} alt="" width={1000} height={32} className="w-full h-auto" />
+            <FaleConnosco />
+        </>
+    );
 }
