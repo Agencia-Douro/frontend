@@ -23,6 +23,8 @@ import PropertyPDFTemplate from "@/components/PropertyPDFTemplate"
 import Image from "next/image"
 
 const ImagensImoveis = dynamic(() => import("@/components/Sections/ImagensImoveis"), { ssr: false })
+import Lightbox from "yet-another-react-lightbox"
+import VideoPlugin from "yet-another-react-lightbox/plugins/video"
 import { useTranslations } from "next-intl"
 import { formatPriceNumber } from "@/lib/currency"
 
@@ -88,6 +90,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
     const [showShareModal, setShowShareModal] = useState(false)
     const [lightboxOpen, setLightboxOpen] = useState(false)
     const [lightboxIndex, setLightboxIndex] = useState(0)
+    const [videoLightboxOpen, setVideoLightboxOpen] = useState(false)
     const pdfRef = useRef(null)
     const router = useRouter()
 
@@ -371,7 +374,7 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                 })()}
                 <div className="pt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 min-w-0">
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 body-16-medium text-brown justify-between md:justify-start w-full md:w-auto">
-                        <span className="whitespace-nowrap">{property.country && property.country !== "PT" ? `${property.region}, ${property.city}`: `${property.concelho}, ${property.distrito}`}</span>
+                        <span className="whitespace-nowrap">{property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
                         <span className="capitalize whitespace-nowrap">{propertyTypeMap[property.propertyType.toLowerCase()] || property.propertyType}</span>
                         <div className="block h-3 w-px bg-brown/30"></div>
@@ -608,8 +611,8 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                     className="my-6 h-75 border-0"
                                     src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(
                                         property.country && property.country !== "PT"
-                                        ? `${property.city}, ${property.region}, ${property.country}`
-                                        : `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
+                                            ? `${property.city}, ${property.region}, ${property.country}`
+                                            : `${property.freguesia}, ${property.concelho}, ${property.distrito}, Portugal`
                                     )}`}
                                     width="100%"
                                     allowFullScreen
@@ -671,6 +674,49 @@ export default function ImovelDetailsClient({ initialProperty }: ImovelDetailsCl
                                 </Button>
                             </div>
                         )}
+                        {(() => {
+                            console.log('[Videos Debug] property.image:', property.image)
+                            console.log('[Videos Debug] isVideoUrl(property.image):', property.image ? isVideoUrl(property.image) : 'no image')
+                            console.log('[Videos Debug] property.imageSections:', property.imageSections)
+                            const allSectionImages = property.imageSections?.flatMap(s => s.images) || []
+                            console.log('[Videos Debug] all section images:', allSectionImages)
+                            console.log('[Videos Debug] section images isVideoUrl check:', allSectionImages.map(src => ({ src, isVideo: isVideoUrl(src) })))
+
+                            const videoSlides = [
+                                ...(property.image && isVideoUrl(property.image) ? [{ type: 'video' as const, sources: [{ src: property.image, type: 'video/mp4' }] }] : []),
+                                ...(property.imageSections?.flatMap(section =>
+                                    section.images.filter(src => isVideoUrl(src)).map(src => ({
+                                        type: 'video' as const,
+                                        sources: [{ src, type: 'video/mp4' }]
+                                    }))
+                                ) || [])
+                            ]
+                            console.log('[Videos Debug] videoSlides:', videoSlides)
+                            return videoSlides.length > 0 ? (
+                                <>
+                                    <div className="flex items-center justify-between py-4 border-b border-brown/10">
+                                        <p className="body-16-medium text-brown">{t("videos")}</p>
+                                        <Button
+                                            variant="gold"
+                                            size="default"
+                                            onClick={() => setVideoLightboxOpen(true)}
+                                        >
+                                            {t("view")}
+                                        </Button>
+                                    </div>
+                                    <Lightbox
+                                        open={videoLightboxOpen}
+                                        close={() => setVideoLightboxOpen(false)}
+                                        slides={videoSlides}
+                                        plugins={[VideoPlugin]}
+                                        styles={{
+                                            root: { "--yarl__color_backdrop": "rgba(0, 0, 0, 0.2)" },
+                                            slide: { padding: "80px 20px" }
+                                        }}
+                                    />
+                                </>
+                            ) : null
+                        })()}
                         {property.files && property.files.filter((f: { isVisible: boolean }) => f.isVisible).length > 0 && (
                             <div className="flex items-center justify-between py-4 border-b border-brown/10">
                                 <p className="body-16-medium text-brown">{t("files")}</p>
