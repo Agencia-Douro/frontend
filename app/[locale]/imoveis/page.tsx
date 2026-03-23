@@ -52,7 +52,7 @@ function ImoveisContent() {
         energyClass: searchParams.get("energyClass") || undefined,
         page: searchParams.get("page") ? Number(searchParams.get("page")) : 1,
         limit: 15,
-        sortBy: searchParams.get("sortBy") || "-createdAt",
+        sortBy: searchParams.get("sortBy") || "price",
         lang: locale,
     };
 
@@ -97,7 +97,7 @@ function ImoveisContent() {
             "maior-preco": "-price",
         };
 
-        params.set("sortBy", sortMap[value] || "-createdAt");
+        params.set("sortBy", sortMap[value] || "price");
         params.delete("page"); // Reset para página 1 ao mudar ordenação
         router.push(`/${locale}/imoveis?${params.toString()}`);
     };
@@ -126,7 +126,7 @@ function ImoveisContent() {
                                 {t("filter")}
                             </button>
                             <Label htmlFor="sortBy" className="body-14-medium text-grey whitespace-nowrap">{t("sortBy")}</Label>
-                            <Select value={getSortLabel(filters.sortBy || "-createdAt")} onValueChange={handleSortChange}>
+                            <Select value={getSortLabel(filters.sortBy || "price")} onValueChange={handleSortChange}>
                                 <SelectTrigger id="sortBy" name="sortBy">
                                     <SelectValue placeholder={t("sortOptions.mostRecent")} />
                                 </SelectTrigger>

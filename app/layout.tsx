@@ -25,7 +25,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
         {/* Consentmanager CMP */}
-        <Script
+        {/* <Script
           id="consentmanager"
           src="https://cdn.consentmanager.net/delivery/autoblocking/59253cc252fe5.js"
           data-cmp-ab="1"
@@ -33,12 +33,12 @@ export default function RootLayout({
           data-cmp-cdn="cdn.consentmanager.net"
           data-cmp-codesrc="16"
           strategy="beforeInteractive"
-        />
+        /> */}
       </head>
       <body className="antialiased bg-muted isolate">
         {children}
         {/* Google Consent Mode v2 */}
-        <Script id="consent-default" strategy="beforeInteractive">
+        {/* <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -47,9 +47,9 @@ export default function RootLayout({
               'ad_storage': 'denied'
             });
           `}
-        </Script>
+        </Script> */}
         {/* Google tag (gtag.js) */}
-        <Script
+        {/* <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-S2LLVJRF5Y"
           strategy="afterInteractive"
         />
@@ -61,7 +61,7 @@ export default function RootLayout({
             gtag('config', 'G-S2LLVJRF5Y');
             gtag('config', 'AW-17325904134');
           `}
-        </Script>
+        </Script> */}
       </body>
     </html>
   )
