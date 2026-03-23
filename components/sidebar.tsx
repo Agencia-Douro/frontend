@@ -9,7 +9,7 @@ import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
 import { Button } from "./ui/button"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, TIPOS_IMOVEL } from "@/app/shared/distritos"
-import { COUNTRIES } from "@/app/shared/countries"
+import { useCountryConfigs, getCountryFlag } from "@/hooks/useCountryConfigs"
 import { useTranslations } from "next-intl"
 
 interface SidebarProps {
@@ -21,6 +21,7 @@ interface SidebarProps {
 export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose }: SidebarProps) {
     const t = useTranslations("Sidebar");
     const tPropertyTypes = useTranslations("PropertyTypes");
+    const { data: countries = [] } = useCountryConfigs()
     const router = useRouter()
     const searchParams = useSearchParams()
     // Determine initial selection based on URL params
@@ -430,9 +431,9 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                 <SelectValue placeholder={t("selectCountry")} />
                                             </SelectTrigger>
                                             <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                {COUNTRIES.map((c) => (
+                                                {countries.map((c) => (
                                                     <SelectItem key={c.code} value={c.code}>
-                                                        {c.name}
+                                                        {c.label}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -849,9 +850,9 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
                                                     <SelectValue placeholder={t("selectCountry")} />
                                                 </SelectTrigger>
                                                 <SelectContent className="[&>div]:flex [&>div]:flex-col gap-1">
-                                                    {COUNTRIES.map((c) => (
+                                                    {countries.map((c) => (
                                                         <SelectItem key={c.code} value={c.code}>
-                                                            {c.flag} {c.name}
+                                                            {getCountryFlag(c.code)} {c.label}
                                                         </SelectItem>
                                                     ))}
                                                 </SelectContent>

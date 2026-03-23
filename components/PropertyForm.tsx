@@ -13,7 +13,7 @@ import { Property, PropertyImageSection } from "@/types/property"
 import { imageSectionsApi, teamMembersApi, TeamMember } from "@/services/api"
 import { toast } from "sonner"
 import { DISTRITOS, DISTRITO_MUNICIPIOS, MUNICIPIO_FREGUESIAS, TIPOS_IMOVEL } from "@/app/shared/distritos"
-import { COUNTRIES } from "@/app/shared/countries"
+import { useCountryConfigs } from "@/hooks/useCountryConfigs"
 import CurrencyInput from "react-currency-input-field"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
@@ -62,6 +62,7 @@ export default function PropertyForm({
   onSuccess,
 }: PropertyFormProps) {
   const isEditMode = !!initialData
+  const { data: countries = [] } = useCountryConfigs()
 
   const [formData, setFormData] = useState(
     initialData || {
@@ -1051,9 +1052,9 @@ export default function PropertyForm({
                     <SelectValue placeholder="Selecione o país" />
                   </SelectTrigger>
                   <SelectContent>
-                    {COUNTRIES.map((c) => (
+                    {countries.map((c) => (
                       <SelectItem key={c.code} value={c.code}>
-                        {c.name}
+                        {c.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
