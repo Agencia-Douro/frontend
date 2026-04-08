@@ -15,11 +15,12 @@ export default function LoginPage() {
   const { login } = useAuth()
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
 
-    if (login(email, password)) {
+    const ok = await login(email, password)
+    if (ok) {
       router.push("/admin/properties")
     } else {
       setError("Email ou senha inválidos")

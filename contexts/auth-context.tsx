@@ -1,67 +1,73 @@
 "use client"
 
-import { createContext, useContext, useSyncExternalStore } from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 
 interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
-  login: (email: string, password: string) => boolean
-  logout: () => void
+  login: (email: string, password: string) => Promise<boolean>
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD
-const AUTH_STORAGE_KEY = process.env.NEXT_PUBLIC_ADMIN_AUTH_STORAGE_KEY
-const AUTH_EVENT_NAME = "admin-auth-change"
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const isAuthenticated = useSyncExternalStore(
-    (onStoreChange) => {
-      if (typeof window === "undefined") return () => {}
-
-      const handler = () => onStoreChange()
-      window.addEventListener("storage", handler)
-      window.addEventListener(AUTH_EVENT_NAME, handler)
-      return () => {
-        window.removeEventListener("storage", handler)
-        window.removeEventListener(AUTH_EVENT_NAME, handler)
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch("/internal-api/admin/me", { method: "GET" })
+        if (!res.ok) throw new Error("Not authenticated")
+        const data: { isAuthenticated: boolean } = await res.json()
+        if (!cancelled) setIsAuthenticated(!!data.isAuthenticated)
+      } catch {
+        if (!cancelled) setIsAuthenticated(false)
+      } finally {
+        if (!cancelled) setIsLoading(false)
       }
-    },
-    () => {
-      if (typeof window === "undefined") return false
-      return localStorage.getItem(AUTH_STORAGE_KEY) === "true"
-    },
-    () => false
-  )
-
-  const login = (email: string, password: string) => {
-    if (!ADMIN_EMAIL || !ADMIN_PASSWORD) return false
-
-    if (
-      email.trim().toLowerCase() === ADMIN_EMAIL.trim().toLowerCase() &&
-      password === ADMIN_PASSWORD
-    ) {
-      localStorage.setItem(AUTH_STORAGE_KEY, "true")
-      window.dispatchEvent(new Event(AUTH_EVENT_NAME))
-      return true
+    })()
+    return () => {
+      cancelled = true
     }
-    return false
+  }, [])
+
+  const login = async (email: string, password: string) => {
+    try {
+      const res = await fetch("/internal-api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
+      if (!res.ok) return false
+      setIsAuthenticated(true)
+      return true
+    } catch {
+      return false
+    }
   }
 
-  const logout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY)
-    window.dispatchEvent(new Event(AUTH_EVENT_NAME))
-    router.push("/admin/login")
+  const logout = async () => {
+    try {
+      await fetch("/internal-api/admin/logout", { method: "POST" })
+    } finally {
+      setIsAuthenticated(false)
+      router.push("/admin/login")
+    }
   }
+
+  const value = useMemo(
+    () => ({ isAuthenticated, isLoading, login, logout }),
+    [isAuthenticated, isLoading]
+  )
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading: false, login, logout }}
+      value={value}
     >
       {children}
     </AuthContext.Provider>
