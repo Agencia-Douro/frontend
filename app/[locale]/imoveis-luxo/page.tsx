@@ -171,6 +171,7 @@ function ImoveisContent() {
                                                     localizacao={property.country && property.country !== "PT" ? `${property.region}, ${property.city}` : `${property.concelho}, ${property.distrito}`}
                                                     preco={property.price}
                                                     status={property.status}
+                                                    locale={locale}
                                                 />))}
                                         </div>
                                         {totalPages > 1 && (

@@ -44,13 +44,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       siteName: "Agência Douro",
       type: "website",
+      url: canonicalUrl,
       locale: locale === "pt" ? "pt_PT" : locale === "fr" ? "fr_FR" : "en_GB",
       images: [
         {
-          url: "/hero/hero1.jpg",
+          url: "/og-image.jpg",
           width: 1200,
           height: 630,
           alt: "Agência Douro - Imóveis de Luxo em Portugal",
+          type: "image/jpeg",
         },
       ],
     },
