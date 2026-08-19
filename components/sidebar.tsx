@@ -111,7 +111,6 @@ export default function Sidebar({ basePath = "/imoveis", isOpen = true, onClose 
     const handleSearch = () => {
         const params = new URLSearchParams()
 
-        // Handle selection: empreendimentos = comprar + isEmpreendimento=true
         if (selection === "empreendimentos") {
             params.set("transactionType", "comprar")
             params.set("isEmpreendimento", "true")
