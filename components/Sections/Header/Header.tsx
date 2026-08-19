@@ -221,12 +221,6 @@ export default function Header() {
                                         {
                                             href: "/imoveis-luxo",
                                             label: t("luxuryProperties"),
-                                            submenu: [
-                                                { href: "/imoveis-luxo?transactionType=comprar", label: t("buy") },
-                                                { href: "/imoveis?isEmpreendimento=true", label: t("developments") },
-                                                { href: "/imoveis?transactionType=arrendar", label: t("rent") },
-                                                { href: "/imoveis?transactionType=trespasse", label: t("businessTransfer") },
-                                            ],
                                         },
                                         { href: "/sobre-nos", label: t("aboutUs") },
                                         { href: "/podcast", label: t("podcast") },
